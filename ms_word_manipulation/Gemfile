@@ -1,0 +1,17 @@
+source 'https://rubygems.org'
+
+gem 'word_wrapper'
+
+gem 'ydocx',  :name => "#{ENV['HOME']}/sandbox/github_repos/madbomber/ydocx/pkg/ydocx-1.2.3.gem"
+
+gem 'docx'
+gem 'docx-html'         # Adds to_html method to Docx class
+                        # Simular to ydocx CLI docx2html
+
+gem 'docx_replace'        # not reliable
+gem 'docx_templater'      # works better than docx_replace
+gem 'docxtor'
+gem 'docx_generator'
+gem 'docx_manipulator'
+
+gem 'docxedit'

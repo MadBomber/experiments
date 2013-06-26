@@ -1,0 +1,11 @@
+%html
+  %body
+    %h2 MS Word Draft Layout View Print Utility for DOCX files
+    %h4 by D. VanHoozer
+    %form(method="post" enctype='multipart/form-data')
+      %input(type='checkbox' name='show_char_styles' value=1 checked=true)
+      Show Character Styles within Content
+      %br
+      %input(type='file' name='myfile')
+      %br
+      %input(type='submit' value='Upload for Printing')
