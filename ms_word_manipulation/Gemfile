@@ -5,7 +5,7 @@ gem 'word_wrapper'
 gem 'ydocx',  :name => "#{ENV['HOME']}/sandbox/github_repos/madbomber/ydocx/pkg/ydocx-1.2.3.gem"
 
 gem 'docx'
-gem 'docx-html'         # Adds to_html method to Docx class
+#gem 'docx-html'         # Adds to_html method to Docx class
                         # Simular to ydocx CLI docx2html
 
 gem 'docx_replace'        # not reliable
@@ -14,4 +14,4 @@ gem 'docxtor'
 gem 'docx_generator'
 gem 'docx_manipulator'
 
-gem 'docxedit'
+gem 'docxedit'            # does not work; looks like docx_replace

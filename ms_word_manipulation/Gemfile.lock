@@ -13,6 +13,9 @@ GEM
       rubyzip
     docx_replace (1.0.0)
       rubyzip
+    docx_templater (0.1.1)
+      htmlentities (~> 4.3.1)
+      rubyzip (~> 0.9.9)
     docxedit (0.0.5)
       rubyzip
     docxtor (0.1.0)
@@ -20,6 +23,7 @@ GEM
       nokogiri
       rubytree
       rubyzip
+    htmlentities (4.3.1)
     i18n (0.6.4)
     json (1.8.0)
     mini_portile (0.5.0)
@@ -45,6 +49,7 @@ DEPENDENCIES
   docx_generator
   docx_manipulator
   docx_replace
+  docx_templater
   docxedit
   docxtor
   word_wrapper
