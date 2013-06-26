@@ -1,0 +1,10 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    words (0.4.6)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  words
