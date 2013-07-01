@@ -1,0 +1,22 @@
+source 'https://rubygems.org'
+
+
+gem 'nbayes'
+gem 'bayesball'       # this is nice
+
+# bayes and LSI
+gem 'reclassifier'
+gem 'madeleine'       # object persistence; has not worked
+
+
+# Support Vector Machines
+#gem 'libsvm_preprocessor'
+#gem "svm_helper"
+#gem "svmlab"
+
+gem "rb-libsvm"
+
+gem 'libsvmffi'
+
+
+
