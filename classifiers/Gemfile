@@ -9,6 +9,10 @@ gem 'reclassifier'
 gem 'madeleine'       # object persistence; has not worked
 
 
+gem 'stuff-classifier'  # bayes and tf-idf weights
+
+gem 'summary'
+
 # Support Vector Machines
 #gem 'libsvm_preprocessor'
 #gem "svm_helper"
