@@ -5,21 +5,21 @@
 
 require 'json'
 require 'awesome_print'
-require 'pp'
+require 'pathname'
 
-analysis = 'analysis.txt'
+analysis = Pathname.new(__FILE__).realpath.parent + 'analysis.txt'
 
 corpus = JSON.parse(IO.read(analysis))
 
-sentence_count =
+max_paragraph_count = rand(3)+2
 
-4.times do
+max_paragraph_count.times do
 
   word = ( ARGV[0] || corpus[""].keys[ Random.rand(corpus[""].length) ] ) #.downcase
   output = "#{word} "
 
   sentence_count = 0
-  max_sentence_count = rand(5)+3
+  max_sentence_count = rand(4)+2
 
   while sentence_count < max_sentence_count do
 
