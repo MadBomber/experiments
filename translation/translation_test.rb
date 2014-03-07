@@ -9,10 +9,15 @@
 require 'debug_me'
 
 require 'pathname'
+require_relative '../../../upperroom/utilities/lib/pathname_helpers.rb'
 
-require 'multi_translate'
-require 'easy_translate'
-require 'google_translate'
+require 'docx'
+require_relative '../../../upperroom/utilities/lib/docx_helpers.rb'
+include DocxHelpers
+
+
+require 'google_translate'    # Screen scrapper
+$glate = GoogleTranslate.new
 
 
 me        = Pathname.new(__FILE__).realpath
@@ -20,7 +25,10 @@ my_dir    = me.parent
 my_name   = me.basename.to_s
 
 $options = {
-  verbose:        false
+  verbose:        false,
+  from_language:  :en,
+  to_language:    :es,
+  paths:          []
 }
 
 def verbose?
@@ -31,13 +39,18 @@ usage = <<EOS
 
 Test out some of the common translation gems
 
-Usage: #{my_name} options
+Usage: #{my_name} options english_file
 
 Where:
 
   options               Do This
     -h or --help        Display this message
     -v or --verbose     Display progress
+    -l or --language    To language; from language is
+                          obtained from the filename
+                          Default: es for Spanish
+
+  english_file          Using the DDG file naming convention
 
 EOS
 
@@ -58,11 +71,29 @@ end
   end
 end
 
+%w[ -l --language ].each do |param|
+  if ARGV.include? param
+    param_index = ARGV.index(param)
+    if param_index+1 >= ARGV.size
+      # FIXME: errors is not global
+      $errors << "#{ARGV[param_index]} specified without parameter"
+    else
+      $options[:to_language] = ARGV[param_index+1].to_sym
+      ARGV[param_index+1] = nil
+    end
 
-# ...
-
+    ARGV[param_index] = nil
+  end
+end
 
 ARGV.compact!
+
+$options[:paths] = ARGV.map { |f| Pathname.new(f) } unless ARGV.empty?
+$options[:paths].select! { |f| f.exist? && '.docx' == f.extname.downcase } unless ARGV.empty?
+
+if $options[:paths].empty?
+  errors << "No valid *.docx files were specified."
+end
 
 unless errors.empty?
   STDERR.puts
@@ -79,19 +110,15 @@ end
 ######################################################
 # Local methods
 
-source = <<EOS
-MeditationDate: Thursday, March 6th, 2014
-Title:True Guests
-LongReading: Read Luke 14:15-24
-QuotedScripture: The master said to the slave, “Go out into the roads and lanes, and compel people to come in, so that my house may be filled.”
-Citation: - Luke 14:23 (NRSV)
-BodyText: The members of the church had chosen to bring in the new year with a worship service that night. Ahead of time, many had declined to come, saying they had other places to go and people to visit. By midnight, no one had arrived. I was sad because I had spent a great deal of time preparing the program. Soon a young boy who attends Sunday school came by. He said, “Pastor, let’s go ahead with the service.” I said, “I don’t think so. No one is here.” The young boy looked at me and said, “But three of us are here — you, me and Jesus.” (See Matt. 18:20.) I realized that the purpose of this service was not simply to gather the people but to worship God and receive God’s blessings. After we sang a few joyous songs, neighbors from the area began to join us. It was a spirit-filled night, and many came to know Christ. This experience reminded me of the parable of the great dinner in Luke 14. After the host sent the invitations and received the news that the guests were not coming, he extended the invitation to include people from the “roads and lanes.” Our dinner became a true feast, where those who came truly wanted to be there. And they were fed by the Bread of Life, Jesus Christ.
-Author: Dennis Rojas (Ica, Peru)
-TFTD: God often changes our plans for the better.
-Prayer: Dear loving Father, thank you for allowing us to come to your house and to sit at table with you. Amen.
-Prayer Focus: Those who live near my church
-EOS
+def translate_paragraph(  text,
+                          from_language = $options[:from_language],
+                          to_language   = $options[:to_language]
+                        )
 
+  result = $glate.translate( from_language, to_language, text )[0]
+  result_str = result.map { |t| t[0] }.join(' ')
+
+end
 
 ######################################################
 # Main
@@ -102,86 +129,42 @@ at_exit do
   puts
 end
 
-puts "="*45
-puts "source"
-puts
-
-puts source
 
 
-=begin
+$options[:paths].each do | en_filepath |
 
-rescue Exception => e
+  if verbose?
+    print "Translating: #{en_filepath.basename} ... "
+  else
+    print '.'
+  end
 
-end
-puts "="*45
-puts "multi-translate: Google"
-puts
+  docx = Docx::Document.open( en_filepath )
 
-mtg_target = MultiTranslate.translate(MultiTranslate::Engines::GOOGLE, 'en', 'es', source)
+  there_was_a_problem = false
 
-puts mtg_target
+  docx.paragraphs.each do |para|
+    begin
+      para.text = translate_paragraph(para.text)
+    rescue Exception => e
+      there_was_a_problem = true
+      STDERR.puts "#{e}"
+    end
+  end
 
-=end
+  new_file = en_filepath.parent + en_filepath.basename.to_s.
+    gsub( "_#{$options[:from_language]}",
+          "_#{$options[:to_language]}")
 
-puts "="*45
-puts "multi-translate: Apertium"
-puts "A free/open-source machine translation platform"
-puts
+  docx.save(new_file)
 
-mta_target = MultiTranslate.translate(MultiTranslate::Engines::APERTIUM, 'en', 'es', source)
+  if verbose?
+    if there_was_a_problem
+      puts "** PROBLEM **"
+    else
+      puts 'done.'
+    end
+  end
 
-puts mta_target
-
-
-__END__
-
-puts "="*45
-puts "easy_translate"
-puts
-
-et_target = "Requres a Google API key" # EasyTranslate.translate(source, :to => :spanish)
-
-puts et_target
-
-
-
-
-puts "="*45
-puts "google-translate"
-puts
-
-glate = GoogleTranslate.new
-
-gt_target_array = glate.translate(:en, :es, source)
-
-puts gt_target_array.class
-
-puts <<EOS
-  The Google Translation API (v2) is a paid service.
-  Cost is approximately $20 per 1 million translated characters.
-
-  returns an array of size: #{gt_target_array.size}
-  array.first is an array of the translation and the source
-    each element has 4 members
-      0: translation
-      1: source
-      2: Translit
-      3:
-
-  The source string is broken up by Google Translate into sentences.
-  The array that is returned is compartmented by the sentences.
-
-  Here is the Meditation Date and Title:
-    #{gt_target_array[0][0].first.strip}
-    #{gt_target_array[0][1].first.strip}
-
-EOS
-
-
-
-
-
-
-
+end # $options[:paths].each do | en_filepath |
 

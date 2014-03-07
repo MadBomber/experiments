@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'multi_translate'
-gem 'easy_translate'
-gem 'google-translate'  # require 'google_translate'
+gem 'multi_translate'   # requires API key for Google
+gem 'easy_translate'    # requires API key
+gem 'google-translate'  # screen scrapper
