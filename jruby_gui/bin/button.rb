@@ -7,9 +7,9 @@
 
 require 'java'
 
-include_class 'java.awt.event.ActionListener'
-include_class 'javax.swing.JButton'
-include_class 'javax.swing.JFrame'
+java_import 'java.awt.event.ActionListener'
+java_import 'javax.swing.JButton'
+java_import 'javax.swing.JFrame'
 
 class ClickAction
   include ActionListener

@@ -6,6 +6,7 @@
 #
 
 require 'java'
+require 'swt'
 
 module SWTTest
 
