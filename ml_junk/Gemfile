@@ -1,0 +1,11 @@
+source 'https://rubygems.org'
+
+gem 'k_means'       # simple clustering also has Jaccard Index algo
+gem 'decisiontree'  # supervised learning
+gem 'classifier'    # bayesian and LSI classifier
+gem 'jaccard'       # recommendation Jaccard Index simular to LSI
+gem 'recommendable' #
+
+gem 'phashion'      # perceptual hashing libphash
+
+gem 'sinderella'    # temporary time-based modification of base value
