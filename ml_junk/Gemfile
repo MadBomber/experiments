@@ -9,3 +9,8 @@ gem 'recommendable' #
 gem 'phashion'      # perceptual hashing libphash
 
 gem 'sinderella'    # temporary time-based modification of base value
+
+# Some gems of parallel processing
+gem 'concurrent-ruby'   # interesting constructs
+gem 'eldritch'          # interesting constructs
+
