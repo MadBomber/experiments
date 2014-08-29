@@ -1,0 +1,3 @@
+suource 'https://rubygems.org'
+
+gem 'bunny'
