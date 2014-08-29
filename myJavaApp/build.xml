@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="myJavaApp" default="install" basedir=".">
+	<property name="src" location="src"/> <!-- java source folder -->
+	<property name="bin" location="bin"/> <!-- intermediate build products -->
+	<property name="jars" location="jars"/> <!-- jar files -->
+	<property name="lib" location="lib"/> <!-- local libraries linked against -->
+	<property name="dist" location="dist"/> <!-- build product location -->
+	<property name="resources" location="resources"/> <!-- location of general java resources -->
+	<property name="resources_macosx" location="resources_macosx"/> <!-- location of Mac OS X specific resources -->
+	<property name="compile.debug" value="true"/>
+	<property name="apple.appstub" location="/System/Library/Frameworks/JavaVM.framework/Resources/MacOS/JavaApplicationStub"/>
+	<property name="application.macos" location="${dist}/${ant.project.name}.app/Contents/MacOS"/>
+	<property name="application.macos.stub" location="${application.macos}/${ant.project.name}"/>
+	<property name="application.resources" location="${dist}/${ant.project.name}.app/Contents/Resources"/>
+	<property name="application.resources.java" location="${dist}/${ant.project.name}.app/Contents/Resources/Java"/>
+
+	<!-- lib directory should contain any pre-built jar files needed to build the project
+		 AppleJavaExtensions.jar is included to allow the built jars to run cross-platform if you depend on Apple eAWT or eIO classes.
+		 See http://developer.apple.com/samplecode/AppleJavaExtensions/index.html for more information -->
+	<fileset id="lib.jars" dir="${lib}">
+		<include name="**/*.jar"/>
+	</fileset>
+
+	<path id="lib.path">
+		<fileset refid="lib.jars"/>
+	</path>
+
+	<!-- Initialization target, for any prelimary setup needed to build -->
+	<target name="init" description="Preparation">
+		<mkdir dir="${src}"/>
+		<mkdir dir="${lib}"/>
+	</target>
+
+	<target name="compile" depends="init" description="Compile code">
+		<mkdir dir="${bin}"/>
+		<javac deprecation="on" srcdir="${src}" destdir="${bin}"
+			   source="1.3" target="1.2"
+			   includeAntRuntime="no"
+			   classpathref="lib.path" debug="${compile.debug}">
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile" description="Build jar">
+		<mkdir dir="${jars}"/>
+		<jar jarfile="${jars}/${ant.project.name}.jar" basedir="${bin}" manifest="${resources}/Manifest">
+			<!-- Inject resources -->
+			<fileset dir="${resources}/"
+				excludes="${resources}/Manifest"
+			/>
+			<!-- Merge library jars into final jar file -->
+			<zipgroupfileset refid="lib.jars"/>
+		</jar>
+	</target>
+	
+	<target name="run-jar" depends="jar">
+		<java jar="${jars}/${ant.project.name}.jar" fork="true">
+		</java>
+	</target>
+	
+	<target name="package" depends="jar" description="Make a double-clickable Mac OS X application">
+		<mkdir dir="${dist}"/>
+		<mkdir dir="${application.resources.java}"/>
+		<mkdir dir="${application.macos}"/>
+		<!-- copy jars -->
+		<copy toDir="${application.resources.java}">
+			<fileset dir="${jars}">
+				<include name="*.jar"/>
+			</fileset>			
+		</copy>
+		<!-- copy application stub -->
+		<copy file="${apple.appstub}" toFile="${application.macos}/${ant.project.name}"/>
+		<!-- fix stub permissions -->
+		<exec executable="/bin/chmod">
+			<arg line="755 '${application.macos.stub}'"/>
+		</exec>		
+		<!-- copy and configure Info.plist -->
+		<copy file="${resources_macosx}/Info.plist" toFile="${dist}/${ant.project.name}.app/Contents/Info.plist">
+			<filterset>
+				<filter token="PROJECTNAMEASIDENTIFIER" value="${ant.project.name}"/>
+			</filterset>
+		</copy>
+		<!-- copy the icon -->
+		<copy file="${resources_macosx}/${ant.project.name}.icns" toDir="${application.resources}"/>
+	</target>
+
+	<!-- Install target, for building the actual product -->
+	<target name="install" description="Create application" depends="package">
+	</target>
+
+    <target name="run" depends="install" description="Run the double-clickable application">
+        <!-- Use the exec task to open the application -->
+        <exec dir="${dist}" executable="/usr/bin/open" os="Mac OS X">
+            <arg line="${ant.project.name}.app"/>
+        </exec>
+    </target>
+    
+    <target name="clean" description="Remove build and dist directories">
+		<delete dir="${bin}"/>
+		<delete dir="${jars}"/>
+		<delete dir="${dist}"/>
+	</target>
+</project>

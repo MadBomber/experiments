@@ -1,0 +1,67 @@
+// !$*UTF8*$!
+{
+	0A9D38F60B2A254900F7949D /* myJavaApp.app */ = {
+		isa = PBXFileReference;
+		name = myJavaApp.app;
+		path = dist/myJavaApp.app;
+		sourceTree = "<absolute>";
+	};
+	88230FFE05D9926E00FE8D22 /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = 88934D45061E10E600F42905 /* myJavaApp */;
+		activeTarget = 8823100505D9929B00FE8D22 /* myJavaApp */;
+		addToTargets = (
+			8823100505D9929B00FE8D22 /* myJavaApp */,
+		);
+		executables = (
+			88934D45061E10E600F42905 /* myJavaApp */,
+		);
+	};
+	8823100505D9929B00FE8D22 /* myJavaApp */ = {
+		activeExec = 0;
+	};
+	0A3CC2080B94A5DE00F6BA26 /* myJavaApp.app */ = {
+		isa = PBXFileReference;
+		explicitFileType = wrapper.application;
+		name = myJavaApp.app;
+		path = dist/myJavaApp.app;
+		sourceTree = "<absolute>";
+	};
+	88934D45061E10E600F42905 /* myJavaApp */ = {
+		isa = PBXExecutable;
+		activeArgIndex = 2147483647;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		configStateDict = {
+			"PBXLSLaunchAction-0" = {
+				PBXLSLaunchAction = 0;
+				PBXLSLaunchStartAction = 1;
+				PBXLSLaunchStdioStyle = 2;
+				PBXLSLaunchStyle = 0;
+				class = PBXLSRunLaunchConfig;
+				displayName = "Executable Runner";
+				identifier = com.apple.Xcode.launch.runConfig;
+				remoteHostInfo = "";
+				startActionInfo = "";
+			};
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = JavaDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		launchableReference = 0A3CC2080B94A5DE00F6BA26 /* myJavaApp.app */;
+		libgmallocEnabled = 0;
+		name = "myJavaApp";
+		sourceDirectories = (
+		);
+		startupPath = "<<ProjectDirectory>>";
+	};
+}
