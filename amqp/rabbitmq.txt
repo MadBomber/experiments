@@ -1,0 +1,16 @@
+==> Pouring rabbitmq-3.3.4.mavericks.bottle.tar.gz
+==> Caveats
+Management Plugin enabled by default at http://localhost:15672
+
+Bash completion has been installed to:
+  /usr/local/etc/bash_completion.d
+
+To have launchd start rabbitmq at login:
+    mkdir -p ~/Library/LaunchAgents
+    ln -sfv /usr/local/opt/rabbitmq/*.plist ~/Library/LaunchAgents
+Then to load rabbitmq now:
+    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.rabbitmq.plist
+Or, if you don't want/need launchctl, you can just run:
+    rabbitmq-server
+==> Summary
+🍺  /usr/local/Cellar/rabbitmq/3.3.4: 1010 files, 26M
