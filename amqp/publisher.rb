@@ -1,0 +1,102 @@
+#!/usr/bin/env ruby
+#################################################################
+###
+##  File: publisher.rb
+##  Desc: Publishes meditations
+##
+#
+require 'awesome_print'
+require 'debug_me'
+require 'betterlorem'
+
+#####################################################
+## initializer junk
+
+require "bunny"
+
+OPTIONS = {
+  :host      => "localhost",  # defualt: 127.0.0.1
+  :port      => 5672,         # default
+  :ssl       => false,        # defualt
+  :vhost     => "sandbox",    # defualt: /
+  :user      => "xyzzy",      # defualt: guest
+  :pass      => "xyzzy",      # defualt: guest
+  :heartbeat => :server,      # defualt: will use RabbitMQ setting
+  :threaded  => true,         # default
+  :network_recovery_interval => 5.0, # default is in seconds
+  :automatically_recover  => true,  # default
+  :frame_max => 131072        # default
+}
+
+QUEUE_NAME = "meditations"
+
+$connection = Bunny.new(OPTIONS).tap(&:start)
+$exchange   = $connection.create_channel.default_exchange
+
+
+#####################################################
+## local stuff
+
+def send_meditation(meditation)
+  #$exchange.publish(meditation.to_json, routing_key: QUEUE_NAME)
+  puts "#"*45
+  ap meditation
+end # def send_meditation(meditation)
+
+def create_meditation
+  meditation = Hash.new
+
+  meditation[:title           ] = BetterLorem.w(3+rand(5),true,true)
+  meditation[:long_reading    ] = BetterLorem.w(1,true,true) + " #{rand(45)}:#{rand(16)}-#{rand(45)+16}"
+  meditation[:quoted_scripture] = BetterLorem.w(13+rand(13),true,true)
+  meditation[:citation        ] = BetterLorem.w(1,true,true) + " #{rand(45)}:#{rand(16)}-#{rand(45)+16}"
+
+  body_text = BetterLorem.p(1+rand(4)).split(' ')
+  s = rand(body_text.size-7)
+  e = s + rand(3)+1
+  body_text[s] = "<i>" + body_text[s]
+  body_text[e] = body_text[e] + "</i>"
+
+  meditation[:body_text          ] = body_text.join(' ')
+  meditation[:prayer             ] = BetterLorem.p(1,true,false)
+  meditation[:thought_for_the_day] = BetterLorem.w(3+rand(10),true,true)
+  meditation[:prayer_focus       ] = BetterLorem.w(3+rand(6),true,true)
+
+  return meditation
+end # def create_meditation
+
+
+def create_author
+  author = Hash.new
+
+  author[:gender  ]   = rand(2) > 0 ? 'M' : 'F'
+  author[:name    ]   = BetterLorem.w(1+rand(4),true,true)
+  author[:location]   = BetterLorem.w(1+rand(3),true,true)
+  author[:email   ]   = BetterLorem.w(1,true,true) + "@" + BetterLorem.w(1,true,true) + '.net'
+
+  return author
+end # def create_author
+
+
+2.times do
+
+  author          = create_author
+
+  2.times do
+    meditation = create_meditation
+    submission = author.merge meditation
+    send_meditation(submission)
+  end
+
+end
+
+
+
+
+
+__END__
+
+System environment variables used when present:
+
+RABBITMQ_URL
+
