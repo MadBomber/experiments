@@ -13,6 +13,8 @@ require 'betterlorem'
 ## initializer junk
 
 require "bunny"
+require 'json'
+require 'date'
 
 OPTIONS = {
   :host      => "localhost",  # defualt: 127.0.0.1
@@ -38,7 +40,10 @@ $exchange   = $connection.create_channel.default_exchange
 ## local stuff
 
 def send_meditation(meditation)
-  #$exchange.publish(meditation.to_json, routing_key: QUEUE_NAME)
+  $exchange.publish(  meditation.to_json,
+                      routing_key: QUEUE_NAME,
+                      app_id: "Fake Submitter"
+                    )
   puts "#"*45
   ap meditation
 end # def send_meditation(meditation)
@@ -46,7 +51,10 @@ end # def send_meditation(meditation)
 def create_meditation
   meditation = Hash.new
 
+  meditation[:submission_id   ] = DateTime.now.strftime('%Q').to_s
+
   meditation[:title           ] = BetterLorem.w(3+rand(5),true,true)
+  meditation[:theme           ] = BetterLorem.w(3+rand(5),true,true)
   meditation[:long_reading    ] = BetterLorem.w(1,true,true) + " #{rand(45)}:#{rand(16)}-#{rand(45)+16}"
   meditation[:quoted_scripture] = BetterLorem.w(13+rand(13),true,true)
   meditation[:citation        ] = BetterLorem.w(1,true,true) + " #{rand(45)}:#{rand(16)}-#{rand(45)+16}"
@@ -78,14 +86,15 @@ def create_author
 end # def create_author
 
 
-2.times do
+100.times do
 
   author          = create_author
 
-  2.times do
+  100.times do
     meditation = create_meditation
     submission = author.merge meditation
     send_meditation(submission)
+    #sleep(rand(3))
   end
 
 end
