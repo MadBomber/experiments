@@ -5,8 +5,14 @@
 ## 	Desc: Diane an Janet's board game
 #
 
-NUMBER_OF_PLAYERS 	= 4
 MULTIPLER 			= 1
+
+require_relative 'event'
+
+Event.new(10, 'Lottery Winner!')  {100}
+Event.new(25, 'Robbery!')         { -(player.cash / 2) }
+Event.new( 5, 'Bank Hacked')      { -(player.bank / 2) }
+
 
 BOARD = [
   "000000000000000",
@@ -57,22 +63,27 @@ $blues 		= BLUES
 $yellows 	= YELLOWS
 $pinks 		= PINKS
 
+class PoorHouse < RuntimeError; end
 
 class Player
 
   attr_accessor :name
-  attr_reader   :bank, :cash
+  attr_accessor :bank, :cash
   attr_accessor :paycheck
   attr_accessor :house, :car, :family
   attr_accessor :house_insurance, :car_insurance, :health_insurance
   attr_accessor :college, :church
 
+  attr_accessor :multipler
+
+
 
   def initialize(player_name)
+    @multipler          = MULTIPLER
     @name 	            = player_name
-    @bank 	            = 100 * MULTIPLER
-    @cash 	            = 10 * MULTIPLER
-    @paycheck           = 1 * MULTIPLER
+    @bank 	            = 100 * @multipler
+    @cash 	            = 10 * @multipler
+    @paycheck           = 1 * @multipler
     @house_insurance    = false
     @car_insurance 	    = false
     @health_insurance   = false
@@ -84,12 +95,17 @@ class Player
   def deposit(amt)
     @bank += amt
     @cash -= amt
-    puts "deposited $#{amt}"
+    @multipler += 1 if @bank > 1000
   end
 
   def withdraw(amt)
     @bank -= amt
     @cash += amt
+    -amt
+  end
+
+  def hacked
+    withdraw(@bank)
   end
 
   def payday(amt=paycheck)
@@ -103,28 +119,26 @@ class Player
   end
 
   def expense(amt)
-    puts "expense #{amt}"
-    @cash = @cash - amt
+    @cash -= amt
     if @cash <= 0
       @bank += @cash
       @cash = 0
-      raise "You are in the poor house" if @bank < 0
+      raise PoorHouse if @bank < 0
     end
+    -amt
   end
 
   def win(amt)
-    puts "win #{amt}"
     @cash += amt
     deposit(@cash / 2) if @cash > 100
+    amt
   end
 
   def robbed
-    print "Robbed!"
     expense(@cash / 2)
   end
 
   def lotto_winner
-    print "Jackpot!"
     win(@bank * 2)
   end
 
@@ -136,6 +150,14 @@ players = [
   Player.new('Mommy'),
   Player.new('Daddy')
 ]
+
+Event.new( 95, 'Misc. Expense')    { player.expense(amount) }
+Event.new(  5, 'Misc. Contest Win'){ player.win(amount) }
+Event.new( 10, 'Lottery Winner!')  { player.lotto_winner }
+Event.new( 25, 'Robbery!')         { player.robbed  }
+Event.new(  5, 'Bank Hacked!')     { player.hacked }
+
+
 
 turn = 0
 
@@ -151,14 +173,18 @@ while players.size > 1 do
 
     player = players[p_index]
 
-    amount = rand(30*MULTIPLER)
-    print "\tPlayer: #{player.name}\tCash: $#{player.cash}\tBank: #{player.bank}\t"
-    
+    amount = rand(30*player.multipler)
+
+    print "\tPlayer: #{player.name}"
+    print "\tCash: $#{player.cash}"
+    print "\tBank: $#{player.bank}"
+    puts "\tM: #{player.multipler}"
+
     begin
-      95 > rand(100) ? player.expense(amount) : player.win(amount)
-      player.lotto_winner if 10 > rand(100)
-      player.robbed       if 25 > rand(100)
-    rescue
+      events = Event.check{}
+      puts events.join("\n") unless events.empty?
+    rescue PoorHouse
+      puts events.join("\n") unless events.nil? || events.empty?
       puts "Poor House!"
       players[p_index] = nil
     end
