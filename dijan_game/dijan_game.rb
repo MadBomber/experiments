@@ -69,26 +69,27 @@ class Player
 
 
   def initialize(player_name)
-    @name 	= player_name
-    @bank 	= 100 * MULTIPLER
-    @cash 	= 10 * MULTIPLER
-    @paycheck= 1 * MULTIPLER
-    @house_insurance = false
-    @car_insurance 	= false
-    @health_insurance = false
-    @college = false
-    @family = 1
-    @church = false
+    @name 	            = player_name
+    @bank 	            = 100 * MULTIPLER
+    @cash 	            = 10 * MULTIPLER
+    @paycheck           = 1 * MULTIPLER
+    @house_insurance    = false
+    @car_insurance 	    = false
+    @health_insurance   = false
+    @college            = false
+    @family             = 1
+    @church             = false
   end
 
   def deposit(amt)
-    bank = @bank + amt
-    cash = @cash - amt
+    @bank += amt
+    @cash -= amt
+    puts "deposited $#{amt}"
   end
 
   def withdraw(amt)
-    bank = @bank - amt
-    cash = @cash + amt
+    @bank -= amt
+    @cash += amt
   end
 
   def payday(amt=paycheck)
@@ -114,9 +115,18 @@ class Player
   def win(amt)
     puts "win #{amt}"
     @cash += amt
+    deposit(@cash / 2) if @cash > 100
   end
 
+  def robbed
+    print "Robbed!"
+    expense(@cash / 2)
+  end
 
+  def lotto_winner
+    print "Jackpot!"
+    win(@bank * 2)
+  end
 
 end # class Player
 
@@ -128,24 +138,45 @@ players = [
 ]
 
 turn = 0
+
 while players.size > 1 do
+
   puts
   puts "="*55
-  puts "Turn #{turn+= 1}"
+  puts "Turn #{turn += 1}"
+
   p_count = players.size
+
   p_count.times do |p_index|
+
     player = players[p_index]
-    next if player.nil?
-    amount = rand(10*MULTIPLER)
+
+    amount = rand(30*MULTIPLER)
     print "\tPlayer: #{player.name}\tCash: $#{player.cash}\tBank: #{player.bank}\t"
+    
     begin
       95 > rand(100) ? player.expense(amount) : player.win(amount)
+      player.lotto_winner if 10 > rand(100)
+      player.robbed       if 25 > rand(100)
     rescue
       puts "Poor House!"
       players[p_index] = nil
     end
-  end
-  players.compact!
-end # until players.empty? do
- 
 
+  end
+
+  players.compact!
+
+end # while players.size > 1 do
+
+winner = players.first
+
+puts
+
+if winner
+  puts "The winner is #{winner.name} with $#{winner.cash + winner.bank}"
+else
+  puts "There is no winner ..."
+end
+
+puts
