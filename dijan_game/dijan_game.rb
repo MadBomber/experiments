@@ -70,7 +70,7 @@ class Player
 
   def initialize(player_name)
     @name 	= player_name
-    @bamk 	= 100 * MULTIPLER
+    @bank 	= 100 * MULTIPLER
     @cash 	= 10 * MULTIPLER
     @paycheck= 1 * MULTIPLER
     @house_insurance = false
@@ -92,10 +92,9 @@ class Player
   end
 
   def payday(amt=paycheck)
-    amt = amt
     amt = amt + amt / 10 if college?
     amt = amt - amt / 10 if church?
-    cash = @cash + amt
+    @cash += amt
   end
 
   def bonus(amt)
@@ -105,26 +104,19 @@ class Player
   def expense(amt)
     puts "expense #{amt}"
     @cash = @cash - amt
-    cash = @cash
+    if @cash <= 0
+      @bank += @cash
+      @cash = 0
+      raise "You are in the poor house" if @bank < 0
+    end
   end
 
   def win(amt)
     puts "win #{amt}"
-    @cash = @cash + amt
-    cash = @cash
+    @cash += amt
   end
 
-  def cash=(amt)
-    @cash = amt
-    puts "money amt: #{amt}  cash: #{cash}  bank: #{bank}"
-    bank = @bank - amt if @cash <= 0
-  end
 
-  def bank=(amt)
-    @bank = amt
-    puts "money amt: #{amt}  bank: #{bank}"
-    raise "You are in the poor house" if @bank <= 0
-  end
 
 end # class Player
 
@@ -136,13 +128,24 @@ players = [
 ]
 
 turn = 0
-while true do
+while players.size > 1 do
+  puts
+  puts "="*55
   puts "Turn #{turn+= 1}"
-  players.each do |player|
-    puts "\tPlayer: #{player.name}  Cash: $#{player.cash}"
+  p_count = players.size
+  p_count.times do |p_index|
+    player = players[p_index]
+    next if player.nil?
     amount = rand(10*MULTIPLER)
-    puts "random #{amount}"
-    0==rand(2) ? player.expense(amount) : player.win(amount)
+    print "\tPlayer: #{player.name}\tCash: $#{player.cash}\tBank: #{player.bank}\t"
+    begin
+      95 > rand(100) ? player.expense(amount) : player.win(amount)
+    rescue
+      puts "Poor House!"
+      players[p_index] = nil
+    end
   end
-end
+  players.compact!
+end # until players.empty? do
+ 
 
