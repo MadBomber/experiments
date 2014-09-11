@@ -9,11 +9,6 @@ MULTIPLER 			= 1
 
 require_relative 'event'
 
-Event.new(10, 'Lottery Winner!')  {100}
-Event.new(25, 'Robbery!')         { -(player.cash / 2) }
-Event.new( 5, 'Bank Hacked')      { -(player.bank / 2) }
-
-
 BOARD = [
   "000000000000000",
   "080000000000070",
@@ -63,7 +58,6 @@ $blues 		= BLUES
 $yellows 	= YELLOWS
 $pinks 		= PINKS
 
-class PoorHouse < RuntimeError; end
 
 class Player
 
@@ -83,13 +77,21 @@ class Player
     @name 	            = player_name
     @bank 	            = 100 * @multipler
     @cash 	            = 10 * @multipler
-    @paycheck           = 1 * @multipler
+    @paycheck           = 123 * @multipler
     @house_insurance    = false
     @car_insurance 	    = false
     @health_insurance   = false
     @college            = false
     @family             = 1
     @church             = false
+  end
+
+  def college?
+    @college
+  end
+
+  def church?
+    @church
   end
 
   def deposit(amt)
@@ -105,17 +107,26 @@ class Player
   end
 
   def hacked
-    withdraw(@bank)
+    b = @bank
+    @bank = 0
+    -b
   end
 
-  def payday(amt=paycheck)
+  def payday(amt=nil)
+    amt = @paycheck if amt.nil?
     amt = amt + amt / 10 if college?
     amt = amt - amt / 10 if church?
     @cash += amt
+    deposit(@cash / 2)
+    amt
   end
 
   def bonus(amt)
-    payday(paycheck+amt)
+    unless 0 == @paycheck
+      payday(paycheck+amt)
+    else
+      0
+    end
   end
 
   def expense(amt)
@@ -123,7 +134,6 @@ class Player
     if @cash <= 0
       @bank += @cash
       @cash = 0
-      raise PoorHouse if @bank < 0
     end
     -amt
   end
@@ -135,14 +145,30 @@ class Player
   end
 
   def robbed
-    expense(@cash / 2)
+    if @cash > 0
+      expense(@cash / 2)
+    else
+      0
+    end
   end
 
   def lotto_winner
     win(@bank * 2)
   end
 
+  def poor_house?
+    @bank < 0
+  end
+
+  def amount
+    rand(30*@multipler) + @multipler
+  end
+
 end # class Player
+
+
+
+
 
 players = [
   Player.new('Diane'),
@@ -151,12 +177,35 @@ players = [
   Player.new('Daddy')
 ]
 
-Event.new( 95, 'Misc. Expense')    { player.expense(amount) }
-Event.new(  5, 'Misc. Contest Win'){ player.win(amount) }
-Event.new( 10, 'Lottery Winner!')  { player.lotto_winner }
+Event.new(  5, 'Misc. Contest Win') { player.win(player.amount) }
+Event.new( 10, 'Lottery Winner!')   { player.lotto_winner }
+Event.new(  7, 'Payday!')           { player.payday }
+Event.new(  2, 'Bonus!')            { player.bonus(player.amount*100) }
+
+Event.new( 25, 'Misc. Expense')    { player.expense(player.amount) }
+
 Event.new( 25, 'Robbery!')         { player.robbed  }
 Event.new(  5, 'Bank Hacked!')     { player.hacked }
 
+Event.new(  5, 'Health Expense')      { player.expense(player.amount) }
+Event.new(  5, 'Car insurance ex[ense')    { player.expense(player.amount) }
+Event.new(  5, 'House Expense')       { player.expense(player.amount) }
+Event.new(  5, 'Doctor Expense')      { player.expense(player.amount) }
+Event.new(  5, 'Grocery Expense')     { player.expense(player.amount) }
+Event.new(  5, 'Eat Out Expense')     { player.expense(player.amount) }
+Event.new(  5, 'Movie Expense')       { player.expense(player.amount) }
+Event.new(  5, 'Entertainment Expense') { player.expense(player.amount) }
+Event.new(  5, 'Gas Expense')         { player.expense(player.amount) }
+Event.new(  5, 'Elecity Expense')     { player.expense(player.amount) }
+Event.new(  5, 'Utilities Expense')   { player.expense(player.amount) }
+Event.new(  5, 'Lottery Ticket')      { player.expense(player.amount) }
+Event.new( 15, 'Feed the pet, woofie'){ player.expense(player.amount) }
+Event.new( 15, 'Feed the kids')       { player.expense(player.amount) }
+
+Event.new(  5, 'Lose you job')        { player.paycheck = 0 }
+Event.new(  5, 'Get a raise')         { player.paycheck = player.paycheck + player.amount; 0 }
+Event.new(  2, 'Pass a College class'){ player.college = true; 0 }
+Event.new(  2, 'Join a Church')       { player.church = true; 0 }
 
 
 turn = 0
@@ -173,18 +222,21 @@ while players.size > 1 do
 
     player = players[p_index]
 
-    amount = rand(30*player.multipler)
-
     print "\tPlayer: #{player.name}"
     print "\tCash: $#{player.cash}"
     print "\tBank: $#{player.bank}"
     puts "\tM: #{player.multipler}"
 
-    begin
-      events = Event.check{}
-      puts events.join("\n") unless events.empty?
-    rescue PoorHouse
-      puts events.join("\n") unless events.nil? || events.empty?
+    events = Event.check{}
+    puts events.join("\n") unless events.empty?
+
+    print "\t   Results -=>"
+    print "\tCash: $#{player.cash}"
+    print "\tBank: $#{player.bank}"
+    puts "\tM: #{player.multipler}"
+
+
+    if player.poor_house?
       puts "Poor House!"
       players[p_index] = nil
     end

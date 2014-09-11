@@ -19,13 +19,14 @@ class Event
 			@@events.each do |e|
 				if e.first > rand(100)
 					proc = e.last.to_source
+					# puts proc
 					amount = eval("#{proc}.call", context.binding)
-					transactions << "#{e[1]} #{amount<0 ? 'Lose' : 'Gain'} $#{amount.abs}"
+					transactions << "\t   #{e[1]} #{amount<0 ? 'Lose' : 'Gain'} $#{amount.abs}"
 				end
 			end
 			return transactions
 		end
 
-	end
+	end # class << self
 
-end
+end # class Event
