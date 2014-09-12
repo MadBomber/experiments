@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.expand_path("../lib", File.dirname(__FILE__))
+
+require 'pool'
+
+QUEUE_NAME = "meditations"
+
+OPTIONS = {
+  :host      => "localhost",  # defualt: 127.0.0.1
+  :port      => 5672,         # default
+  :ssl       => false,        # defualt
+  :vhost     => "sandbox",    # defualt: /
+  :user      => "xyzzy",      # defualt: guest
+  :pass      => "xyzzy",      # defualt: guest
+  :heartbeat => :server,      # defualt: will use RabbitMQ setting
+  :threaded  => true,         # default
+  :network_recovery_interval => 5.0, # default is in seconds
+  :automatically_recover  => true,  # default
+  :frame_max => 131072        # default
+}
+
+if ARGV.empty?              ||
+   ARGV.include?('-h')      ||
+   ARGV.size > 1            ||
+   ARGV.include?('--help')
+
+puts <<EOS
+
+Requires a single parameter:  number_of_pools
+
+number_of_pools must be >= 2
+
+EOS
+
+exit
+end
+
+number_of_pools = ARGV.first.to_i
+
+unless number_of_pools >= 2
+  puts "ERROR: I SAID it had to be 2 or greater"
+  exit
+end
+
+at_exit do
+  puts "done."
+end
+
+consumer = Pool.new(ARGV[0])
+consumer.init

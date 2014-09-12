@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.expand_path("../lib", File.dirname(__FILE__))
+
+require 'producer'
+
+QUEUE_NAME = "meditations"
+
+OPTIONS = {
+  :host      => "localhost",  # defualt: 127.0.0.1
+  :port      => 5672,         # default
+  :ssl       => false,        # defualt
+  :vhost     => "sandbox",    # defualt: /
+  :user      => "xyzzy",      # defualt: guest
+  :pass      => "xyzzy",      # defualt: guest
+  :heartbeat => :server,      # defualt: will use RabbitMQ setting
+  :threaded  => true,         # default
+  :network_recovery_interval => 5.0, # default is in seconds
+  :automatically_recover  => true,  # default
+  :frame_max => 131072        # default
+}
+
+producer = Producer.new
+producer.run
+producer.connection.close

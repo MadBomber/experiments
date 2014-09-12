@@ -1,0 +1,20 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    amq-protocol (1.9.2)
+    bunny (1.4.0)
+      amq-protocol (>= 1.9.2)
+    celluloid (0.16.0)
+      timers (~> 4.0.0)
+    hitimes (1.2.2)
+    msgpack (0.5.8)
+    timers (4.0.1)
+      hitimes
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bunny
+  celluloid
+  msgpack
