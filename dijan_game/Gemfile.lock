@@ -1,0 +1,27 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
+    debug_inspector (0.0.2)
+    file-tail (1.0.12)
+      tins (~> 0.5)
+    ruby2ruby (2.1.2)
+      ruby_parser (~> 3.1)
+      sexp_processor (~> 4.0)
+    ruby_parser (3.6.2)
+      sexp_processor (~> 4.1)
+    sexp_processor (4.4.4)
+    sourcify (0.5.0)
+      file-tail (>= 1.0.5)
+      ruby2ruby (>= 1.2.5)
+      ruby_parser (>= 2.0.5)
+      sexp_processor (>= 3.0.5)
+    tins (0.13.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  binding_of_caller
+  sourcify

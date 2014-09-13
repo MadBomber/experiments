@@ -227,7 +227,7 @@ while players.size > 1 do
     print "\tBank: $#{player.bank}"
     puts "\tM: #{player.multipler}"
 
-    events = Event.check{}
+    events = Event.check
     puts events.join("\n") unless events.empty?
 
     print "\t   Results -=>"
