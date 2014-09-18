@@ -1,3 +1,4 @@
 suource 'https://rubygems.org'
 
 gem 'bunny'
+gem 'sneakers'
