@@ -1,4 +1,4 @@
-suource 'https://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'bunny'
 gem 'sneakers'
