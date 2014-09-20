@@ -6,49 +6,81 @@
 ##
 #
 require 'awesome_print'
-require 'debug_me'
-require 'betterlorem'
 
 #####################################################
 ## initializer junk
 
 require "bunny"
 require 'json'
+require 'hashie'
 require 'date'
 
 OPTIONS = {
-  :host      => "localhost",  # defualt: 127.0.0.1
-  :port      => 5672,         # default
-  :ssl       => false,        # defualt
-  :vhost     => "sandbox",    # defualt: /
-  :user      => "xyzzy",      # defualt: guest
-  :pass      => "xyzzy",      # defualt: guest
-  :heartbeat => :server,      # defualt: will use RabbitMQ setting
-  :threaded  => true,         # default
-  :network_recovery_interval => 5.0, # default is in seconds
-  :automatically_recover  => true,  # default
-  :frame_max => 131072        # default
+  :host      => "localhost",          # defualt: 127.0.0.1
+  :port      => 5672,                 # default
+  :ssl       => false,                # defualt
+  :vhost     => "sandbox",            # defualt: /
+  :user      => "xyzzy",              # defualt: guest
+  :pass      => "xyzzy",              # defualt: guest
+  :heartbeat => :server,              # defualt: will use RabbitMQ setting
+  :threaded  => true,                 # default
+  :network_recovery_interval => 5.0,  # default is in seconds
+  :automatically_recover  => true,    # default
+  :frame_max => 131072                # default
 }
 
-QUEUE_NAME = "meditations"
+QUEUE_NAME = "submissions"
 
-$connection = Bunny.new(OPTIONS).tap(&:start)
-$channel    = $connection.create_channel
+connection = Bunny.new(OPTIONS).tap(&:start)
+channel    = connection.create_channel
+exchange   = channel.topic("sandbox", :auto_delete => true)
 
-$channel.queue_declare(QUEUE_NAME,
-                        durable: true,
-                        auto_delete: false,
-                        arguments: {"x-max-length" => 1000})
-
-$queue      = $channel.queue( QUEUE_NAME,
+queue      = channel.queue( QUEUE_NAME,
                                 durable: true,
                                 auto_delete: false,
                                 arguments: {"x-max-length" => 1000}
-                            )
+                            ).bind(exchange, :routing_key => "#.new")
 
+at_exit do
+  connection.close
+end
 
 #####################################################
 ## local stuff
+
+class Author < Hashie::Mash
+  def save
+    # TODO: most likely going to save to a database
+    #       or maybe to a file in Elvis
+
+    puts "\nSaving New Author"
+    puts "\tID ...... #{author_id}"
+    puts "\tName .... #{name}"
+    puts "\teMail ... #{email}"
+
+    #sleep(1)
+
+  end
+end
+
+class Meditation < Hashie::Mash
+  def save
+    # TODO: save as an InCopy file
+    # TODO: Upload file to Elvis
+
+    puts "\nSaving New Meditation"
+    puts "\tID .......... #{submission_id}"
+    puts "\tAuthor ID ... #{author_id}"
+    puts "\tTheme ....... #{theme}"
+    puts "\tTitle ....... #{title}"
+
+    #sleep(1)
+
+  end
+end
+
+
+
 
 class MeditationSubmissionConsumer < Bunny::Consumer
 
@@ -63,24 +95,38 @@ class MeditationSubmissionConsumer < Bunny::Consumer
 end # class MeditationSubmissionConsumer < Bunny::Consumer
 
 consumer = MeditationSubmissionConsumer.new(
-  $channel,
-  $queue,
+  channel,
+  queue,
   "elvis_eats_meditations", # consumer tag
   false,                    # no_ack
   false                     # exclusive
 )
 
 consumer.on_delivery() do |delivery_info, metadata, payload|
-    meditation = JSON.parse(payload, symbolize_names: true)
+
     puts
     puts "#"*55
-    ap delivery_info
-    ap metadata
-    ap meditation
-    consumer.channel.acknowledge( delivery_info.delivery_tag, false )
-end
+    print 'Routing Key: '
+    puts delivery_info.routing_key
 
-$queue.subscribe_with( consumer, block: true )
+    begin
+      payload_as_hash = JSON.parse(payload)
+      submission = eval(delivery_info.routing_key + "(payload_as_hash)")
+      begin
+        submission.save
+        consumer.channel.acknowledge( delivery_info.delivery_tag, false )
+      rescue Exception => e
+        puts "ERROR: had a problem saving #{e}"
+      end
+
+    rescue Exception => e
+      puts "ERROR: Don't know: #{e}"
+    end
+
+end # consumer.on_delivery() do |delivery_info, metadata, payload|
+
+
+queue.subscribe_with( consumer, block: true )
 
 __END__
 
