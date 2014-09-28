@@ -1,0 +1,26 @@
+################################################################
+###
+##  File: Gemfile
+##  Desc: gems worth looking at for possible inclusion into the standard
+##        ISE distribution
+#
+
+source( "http://rubygems.org" )
+source( "http://gems.github.com" )
+
+# source( Bundler::Source::GemCache.new("path" => "/full/path/to/gemdir") ) # how to point to a non-standard directory location
+
+########################################################################
+##
+
+gem 'eventmachine'          # The reactor pattern for TCP/UDP comms
+
+gem "notify"                # provides notification functionalities on cross platforms
+gem "libnotify"             # Supports alert notifications in linux
+
+gem "rb-inotify"            # Linux: Ruby binding to the libnotify
+# gem "win32-changenotify"  # win32: for use with em-dir-watcher
+# gem "win32-event"         # win32: for use with em-dir-watcher
+gem "em-dir-watcher"        # monitors a directory for modifications (cross-platform; see rubygems/org)
+
+
