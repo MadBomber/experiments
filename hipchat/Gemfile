@@ -1,0 +1,8 @@
+source 'https://rubygems.org'
+
+gem 'hipchat'
+gem 'hipchat-s3'   # Uses hipchat and aws-s3
+gem 'hipchat_bot'
+gem 'hipchat_searcher'    # adds a CLI 'hps' that searchs all hipchat rooms
+
+

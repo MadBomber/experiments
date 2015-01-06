@@ -1,0 +1,42 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    aws-s3 (0.6.3)
+      builder
+      mime-types
+      xml-simple
+    builder (3.2.2)
+    colorize (0.7.5)
+    hashie (3.3.2)
+    hipchat (1.4.0)
+      httparty
+    hipchat-s3 (0.1.1)
+      aws-s3
+      hipchat
+    hipchat_bot (0.1.1)
+      httparty
+      json
+      xmpp4r
+    hipchat_searcher (1.0.1)
+      colorize
+      hashie
+      hipchat
+      slop
+    httparty (0.13.3)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
+    json (1.8.1)
+    mime-types (2.4.3)
+    multi_xml (0.5.5)
+    slop (3.6.0)
+    xml-simple (1.1.4)
+    xmpp4r (0.5.6)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  hipchat
+  hipchat-s3
+  hipchat_bot
+  hipchat_searcher
