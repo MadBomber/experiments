@@ -8,11 +8,20 @@
 #
 
 require 'debug_me'
+include DebugMe
+
 require 'nenv'
 
 $twilio = Nenv :twilio
 
 Nenv.tftd = "How well do I imitate God in word and deed?"
+Nenv.voice_url = "https://s3.amazonaws.com/voice.devotional.upperroom.org/en/20140401_en.mp3"
+Nenv.voice_xml_url = "https://s3.amazonaws.com/voice.devotional.upperroom.org/en/20140401_en.xml"
+
+Nenv.simple_message_url = "http://twimlets.com/message?Message[0]=#{Nenv.voice_url}&amp;Message[1]=Thank+You+For+Calling+The+Upper+Room"
+
+puts Nenv.simple_message_url
+
 
 require 'pathname'
 
@@ -26,6 +35,7 @@ $options = {
   sms:            false,
   mms:            false,
   auto_validate:  false,
+  disable:        false,
   phone_numbers:  []
 }
 
@@ -49,6 +59,9 @@ def auto_validate?
   $options[:auto_validate]
 end
 
+def disable?
+  $options[:disable]
+end
 
 def valid_phone_number?(phone_number)
   /^\d{10}$/ === phone_number
@@ -71,6 +84,7 @@ Where:
           --mms         Send MMS message using
                           TUR cover graphic
           --validate    Auto-validate outgoing phone numbers
+          --disable     Disable outgoing phone numbers
 
   phone_number+         The mobil phone number destination(s)
 
@@ -212,12 +226,27 @@ abort_if_errors
 # Gary's 6152688522
 
 require 'twilio-ruby'
+require 'phony'
 
 $client = Twilio::REST::Client.new $twilio.acct_sid, $twilio.auth
 
 ######################################################
 # Local methods
 
+# Convert domestic phone numbers into international format as used
+# by Twilio
+# SMELL: USA only
+def convert_phone_number_to_e164(phone_number, country_code='1')
+  phone_number = (country_code + phone_number) if 10 == phone_number.size
+  Phony.format(
+      phone_number,
+      :format => :international,
+      :spaces => ''
+  ).gsub(/\s+/, "") # Phony won't remove all spaces
+end
+
+
+# SMELL: this format is domestic numbers only
 def format_phone_number(phone_number)
   return(phone_number) unless valid_phone_number? phone_number
   "(#{phone_number[0,3]}) #{phone_number[3,3]}-#{phone_number[6,4]}"
@@ -226,58 +255,63 @@ end
 
 def validate_outgoing_phone_number(phone_number)
   return(nil) unless auto_validate?
-  response = $client.account.outgoing_caller_ids.create(:phone_number => "+1#{phone_number}")
+  response = $client.account.outgoing_caller_ids.create(
+    :phone_number => convert_phone_number_to_e164(phone_number)
+  )
   puts response.validation_code
 end
 
+def disable_outgoing_phone_number(phone_number)
+  response = $client.account.outgoing_caller_ids.list(
+    :phone_number => convert_phone_number_to_e164(phone_number)
+  )
+  callerid = response[0]
+  callerid.delete()
+end
 
 def send_voice_message_to (phone_number)
   puts "sending voice message to #{format_phone_number phone_number} ..." if verbose?
   begin
     outgoing_call = $client.account.calls.create({
-        :to   => phone_number,
-        :from => $twilio.phone,
-        :url  => "http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient"})
+        :to   => convert_phone_number_to_e164(phone_number),
+        :from => convert_phone_number_to_e164($twilio.phone),
+        :url  => Nenv.simple_message_url
+      })
   rescue Twilio::REST::RequestError
     puts "#{phone_number} is unverified for the trial Twilio account."
     validate_outgoing_phone_number(phone_number) if auto_validate?
   end
-
 end # def send_voice_message_to (phone_number)
 
 
 def send_sms_message_to (phone_number)
   puts "sending SMS message to #{phone_number} ..." if verbose?
-
   begin
     outgoing_message = $client.account.messages.create({
-                                    :to => "+1#{phone_number}",
-                                    :from => "+1#{$twilio.phone}",
-                                    :body => "The Upper Room Though for the Day: #{Nenv.tftd}",
-                                  })
+                                :to   => convert_phone_number_to_e164(phone_number),
+                                :from => convert_phone_number_to_e164($twilio.phone),
+                                :body => "The Upper Room Though for the Day: #{Nenv.tftd}",
+                              })
   rescue Twilio::REST::RequestError
     puts "#{phone_number} is unverified for the trial Twilio account."
     validate_outgoing_phone_number(phone_number) if auto_validate?
   end
-
 end # def send_sms_message_to (phone_number)
 
 
 def send_mms_message_to (phone_number)
   puts "sending MMS message to #{format_phone_number phone_number} ..." if verbose?
-
   begin
     outgoing_message = $client.account.messages.create({
-                                    :to => "+1#{phone_number}",
-                                    :from => "+1#{$twilio.phone}",
-                                    :body => "Though for the Day: #{Nenv.tftd}",
-                                    :media_url => "http://s3.amazonaws.com/images.upperroom.org/devotional/en/issue_covers/slideshow/175.png?1418924817"
-                                  })
+                                :to   => convert_phone_number_to_e164(phone_number),
+                                :from => convert_phone_number_to_e164($twilio.phone),
+                                :body => "Though for the Day: #{Nenv.tftd}",
+                                :media_url => "http://s3.amazonaws.com/images.upperroom.org/devotional/en/issue_covers/slideshow/175.png?1418924817"
+                              })
   rescue Twilio::REST::RequestError
     puts "#{phone_number} is unverified for the trial Twilio account."
     validate_outgoing_phone_number(phone_number) if auto_validate?
   end
-
 end # def send_mms_message_to (phone_number)
 
 
@@ -296,6 +330,10 @@ end
 pp $options
 
 $options[:phone_numbers].each do |phone_number|
+  if disable?
+    disable_outgoing_phone_number phone_number
+    next
+  end
   send_voice_message_to(phone_number)  if voice?
   send_sms_message_to(phone_number)    if sms?
   send_mms_message_to(phone_number)    if mms?
