@@ -26,25 +26,40 @@ end # class Time
 require 'debug_me'
 include DebugMe
 
+require 'date'
+require 'uri'
 require 'nenv'
 
 $twilio = Nenv :twilio
 
-tftd = "Thought for the Day:"
-Nenv.tftd = "#{tftd} Spending time with God daily makes a good spiritual diet."
+ECHO_URL   = "http://twimlets.com/echo"
+TURS_LABEL = "The Upper Room's"
+TFTD_LABEL = "Thought for the Day:"
 
-Nenv.voice_url = "https://s3.amazonaws.com/voice.devotional.upperroom.org/en/20140401_en.mp3"
-Nenv.voice_xml_url = "https://s3.amazonaws.com/voice.devotional.upperroom.org/en/20140401_en.xml"
+Nenv.tftd  = "#{TFTD_LABEL} When God calls us to a task, God equips us to accomplish it.  See the Upper Room daily devotional at http://devotional.upperroom.org/"
+
+Nenv.meditation_date = Date.today.strftime('%Y%m%d')
+Nenv.meditation_lang = 'en'
 
 Nenv.sales_ad = "Your contributions to The Upper Room help make this resource available.  Thank you for your support."
 
-Nenv.simple_message_url = "http://twimlets.com/message?Message%5B0%5D=https%3A%2F%2Fs3.amazonaws.com%2Fvoice.devotional.upperroom.org%2Fen%2F20150107_en.mp3&Message%5B1%5D=Your%20contributions%20to%20The%20Upper%20Room%20help%20make%20this%20resource%20available.%20%20Thank%20you%20for%20your%20support.&"
-
-Nenv.echo_url = "http://twimlets.com/echo?Twiml=%3CResponse%3E%0A%20%20%3CPlay%3Ehttps%3A%2F%2Fs3.amazonaws.com%2Fvoice.devotional.upperroom.org%2Fen%2F20140401_en.mp3%3C%2FPlay%3E%0A%20%20%3CSay%3EPlease%20consider%20a%20donation%20or%20a%20subscription%20to%20The%20Upper%20Room%20so%20that%20we%20may%20continue%20to%20provide%20resources%20to%20support%20your%20spiritual%20growth.%20%20Thank%20you%20and%20may%20God%20bless%20your%20day.%3C%2FSay%3E%0A%3C%2FResponse%3E&"
+Nenv.current_issue_cover_page = "http://s3.amazonaws.com/images.upperroom.org/devotional/en/issue_covers/slideshow/175.png?1418924817"
 
 
-Nenv.voice_url = "http://twimlets.com/echo?Twiml=%3CResponse%3E%3CSay%3EHow+well+do+I+imitate+God+in+word+and+deed%3F%3C%2FSay%3E%3C%2FResponse%3E"
-Nenv.sms_url = "http://twimlets.com/echo?Twiml=%3CResponse%3E%3CSms%3EHow+well+do+I+imitate+God+in+word+and+deed%3F%3C%2FSms%3E%3C%2FResponse%3E"
+Nenv.voice_url = "https://s3.amazonaws.com/voice.devotional.upperroom.org/en/#{Nenv.meditation_date}_#{Nenv.meditation_lang}.mp3"
+
+
+play_this   = "<Play>#{Nenv.voice_url}</Play>"
+say_this    = "<Say>#{Nenv.sales_ad}</Say>"
+
+sms_message = "#{TURS_LABEL} #{Nenv.tftd}"
+
+voice_message_twiml = {
+  'Twiml' => "<Response>#{play_this}#{say_this}</Response>"
+}
+
+Nenv.voice_message_push_url =  "#{ECHO_URL}?#{URI.encode_www_form(voice_message_twiml)}"
+
 
 
 require 'pathname'
@@ -136,12 +151,12 @@ NOTE:
 
   For the trial account only verified phone numbers can be reached.
 
-  Verified Numbers are:
+  Verified/Validated Numbers for push operations are:
     Dewayne:  817-905-1687
     Jorge:    615-828-5975
     Gary:     615-268-8522
     Doug:     615-557-3824
-
+    Jon:      316-821-5335
 
 EOS
 
@@ -327,22 +342,6 @@ $client = Twilio::REST::Client.new $twilio.acct_sid, $twilio.auth
 ######################################################
 # Local methods
 
-class Time
-  def before?(a_time)
-    (self <=> a_time) < 0
-  end
-  def after?(a_time)
-    (self <=> a_time) > 0
-  end
-  # a_string is expected to be in the form of hours[:minutes[:seconds]]
-  # where hours is 0..23 minutes is 0..59 seconds is 0..59
-  def self.parse(a_string)
-    hms = a_string.scan(/\d+/).map(&:to_i)
-    tn = now
-    initialize(tn.year, tn.month, tn.day,
-      hms[0], (hms.size>1 ? hms[1] : 0), (hms.size>2 ? hms[2] : 0))
-  end
-end # class Time
 
 def list_applications
   puts ">"*15
@@ -440,24 +439,22 @@ def send_voice_message_to (phone_number)
     outgoing_call = $client.account.calls.make(
         convert_phone_number_to_e164($twilio.phone),  # from
         convert_phone_number_to_e164(phone_number),   # to
-        # BAD because of POST event to AWS/S3 Nenv.voice_xml_url
-        # Nenv.echo_url
-        Nenv.simple_message_url                            # url
+        Nenv.voice_message_push_url                   # url to twiml
       )
-  #rescue Twilio::REST::RequestError
-  #  puts "#{phone_number} is unverified for the trial Twilio account."
-  #  validate_outgoing_phone_number(phone_number) if auto_validate?
+  rescue Twilio::REST::RequestError
+    puts "#{phone_number} is unverified for the trial Twilio account."
+    validate_outgoing_phone_number(phone_number) if auto_validate?
   end
 end # def send_voice_message_to (phone_number)
 
 
-def send_sms_message_to (phone_number)
-  puts "sending SMS message to #{phone_number} ..." if verbose?
+def send_sms_message_to (phone_number, message)
+  puts "sending SMS message to #{format_phone_number phone_number} ..." if verbose?
   begin
     outgoing_message = $client.account.messages.create({
                                 :to   => convert_phone_number_to_e164(phone_number),
                                 :from => convert_phone_number_to_e164($twilio.phone),
-                                :body => "The Upper Room Though for the Day: #{Nenv.tftd}",
+                                :body => message,
                               })
   rescue Twilio::REST::RequestError
     puts "#{phone_number} is unverified for the trial Twilio account."
@@ -466,14 +463,14 @@ def send_sms_message_to (phone_number)
 end # def send_sms_message_to (phone_number)
 
 
-def send_mms_message_to (phone_number)
+def send_mms_message_to (phone_number, message, image_url=Nenv.current_issue_cover_page)
   puts "sending MMS message to #{format_phone_number phone_number} ..." if verbose?
   begin
     outgoing_message = $client.account.messages.create({
                                 :to   => convert_phone_number_to_e164(phone_number),
                                 :from => convert_phone_number_to_e164($twilio.phone),
-                                :body => Nenv.tftd,
-                                :media_url => "http://s3.amazonaws.com/images.upperroom.org/devotional/en/issue_covers/slideshow/175.png?1418924817"
+                                :body => message,
+                                :media_url => image_url
                               })
   rescue Twilio::REST::RequestError
     puts "#{phone_number} is unverified for the trial Twilio account."
@@ -516,7 +513,7 @@ $options[:phone_numbers].each do |phone_number|
     disable_outgoing_phone_number phone_number
     next
   end
-  send_voice_message_to(phone_number)  if voice?
-  send_sms_message_to(phone_number)    if sms?
-  send_mms_message_to(phone_number)    if mms?
+  send_voice_message_to(phone_number)              if voice?
+  send_sms_message_to(phone_number, sms_message)   if sms?
+  send_mms_message_to(phone_number, sms_message)   if mms?
 end
