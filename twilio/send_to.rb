@@ -145,6 +145,9 @@ Where:
             send_at       '[year/month/day] hh:mm:ss'
                           the date component is optional defaults to today
 
+          --list        List all applications
+          --update      Update the 'TUR Demo' with new voice and sms urls
+
   phone_number+         The mobil phone number destination(s)
 
 NOTE:
@@ -347,8 +350,6 @@ def list_applications
   puts ">"*15
   apps = $client.account.applications.list
   apps.each do |app|
-    pp app
-    pp app.methods.sort
     [:account_sid,
      :api_version,
      :date_created,
@@ -374,6 +375,10 @@ def list_applications
     end
   end
   puts "<"*15
+
+  app = get_app('TUR Demo')
+  debug_me{['app.friendly_name', 'app.voice_url', 'app.sms_url']}
+
 end # def list_applications
 
 
@@ -382,11 +387,19 @@ def new_app
 end # def new_app
 
 
+def get_app(friendly_name)
+  $client.account.applications.list.each do |app|
+    return(app) if app.friendly_name.upcase == friendly_name.upcase
+  end
+  return nil
+end
+
+
 def update_app(app_sid=$twilio.app_sid)
   app = $client.account.applications.get(app_sid)
   app.update(
-    :voice_url  => "http://demo.twilio.com/docs/voice.xml",
-    :sms_url    => "http://demo.twilio.com/docs/sms.xml"
+    :voice_url  => Nenv.voice_message_push_url,
+    # :sms_url    => Nenv.message_url
   )
 end # def update_app(app_sid=$twilio.app_sid)
 
@@ -485,19 +498,15 @@ end # def send_mms_message_to (phone_number)
 ######################################################
 # Main
 
-at_exit do
-  puts
-  puts "Done."
-  puts
-end
-
-puts
-pp $options
-puts
-
 list_applications if list?
 
-puts
+if update_app?
+  app = get_app('TUR Demo')
+  unless app.nil?
+    update_app(app.sid)
+    send_sms_message_to('8179051687', "Daily devotional message has been updated for #{Date.today}")
+  end
+end
 
 unless $options[:send_time].nil?
   puts Time.now
