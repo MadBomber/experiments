@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem  'mqtt-sn-ruby'
+gem  'json_rpc_over_mqtt_example'
+gem  'simple_ruby_mqtt_client'
+gem  'sps_mqtt_bridge'
+gem  'em-mqtts'
+gem  'em-mqtt'
+gem  'mqtt'
+
