@@ -1,0 +1,10 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ballistics (0.2.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ballistics
