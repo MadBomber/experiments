@@ -1,0 +1,48 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activemodel (4.2.0)
+      activesupport (= 4.2.0)
+      builder (~> 3.1)
+    activesupport (4.2.0)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    addressable (2.3.7)
+    builder (3.2.2)
+    highline (1.6.21)
+    i18n (0.7.0)
+    json (1.8.2)
+    middleware (0.1.0)
+    minitest (5.5.1)
+    nenv (0.2.0)
+    nobrainer (0.21.0)
+      activemodel (>= 4.1.0)
+      activesupport (>= 4.1.0)
+      middleware (~> 0.1.0)
+      rethinkdb (>= 1.15.0.0)
+      symbol_decoration (~> 1.1)
+    options (2.3.2)
+    progress_bar (1.0.3)
+      highline (~> 1.6.1)
+      options (~> 2.3.0)
+    rethinkdb (1.16.0.1)
+      json
+    slop (4.0.0)
+    symbol_decoration (1.1.0)
+    thread_safe (0.3.4)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  addressable
+  nenv
+  nobrainer
+  progress_bar
+  rethinkdb
+  slop
