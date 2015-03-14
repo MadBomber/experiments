@@ -1,9 +1,15 @@
+#!/usr/bin/env ruby -wKU
 require 'words'
 
-data = Words::Wordnet.new # or: data = Words::Wordnet.new(:tokyo) for the tokyo backend
+#data = Words::Wordnet.new # or: data = Words::Wordnet.new(:tokyo) for the tokyo backend
 
 # to specify a wordnet path Words::Words.new(:pure, '/path/to/wordnet')
 # to specify the tokyo dataset Words::Words.new(:pure, :search, '/path/to/data.tct')
+
+# Need to yum install wordnet wordnet-*
+data = Words::Wordnet.new(:pure, '/usr/share/wordnet-3.0/dict')
+
+
 
 # play with connections
 data.connected? # => true
