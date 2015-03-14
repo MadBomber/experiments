@@ -87,21 +87,21 @@ cls.save_state
 
 # And finally, classifying stuff:
 
-assert :cat, cls.classify("This test is about cats.")
-assert :cat, cls.classify("I hate ...")
-assert :cat, cls.classify("The most annoying animal on earth.")
-assert :cat, cls.classify("The preferred company of software developers.")
-assert :cat, cls.classify("My precious, my favorite!")
-assert :cat, cls.classify("Get off my keyboard!")
-assert :cat, cls.classify("Kill that bird!")
+assert :cat, cls.classify("This test is about cats.").to_sym
+assert :cat, cls.classify("I hate ...").to_sym
+assert :cat, cls.classify("The most annoying animal on earth.").to_sym
+assert :cat, cls.classify("The preferred company of software developers.").to_sym
+assert :cat, cls.classify("My precious, my favorite!").to_sym
+assert :cat, cls.classify("Get off my keyboard!").to_sym
+assert :cat, cls.classify("Kill that bird!").to_sym
 
-assert :dog, cls.classify("This test is about dogs.")
-assert :dog, cls.classify("Cats or Dogs?")
-assert :dog, cls.classify("What pet will I love more?")
-assert :dog, cls.classify("Willy, where the heck are you?")
-assert :dog, cls.classify("I like big dogs and I cannot lie.")
-assert :dog, cls.classify("Why is the front door of our house open?")
-assert :dog, cls.classify("Who is eating my meat?")
+assert :dog, cls.classify("This test is about dogs.").to_sym
+assert :dog, cls.classify("Cats or Dogs?").to_sym
+assert :dog, cls.classify("What pet will I love more?").to_sym
+assert :dog, cls.classify("Willy, where the heck are you?").to_sym
+assert :dog, cls.classify("I like big dogs and I cannot lie.").to_sym
+assert :dog, cls.classify("Why is the front door of our house open?").to_sym
+assert :dog, cls.classify("Who is eating my meat?").to_sym
 
 
 
