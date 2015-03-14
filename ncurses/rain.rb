@@ -39,8 +39,7 @@
 # ****************************************************************************/
 
 
-require 'rubygems'
-require "ncurses"
+require 'ncurses.rb'
 
 
 # A class responsible for raindrop drawing
@@ -166,7 +165,7 @@ class Rain
       num_ceil
     end
   end
-    
+
   def fall(pause = 0.1)
     begin
       fall_for_a_moment

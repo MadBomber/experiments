@@ -1,0 +1,12 @@
+source 'http://rubygems.org'
+
+# yum install ncurses ncurses-*
+
+# gem 'ncurses' # can not get the extension to compile
+
+gem 'ncurses-ruby' # require 'ncurses.rb'; not all examples work
+
+gem 'ffi-ncurses'
+
+
+

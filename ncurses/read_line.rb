@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 # Emacs: This is -*- ruby -*- code!
-# 
+#
 # Unfinished read_line function
 #
 # Written 2003, 2004 by Tobias Peters
 # No warranties
 # Share and enjoy!
 
-require "ncurses"
+require 'ncurses.rb'
 
 # read_line returns an array
 # [string, last_cursor_position_in_string, keycode_of_terminating_enter_key].
@@ -43,8 +43,8 @@ def read_line(y, x,
     else
       Ncurses.beep
     end
-  end    	
-end    
+  end
+end
 
 if (__FILE__ == $0) then begin
   # demo mode
@@ -54,13 +54,13 @@ if (__FILE__ == $0) then begin
 
   # recognize KEY_ENTER, KEY_BACKSPACE  etc
   Ncurses.keypad(Ncurses.stdscr, true)
-  
+
   y = 10
   x = 2
   prompt = "Hallo > "
   Ncurses.mvaddstr(y,x, prompt)
   s = read_line(y, x + prompt.length)
-  
+
 ensure
   Ncurses.endwin
 end end

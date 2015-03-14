@@ -14,8 +14,7 @@
 
 # First, we have to tell Ruby to use the Ncurses extension module:
 
-require 'rubygems'
-require "ncurses"
+require 'ncurses.rb'
 
 
 
