@@ -15,6 +15,7 @@ require 'nenv'
 require 'slop'
 require 'addressable/uri'
 require "cgi"
+require 'useragent'
 require 'progress_bar'
 
 
@@ -176,6 +177,8 @@ def process_transaction(a_hash)
 
   refer_object = Addressable::URI.parse(a_hash[:refer])
   a_hash[:refer_query]  = CGI::parse(refer_object.query) unless refer_object.query.nil?
+
+# TODO: use UserAgent parser to tease out information from the UA parameter
 
   return a_hash
 end # def process_transaction(a_hash)
