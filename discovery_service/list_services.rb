@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby
 # list_services.rb
 # List all of the services the RingServer knows about
 

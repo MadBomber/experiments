@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby
 # Jukebox Server
 
 require 'drb'
@@ -13,11 +13,11 @@ end
 
 class Jukebox
   attr :songs
-  
+
   def initialize(songs)
     @songs = songs
   end
-  
+
   def play(index)
     puts "playing #{@songs[index]}"
   end

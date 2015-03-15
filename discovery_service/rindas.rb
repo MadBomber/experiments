@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby
 # rindas.rb
 # rindas modified to find the TupleSpace via a RingServer
 

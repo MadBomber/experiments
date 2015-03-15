@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby
 # rinda_ts.rb
 # Registering a TupleSpace with Rinda::Ring
 
