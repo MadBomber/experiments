@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -W0
+#!/usr/bin/env ruby
 ##########################################################
 ###
 ##  File: translation_test.rb
