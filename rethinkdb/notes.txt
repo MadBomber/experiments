@@ -1,0 +1,62 @@
+==> Pouring rethinkdb-1.16.2-1.yosemite.bottle.tar.gz
+==> Caveats
+To have launchd start rethinkdb at login:
+    ln -sfv /usr/local/opt/rethinkdb/*.plist ~/Library/LaunchAgents
+Then to load rethinkdb now:
+    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.rethinkdb.plist
+==> Summary
+🍺  /usr/local/Cellar/rethinkdb/1.16.2-1: 6 files,  35M
+
+
+
+
+HTTPS clone URL
+
+You can clone with HTTPS or SSH.
+
+RethinkDB Setup on OSX
+
+rethinkdb_setup_osx.md
+RethinkDB Setup on OSX
+
+This guide will get RethinkDB setup and running with a default configuration on OSX. There is also an option for setting RethinkDB to start at boot time on OSX, and a note on upgrading to a more recent RethinkDB version.
+First Installation
+
+Install Homebrew if you don't already have it:
+
+ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+
+Install RethinkDB:
+
+brew update
+brew install rethinkdb
+
+Now modify either ~/.bash_aliases or ~/.bashrc to add the following shortcuts to start/stop RethinkDB:
+
+alias rethinkdb.start='launchctl load /usr/local/opt/rethinkdb/homebrew.mxcl.rethinkdb.plist'
+alias rethinkdb.stop='launchctl unload /usr/local/opt/rethinkdb/homebrew.mxcl.rethinkdb.plist'
+
+Run source ~/.bash_aliases or source ~/.bashrc to update the shell environment.
+
+Run rethinkdb.start and then visit http://localhost:8080/
+Python Development Tools
+
+Install the python driver to access RethinkDB:
+
+sudo pip install rethinkdb
+
+Starting RethinkDB with OSX
+
+If you'd prefer RethinkDB to be always available, run this command:
+
+ln -sfv /usr/local/opt/rethinkdb/*.plist ~/Library/LaunchAgents
+
+Upgrading RethinkDB
+
+brew update
+brew upgrade rethinkdb
+sudo pip install -U rethinkdb
+
+
+==================================
+

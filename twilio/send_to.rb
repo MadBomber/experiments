@@ -500,20 +500,20 @@ end # def send_mms_message_to (phone_number)
 
 list_applications if list?
 
-if update_app?
-  app = get_app('TUR Demo')
-  unless app.nil?
-    update_app(app.sid)
-    send_sms_message_to('8179051687', "Daily devotional message has been updated for #{Date.today}")
-  end
-end
-
 unless $options[:send_time].nil?
   puts Time.now
   puts $options[:send_time]
   while Time.now.before? $options[:send_time]
     sleep 1
     puts Time.now
+  end
+end
+
+if update_app?
+  app = get_app('TUR Demo')
+  unless app.nil?
+    update_app(app.sid)
+    send_sms_message_to('8179051687', "Daily devotional message has been updated for #{Date.today}")
   end
 end
 
