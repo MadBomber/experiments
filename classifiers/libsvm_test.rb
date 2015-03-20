@@ -25,6 +25,14 @@ require 'libsvm'
 documents = [[1, "Why did the chicken cross the road? Because a car was coming"],
              [0, "You're an elevator tech? I bet that job has its ups and downs"]]
 
+puts "Joke Training set:"
+documents.each do |d|
+  print 1==d.first ? 'Funny: ' : 'Not Funny: '
+  puts d.last
+end
+
+puts 'Training ...'
+
 # Lets create a dictionary of unique words and then we can
 # create our vectors.  This is a very simple example.  If you
 # were doing this in a production system you'd do things like
@@ -58,12 +66,22 @@ model = Libsvm::Model.train(problem, parameter)
 # Now lets test our classifier using the test set
 #
 test_set      = [1, "Why did the chicken cross the road? To get the worm"]
+
+puts "Testing ..."
+puts test_set.last
+
+
+
 test_document = test_set.last.split.map{ |x| x.gsub(/\?|,|\.|\-/,'') }
 
 doc_features  = dictionary.map{|x| test_document.include?(x) ? 1 : 0 }
 pred          = model.predict(Libsvm::Node.features(doc_features))
 
 puts "Predicted #{pred==1 ? 'funny' : 'not funny'}"
+
+puts
+puts
+
 
 ################################################################
 ## try the sport example with SVM
@@ -95,10 +113,10 @@ EOF
 
 
 documents   = Array.new
-documents   << [10.0, basketball.downcase]
-documents   << [20.0, baseball.downcase]
-documents   << [30.0, racquetball.downcase]
-documents   << [40.0, football.downcase]
+documents   << [1, basketball.downcase]
+documents   << [2, baseball.downcase]
+documents   << [3, racquetball.downcase]
+documents   << [4, football.downcase]
 
 
 # Lets create a dictionary of unique words and then we can
@@ -131,15 +149,6 @@ parameter.c           = 10
 problem.set_examples(training_set.map(&:first), training_set.map(&:last))
 model = Libsvm::Model.train(problem, parameter)
 
-# Now lets test our classifier using the test set
-#
-test_set      = [1, "Why did the chicken cross the road? To get the worm"]
-test_document = test_set.last.split.map{ |x| x.gsub(/\?|,|\.|\-/,'').downcase }
-
-doc_features  = dictionary.map{|x| test_document.include?(x) ? 1 : 0 }
-pred          = model.predict(Libsvm::Node.features(doc_features))
-
-puts "Predicted #{pred==1 ? 'funny' : 'not funny'}"
 
 ####################################################################################
 ##
@@ -151,10 +160,12 @@ puts "Predicted #{pred==1 ? 'funny' : 'not funny'}"
 
 
 test_set  = Array.new
-test_set  << [10.0, 'the shot did not count because he was traveling'] #=> 'basketball'
-test_set  << [20.0, 'I want to play Major League Baseball some day']   #=>  'baseball'
-test_set  << [30.0, 'Hitting a ball made of rubber']                   #=>  'racquetball'
-test_set  << [40.0, 'The winning team is kicking butt. They always make the ball go in the hoop every time'] #=> 'basketball'
+test_set  << [1, 'the shot did not count because he was traveling']
+test_set  << [2, 'I want to play Major League Baseball some day']
+test_set  << [3, 'Hitting a ball made of rubber']
+test_set  << [4, 'The winning team is kicking butt. They always make the ball go in the hoop every time']
+
+expected_labels = %w[ xyzzy basketball baseball racquetball basketball ]
 
 
 test_set.each do |ts|
@@ -164,8 +175,8 @@ test_set.each do |ts|
   doc_features  = dictionary.map{|x| test_document.include?(x) ? 1 : 0 }
   pred          = model.predict(Libsvm::Node.features(doc_features))
 
-  puts "Predicted  #{pred} ... #{pred == ts.first ? 'funny' : 'not funny'}"
+  puts "Predicted  #{expected_labels[pred]} ... #{pred == ts.first ? 'correct' : 'not correct'}"
 
 end
 
-ap dictionary
+#ap dictionary

@@ -5,6 +5,9 @@
 ##  Desc: simple classifier
 #
 
+require 'assertions'
+include Assertions
+
 require 'awesome_print'
 require 'date'
 
@@ -37,8 +40,8 @@ EOF
 
 sport.train('football', 'field goal')
 
-sport.classify('the shot did not count because he was traveling') #=> 'basketball'
-sport.classify('I want to play Major League Baseball some day')   #=>  'baseball'
-sport.classify('Hitting a ball made of rubber')                   #=>  'racquetball'
-sport.classify('The winning team is kicking butt. They always make the ball go in the hoop every time') #=> 'basketball'
+assert_equal 'basketball',  sport.classify('the shot did not count because he was traveling')
+assert_equal 'baseball',    sport.classify('I want to play Major League Baseball some day')
+assert_equal 'racquetball', sport.classify('Hitting a ball made of rubber')
+assert_equal 'basketball',  sport.classify('The winning team is kicking butt. They always make the ball go in the hoop every time')
 

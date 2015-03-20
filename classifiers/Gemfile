@@ -1,10 +1,12 @@
 source 'https://rubygems.org'
 
+gem 'minitest'
 
 gem 'nbayes'
 gem 'bayesball'       # this is nice
 
 # bayes and LSI
+gem 'rb-gsl'          # required for LSI in the reclassifier
 gem 'reclassifier'
 gem 'madeleine'       # object persistence; has not worked
 
@@ -17,6 +19,9 @@ gem 'summary'
 #gem 'libsvm_preprocessor'
 #gem "svm_helper"
 #gem "svmlab"
+
+
+# yum install libsvm libsvm-*
 
 gem "rb-libsvm"
 

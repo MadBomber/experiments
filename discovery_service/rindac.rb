@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby
 # rindac.rb
 # rindac.rb modified to find the TupleSpace via a RingServer
 

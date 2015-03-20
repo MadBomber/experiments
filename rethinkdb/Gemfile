@@ -4,6 +4,7 @@ gem 'slop'
 gem 'nenv'
 gem 'progress_bar'
 gem 'addressable'
+gem 'useragent'
 
 gem 'rethinkdb'
 gem 'nobrainer'

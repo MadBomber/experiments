@@ -9,8 +9,7 @@
 #
 # No warranties. Share and enjoy.
 
-require 'rubygems'
-require "ncurses"
+require "ncurses.rb"
 
 begin
   Ncurses.initscr

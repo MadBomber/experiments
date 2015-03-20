@@ -30,9 +30,7 @@
 # clearly marked as such.                                                 #
 ###########################################################################
 
-require 'rubygems'
 require "ncurses"
-
 PI = Math::PI
 
 def sign(_x)
@@ -50,7 +48,7 @@ end
 
 # Plot a point
 def plot(x, y, c)
-  Ncurses.mvaddch(y, x, c[0])
+  Ncurses.mvaddch(y, x, c[0].ord)
 end
 
 # Draw a diagonal(arbitrary) line using Bresenham's alogrithm.

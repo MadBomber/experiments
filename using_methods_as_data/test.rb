@@ -13,14 +13,22 @@ end
 
 class Radar
 
-  def self.three data
-    puts "from three -=> #{data}"
-  end
-  
+
   def four data
     puts "from four -=> #{data}"
   end
-  
+
+  def five data
+    puts "from five -=> #{data}"
+    self.class.three(data)
+  end
+
+  class << self
+    def three data
+      puts "from three -=> #{data}"
+    end
+  end
+
 end
 
 
@@ -35,20 +43,26 @@ ah[3] = Radar.method(:three)
  ah[1].call("a one")
 
  ah[2].call("and a two")
- 
- ah[3].call("and a three")
- 
- 
- my_radar = Radar.new
- 
- ah[4] = my_radar.method(:four)
- 
- ah[4].call("and a four")
- 
- 
- ah[5] = my_radar.method(:three)
- 
- ah[5].call("back to three")
 
-  
-  
+ ah[3].call("and a three")
+
+
+ my_radar = Radar.new
+
+ ah[4] = my_radar.method(:four)
+
+ ah[4].call("and a four")
+
+
+ ah[5] = my_radar.method(:five)
+
+ ah[5].call("getting to three through five")
+
+puts "watch that again ..."
+
+x = 0
+ah.each_key do |k|
+  x+=1
+  ah[k].call(x)
+end
+
