@@ -73,10 +73,14 @@ def process_transaction(a_hash)
   refer_object          = Addressable::URI.parse(a_hash[:refer])
   a_hash[:refer_query]  = CGI::parse(refer_object.query) unless refer_object.query.nil?
 
-  # FIXME: Waiting for UserAgent PR for #to_h method
-  #ua_object           = UserAgent.parse(a_hash[:ua])
-  #a_hash[:user_agent] = ua_object.to_h
+  ua_object           = UserAgent.parse(a_hash[:ua])
 
+  # FIXME: #to_h is crashing
+  begin
+    a_hash[:user_agent] = ua_object.to_h
+  rescue Exception => e
+    a_hash[:user_agent] = 'badly formed'
+  end
   return a_hash
 end # def process_transaction(a_hash)
 

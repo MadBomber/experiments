@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'slop'
-gem 'nenv'
+gem 'cli_helper'
 gem 'progress_bar'
 gem 'addressable'
 gem 'useragent'
 
 gem 'rethinkdb'
+gem 'rethinkdb_helper'
 gem 'nobrainer'
 
 
