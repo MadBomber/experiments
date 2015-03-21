@@ -50,7 +50,7 @@ unless $options[:file].exist?
 end
 
 begin
-  db = ReDBH.new( $options.merge({create_if_missing: true}) )
+  db = RDB.new( $options.merge({create_if_missing: true}) )
 rescue Exception => e
   error e
 end
