@@ -29,7 +29,7 @@ EOHELP
 cli_helper("\nLoad a localhost rethinkDB from a transaction file") do |o|
 
   o.int           '--skip',  'skip some transactions',  default: 0
-  o.int     '-l', '--limit', 'Number of transactions to load', default: 100
+  o.int     '-l', '--limit', 'Number of transactions to load', default: 0
   o.bool          '--drop',  'drop the database'
   o.string        '--db',    'database name',  default: 'simplifi_development'
   o.string  '-t', '--table', 'table  in which data is stored',  default: 'transactions'
@@ -61,11 +61,19 @@ abort_if_errors
 ######################################################
 # Local methods
 
+# Becayse someone doesn't like negative integers
+def create_userid_from(*args)
+  user_id = ''
+  args.each{|a| user_id << a.to_s}
+  user_id = user_id.hash.to_s(36).gsub('-','x')
+  user_id<<'x' if user_id.size < 13 # MAGIC: 13 is a lucky number
+  return user_id
+end
+
 # SMELL: IPv6 ?
 # SMELL: user_id funciton sucks
 def process_transaction(a_hash)
-  user_id = (a_hash[:ip] + a_hash[:ua]).hash
-  a_hash[:user_id]      = user_id
+  a_hash[:user_id]    = create_userid_from a_hash[:ip], a_hash[:ua]
 
   url_object          = Addressable::URI.parse(a_hash[:url])
   a_hash[:url_query]  = CGI::parse(url_object.query) unless url_object.query.nil?
@@ -73,11 +81,9 @@ def process_transaction(a_hash)
   refer_object          = Addressable::URI.parse(a_hash[:refer])
   a_hash[:refer_query]  = CGI::parse(refer_object.query) unless refer_object.query.nil?
 
-  ua_object           = UserAgent.parse(a_hash[:ua])
-
-  # FIXME: #to_h is crashing
+  # Sometimes UserAgent#to_h crashes on wierd Opera user agent strings
   begin
-    a_hash[:user_agent] = ua_object.to_h
+    a_hash[:user_agent] = UserAgent.parse(a_hash[:ua]).to_h
   rescue Exception => e
     a_hash[:user_agent] = 'badly formed'
   end
