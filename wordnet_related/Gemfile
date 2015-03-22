@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'cli_helper'
+
 # direct access to the wordnet API and FFI
 # also supports a Tokyo Cabinet implementation
 #yum install wordnet
