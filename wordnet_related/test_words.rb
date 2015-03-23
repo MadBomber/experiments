@@ -30,7 +30,8 @@ require 'words'
 
 # Need to yum install wordnet wordnet-*
 # you can use :pure or :tokyo cabinet-based data stores
-data = Words::Wordnet.new(:pure, '/usr/share/wordnet-3.0/dict')
+
+data = Words::Wordnet.new(:pure, ENV['WORDNET_DB_PATH'])
 
 
 # play with connections
