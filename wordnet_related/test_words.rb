@@ -8,6 +8,7 @@ take_it_for_a_spin
 
 
 require 'cli_helper'
+include CliHelper
 
 HELP = <<EOS
 
@@ -110,18 +111,18 @@ synset_mq = %w[
   domain_of_synset_usages?       member_meronyms?     pertainyms?
 ]
 
-unless $options[:keyword].nil?
-  keyword = data.find $options[:keyword]
+unless configatron.keyword.nil?
+  keyword = data.find configatron.keyword
   if keyword.nil?
-    puts "\nCan not find an entry for keyword: '#{$options[:keyword]}'"
+    puts "\nCan not find an entry for keyword: '#{configatron.keyword}'"
     puts "It is either mis-spelled or not in the word-net database."
   else
-    keywords = [ $options[:keyword] ]
+    keywords = [ configatron.keyword ]
     keywords << keyword.nouns.map{|n| n.words} if keyword.nouns?
     keywords << keyword.verbs.map{|v| v.words} if keyword.verbs?
     keywords = keywords.flatten.uniq.sort
     puts
-    puts "The keyword '#{$options[:keyword]}' has the following additional terms:"
+    puts "The keyword '#{configatron.keyword}' has the following additional terms:"
     puts keywords.join(', ')
     puts
     puts 'Here are some other things to consider'
