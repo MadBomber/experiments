@@ -7,7 +7,11 @@
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
+require 'awesome_print'
+
 require 'cli_helper'
+include CliHelper
+
 require 'rethinkdb_helper'
 
 #require 'nobrainer'
@@ -30,11 +34,11 @@ thing = cli_helper("\nSearch for keywords in a localhost rethinkDB") do |o|
 
 end
 
-if $options[:arguments].empty?  &&  $options[:user].nil?
+if configatron.arguments.empty?  &&  configatron.user.nil?
   error 'No search terms were specified.  See --help'
 else
   begin
-    $db = RDB.new($options)
+    $db = RDB.new(configatron.to_h)
   rescue Exception => e
     error e
   end
@@ -58,7 +62,7 @@ end
 def search_for_keywords
   total_found = 0
   # TODO: handle more than one keyword
-  keyword = $options[:arguments].first
+  keyword = configatron.arguments.first
 
   if insensitive?
     keyword = "(?i)#{keyword}"
@@ -104,7 +108,7 @@ def search_for_user(user_id)
   cursor  = $db.search( user_id: user_id )
 
   puts
-  puts "The following transactions were made by user ID #{$options[:user]}"
+  puts "The following transactions were made by user ID #{configatron.user}"
   puts
 
   cursor.each do |c|
@@ -129,13 +133,13 @@ at_exit do
   puts
 end
 
-ap $options  if verbose? || debug?
+ap configatron.to_h  if verbose? || debug?
 
 
-if $options[:user].nil?
+if configatron.user.nil?
   search_for_keywords
 else
-  search_for_user $options[:user]
+  search_for_user configatron.user
 end
 
 puts "Users with more than 3 transactions:"
