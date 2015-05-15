@@ -1,0 +1,114 @@
+notes.txt
+
+__URCMS_xxx__
+
+Request Prayer 8002512468
+
+To order books, magazines and for all other customer service needs, call
+8009720433
+
+donations: 6153407212  (which is Beth Wakefield’s extension) 877-899-2780 ext 7212
+
+The Upper Room relies on income from resource sales, participants fees, and the generous support of donors to cover all expenses and to be in ministry around the world.  The Upper Room receives no appointed funds from the United Methodist Church or any other denomination. Your gift matters.
+
+
+======================================================================
+Here are the rought ideas I have for the MP3 files to use in the phone menu system.  I do not have a mic on my mac or I would have recorded these myself.  By that I mean that I do not care how "perfect" the recordings are.  I am sure that as we get closer to a public roll out of the audio publication that we will need the perfect versions.  But for now, if you have the time please just think of this first round as throw away development recordings.
+
+The first MP3 file is instructions for the main menu.  Lets call the file "main_menu.mp3"
+
+  Main menu <pause>
+  To be connected to the Upper Room's living prayer center press 1.
+  To purchase subscriptions to Upper Room periodicals press 2.
+  To make a donation to the Upper Room ministries press 3.
+  To hear a daily devotional from our archives press 4.
+  To hear today's daily devotional press 5.
+  To repeat this menu press star.
+
+The next MP3 is instructions for accessing a previous devotional from our archive.  Lets call this file "archive_menu.mp3"
+
+  Please enter the date of the daily meditation using 4 digits for the year, 2 digits for the month and 2 digits for the day.  For example June third 2014 would be entered as 2 0 1 4 0 6 0 3.  Press star to hear that day's Upper Room devotational.
+
+The next MP3 is a thank you message.  Lets call this file "thank_you.mp3"
+
+  Your contributions to The Upper Room Ministries help make this and other resources available.  Thank you for your support.
+
+
+
+======================================================================
+
+# Redirect to Living Prayer Center
+# unencoded
+http://twimlets.com/forward?PhoneNumber=8002512468&CallerId=8179051687&Timeout=10&FailUrl=http://twimlets.com/message?Message[0]=I am sorry, No one is available to take your call.&
+
+
+# Redirect to Subscriptions
+# unencoded
+http://twimlets.com/forward?PhoneNumber=8009720433&CallerId=8179051687&Timeout=10&FailUrl=http://twimlets.com/message?Message[0]=I am sorry, No one is available to take your call.&
+
+
+# Redirect to Donations
+# unencoded
+http://twimlets.com/forward?PhoneNumber=6153407212&CallerId=8179051687&Timeout=10&FailUrl=http://twimlets.com/message?Message[0]=I am sorry, No one is available to take your call.&
+
+-----------------
+
+<Response>
+  <Say voice="woman" language="en">
+    Access to the Upper Rooms archive of audio devotional meditations is only available to registered audio subscribers.
+  </Say>
+</Response>
+
+http://twimlets.com/echo?Twiml=<Response><Say voice="woman" language="en">Access to the Upper Rooms archive of audio devotional meditations is only available to registered audio subscribers.</Say></Response>&
+
+
+
+<Response>
+  <Say voice="woman" language="en">
+    This option is not available
+  </Say>
+</Response>
+
+# unencoded
+http://twimlets.com/echo?Twiml=<Response><Say voice="woman" language="en">This option is not available</Say></Response>&
+
+
+----
+The Real Menu
+
+http://twimlets.com/menu?Message=https%3A%2F%2Fs3.amazonaws.com%2Fvoice.devotional.upperroom.org%2Fen%2Fmain_menu.mp3&Options%5B1%5D=http%3A%2F%2Ftwimlets.com%2Fforward%3FPhoneNumber%3D8002512468%26CallerId%3D8179051687%26Timeout%3D10%26FailUrl%3Dhttp%253A%252F%252Ftwimlets.com%252Fmessage%253FMessage%25255B0%25255D%253DI%252520am%252520sorry%25252C%252520No%252520one%252520is%252520available%252520to%252520take%252520your%252520call.%2526%26&Options%5B2%5D=http%3A%2F%2Ftwimlets.com%2Fforward%3FPhoneNumber%3D8009720433%26CallerId%3D8179051687%26Timeout%3D10%26FailUrl%3Dhttp%253A%252F%252Ftwimlets.com%252Fmessage%253FMessage%25255B0%25255D%253DI%252520am%252520sorry%25252C%252520No%252520one%252520is%252520available%252520to%252520take%252520your%252520call.%2526%26&Options%5B3%5D=http%3A%2F%2Ftwimlets.com%2Fforward%3FPhoneNumber%3D6153407212%26CallerId%3D8179051687%26Timeout%3D10%26FailUrl%3Dhttp%253A%252F%252Ftwimlets.com%252Fmessage%253FMessage%25255B0%25255D%253DI%252520am%252520sorry%25252C%252520No%252520one%252520is%252520available%252520to%252520take%252520your%252520call.%2526%26&Options%5B4%5D=http%3A%2F%2Ftwimlets.com%2Fecho%3FTwiml%3D%253CResponse%253E%250A%253CSay%2520voice%253D%2522woman%2522%2520language%253D%2522en%2522%253EAccess%2520to%2520the%2520Upper%2520Rooms%2520archive%2520of%2520audio%2520devotional%2520meditations%2520is%2520only%2520available%2520to%2520registered%2520audio%2520subscribers.%253C%252FSay%253E%250A%253C%252FResponse%253E%26&Options%5B5%5D=http%3A%2F%2Ftwimlets.com%2Fecho%3FTwiml%3D%253CResponse%253E%250A%253CSay%2520voice%253D%2522woman%2522%2520language%253D%2522en%2522%253EThis%2520option%2520is%2520not%2520available%253C%252FSay%253E%250A%253C%252FResponse%253E%26&
+
+
+
+
+
+=====================
+
+# Play devotional + thank you message
+http://twimlets.com/message?Message%5B0%5D=https%3A%2F%2Fs3.amazonaws.com%2Fvoice.devotional.upperroom.org%2Fen%2F20150109_en.mp3&Message%5B1%5D=Your%20contributions%20to%20The%20Upper%20Room%20help%20make%20this%20resource%20available.%20%20Thank%20you%20for%20your%20support.&
+
+=======================
+
+# Menu to connect to team member's
+# unencoded
+
+http://twimlets.com/menu?Message=Press 1 for Dewayne, 2 for Gary, 3 for Doug or Press 4 to speak to our Spanish office.&Options[1]=http://twimlets.com/forward?PhoneNumber=8179051687&CallerId=8179051687&Timeout=10&FailUrl=http://twimlets.com/message?Message[0]=I am sorry, No one is available to take your call.;&Options[2]=http://twimlets.com/forward?PhoneNumber=6152688522&CallerId=8179051687&Timeout=10&FailUrl=http://twimlets.com/message?Message[0]=I am sorry, No one is available to take your call.;&Options[3]=http://twimlets.com/forward?PhoneNumber=6155573824&CallerId=8179051687&Timeout=10&FailUrl=http://twimlets.com/message?Message[0]=I am sorry, No one is available to take your call.;&Options[4]=http://twimlets.com/forward?PhoneNumber=6158285975&CallerId=8179051687&Timeout=10&FailUrl=http://twimlets.com/message?Message[0]=I am sorry, No one is available to take your call.;&
+
+
+
+===========================
+
+<Response>
+  <Gather timeout="10" finishOnKey="*">
+    <Say>Please enter your pin number and then press star.</Say>
+  </Gather>
+</Response>
+
+<Response>
+  <Gather timeout="10" finishOnKey="*">
+    <Say>Please enter the date of the daily meditation using 4 digits for the year, 2 digits for the month and 2 digits for the day.  For example June third 2014 would be entered at 2 0 1 4 0 6 0 3.  Press star to hear that day's Upper Room devotational.</Say>
+  </Gather>
+</Response>
+
+
+

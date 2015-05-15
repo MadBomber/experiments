@@ -1,0 +1,43 @@
+
+Create a file in the standard icanlendar (ics) format for import/export
+
+Usage: create_ics_file.rb [options]
+
+Where:
+
+  options               Do This
+    -h or --help        Display this message
+    -v or --verbose     Display progress
+
+    -u --ure or --english   Selects the URE publication
+                              This is the default publication.
+
+    -e --eaa or --spanish  Selects the EAA publication
+
+    -o or --output      Specifies the path to the output
+        out_filename      file.  The extname must be 'ics'
+                          Defaults to STDOUT
+
+    --start yyyymmdd    Specifies the start and end dates
+    --end yyyymmdd        expressed in a common format.
+                          Defaults to current issue.
+
+    --volume v          Specifies the volume and issue of
+    --issue  i            the publication.
+                          Defaults to current issue.
+
+    --pubid id          Specifies the publication, volume and issue
+                          in the standard PUB_VOL_ISSUE format.
+                          Defaults to current issue.
+
+NOTE:
+
+  The options provide various ways of entering the same information.
+
+  If no specific issue or date range is given, the default is the
+  current issue.
+
+  Date ranges can be given that span multiple issues.
+
+
+
