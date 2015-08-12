@@ -11,7 +11,7 @@ $db_list = r.db_list.run
 
 table_list = r.table_list.run
 
-r.create_table('meditations').run unless table_list.include?('meditations')
+r.table_create('meditations').run unless table_list.include?('meditations')
 
 M = r.table('meditations')
 
