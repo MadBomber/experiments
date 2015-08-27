@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+def brew(a_string)
+  `brew install #{a_string}`
+end
+
 gem 'minitest'
 
 gem 'nbayes'
@@ -10,21 +14,27 @@ gem 'rb-gsl'          # required for LSI in the reclassifier
 gem 'reclassifier'
 gem 'madeleine'       # object persistence; has not worked
 
+gem 'classifier-reborn'
+brew 'gsl'
+gem 'gsl'
 
 gem 'stuff-classifier'  # bayes and tf-idf weights
 
 gem 'summary'
 
 # Support Vector Machines
-#gem 'libsvm_preprocessor'
 #gem "svm_helper"
 #gem "svmlab"
+#gem 'libsvm-ruby-swig'
+#gem 'libsvm_preprocessor'
+#gem 'libsvmffi'
+#gem 'rb-libsvm'
 
+brew 'libsvm'
 
 # yum install libsvm libsvm-*
 
 gem "rb-libsvm"
-
 gem 'libsvmffi'
 
 
