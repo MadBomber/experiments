@@ -1,4 +1,4 @@
-#!/bin/env ruby
+#!/usr/bin/env ruby
 ######################################################################
 ###
 ##  File: train_svm_classifier.rb
@@ -120,7 +120,7 @@ end # class String
 # already classified files and at the top level, files which
 # not yet been classified.
 
-cwd               = Pathname.pwd
+cwd               = Pathname.pwd + 'training_data'
 scn_metadata_path = cwd + scn_metadata
 scn_model_path    = cwd + scn_model
 
@@ -219,6 +219,9 @@ puts
 puts "=" * 45
 
 files_without_category.each do |f|
+
+  # TODO: skip the classifier's metadata and model files
+  
 
   GC::start
 

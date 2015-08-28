@@ -1,4 +1,4 @@
-#!/bin/env ruby
+#!/usr/bin/env ruby
 ######################################################################
 ###
 ##  File: train_bayes_classifier.rb
