@@ -8,6 +8,8 @@ gem 'minitest'
 
 gem 'nbayes'
 gem 'bayesball'       # this is nice
+gem 'omnicat-bayes'
+
 
 # bayes and LSI
 gem 'rb-gsl'          # required for LSI in the reclassifier
@@ -29,6 +31,9 @@ gem 'summary'
 #gem 'libsvm_preprocessor'
 #gem 'libsvmffi'
 #gem 'rb-libsvm'
+
+#gem 'omnicat-svm' 	# out of sync with omnicat-bayes
+                    # wants an older version of omnicat
 
 brew 'libsvm'
 
