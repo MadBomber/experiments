@@ -7,38 +7,55 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    awesome_print (1.6.1)
     bayesball (0.3.0)
     classifier-reborn (2.0.3)
       fast-stemmer (~> 1.0)
+    debug_me (1.0.2)
     fast-stemmer (1.0.2)
+    forkoff (1.2.0)
+    gnuplot (2.6.2)
     gsl (1.16.0.6)
     hashable (0.1.2)
+    hoatzin (0.2.1)
+      fast-stemmer
+      libsvm-ruby-swig
     i18n (0.7.0)
     json (1.8.3)
+    kick_the_tires (0.0.2)
+      awesome_print
+    libsvm-ruby-swig (0.4.0)
+    libsvm_preprocessor (0.2)
+      ruby-stemmer (~> 0.9.3)
+      stopwords-filter (~> 0.2.1)
     libsvmffi (0.0.2)
     madeleine (0.9.0)
     minitest (5.8.0)
     msgpack (0.6.2)
     nbayes (0.1.1)
-    omnicat (0.2.2)
-      hashable (~> 0.1.0)
-    omnicat-bayes (0.2.2)
-      hashable (~> 0.1.1)
-      omnicat (~> 0.2.2)
-    rb-gsl (1.16.0.6)
-      gsl
+    omnicat (0.3.0)
+      hashable (~> 0.1, >= 0.1.2)
+    omnicat-bayes (0.3.0)
+      omnicat (~> 0.3.0)
     rb-libsvm (1.3.1)
     reclassifier (0.4.11)
       activesupport
       fast-stemmer
+    ruby-stemmer (0.9.6)
     sequel (4.25.0)
     sqlite3 (1.3.10)
+    stopwords-filter (0.2.1)
     stuff-classifier (0.5)
       fast-stemmer (>= 1.0)
       msgpack
       sequel
       sqlite3
     summary (0.7.3)
+    svm_helper (0.2.1)
+      ruby-stemmer
+    svmlab (1.0.0)
+      forkoff
+      gnuplot
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -47,19 +64,26 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print
   bayesball
   classifier-reborn
+  debug_me
   gsl
+  hoatzin
+  kick_the_tires
+  libsvm-ruby-swig
+  libsvm_preprocessor
   libsvmffi
   madeleine
   minitest
   nbayes
   omnicat-bayes
-  rb-gsl
   rb-libsvm
   reclassifier
   stuff-classifier
   summary
+  svm_helper
+  svmlab
 
 BUNDLED WITH
    1.10.6
