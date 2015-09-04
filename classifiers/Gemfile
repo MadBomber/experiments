@@ -1,10 +1,65 @@
 source 'https://rubygems.org'
 
-def brew(a_string)
-  `brew install #{a_string}`
+if defined? $TDV_PASS
+  $TDV_PASS += 1
+else
+  $TDV_PASS = 1
 end
 
+def fedora?() 'Fedora'==ENV['_system_name'];end
+def mac?()    'OSX'   ==ENV['_system_name'];end
+
+if fedora?
+  $lib_install_command = 'sudo yum -y install $@ 2>&1'
+  $lib_check_command   = 'yum list installed  $@ 2>&1'
+elsif mac?
+  $lib_install_command = 'brew install $@ 2>&1'
+  $lib_check_command   = 'brew ls --versions $@ 2>&1'
+else
+  puts "UNKNOWN SYSTEM NAME: #{ENV['_system_name']}"
+  $lib_install_command = 'echo ERROR processing $@ 2>&1'
+  $lib_check_command   = 'echo ERROR processing $@ 2>&1'
+end
+
+def system_package(a_string)
+  case $TDV_PASS
+  when 1
+    unless defined?($TDV_SYSLIB_ARRAY)
+      $TDV_SYSLIB_ARRAY = Array.new
+    end
+    unless $TDV_SYSLIB_ARRAY.include? a_string
+      result = `#{$lib_check_command.gsub('$@',a_string)}`
+      $TDV_SYSLIB_ARRAY << a_string unless result.include?(a_string)
+    end
+  when 2
+    if $TDV_SYSLIB_ARRAY.include? a_string
+      puts "Installing system lib/pgm dependency: #{a_string}"
+      result = `#{$lib_install_command.gsub('$@',a_string)}`
+      puts result
+      $TDV_SYSLIB_ARRAY.delete a_string
+    else
+      puts "Using system lib/pgm dependency #{a_string}"
+    end
+  else
+    puts "============= ERROR: what? pass number is #{$TDV_PASS}"
+  end
+end # def system_package(a_string)
+
+system_package 'catdoc'   if fedora? || mac?
+system_package 'html2txt' if fedora? || mac?
+system_package 'pdf2txt'  if fedora? || mac?
+
+# Utilities
+
+gem 'debug_me'
+gem 'kick_the_tires'
+gem 'awesome_print'
 gem 'minitest'
+
+# web-based API
+gem 'uclassify'
+
+# bayesian classifiers
 
 gem 'nbayes'
 gem 'bayesball'       # this is nice
@@ -12,35 +67,35 @@ gem 'omnicat-bayes'
 
 
 # bayes and LSI
-gem 'rb-gsl'          # required for LSI in the reclassifier
+#gem 'rb-gsl'          # required for LSI in the reclassifier
 gem 'reclassifier'
 gem 'madeleine'       # object persistence; has not worked
 
 gem 'classifier-reborn'
-brew 'gsl'
-gem 'gsl'
+
+system_package 'gsl'  if fedora? || mac?
+gem 'gsl'  # might load its own gsl library
 
 gem 'stuff-classifier'  # bayes and tf-idf weights
 
-gem 'summary'
+gem 'summary'  # not any good.
 
 # Support Vector Machines
-#gem "svm_helper"
-#gem "svmlab"
-#gem 'libsvm-ruby-swig'
-#gem 'libsvm_preprocessor'
-#gem 'libsvmffi'
-#gem 'rb-libsvm'
+gem "svm_helper"
+gem "svmlab"
+gem 'libsvm-ruby-swig'
+gem 'libsvm_preprocessor'
+gem 'libsvmffi'
+gem 'rb-libsvm'
+gem 'hoatzin'
 
 #gem 'omnicat-svm' 	# out of sync with omnicat-bayes
                     # wants an older version of omnicat
 
-brew 'libsvm'
-
-# yum install libsvm libsvm-*
-
-gem "rb-libsvm"
-gem 'libsvmffi'
+system_package 'libsvm'  if fedora? || mac?
 
 
+# Clustering
+
+gem 'kmeans-clusterer'
 
