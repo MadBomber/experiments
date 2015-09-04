@@ -17,7 +17,7 @@ class String
   alias :tdv_summary :summary
 end
 
-require 'classifier'  # GEM that implements both a bayes and an LSI classifier
+require 'classifier-reborn'  # GEM that implements both a bayes and an LSI classifier
 
 # my fork reclassifier is a fork of a fork of classifier.
 # The original classifier has been updated more recently than
@@ -123,7 +123,7 @@ puts "Train a classifier (#{category_hash.keys}) for this directory: #{cwd}"
 files_without_category = cwd.children.select {|c| c if c.file? }
 
 
-classifier = Classifier::Bayes.new(category_hash.keys)
+classifier = ClassifierReborn::Bayes.new(category_hash.keys)
 
 
 
@@ -131,7 +131,7 @@ category_hash.each_pair do | category, dir |
 
   debug_me{[ :category, :dir ]}
 
-  classifier.train category, category.remove_stuff
+  classifier.train(category, category.remove_stuff)
 
   puts "Training #{category} ..."
   dir.children.sort.each do |f|
@@ -169,7 +169,10 @@ end
 
 
 files_without_category.each do |f|
-  puts "File: #{f}"
+
+  next if f.extname == '.model'  ||  f.extname == '.metadata'
+
+  puts "File: #{f.basename}"
   ext       = f.extname.downcase
   summary   = f.basename.to_s.downcase.remove_stuff(ext) + " "
 
@@ -197,13 +200,13 @@ files_without_category.each do |f|
   puts
   puts "Category: #{score}   #{category}"
   puts
-  puts "  Others: #{category_weights_hash.pretty_inspect}"
+  puts "  Others: \n#{category_weights_hash.pretty_inspect}"
   puts
 
   if score > -10.0
     print "Do you want to move the file? (no) "
     answer = gets.strip.downcase
-    if !answer.empty? and 'y' == answer[0]
+    if !answer.empty? && 'y' == answer[0]
       system "mv -i '#{f}' '#{category_hash[category.downcase]}'"
     end
   end

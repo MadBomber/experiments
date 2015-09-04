@@ -220,9 +220,9 @@ puts "=" * 45
 
 files_without_category.each do |f|
 
-  # TODO: skip the classifier's metadata and model files
+  next if f.extname.to_s == '.metadata'
+  next if f.extname.to_s == '.model'
   
-
   GC::start
 
   puts
