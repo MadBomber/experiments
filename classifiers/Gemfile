@@ -55,6 +55,7 @@ gem 'debug_me'
 gem 'kick_the_tires'
 gem 'awesome_print'
 gem 'minitest'
+gem 'cli_helper'
 
 # web-based API
 gem 'uclassify'
