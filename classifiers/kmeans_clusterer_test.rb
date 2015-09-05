@@ -1,27 +1,86 @@
 #!/usr/bin/env ruby
 
+require 'debug_me'
+include DebugMe
+
+require 'pathname'
+
 require 'kmeans-clusterer'
+require 'bag_of_words'
+require 'optparse'
 
-data = [[40.71,-74.01],[34.05,-118.24],[39.29,-76.61],
-        [45.52,-122.68],[38.9,-77.04],[36.11,-115.17]]
 
-labels = ['New York', 'Los Angeles', 'Baltimore',
-          'Portland', 'Washington DC', 'Las Vegas']
+cwd = Pathname.pwd
+training_data = cwd + 'training_data'
 
-k = 2 # find 2 clusters in data
 
-kmeans = KMeansClusterer.run k, data, labels: labels, runs: 5
 
-kmeans.clusters.each do |cluster|
-  puts  cluster.id.to_s + '. ' +
-        cluster.points.map(&:label).join(", ") + "\t" +
-        cluster.centroid.to_s
+datafiles = Dir['training_data/**/*.txt']
+basenames = datafiles.map {|f| File.basename(f, '.txt')}
+
+k = datafiles.length
+runs = 10
+
+OptionParser.new do |opts|
+  opts.on("-kK") {|v| k = v.to_i }
+  opts.on("-rD") {|v| runs = v.to_i }
+end.parse!
+
+
+docs = []
+doc_fileids = []
+
+get_basename = -> (docid) {
+  fileid = doc_fileids[docid]
+  basenames[fileid]
+}
+
+bag = BagOfWords.new idf: true
+
+datafiles.each_with_index do |filename, i|
+  File.open(filename).each do |line|
+    doc = line.chomp.to_s
+    next if doc.empty?
+    bag.add_doc doc
+    docs << doc
+    doc_fileids << i
+  end
 end
 
-# Use existing clusters for prediction with new data:
-predicted = kmeans.predict [[41.85,-87.65]] # Chicago
-puts "\nClosest cluster to Chicago: #{predicted[0]}"
+puts "\nClassifying #{docs.length} docs with #{bag.terms_count} unique terms into #{k} clusters:\n"
+data = bag.to_matrix
 
-# Clustering quality score. Value between -1.0..1.0 (1.0 is best)
-puts "\nSilhouette score: #{kmeans.silhouette.round(2)}"
+start = Time.now
 
+kmeans = KMeansClusterer.run(k, data, runs: runs, log: true)
+
+elapsed = Time.now - start
+
+kmeans.clusters.each do |cluster|
+  puts
+  puts "="*45
+  cp_count = cluster.points.length
+  print "== Cluster ID: #{cluster.id} has #{cp_count} document"
+  print 's' if cp_count > 1
+  puts
+  puts
+
+  acc = Hash.new {|h, k| h[k] = []}
+  grouped_points = cluster.points.inject(acc){|hsh, p| hsh[get_basename[p.id]] << p; hsh }
+  sums = grouped_points.map {|file, points| [file, points.length]}
+  puts sums.map {|(k, v)| "#{k}: #{v}"}.join(', ')
+
+  samplesize = 5
+  samplesize = 2 if grouped_points.keys.length > 2
+  samplesize = 1 if grouped_points.keys.length > 10
+
+  grouped_points.each do |name, points|
+    points.sample(samplesize).each do |point|
+      puts "\n[#{name}] #{docs[point.id]}"
+    end
+  end
+end
+
+puts "\nBest of #{runs} runs (total time #{elapsed.round(2)}s):"
+puts "#{k} clusters in #{kmeans.iterations} iterations, #{kmeans.runtime.round(2)}s, SSE #{kmeans.error.round(2)}"
+puts "Silhouette score: #{kmeans.silhouette.round(2)}"
