@@ -1,0 +1,19 @@
+
+source 'https://rubygems.org'
+
+gem 'rethinkdb'
+gem 'rethinkdb_helper'
+
+gem 'nobrainer'
+gem 'nobrainer_geospatial'
+
+gem 'ffi-geos'
+
+gem 'rgeo'
+gem 'rgeo-geojson'
+
+gem 'geocoder'
+gem 'geokit'
+
+gem 'geospatial'   # new
+

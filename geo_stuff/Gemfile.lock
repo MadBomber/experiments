@@ -1,0 +1,60 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activemodel (4.2.4)
+      activesupport (= 4.2.4)
+      builder (~> 3.1)
+    activesupport (4.2.4)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    builder (3.2.2)
+    ffi (1.9.10)
+    ffi-geos (1.1.0)
+      ffi (>= 1.0.0)
+    geocoder (1.2.11)
+    geokit (1.10.0)
+    geospatial (0.0.1)
+    i18n (0.7.0)
+    json (1.8.3)
+    middleware (0.1.0)
+    minitest (5.8.1)
+    nobrainer (0.29.0)
+      activemodel (>= 4.1.0)
+      activesupport (>= 4.1.0)
+      middleware (~> 0.1.0)
+      rethinkdb (>= 2.1.0)
+      symbol_decoration (~> 1.1)
+    nobrainer_geospatial (1.1)
+      nobrainer
+    rethinkdb (2.1.0.1)
+      json
+    rethinkdb_helper (0.0.4)
+      rethinkdb (~> 2)
+    rgeo (0.4.0)
+    rgeo-geojson (0.3.1)
+      rgeo (~> 0.3)
+    symbol_decoration (1.1.0)
+    thread_safe (0.3.5)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ffi-geos
+  geocoder
+  geokit
+  geospatial
+  nobrainer
+  nobrainer_geospatial
+  rethinkdb
+  rethinkdb_helper
+  rgeo
+  rgeo-geojson
+
+BUNDLED WITH
+   1.10.6
