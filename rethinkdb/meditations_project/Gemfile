@@ -1,0 +1,12 @@
+source 'https://rubygems.org'
+
+gem 'cli_helper'
+gem 'kick_the_tires'
+gem 'debug_me'
+gem 'progress_bar'
+
+gem 'rethinkdb'
+gem 'rethinkdb_helper'
+gem 'nobrainer'
+
+
