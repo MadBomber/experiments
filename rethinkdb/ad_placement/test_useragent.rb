@@ -21,7 +21,7 @@ EOHELP
 
 cli_helper("__file_description__") do |o|
 
-  o.path    '-p', '--path',   'path to teset data'
+  o.path    '-p', '--path',   'path to test data'
 
 end
 
