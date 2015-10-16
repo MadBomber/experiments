@@ -1,0 +1,18 @@
+source 'https://rubygems.org'
+
+gem 'cli_helper'
+
+# direct access to the wordnet API and FFI
+# also supports a Tokyo Cabinet implementation
+#yum install wordnet
+#brew install wordnet
+gem 'words'
+
+# makes use of an SQL version of the wordnet database
+gem 'wordnet'
+gem 'wordnet-defaultdb'
+
+#
+gem 'rwordnet'  # an all-ruby version that access the DB directly
+
+
