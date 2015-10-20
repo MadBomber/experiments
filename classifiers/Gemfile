@@ -72,7 +72,7 @@ gem 'omnicat-bayes'
 gem 'reclassifier'
 gem 'madeleine'       # object persistence; has not worked
 
-gem 'classifier-reborn'
+gem 'classifier-reborn', git: 'https://github.com/MadBomber/classifier-reborn.git'
 
 system_package 'gsl'  if fedora? || mac?
 gem 'gsl'  # might load its own gsl library

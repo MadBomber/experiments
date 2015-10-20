@@ -6,7 +6,7 @@ require 'classifier-reborn'
 training_set = DATA.read.split("\n")
 categories   = training_set.shift.split(',').map{|c| c.strip}
 
-classifier = ClassifierReborn::Bayes.new categories
+classifier = ClassifierReborn::Bayes.new categories, auto_categorize: true
 
 training_set.each do |a_line|
   next if a_line.empty? || '#' == a_line.strip[0]
