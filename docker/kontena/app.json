@@ -1,0 +1,16 @@
+{
+  "name": "Sinatra example application",
+  "description": "This app is a basic Sinatra application.",
+  "keywords": [
+    "kontena",
+    "ruby",
+    "sinatra",
+    "redis"
+  ],
+  "website": "http://www.kontena.io",
+  "repository": "https://github.com/kontena/redis-example",
+  "success_url": "/",
+  "addons": [
+    "openredis"
+  ]
+}

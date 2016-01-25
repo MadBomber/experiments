@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Heroku style application deployments with Docker</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="http://blog.kontena.io/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="Heroku%20style%20application%20deployments%20with%20Docker_files/screen.css">
+    <link rel="stylesheet" type="text/css" href="Heroku%20style%20application%20deployments%20with%20Docker_files/css.css">
+
+    <link rel="canonical" href="http://blog.kontena.io/heroku-style-application-deployments-with-docker/">
+    
+    <meta property="og:site_name" content="Kontena Blog">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Heroku style application deployments with Docker">
+    <meta property="og:description" content="In this article, we describe how you can use Kontena's experimental features for deploying application with Kontena just like with Heroku! Developing and deploying applications to Heroku was revolutionary when it was introduced. Developer could just focus on developing a...">
+    <meta property="og:url" content="http://blog.kontena.io/heroku-style-application-deployments-with-docker/">
+    <meta property="og:image" content="http://blog.kontena.io/content/images/2015/10/3953861947_7fec37c3e6_o.jpg">
+    <meta property="article:published_time" content="2015-10-25T21:11:00.000Z">
+    <meta property="article:modified_time" content="2015-10-25T21:19:49.000Z">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Heroku style application deployments with Docker">
+    <meta name="twitter:description" content="In this article, we describe how you can use Kontena's experimental features for deploying application with Kontena just like with Heroku! Developing and deploying applications to Heroku was revolutionary when it was introduced. Developer could just focus on developing a...">
+    <meta name="twitter:url" content="http://blog.kontena.io/heroku-style-application-deployments-with-docker/">
+    <meta name="twitter:image:src" content="http://blog.kontena.io/content/images/2015/10/3953861947_7fec37c3e6_o.jpg">
+    
+    <script src="Heroku%20style%20application%20deployments%20with%20Docker_files/analytics.js" async=""></script><script src="Heroku%20style%20application%20deployments%20with%20Docker_files/analytics.js" async=""></script><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "Kontena Blog",
+    "author": {
+        "@type": "Person",
+        "name": "Lauri Nevala",
+        "image": "http://blog.kontena.io/content/images/2015/06/profile.jpg",
+        "url": "http://blog.kontena.io/author/lauri",
+        "sameAs": "http://www.kontena.io",
+        "description": null
+    },
+    "headline": "Heroku style application deployments with Docker",
+    "url": "http://blog.kontena.io/heroku-style-application-deployments-with-docker/",
+    "datePublished": "2015-10-25T21:11:00.000Z",
+    "dateModified": "2015-10-25T21:19:49.000Z",
+    "image": "http://blog.kontena.io/content/images/2015/10/3953861947_7fec37c3e6_o.jpg",
+    "description": "In this article, we describe how you can use Kontena&#x27;s experimental features for deploying application with Kontena just like with Heroku! Developing and deploying applications to Heroku was revolutionary when it was introduced. Developer could just focus on developing a..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.6">
+    <link rel="alternate" type="application/rss+xml" title="Kontena Blog" href="http://blog.kontena.io/rss/">
+<script src="Heroku%20style%20application%20deployments%20with%20Docker_files/embed.js" async="" type="text/javascript"></script><style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style></head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-blog" role="presentation"><a href="http://blog.kontena.io/">Blog</a></li>
+            <li class="nav-website" role="presentation"><a href="http://www.kontena.io/">Website</a></li>
+            <li class="nav-kontena-at-github" role="presentation"><a href="https://github.com/kontena">Kontena at Github</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="http://blog.kontena.io/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head " style="background-image: url(/content/images/2015/10/3953861947_7fec37c3e6_o.jpg)">
+    <nav class="main-nav overlay clearfix">
+        <a class="blog-logo" href="http://blog.kontena.io/"><img src="Heroku%20style%20application%20deployments%20with%20Docker_files/kontena-blog3-2.png" alt="Blog Logo"></a>
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Heroku style application deployments with Docker</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-10-25">25 October 2015</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <blockquote>
+  <p>In this article, we describe how you can use Kontena's experimental
+ features for deploying application with Kontena just like with Heroku!</p>
+</blockquote>
+
+<p>Developing and deploying applications to <a href="https://www.heroku.com/">Heroku</a>
+ was revolutionary when it was introduced. Developer could just focus on
+ developing a killer app instead of configuring servers and build 
+scripts. </p>
+
+<p>Heroku, just like many other <a href="https://en.wikipedia.org/wiki/Platform_as_a_service">platform-as-a-service</a> ("<strong>PaaS</strong>")
+ solutions, allow developers to deploy application written in a 
+supported programming language, to a hosted cloud platform. The 
+deployment is typically made with <code>git push</code> to a PaaS 
+platform specific repository. On deploy, the platform will detect the 
+programming language and build &amp; run the application.</p>
+
+<p>With PaaS platforms, developers can enjoy highly automated deployment processes. <a href="https://github.com/kontena/kontena">Kontena</a>
+ is aiming to enable the same convenience for people moving away from 
+PaaS solutions to Docker containers. Since Heroku is one of the most 
+polished and developer friendly PaaS platforms out there, we wanted to 
+see if it is possible to create similar development workflow with 
+Kontena. </p>
+
+<h2 id="gettinganapplicationrunningonkontena">Getting an application running on Kontena</h2>
+
+<p>After you have provisioned Master node and host nodes you are ready to start deploying applications to Kontena. See <a href="http://www.kontena.io/docs/getting-started/quick-start">Quick Start</a> guide for more details</p>
+
+<p>The first step of running your application on Kontena is to dockerize it. With Kontena it is easy, just call <code>kontena app init</code> command. It creates the necessary <code>Dockerfile</code>, <code>docker-compose.yml</code> and <code>kontena.yml</code> files.</p>
+
+<p>The generated Dockerfile is by default based on <a href="https://github.com/progrium/buildstep">Buildstep</a> which enables Heroku-style application builds with Docker. Buildstep has a <a href="https://github.com/gliderlabs/herokuish/tree/master/buildpacks">list of officially supported buildpacks</a> that are built-in and ready to be used. </p>
+
+<p>In addition to Dockerfile generation, Kontena parses the <code>app.json</code> manifest file and <code>Procfile</code>. Based on those files it describes necessary application and add-on services in <code>kontena.yml</code> and generates related environment variables in <code>.env</code> file.</p>
+
+<p>When your application is dockerized you can deploy it with <code>kontena app deploy</code>
+ command. On deploy Kontena builds Docker image for your application 
+automatically and detects your application type based on the source code
+ and prepares the required running environment for it. </p>
+
+<p>After the built is ready Kontena pushes the created Docker image to image registry. By default Kontena uses a <a href="http://www.kontena.io/docs/using-kontena/image-registry">built-in self-hosted Docker registry</a>, but you can change it in <code>kontena.yml</code>.</p>
+
+<p>On deployment Kontena orchestrates Docker containers and deploys the app to host nodes.</p>
+
+<p>When the deploy completes, you have your app and all necessary addon services up and running.</p>
+
+<h2 id="example">Example</h2>
+
+<p>Let’s try this out with <a href="https://github.com/kontena/sinatra-example">simple Heroku styled Ruby/Sinatra application</a> that has one endpoint that shows how many times page has been visited:</p>
+
+<p><strong>web.rb</strong></p>
+
+<pre><code>require 'sinatra'  
+require 'redis'
+
+get '/' do  
+  redis = Redis.new(:url =&gt; ENV['REDIS_URL'])
+  redis.incr "count"
+  "Hello, world called #{redis.get("count")} times"
+end  
+</code></pre>
+
+<p>Then we define our application in <strong>app.json</strong> manifest with one <em>openredis</em> addon:</p>
+
+<pre><code>{
+  "name": "Sinatra example application",
+  "description": "This app is a basic Sinatra application.",
+  "keywords": [
+    "kontena",
+    "ruby",
+    "sinatra",
+    "redis"
+  ],
+  "website": "http://www.kontena.io",
+  "repository": "https://github.com/kontena/redis-example",
+  "success_url": "/",
+  "addons": [
+    "openredis"
+  ]
+}
+</code></pre>
+
+<p>We also need to introduce our processes in <strong>Procfile</strong></p>
+
+<pre><code>web: bundle exec ruby web.rb -p $PORT  
+</code></pre>
+
+<p>Now we are ready to dockerize our application by running:</p>
+
+<pre><code>$ kontena app init
+</code></pre>
+
+<p>It creates all the necessary Docker and Kontena related files and services and we can just deploy our app: </p>
+
+<pre><code>$ kontena app deploy
+</code></pre>
+
+<h3 id="scalingtheapplication">Scaling the application</h3>
+
+<p>In order to scale the application, we need to attach it to a <a href="http://www.kontena.io/docs/using-kontena/loadbalancer">Kontena Load Balancer</a>. To do that, we must first create a load balancer service to the grid:</p>
+
+<pre><code>$ kontena service create --ports 80:80 internet_lb kontena/lb:latest
+</code></pre>
+
+<p>Then we can edit <code>kontena.yml</code> file and set number of running <em>instances</em> and attach service to the load balancer service. That can be done with <em>external_links</em> property and <em>environment</em> variables:</p>
+
+<pre><code>web:  
+  ...
+  instances: 2
+  external_links:
+    - internet_lb
+  environment:
+    - KONTENA_LB_MODE=http
+    - KONTENA_LB_BALANCE=roundrobin
+    - KONTENA_LB_INTERNAL_PORT=5000
+    - KONTENA_LB_VIRTUAL_HOSTS=www.yourdomain.com,yourdomain.com
+</code></pre>
+
+<p>See <a href="https://github.com/kontena/sinatra-example/blob/master/kontena.yml.example">example kontena.yml</a> for the complete example.</p>
+
+<p>After that we can just re-deploy our web service:</p>
+
+<pre><code>$ kontena app deploy web
+</code></pre>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>We have demonstrated it is possible to have Heroku-like application 
+development workflow when working with Docker containers. You can enjoy 
+best parts of both worlds; super easy application development workflow 
+combined with pure docker containers. </p>
+
+<p>We are still working and experimenting with this feature so expect to
+ see some changes in the future. Some of the improvements we are 
+thinking about:</p>
+
+<ul>
+<li>Automatically attach "web" services to Kontena's load balancer</li>
+<li>Allow Heroku-like easy scaling for application</li>
+<li>Make Buildstep produce smaller images. The current implementation produces  images that are too big; typically over 1GB!</li>
+</ul>
+
+<p>Let us know what you think and/or help us by contributing to <a href="https://github.com/kontena/kontena">Kontena</a> open source project. Looking forward to see you again!</p>
+
+<h2 id="aboutkontena">About Kontena</h2>
+
+<p><a href="http://www.kontena.io/">Kontena</a> is a new open source 
+Docker platform including orchestration, service discovery, overlay 
+networking and all the tools required to run your containerized 
+workloads. Kontena is built to maximize developer happiness. It works on
+ any cloud, it's easy to setup and super simple to use. <a href="http://www.kontena.io/docs/getting-started/quick-start">Give it a try</a>! If you like it, please star it on <a href="https://github.com/kontena/kontena">Github</a> and follow us on <a href="https://twitter.com/KontenaInc">Twitter</a>. We hope to see you again!</p>
+
+<p><em>Image credits: Origami by <a href="https://www.flickr.com/photos/caribb/3953861947/">Doug</a></em></p>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="http://blog.kontena.io/author/lauri/" style="background-image: url(/content/images/2015/06/profile.jpg)"><span class="hidden">Lauri Nevala's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="http://blog.kontena.io/author/lauri/">Lauri Nevala</a></h4>
+
+                    <p>Read <a href="http://blog.kontena.io/author/lauri/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Helsinki, Finland</span>
+                    <span class="author-link icon-link"><a href="http://www.kontena.io/">http://www.kontena.io</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=Heroku%20style%20application%20deployments%20with%20Docker&amp;url=http://blog.kontena.io/heroku-style-application-deployments-with-docker/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.kontena.io/heroku-style-application-deployments-with-docker/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://blog.kontena.io/heroku-style-application-deployments-with-docker/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+            <div id="disqus_thread"><iframe verticalscrolling="no" horizontalscrolling="no" src="Heroku%20style%20application%20deployments%20with%20Docker_files/a.html" style="width: 100% ! important; border: medium none ! important; overflow: hidden ! important; height: 498px ! important;" title="Disqus" tabindex="0" scrolling="no" allowtransparency="true" name="dsq-app1" id="dsq-app1" frameborder="0" width="100%"></iframe></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'kontenablog'; // required: replace example with your forum shortname
+                var disqus_identifier = '';
+
+                /* * * DON'T EDIT BELOW THIS LINE * * */
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story prev " style="background-image: url(https://farm8.staticflickr.com/7345/14196292063_3f88b6d070_k_d.jpg)" href="http://blog.kontena.io/orchestrating-docker-containers-with-slack/">
+        <section class="post">
+            <h2>Orchestrating Docker Containers with Slack</h2>
+            <p>Guest post by Jussi Nummelin, senior architect at Digia. 
+Jussi is currently Dockerizing both customers and internal projects. 
+You…</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="http://blog.kontena.io/">Kontena Blog</a> © 2015</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org/">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <script src="Heroku%20style%20application%20deployments%20with%20Docker_files/jquery_002.js"></script> <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-60024048-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script type="text/javascript" src="Heroku%20style%20application%20deployments%20with%20Docker_files/jquery.js"></script>
+    <script type="text/javascript" src="Heroku%20style%20application%20deployments%20with%20Docker_files/index.js"></script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-60024048-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+
+</body></html>
