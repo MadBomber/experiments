@@ -1,0 +1,9 @@
+digraph 
+  {
+    "a"                  [ shape = square,color = red ];
+    "b"                  [ shape = triangle,color = green ];
+    "c"                  [ color = blue         ];
+    "a" -> "b"           [ color = red          ];
+    "b" -> "c"           [ color = green        ];
+    "c" -> "a"           [ color = blue         ];
+  }

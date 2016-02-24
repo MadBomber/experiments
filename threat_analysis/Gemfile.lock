@@ -1,0 +1,16 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ruby-graphviz (1.0.9)
+    ruby-graphviz-mindmap (1.0.0)
+      ruby-graphviz (~> 1.0.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ruby-graphviz
+  ruby-graphviz-mindmap
+
+BUNDLED WITH
+   1.11.2
