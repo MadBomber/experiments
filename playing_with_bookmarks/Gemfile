@@ -1,0 +1,9 @@
+source 'https://rubygems.org'
+
+gem 'awesome_print'
+gem 'debug_me'
+gem 'kick_the_tires'
+gem 'ffi-yajl'
+gem 'cli_helper'
+gem 'rethinkdb'
+gem 'nobrainer'
