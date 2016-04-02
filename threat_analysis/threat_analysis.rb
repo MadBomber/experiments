@@ -18,15 +18,7 @@ require 'awesome_print'
 require 'debug_me'
 include DebugMe
 
-require 'sycamore'
-
-module Sycamore
-  class Tree
-    def search(a_string)
-      self.each_path.select{|a_path| a_path.join('/').downcase.include?(a_string.downcase)}
-    end
-  end
-end
+require 'sycamore_helpers'
 
 notes = Sycamore::Tree.new
 
@@ -39,6 +31,15 @@ def extract_name_value(a_string)
   return name.to_sym, parts.join(' ')
 end
 
+
+def top_of_subtree(name, value, path)
+  sub_tree_path = path.to_a.reverse
+  until value == sub_tree_path[0] && name == sub_tree_path[1] do
+    sub_tree_path.shift
+  end
+  sub_tree_path.reverse
+end # def top_of_subtree(name, value, path)
+
 prev_indent = 0
 
 node_stack  = []
@@ -47,6 +48,7 @@ DATA.each_line do |a_line|
   a_line.chomp!
   next if a_line.strip.empty?
   next if a_line.lstrip.start_with?('#')
+  break if a_line.lstrip.start_with?('__END__')
 
   a_line.gsub!("\t", spaces_per_tab)
 
@@ -55,9 +57,36 @@ DATA.each_line do |a_line|
   indent_level = a_line.length - a_line.lstrip.length
 
   if 0 == indent_level
-    node_stack  = []
-    notes[name] << value
-    node_stack.push [indent_level, name, value]
+
+    # TODO: search the tree to see if [name, value]
+    #       already exists in the tree?
+
+    sub_tree_path = []
+
+    unless notes.empty?
+      paths = notes.string_search("/#{name}/#{value}")
+      unless paths.empty?
+
+        paths.map! { |path| top_of_subtree(name, value, path) }
+
+        debug_me {[ :name, :value, :paths ]}
+
+        # This is the current method, just insert a new top-level node
+        node_stack  = []
+        notes.insert({name => value}) # , sub_tree_path)
+        node_stack.push [indent_level, name, value]
+      else
+        node_stack  = []
+        notes.insert({name => value})
+        node_stack.push [indent_level, name, value]
+      end
+    else
+      node_stack  = []
+      notes.insert({name => value})
+      node_stack.push [indent_level, name, value]
+    end # unless notes.empty?
+
+
   else
     last_node = node_stack.last
 
@@ -69,6 +98,7 @@ DATA.each_line do |a_line|
         last_node = node_stack.last
       end
     end
+
     
     path_to_here = []
 
@@ -77,17 +107,17 @@ DATA.each_line do |a_line|
       path_to_here << node[2]
     end
 
-    path_to_here << name
+    # debug_me{[ :name, :value, :path_to_here ]}
+
+    notes.insert({name => value}, path_to_here)
 
     node_stack.push [indent_level, name, value]
 
-    notes[ path_to_here ] << value
+  end # end of if 0 == indent_level
 
-  end
+ # puts node_stack.inspect if debug?
 
- puts node_stack.inspect if debug?
-
-end
+end # end of DATA.each_line do |a_line|
 
 if debug?
   ap notes.to_h
@@ -105,11 +135,54 @@ unless ARGV.empty?
     puts "\n\n"
     puts "#"*45
     puts "## Search term: #{search_term}"
-    ap notes.search(search_term)
+    ap notes.string_search(search_term)
   end
 else
   puts "\n\nAdd some search terms to the command line.  See what pops out.\n\n"
 end
+
+__END__
+
+family VanHoozer
+  person Dewayne
+  person Ella
+
+family VanHoozer
+  person Diane
+  person Janet
+
+family Krous
+  person Calvin
+  person Ella
+
+magic_word xyzzy
+
+person Teddy
+  aka Pop
+
+family VanHoozer
+  person Dewayne
+    is_a Daddy
+
+person Dewayne
+  is_a blind guy
+
+person Ella
+  is_a Mommy
+
+person Diane
+  is_a teenager
+
+person Janet
+  is_a teenager
+
+person Diane
+  date_born April 2000
+
+person Janet
+  date_born Octover 2001
+
+
 
 __END__
 
