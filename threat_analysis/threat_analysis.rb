@@ -4,11 +4,50 @@
 ##  File: threat_analysis.rb
 ##  Desc: notional thought on object relationships
 ##
+##  This is really an investigation into a manual way of
+##  generating an AST for text in the process of entity
+##  relationship extraction.
+##
 # TODO: aka needs to be linked to all information
+#       still all the duples are not linked.  Need to
+#       rethink everything.
 #
+
+usage = <<EOS
+
+usage: pgm [options] data_file [search terms]
+
+Options:
+
+  --debug         Turn on debuging stuff
+
+Where:
+
+  data_file       Is a path to a text file
+  [search terms]  Optional search terms
+
+EOS
 
 DEBUG = ARGV.include?('--debug')
 def debug?; DEBUG; end
+
+if ARGV.empty?              ||
+   ARGV.include?('-h')      ||
+   ARGV.include?('--help')
+  puts usage
+  exit -1
+end
+
+until ARGV.empty? || !ARGV.first.start_with?('-') do
+  ARGV.shift
+end
+
+if ARGV.empty?
+  puts usage
+  exit -1
+end
+
+data_filename = ARGV.shift
 
 require 'awesome_print'
 require 'debug_me'
@@ -16,7 +55,7 @@ include DebugMe
 
 require 'sycamore_helpers'
 
-notes = Sycamore::Tree.new
+my_data_tree = Sycamore::Tree.new
 
 spaces_per_tab = "  "
 
@@ -40,12 +79,30 @@ prev_indent = 0
 
 node_stack  = []
 
-DATA.each_line do |a_line|
+data_file = File.open(data_filename, 'r')
+
+data_file.each_line do |a_line|
   a_line.chomp!
   next if a_line.strip.empty?
   next if a_line.lstrip.start_with?('#')
   break if a_line.lstrip.start_with?('__END__')
 
+  # This input format has the same problem as Python
+  # FIXME: replace indention level indicator (relationship) with '>'
+  #        so that linear format can also be supported like:
+  #        name value > name value > name value
+  #        would be the same as:
+  #        
+  #        name value
+  #          name value
+  #            name value
+  #        
+  #    and
+  #        
+  #        name value
+  #        > name value
+  #        >> name value
+  #        
   a_line.gsub!("\t", spaces_per_tab)
 
   name, value = extract_name_value(a_line)
@@ -54,7 +111,7 @@ DATA.each_line do |a_line|
 
   if 0 == indent_level
     node_stack  = []
-    notes.insert({name => value})
+    my_data_tree.insert({name => value})
     node_stack.push [indent_level, name, value]
   else
     last_node = node_stack.last
@@ -68,7 +125,6 @@ DATA.each_line do |a_line|
       end
     end
 
-    
     path_to_here = []
 
     node_stack.each do |node|
@@ -76,7 +132,7 @@ DATA.each_line do |a_line|
       path_to_here << node[2]
     end
 
-    notes.insert({name => value}, path_to_here)
+    my_data_tree.insert({name => value}, path_to_here)
 
     node_stack.push [indent_level, name, value]
 
@@ -87,23 +143,25 @@ end # end of DATA.each_line do |a_line|
 
 ##########################################
 ## simplify and combine nodes
-## The first node defined is the top-level
+## The first node defined is a top-level node of interest
+## All other top-level nodes are pending data items not
+## yet associated with the defined top-level node
 
-total_top_level_nodes = notes.size
+total_top_level_nodes = my_data_tree.size
 
-root_tree_name    = notes.nodes.first
-root_tree_values  = notes[root_tree_name].nodes
+root_tree_name    = my_data_tree.nodes.first
+root_tree_values  = my_data_tree[root_tree_name].nodes
 
 if total_top_level_nodes >= 2
-  nodes       = notes.nodes
+  nodes       = my_data_tree.nodes
   (1..total_top_level_nodes).each do |x|
     next_name   = nodes[x]
-    next_values = notes[next_name].keys
+    next_values = my_data_tree[next_name].nodes
     next_values.each do |next_value|
       delete_the_sub_tree = false
-      sub_tree    = notes[next_name, next_value]
+      sub_tree    = my_data_tree[next_name, next_value]
       root_tree_values.each do |root_tree_value|
-        root_tree   = notes[root_tree_name, root_tree_value]
+        root_tree   = my_data_tree[root_tree_name, root_tree_value]
         paths       = root_tree.search({next_name => next_value})
         unless paths.empty?
           paths.each do |path|
@@ -112,7 +170,7 @@ if total_top_level_nodes >= 2
           end
         end # unless paths.empty?
       end # root_tree_values.each do |root_tree_value|
-      notes.delete({next_name => next_value}) if delete_the_sub_tree
+      my_data_tree.delete({next_name => next_value}) if delete_the_sub_tree
     end # next_values.each do |next_value|
   end # (1..total_top_level_nodes).each do |x|
 end # if total_top_level_nodes >= 2
@@ -126,156 +184,10 @@ unless ARGV.empty?
     puts "\n\n"
     puts "#"*45
     puts "## Search term: #{search_term}"
-    ap notes.string_search(search_term)
+    ap my_data_tree.string_search(search_term)
   end
 else
   puts "\n\nAdd some search terms to the command line.  See what pops out.\n\n"
 end
 
 __END__
-
-threat Tehreek-e-Taliban Pakistan
-  aka TTP
-  person Hafez Saeed Khan
-    is_a commander
-
-area Khorasan
-  area Afghanistan
-  area Pakistan
-
-prophecy foretold the coming of an unstoppable army bearing black flags that would emerge from Khorasan
-  attributed_to Mohammed
-
-area America
-  aka US
-  aka USA
-  aka United States
-  aka United States of America
-  aka far enemy
-
-person Ibrahim al Asiri
-  is_a bomb maker
-
-explosive PETN
-  is_a white
-  is_a powdery
-  is_a difficult-to-detect explosive
-
-explosive TAPT 
-
-
-person Abu Muhammad al-Adnani
-  aka al-Adnani
-  is_a spokesperson for the Islamic State
-
-threat AQAP
-  aka al Qaeda in the Arabian Peninsula
-
-threat Khorasan
-  aka Khorasan group
-  aka Khurasan
-  is_a group of senior al-Qaeda members
-  ideology Salafi jihadism
-    defined_as a transnational religious-political ideology based on a belief in violent jihad and the Salafist religious movement of returning to (what adherents believe is) "true" Sunni Islam
-  plans_to strike targets in the United States and Europe
-  composed_of former Al-Qaeda operatives
-    area Middle East
-    area North Africa
-    area South Asia
-  terror_method concealed explosives
-  person Abdelrahman al Johani
-    aka Al Johani
-    is_a bomb maker
-    is_a counterintelligence chief
-    date_born 1970
-      area Saudi Arabia
-    trained_in explosives
-      aka bomb maker
-    trained_in toxins
-  person Mohammed Islambouli
-  person Abdul al Charekh
-    is_a internet propagandist
-    is_a money_man
-    date_born 1985
-  person Adel Radi Saqr al-Wahabi al-Harbi
-    is_a leader
-    date_died march 2015
-      area Idlib, Syria
-  person David Drugeon
-    nationality french
-    is_a bomb maker
-    date_died march 2015
-      area Idlib, Syria
-  person Muhsin al-Fadhli
-    aka Abu Majid Samiyah
-    aka Abu Samia
-    aka Dawud al-Asadi
-    aka Muhsin Fadhil Ayyid al-Fadhli
-    aka Muhsin Fadil Ayid Ashur al-Fadhli
-    is_a senior_leader
-    close_to Osama bin Laden
-    date_born 24 April 1981
-      area  Kuwait
-    date_died 8 July 2015
-      area Sarmada, Syria
-    credited_by US State Department
-      date 2012
-      as leader of the Iranian branch of Al-Qaeda
-    works_with wealthy “jihadist donors”
-      area Kuwait
-  credited_by Former President George W. Bush
-    date 2005
-    as leader
-    event French oil tanker bombing
-      date 2002
-  person al-Zawahiri
-    is_a senior_leader
-    influence_is weak
-  person Ibrahim al-Asiri 
-    is_a bomb maker
-    linked_to  Al-Qaeda
-    is_a true pioneer of hard-to-detect bombs
-  intends_to recruit European and American Muslim militants
-  intends_to train and deploy these recruits, who hold American and European passports, for attacks against Western targets
-  linked_to Al-Qaeda
-    as new arm in attacking America
-  linked_to Al Nusra
-    as allies
-    area Syria
-  scope global
-
-############################################
-threat isis
-  aka is
-  aka isil
-  aka islamic state
-  scope regional
-
-#############################################
-threat Al Nusra
-  aka Nusra Front
-  aka Al Nusra Front
-  aka Jabhat al Nusra
-  linked_to Al-Qaeda
-    as official branch
-    area Syria
-
-############################################
-threat Ahrar al Sham
-  aka Harakat Ahrar ash-Sham al-Islamiyya
-  aka Islamic Movement of the Free Men of the Levant
-  ideology Sunni Islamism
-  ideology Salafism
-  person Hassan Aboud
-    is_a leader
-  person Abu Jaber
-    is_a leader
-  influnces Syrian Sunnis
-
-#############################################
-threat Al-Qaeda
-  person Ayman al-Zawahiri
-    is_a leader
-    is_a emir
-
-

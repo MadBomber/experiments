@@ -1,8 +1,18 @@
-# threat_analysis.txt
+
+threat Tehreek-e-Taliban Pakistan
+  aka TTP
+  area Pakistan
+  person Hafez Saeed Khan
+    is_a commander
 
 area Khorasan
   area Afghanistan
   area Pakistan
+
+area al-Shām
+  aka Levant
+  aka Greater Syria
+
 
 prophecy foretold the coming of an unstoppable army bearing black flags that would emerge from Khorasan
   attributed_to Mohammed
@@ -13,28 +23,31 @@ area America
   aka United States
   aka United States of America
   aka far enemy
+  natives_known_as american
+    aka yankees
+    aka yanks
+
+area Syria
+  natives_known_as syrian
 
 person Ibrahim al Asiri
-  role bomb maker
+  is_a bomb maker
 
 explosive PETN
-  color white
+  is_a white
   is_a powdery
   is_a difficult-to-detect explosive
 
-threat Tehreek-e-Taliban Pakistan
-  aka TTP
-  person Hafez Saeed Khan
-    role commander
+explosive TAPT 
 
-
-person Abu Muhammad al-Adnani
-  aka al-Adnani
-  member_of Islamic State
-    role spokesperson
+threat Islamic State
+  person Abu Muhammad al-Adnani
+    aka al-Adnani
+    is_a spokesperson 
 
 threat AQAP
   aka al Qaeda in the Arabian Peninsula
+  area Arabian Peninsula
 
 threat Khorasan
   aka Khorasan group
@@ -42,7 +55,7 @@ threat Khorasan
   is_a group of senior al-Qaeda members
   ideology Salafi jihadism
     defined_as a transnational religious-political ideology based on a belief in violent jihad and the Salafist religious movement of returning to (what adherents believe is) "true" Sunni Islam
-  plans_to strik targets in the United States and Europe
+  plans_to strike targets in the United States and Europe
   composed_of former Al-Qaeda operatives
     area Middle East
     area North Africa
@@ -50,25 +63,26 @@ threat Khorasan
   terror_method concealed explosives
   person Abdelrahman al Johani
     aka Al Johani
-    role bomb_maker
-    role counterintelligence chief
-    born 1970
+    is_a bomb maker
+    is_a counterintelligence chief
+    date_born 1970
       area Saudi Arabia
-    trained explosives
-    trained toxins
+    trained_in explosives
+      aka bomb maker
+    trained_in toxins
   person Mohammed Islambouli
   person Abdul al Charekh
-    role internet propagandist
-    role money_man
-    born 1985
+    is_a internet propagandist
+    is_a money_man
+    date_born 1985
   person Adel Radi Saqr al-Wahabi al-Harbi
-    role leader
-    died march 2015
+    is_a leader
+    date_died march 2015
       area Idlib, Syria
   person David Drugeon
     nationality french
-    role bomber_maker
-    died march 2015
+    is_a bomb maker
+    date_died march 2015
       area Idlib, Syria
   person Muhsin al-Fadhli
     aka Abu Majid Samiyah
@@ -78,43 +92,68 @@ threat Khorasan
     aka Muhsin Fadil Ayid Ashur al-Fadhli
     is_a senior_leader
     close_to Osama bin Laden
-    born 24 April 1981
+    date_born 24 April 1981
       area  Kuwait
-    died 8 July 2015
+    date_died 8 July 2015
       area Sarmada, Syria
     credited_by US State Department
-      in 2012
-      member_of Iranian branch of Al-Qaeda
-        role leader
+      date 2012
+      as leader of the Iranian branch of Al-Qaeda
     works_with wealthy “jihadist donors”
       area Kuwait
-	credited_by Former President George W. Bush
-	  in 2005
-	  role leader
-	  event French oil tanker bombing
-	    in 2002
+  credited_by Former President George W. Bush
+    date 2005
+    as leader
+    event French oil tanker bombing
+      date 2002
   person al-Zawahiri
-    role senior_leader
-      influence weak
+    is_a senior_leader
+    influence_is weak
   person Ibrahim al-Asiri 
-    role bomb_maker
+    is_a bomb maker
     linked_to  Al-Qaeda
-    role true pioneer of hard-to-detect bombs
+    is_a true pioneer of hard-to-detect bombs
   intends_to recruit European and American Muslim militants
   intends_to train and deploy these recruits, who hold American and European passports, for attacks against Western targets
   linked_to Al-Qaeda
-    role new arm in attacking America
+    as new arm in attacking America
   linked_to Al Nusra
-    role ally
+    as allies
     area Syria
   scope global
 
 ############################################
 threat isis
+  aka Islamic State of Iraq and Syria
+  aka Islamic State of Iraq and al-Sham
   aka is
-  aka isil
   aka islamic state
+  aka isil
+  aka Islamic State of Iraq and the Levant
+  aka Daesh
+  aka ad-Dawlah al-Islāmiyah fī 'l-ʿIrāq wa-sh-Shām
   scope regional
+  is_a Salafi jihadist militant group
+  is_a worldwide caliphate
+  founding_date 1999
+    person Abu Musab al-Zarqawi
+      nationality Jordanian
+      is_a radical
+  aka Jamāʻat al-Tawḥīd wa-al-Jihād
+  aka The Organisation of Monotheism and Jihad
+  person Abu Bakr al-Baghdadi
+    is_a leader
+
+person Abu Musab al-Zarqawi
+  aka al-Zarqawi
+  died_date June 2006
+
+person Abu Omar al-Baghdadi
+  died_date April 2010
+
+person Abu Ayyub al-Masri
+  died_date April 2010
+
 
 #############################################
 threat Al Nusra
@@ -132,15 +171,20 @@ threat Ahrar al Sham
   ideology Sunni Islamism
   ideology Salafism
   person Hassan Aboud
-    role leader
+    is_a leader
   person Abu Jaber
-    role leader
+    is_a leader
   influnces Syrian Sunnis
 
 #############################################
 threat Al-Qaeda
   person Ayman al-Zawahiri
-    role leader
-    role emir
+    is_a leader
+    is_a emir
+
+#############################################
+person Bashar al-Assad
+  is_a leader
+    area Syria
 
 
