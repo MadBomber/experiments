@@ -4,12 +4,8 @@
 ##  File: threat_analysis.rb
 ##  Desc: notional thought on object relationships
 ##
-# TODO: given a new top-level node, find all existing sub-nodes
-#       that match given name, value and attach new information to
-#       those sub-nodes.  In other words, don't create a top-level
-#       node if the information is already in the tree at a lower
-#       level.  Does this mean that there might be duplicate sub-nodes? yes.
-#       Is that bad? yea, but will deal with that later.
+# TODO: aka needs to be linked to all information
+#
 
 DEBUG = ARGV.include?('--debug')
 def debug?; DEBUG; end
@@ -57,36 +53,9 @@ DATA.each_line do |a_line|
   indent_level = a_line.length - a_line.lstrip.length
 
   if 0 == indent_level
-
-    # TODO: search the tree to see if [name, value]
-    #       already exists in the tree?
-
-    sub_tree_path = []
-
-    unless notes.empty?
-      paths = notes.string_search("/#{name}/#{value}")
-      unless paths.empty?
-
-        paths.map! { |path| top_of_subtree(name, value, path) }
-
-        debug_me {[ :name, :value, :paths ]}
-
-        # This is the current method, just insert a new top-level node
-        node_stack  = []
-        notes.insert({name => value}) # , sub_tree_path)
-        node_stack.push [indent_level, name, value]
-      else
-        node_stack  = []
-        notes.insert({name => value})
-        node_stack.push [indent_level, name, value]
-      end
-    else
-      node_stack  = []
-      notes.insert({name => value})
-      node_stack.push [indent_level, name, value]
-    end # unless notes.empty?
-
-
+    node_stack  = []
+    notes.insert({name => value})
+    node_stack.push [indent_level, name, value]
   else
     last_node = node_stack.last
 
@@ -107,27 +76,49 @@ DATA.each_line do |a_line|
       path_to_here << node[2]
     end
 
-    # debug_me{[ :name, :value, :path_to_here ]}
-
     notes.insert({name => value}, path_to_here)
 
     node_stack.push [indent_level, name, value]
 
   end # end of if 0 == indent_level
 
- # puts node_stack.inspect if debug?
-
 end # end of DATA.each_line do |a_line|
 
-if debug?
-  ap notes.to_h
 
-  notes.each_path do |a_path|
-    puts a_path.join('/')
-  end
+##########################################
+## simplify and combine nodes
+## The first node defined is the top-level
 
-  ap notes.search('leader')
-end # if testing?
+total_top_level_nodes = notes.size
+
+root_tree_name    = notes.nodes.first
+root_tree_values  = notes[root_tree_name].nodes
+
+if total_top_level_nodes >= 2
+  nodes       = notes.nodes
+  (1..total_top_level_nodes).each do |x|
+    next_name   = nodes[x]
+    next_values = notes[next_name].keys
+    next_values.each do |next_value|
+      delete_the_sub_tree = false
+      sub_tree    = notes[next_name, next_value]
+      root_tree_values.each do |root_tree_value|
+        root_tree   = notes[root_tree_name, root_tree_value]
+        paths       = root_tree.search({next_name => next_value})
+        unless paths.empty?
+          paths.each do |path|
+            root_tree.insert(sub_tree, [next_name, next_value])
+            delete_the_sub_tree = true
+          end
+        end # unless paths.empty?
+      end # root_tree_values.each do |root_tree_value|
+      notes.delete({next_name => next_value}) if delete_the_sub_tree
+    end # next_values.each do |next_value|
+  end # (1..total_top_level_nodes).each do |x|
+end # if total_top_level_nodes >= 2
+
+
+
 
 unless ARGV.empty?
   ARGV.each do |search_term|
@@ -143,48 +134,10 @@ end
 
 __END__
 
-family VanHoozer
-  person Dewayne
-  person Ella
-
-family VanHoozer
-  person Diane
-  person Janet
-
-family Krous
-  person Calvin
-  person Ella
-
-magic_word xyzzy
-
-person Teddy
-  aka Pop
-
-family VanHoozer
-  person Dewayne
-    is_a Daddy
-
-person Dewayne
-  is_a blind guy
-
-person Ella
-  is_a Mommy
-
-person Diane
-  is_a teenager
-
-person Janet
-  is_a teenager
-
-person Diane
-  date_born April 2000
-
-person Janet
-  date_born Octover 2001
-
-
-
-__END__
+threat Tehreek-e-Taliban Pakistan
+  aka TTP
+  person Hafez Saeed Khan
+    is_a commander
 
 area Khorasan
   area Afghanistan
@@ -201,7 +154,7 @@ area America
   aka far enemy
 
 person Ibrahim al Asiri
-  is_a bomb_maker
+  is_a bomb maker
 
 explosive PETN
   is_a white
@@ -210,10 +163,6 @@ explosive PETN
 
 explosive TAPT 
 
-threat Tehreek-e-Taliban Pakistan
-  aka TTP
-  person Hafez Saeed Khan
-    is_a commander
 
 person Abu Muhammad al-Adnani
   aka al-Adnani
@@ -236,11 +185,12 @@ threat Khorasan
   terror_method concealed explosives
   person Abdelrahman al Johani
     aka Al Johani
-    is_a bomb_maker
+    is_a bomb maker
     is_a counterintelligence chief
     date_born 1970
       area Saudi Arabia
     trained_in explosives
+      aka bomb maker
     trained_in toxins
   person Mohammed Islambouli
   person Abdul al Charekh
@@ -253,7 +203,7 @@ threat Khorasan
       area Idlib, Syria
   person David Drugeon
     nationality french
-    is_a bomber_maker
+    is_a bomb maker
     date_died march 2015
       area Idlib, Syria
   person Muhsin al-Fadhli
@@ -282,7 +232,7 @@ threat Khorasan
     is_a senior_leader
     influence_is weak
   person Ibrahim al-Asiri 
-    is_a bomb_maker
+    is_a bomb maker
     linked_to  Al-Qaeda
     is_a true pioneer of hard-to-detect bombs
   intends_to recruit European and American Muslim militants
