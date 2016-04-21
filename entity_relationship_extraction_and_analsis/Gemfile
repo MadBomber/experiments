@@ -4,3 +4,7 @@ gem 'ruby-graphviz'
 gem 'ruby-graphviz-mindmap'
 gem 'sycamore'
 
+# brew install freeling
+gem 'freeling-client'
+gem 'freeling-analyzer'
+
