@@ -1,5 +1,13 @@
 source "https://rubygems.org"
 
+gem 'awesome_print'
+gem 'debug_me'
+gem 'cli_helper'
+
 gem 'google_cloud_vision'
+
 gem 'geohash36'
+gem 'rgeo'
+gem 'rgeo-kml'
+
 gem 'jsonpath'
