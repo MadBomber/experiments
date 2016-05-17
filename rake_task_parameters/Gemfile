@@ -1,0 +1,7 @@
+# Gemfile
+
+source "https://rubygems.org"
+
+gem 'docopt'
+gem 'debug_me'
+gem 'awesome_print'

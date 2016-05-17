@@ -1,0 +1,17 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    awesome_print (1.6.1)
+    debug_me (1.0.2)
+    docopt (0.5.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  awesome_print
+  debug_me
+  docopt
+
+BUNDLED WITH
+   1.12.4

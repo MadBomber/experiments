@@ -1,0 +1,43 @@
+# Rakefile
+
+require 'awesome_print'
+require 'debug_me'
+include DebugMe
+require 'pathname'
+require 'require_all'
+
+require './rake_task_arguments'
+
+ROOT = Pathname.pwd
+CWD  = Pathname.new ENV['PWD']  # NOTE: The real current working directory of the user
+                                #       Pathname.owd returns the location of the Rakefile
+                                #       Use CWD in a task file to find out where the user
+                                #       is currently working when the rake task is invoked
+
+# The world is not entirely Rails but some rake task -oriented gems think so
+module Rails
+  class << self
+    def root
+      ROOT
+    end
+  end
+end
+
+desc 'Rails sillines: what does love have to do with it?'
+task :environment do
+  'development'
+end
+
+desc 'This is the default task; it tells you to use "rake -T" to see a task list'
+task :default do
+  puts <<-EOS
+
+    For a list of available tasks do:  rake -T
+
+  EOS
+end
+
+
+require_all 'tasks/*.rb'
+
+
