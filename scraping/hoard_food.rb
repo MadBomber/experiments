@@ -2,16 +2,36 @@
 ##################################################
 ###
 ##  File: hoard_food.rb
-##  Desc: Actually just get some respices
+##  Desc: Actually just get some recipe
+##        No; really playing with mechanize
 #
 
+require 'exponential_backoff'
 require 'mechanize'
+
+module MechanizeBackoff
+
+  def get(*args)
+
+    begin
+      ExponentialBackoff.try(2) { response = super }
+    rescue => e
+      e.errors # => [#<RuntimeError: Blah>, #<ConnectionError: Bleh>]
+    end
+
+  end
+end
+
+class Mechanize
+  prepend MechanizeBackoff
+end
+
 
 mechanize = Mechanize.new
 
 mechanize.user_agent_alias = 'Mac Safari'
 
-chefs = []
+chefs = CHEFS.read.split("\n")  #[]
 
 chefs_url = 'http://www.bbc.co.uk/food/chefs'
 
@@ -31,6 +51,7 @@ require 'fileutils'
 search_url = 'http://www.bbc.co.uk/food/recipes/search?chefs[]='
 
 chefs.each do |chef_id|
+
   results_pages = []
 
   begin
