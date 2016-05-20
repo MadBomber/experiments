@@ -7,7 +7,9 @@ include CliHelper
 
 
 cli_helper 'Get definitions for words in a list' do |o|
-  o.path '-f', '--file', 'File containing word list'
+  o.path '-f', '--file',        'File containing word list'
+  o.path '-c', '--create-test', 'Create config file used in test generater'
+  o.int  '-w', '--word-count',  'How many words to use on the test', default: 20
 end
 
 
@@ -45,6 +47,8 @@ else
   end
 end
 
+test_data = []
+
 
 words.flatten.each do |word|
 
@@ -60,7 +64,11 @@ words.flatten.each do |word|
     if d.gloss.include?(';')
       parts = d.gloss.split(';')
       parts.each do |p|
-        puts p.strip unless p.include?(word)
+        unless p.include?(word)
+          definition = p.strip
+          puts definition
+          test_data << [word, definition] unless definition.start_with?('"')
+        end
       end
       next
     end
@@ -70,6 +78,45 @@ words.flatten.each do |word|
 end
 
 puts
+
+unless configatron.create_test.nil?
+  if '.ini' == configatron.create_test.extname.to_s
+    config_file = configatron.create_test
+  else
+    config_file = Pathname.bew(configatron.create_test.to_s+'.ini')
+  end
+
+  if config_file.exist?
+    warning "File Already Exists: #{config_file}"
+    abort_if_errors
+  end
+
+  CF = File.open(config_file, 'w')
+  CF.puts "# #{config_file}"
+  CF.puts "# Source: #{configatron.file}"
+  CF.puts "\n[definitions]\n"
+  test_data.sample(configatron.word_count).each do |entry|
+    word        = entry.first
+    definition  = entry.last
+    CF.printf "%-20s= %s\n", word, definition
+  end
+  CF.close
+end
+
+__END__
+
+The created config file for the test generater looks like this:
+
+# header stuff
+
+[definitions]
+  
+word1    = definition 1
+word2    = definition 2
+
+... etc.
+
+
 
 
 __END__
