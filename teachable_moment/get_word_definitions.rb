@@ -13,28 +13,40 @@ end
 
 require 'wordnet'
 
+if configatron.file.nil?
+  words = %w{ 
+    amputate    
+    aptitude    
+    beneficiary   
+    boon      
+    commiserate   
+    garner      
+    gratis      
+    incapacitate  
+    inception   
+    magnanimous   
+    myriad      
+    practicable   
+    remunerate    
+    solicit     
+    trite     
+  }
+else
+  if configatron.file.exist?
+    words = []
+    configatron.file.read.split("\n").each do |a_line|
+      next if a_line.start_with?('#')
+      next if a_line.empty?
+      words << a_line.split().select {|w| !w.start_with?('(')}
+    end
+  else
+    error "File Does Not Exist: #{configatron.file}"
+    abort_if_errors
+  end
+end
 
-# TODO: replace with words obtained from a file.
 
-words = %w{ 
-  amputate    
-  aptitude    
-  beneficiary   
-  boon      
-  commiserate   
-  garner      
-  gratis      
-  incapacitate  
-  inception   
-  magnanimous   
-  myriad      
-  practicable   
-  remunerate    
-  solicit     
-  trite     
-}
-
-words.each do |word|
+words.flatten.each do |word|
 
   puts "\n============="
   puts "== #{word}"
