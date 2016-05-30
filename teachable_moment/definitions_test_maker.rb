@@ -25,11 +25,11 @@ Important:
 
 EOHELP
 
-cli_helper("__file_description__") do |o|
+cli_helper("Generate multiple choice and matching tests from a definitions file") do |o|
 
   o.bool  '-c', '--choice', 'Generate Multiple Choice Test',  default: false
-  o.bool  '-m', '--match', 'Generate Matching Test',  default: false
-  o.path    '-t', '--test',   'Test File', default: Pathname.new('sample_test.ini')
+  o.bool  '-m', '--match',  'Generate Matching Test',  default: false
+  o.path  '-t', '--test',   'Test File', default: Pathname.new('sample_test.ini')
 
 end
 
