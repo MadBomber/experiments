@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    re2 (0.7.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  re2
+
+BUNDLED WITH
+   1.12.4
