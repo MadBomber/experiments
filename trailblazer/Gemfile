@@ -1,5 +1,10 @@
 # Gemfile
 
+# SMELL: I looked at the two examples for using trailblazer one with sinatra the
+#        other rails.  They are so far out of date to be worthless out of the box.
+#        Also this concept is overly complex in that it ruins the simlicity of sinatra.
+#        So far I have found nothing redeaming about the framework.
+
 source "https://rubygems.org"
 
 ruby "2.3.1"
