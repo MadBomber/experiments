@@ -1,0 +1,4 @@
+# start
+
+rackup --port $APP_PORT --daemonize --host $APP_BIND --server puma --pid $APP_PIDFILE
+

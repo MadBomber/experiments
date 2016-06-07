@@ -1,0 +1,37 @@
+-# layout.haml
+!!!
+%html
+  %head
+    %title Application by VanHoozer
+    %link{:rel => :stylesheet, :type => :"text/css", :href => "/css/app.css"}
+    = LeafletHelper::L.init
+  %body
+
+    #logo_header
+
+      %h1 
+        Application by VanHoozer
+        %span{ :class =>"home" }
+          %a{ :href => "/" }
+            Home
+
+    #masthead
+      #inner-masthead
+        %table{ width: "100%", border: "0", cellspacing:"0", cellpadding: "0", id: "header-table"}
+          %tbody
+            %tr
+              %td
+                %a{:href => 'http://dvanhoozer.herokuapp.com'}
+                  %img{ src: "/images/bomb.png", id: "logo", width: "204", height: "50", alt: "@madbomber" }
+              %td
+                %h1 Next Generation Technology
+                %p Our Next Generation Technology solutions address our ability to deliver innovative solutions to our customer’s biggest challenges in cloud infrastructure, big data analytics, cyber security, and mobility, along with the robust solutions of our trusted alliance partners.
+
+    #main
+
+      = yield
+
+    #footer
+      = partial :footer        
+
+    = LeafletHelper::L.show_with_openstreetmap_layer('map', latitude: 37.235, longitude: -115.811111, min_zoom: 2, max_zoom: 18)

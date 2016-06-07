@@ -1,0 +1,9 @@
+# stop
+
+pid=`cat $APP_PIDFILE`
+
+kill -9 $pid
+
+#psaux=`ps aux | fgrep puma | fgrep -v fgrep`
+
+rm -f $APP_PIDFILE

@@ -1,0 +1,41 @@
+# Gemfile
+
+source "https://rubygems.org"
+
+ruby "2.3.1"
+
+# Special Libraries
+#gem 'mapbox-sdk'  # Ruby bindings for the Mapbox API
+
+gem 'leaflet_helper', path: "/Users/dvanhoozer/sandbox/git_repos/madbomber/leaflet_helper"
+
+# Utilities
+gem 'require_all'  # A wonderfully simple way to load your code
+
+# Web-app framework
+gem 'sinatra', require: 'sinatra/base'  # Classy web-development dressed in a DSL
+gem 'sinatra-contrib'                   # Collection of useful Sinatra extensions
+gem "sinatra-activerecord"              # Extends Sinatra with ActiveRecord helpers.
+gem 'haml'                              # An elegant, structured (X)HTML/XML templating engine.
+gem 'sass'                              # A powerful but elegant CSS compiler that makes CSS fun again.
+gem 'refile'                            # Simple and powerful file upload library
+gem 'sinatra-partial',  require: 'sinatra/partial'  # A sinatra extension for render partials.
+gem 'sinatra-param',    require: 'sinatra/param'    # Parameter Validation & Type Coercion for Sinatra.
+gem 'thin'                                          # A thin and fast web server
+gem 'puma'                                          # Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for Ruby/Rack application
+
+
+# Database tools
+gem "pg"            # Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresql.org/]
+gem "activerecord"  # Object-relational mapper framework (part of Rails).
+gem 'textacular'    # Textacular exposes full text search capabilities from PostgreSQL
+gem 'table_print'   # Turn objects into nicely formatted columns for easy reading
+
+
+# Development tools
+gem 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+gem 'debug_me'       # A tool to print the labeled value of variables.
+
+gem 'minitest',           require: false  # minitest provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking
+gem 'minitest-reporters', require: false  # Create customizable Minitest output formats
+gem 'rack-test',          require: false  # Simple testing API built on Rack

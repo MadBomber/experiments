@@ -1,0 +1,5 @@
+# restart
+
+$root/bin/stop
+sleep 2
+$root/bin/start
