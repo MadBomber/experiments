@@ -83,7 +83,18 @@ module APP
       haml :index
     end
 
-
+    # Return array of markers for a given map id
+    get '/:map_id/markers' do |map_id|
+      content_type :json
+      [
+        {
+          "name":"Area 51",
+          "lon":"-115.811111",
+          "lat":"37.235",
+          "details":"This is a good place to buy used flying saucers."
+        }
+      ].to_json
+    end
 
 ############################################################
 
