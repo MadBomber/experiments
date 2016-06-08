@@ -7,7 +7,7 @@ ruby "2.3.1"
 # Special Libraries
 #gem 'mapbox-sdk'  # Ruby bindings for the Mapbox API
 
-gem 'leaflet_helper', path: "/Users/dvanhoozer/sandbox/git_repos/madbomber/leaflet_helper"
+gem 'leaflet_helper'  # A Ruby-wrapper around leaflet.js
 
 # Utilities
 gem 'require_all'  # A wonderfully simple way to load your code

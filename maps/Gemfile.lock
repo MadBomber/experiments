@@ -16,7 +16,7 @@ GEM
       tzinfo (~> 1.1)
     ansi (1.5.0)
     arel (6.0.3)
-    awesome_print (1.6.1)
+    awesome_print (1.7.0)
     backports (3.6.8)
     builder (3.2.2)
     daemons (1.2.3)
@@ -30,7 +30,8 @@ GEM
       domain_name (~> 0.5)
     i18n (0.7.0)
     json (1.8.3)
-    mime-types (2.99.1)
+    leaflet_helper (0.0.2)
+    mime-types (2.99.2)
     minitest (5.9.0)
     minitest-reporters (1.1.9)
       ansi
@@ -83,7 +84,7 @@ GEM
       eventmachine (~> 1.0, >= 1.0.4)
       rack (>= 1, < 3)
     thread_safe (0.3.5)
-    tilt (2.0.4)
+    tilt (2.0.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unf (0.1.4)
@@ -98,6 +99,7 @@ DEPENDENCIES
   awesome_print
   debug_me
   haml
+  leaflet_helper
   minitest
   minitest-reporters
   pg

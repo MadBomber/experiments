@@ -15,7 +15,10 @@
       %a{ :href => url('/button-two'), :class => "button" }
         Do TWO
 
-= LeafletHelper::L.map('map')
+%p
+  This is some text above the map
+
+= LeafletHelper::L.place_map_here('map')
 
 %p
   This is some text below the map
