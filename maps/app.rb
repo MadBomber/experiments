@@ -44,6 +44,49 @@ require 'sinatra/partial'
 
 require_all 'db/models'
 
+module TestData
+
+  AREA51_LOCATION   = [37.242, -115.8191]         # Lat, Long
+  DELTA             = [15, 15]  # NOTE: expresed as integer of real delta +/- 1.5 in lat, long
+                                #       in order to use rand() method
+
+
+
+  CODE_WORDS    = [
+    "Magic Carpet",
+    "Desert Storm",
+    "Bayonet Lightning",
+    "Valiant Guardian",
+    "Urgent Fury",
+    "Eagle Claw",
+    "Crescent Wind",
+    "Spartan Scorpion",
+    "Overlord",
+    "Rolling Thunder"
+  ]
+
+  class << self
+
+    def get_random_codeword
+      CODE_WORDS.sample
+    end
+
+
+    def get_random_location( fixed_point=AREA51_LOCATION, delta=DELTA )
+      offset  = []
+      dir     = rand(2) == 0 ? -1.0 : 1.0
+      offset << dir * rand(delta.first).to_f  / 10.0
+      dir     = rand(2) == 0 ? -1.0 : 1.0
+      offset << dir * rand(delta.last).to_f / 10.0
+      point   = fixed_point.each_with_index.map {|v, x| v + offset[x]}
+
+      return { 'lat' => point.first, 'lon' => point.last } 
+
+    end # def get_random_location( fixed_point=AREA51_LOCATION, delta=DELTA )
+  end # class < self
+
+end # module TestData
+
 
 module APP
 
@@ -84,16 +127,26 @@ module APP
     end
 
     # Return array of markers for a given map id
+    # every time the map changes, generate a new set of markers around Area 51
     get '/:map_id/markers' do |map_id|
       content_type :json
-      [
+      markers = [
         {
           "name":"Area 51",
           "lon":"-115.811111",
           "lat":"37.235",
           "details":"This is a good place to buy used flying saucers."
         }
-      ].to_json
+      ]
+
+      (rand(10)+1).times do |x|
+        crash = {"name": "Crash ##{x+1}",
+          "details": "Crash associated with project #{TestData.get_random_codeword}"
+        }.merge(TestData.get_random_location)
+        markers << crash
+      end
+
+      markers.to_json
     end
 
 ############################################################
