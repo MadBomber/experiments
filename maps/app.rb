@@ -128,11 +128,12 @@ module APP
 
     # Return array of markers for a given map id
     # every time the map changes, generate a new set of markers around Area 51
+    # This route is coupled with the route that is used with: LeafletHelper::L.add_support_for_markers
     get '/:map_id/markers' do |map_id|
       content_type :json
       markers = [
         {
-          "name":"Area 51",
+          "name":"Area 51 on #{map_id}",
           "lon":"-115.811111",
           "lat":"37.235",
           "details":"This is a good place to buy used flying saucers."

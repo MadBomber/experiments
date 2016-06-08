@@ -16,9 +16,11 @@
         Do TWO
 
 %p
-  This is some text above the map
+  This is the first map
 
 = LeafletHelper::L.place_map_here('map')
 
 %p
-  This is some text below the map
+  This is second map.  NOTE that the map id MUST be different! .. ought to check for that in the leafelet_helper gem.
+
+= LeafletHelper::L.place_map_here('map2', style: "width: 400px; height: 400px")

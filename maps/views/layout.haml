@@ -39,4 +39,9 @@
     - map_id = 'map'; map_options = { latitude: 37.235, longitude: -115.811111, min_zoom: 2, max_zoom: 18}
     = LeafletHelper::L.show_map(map_id, map_options)
     = LeafletHelper::L.add_openstreetmap_layer(map_id, map_options)
-    = LeafletHelper::L.add_support_for_markers(map_id, map_options)
+    = LeafletHelper::L.add_support_for_markers(map_id, route: "#{map_id}/markers")
+
+    - map_id = 'map2'; map_options = { latitude: 37.235, longitude: -115.811111, min_zoom: 2, max_zoom: 18}
+    = LeafletHelper::L.show_map(map_id, map_options)
+    = LeafletHelper::L.add_openstreetmap_layer(map_id, map_options)
+    = LeafletHelper::L.add_support_for_markers(map_id, route: "#{map_id}/markers")

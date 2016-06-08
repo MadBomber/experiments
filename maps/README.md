@@ -1,8 +1,16 @@
-# __application_name__ #
+# maps #
 
 ## Description
 
-__description__
+Playing with the leaflet_helper gem and maybe a few others.
+
+Use the start and stop scripts in the bin directory.
+
+The basic file layout of this project was created from:
+
+  new sinatra_app
+
+"new" is located in my "scripts" repo.
 
 Remainder of this file is TBD ...
 
