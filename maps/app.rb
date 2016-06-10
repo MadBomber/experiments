@@ -8,6 +8,8 @@
 require 'pathname'
 require 'leaflet_helper'
 
+$markers = Hash.new(LeafletHelper::ManageMarkers.new)
+
 ROOT = Pathname.new(__FILE__).realpath.parent
 
 class MissingSystemEnvironmentVariable < RuntimeError; end
@@ -50,8 +52,6 @@ module TestData
   DELTA             = [15, 15]  # NOTE: expresed as integer of real delta +/- 1.5 in lat, long
                                 #       in order to use rand() method
 
-
-
   CODE_WORDS    = [
     "Magic Carpet",
     "Desert Storm",
@@ -65,10 +65,27 @@ module TestData
     "Rolling Thunder"
   ]
 
+  CAUSE = [
+    "overload on the flux stream capacitor",
+    "pilot error",
+    "programming error in the navigation system",
+    "unknown",
+    "bird strike",
+    "union organizers",
+    "pilot FWI - flying while intoxicated",
+    "pilot - inability to follow instructions given in any Earth language",
+    "flew too near the sun"
+  ]
+
   class << self
 
     def get_random_codeword
       CODE_WORDS.sample
+    end
+
+
+    def get_random_cause
+      CAUSE.sample
     end
 
 
@@ -80,7 +97,7 @@ module TestData
       offset << dir * rand(delta.last).to_f / 10.0
       point   = fixed_point.each_with_index.map {|v, x| v + offset[x]}
 
-      return { 'lat' => point.first, 'lon' => point.last } 
+      return { lat: point.first, lon: point.last } 
 
     end # def get_random_location( fixed_point=AREA51_LOCATION, delta=DELTA )
   end # class < self
@@ -131,23 +148,31 @@ module APP
     # This route is coupled with the route that is used with: LeafletHelper::L.add_support_for_markers
     get '/:map_id/markers' do |map_id|
       content_type :json
-      markers = [
-        {
-          "name":"Area 51 on #{map_id}",
-          "lon":"-115.811111",
-          "lat":"37.235",
-          "details":"This is a good place to buy used flying saucers."
-        }
-      ]
+      $markers[map_id].clear
+
+      $markers[map_id].add id: 'Secret Place',
+        lat: 37.235, lon: -115.811111,
+        html: <<~EOS
+          <h2>Area 51 on #{map_id}</h2>
+          <p>This is a good place to buy used flying saucers.</p>
+        EOS
 
       (rand(10)+1).times do |x|
-        crash = {"name": "Crash ##{x+1}",
-          "details": "Crash associated with project #{TestData.get_random_codeword}"
-        }.merge(TestData.get_random_location)
-        markers << crash
+        location  = TestData.get_random_location
+        codeword  = TestData.get_random_codeword
+        cause     = TestData.get_random_cause
+
+        $markers[map_id].add id: "Crash Site",
+          lat:  location[:lat],
+          lon:  location[:lon],
+          html: <<~EOS
+            <h3>Crash Site ##{x}</h3>
+            <p>Project #{codeword}</p>
+            <p>Cause of crash: #{cause}</p>
+          EOS
       end
 
-      markers.to_json
+      $markers[map_id].to_json
     end
 
 ############################################################
