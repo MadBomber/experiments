@@ -157,20 +157,33 @@ module APP
           <p>This is a good place to buy used flying saucers.</p>
         EOS
 
+      template = <<~EOS
+        <h1>{classification}</h1>
+        <h3>Crash Site \#{x}</h3>
+        <em>Location: [{lat}, {lon}]</em>
+        <p>Project {codeword}</p>
+        <p>Cause of crash: {cause}</p>
+      EOS
+
       (rand(10)+1).times do |x|
         location  = TestData.get_random_location
-        codeword  = TestData.get_random_codeword
-        cause     = TestData.get_random_cause
+
+        data = {
+          x:        x,
+          lat:      location[:lat],
+          lon:      location[:lon],
+          codeword: TestData.get_random_codeword,
+          cause:    TestData.get_random_cause
+        }
 
         $markers[map_id].add id: "Crash Site",
           lat:  location[:lat],
           lon:  location[:lon],
-          html: <<~EOS
-            <h3>Crash Site ##{x}</h3>
-            <p>Project #{codeword}</p>
-            <p>Cause of crash: #{cause}</p>
-          EOS
+          html: template,
+          data: data
       end
+
+      $markers[:map_id].replace_with('Crash Site', {classification: 'Unclassified'})
 
       $markers[map_id].to_json
     end
