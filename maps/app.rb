@@ -105,6 +105,50 @@ module TestData
 end # module TestData
 
 
+# setup some static markers
+
+%w[ map map2 ].each do |map_id|
+
+  $markers[map_id].clear
+
+  $markers[map_id].add id: 'Secret Place',
+    lat: 37.235, lon: -115.811111,
+    html: <<~EOS
+      <h2>Area 51 on #{map_id}</h2>
+      <p>This is a good place to buy used flying saucers.</p>
+    EOS
+
+  template = <<~EOS
+    <h1>{classification}</h1>
+    <h3>Crash Site \#{x}</h3>
+    <em>Location: [{lat}, {lon}]</em>
+    <p>Project {codeword}</p>
+    <p>Cause of crash: {cause}</p>
+  EOS
+
+  30.times do |x|
+    location  = TestData.get_random_location
+
+    data = {
+      x:        x,
+      lat:      location[:lat],
+      lon:      location[:lon],
+      codeword: TestData.get_random_codeword,
+      cause:    TestData.get_random_cause
+    }
+
+    $markers[map_id].add id: "Crash Site",
+      lat:  location[:lat],
+      lon:  location[:lon],
+      html: template,
+      data: data
+  end
+
+end # %w[ map map2 ].each do |map_id|
+
+
+
+
 module APP
 
   class DemoError < RuntimeError; end
@@ -148,40 +192,6 @@ module APP
     # This route is coupled with the route that is used with: LeafletHelper::L.add_support_for_markers
     get '/:map_id/markers' do |map_id|
       content_type :json
-      $markers[map_id].clear
-
-      $markers[map_id].add id: 'Secret Place',
-        lat: 37.235, lon: -115.811111,
-        html: <<~EOS
-          <h2>Area 51 on #{map_id}</h2>
-          <p>This is a good place to buy used flying saucers.</p>
-        EOS
-
-      template = <<~EOS
-        <h1>{classification}</h1>
-        <h3>Crash Site \#{x}</h3>
-        <em>Location: [{lat}, {lon}]</em>
-        <p>Project {codeword}</p>
-        <p>Cause of crash: {cause}</p>
-      EOS
-
-      (rand(10)+1).times do |x|
-        location  = TestData.get_random_location
-
-        data = {
-          x:        x,
-          lat:      location[:lat],
-          lon:      location[:lon],
-          codeword: TestData.get_random_codeword,
-          cause:    TestData.get_random_cause
-        }
-
-        $markers[map_id].add id: "Crash Site",
-          lat:  location[:lat],
-          lon:  location[:lon],
-          html: template,
-          data: data
-      end
 
       $markers[:map_id].replace_with('Crash Site', {classification: 'Unclassified'})
 

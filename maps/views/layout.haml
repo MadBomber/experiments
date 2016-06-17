@@ -4,9 +4,7 @@
   %head
     %title Application by VanHoozer
     %link{:rel => :stylesheet, :type => :"text/css", :href => "/css/app.css"}
-    = LeafletHelper::L.comment "before"
-    = LeafletHelper::L.init
-    = LeafletHelper::L.comment "after"
+    = LeafletHelper::L.init(markers: true, cluster: true)
   %body
 
     #logo_header
@@ -36,12 +34,8 @@
     #footer
       = partial :footer        
 
-    - map_id = 'map'; map_options = { latitude: 37.235, longitude: -115.811111, min_zoom: 2, max_zoom: 18}
-    = LeafletHelper::L.show_map(map_id, map_options)
-    = LeafletHelper::L.add_openstreetmap_layer(map_id, map_options)
-    = LeafletHelper::L.add_support_for_markers(map_id, route: "#{map_id}/markers")
+    - map_id = 'map'
+    = LeafletHelper::L.show_map(map_id, {markers: true, cluster: false})
 
-    - map_id = 'map2'; map_options = { latitude: 37.235, longitude: -115.811111, min_zoom: 2, max_zoom: 18}
-    = LeafletHelper::L.show_map(map_id, map_options)
-    = LeafletHelper::L.add_mapbox_layer(map_id, map_options)
-    = LeafletHelper::L.add_support_for_markers(map_id, route: "#{map_id}/markers")
+    - map_id = 'map2'
+    = LeafletHelper::L.show_map(map_id, {openstreetmap: false, mapbox: true, markers: true, cluster: true})
