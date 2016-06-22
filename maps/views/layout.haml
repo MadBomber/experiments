@@ -4,7 +4,7 @@
   %head
     %title Application by VanHoozer
     %link{:rel => :stylesheet, :type => :"text/css", :href => "/css/app.css"}
-    = LeafletHelper::L.init(markers: true, cluster: true)
+    = LeafletHelper::L.init( {plugins: [ :marker_cluster ]} )
   %body
 
     #logo_header
@@ -35,7 +35,7 @@
       = partial :footer        
 
     - map_id = 'map'
-    = LeafletHelper::L.show_map(map_id, {markers: true, cluster: false})
+    = LeafletHelper::L.show_map(map_id, {openstreetmap: true, markers: true, cluster: false})
 
     - map_id = 'map2'
     = LeafletHelper::L.show_map(map_id, {openstreetmap: false, mapbox: true, markers: true, cluster: true})
