@@ -1,0 +1,22 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    SysVIPC (0.9.10)
+    awesome_print (1.7.0)
+    debug_me (1.0.2)
+    sysvmq (0.2.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  SysVIPC
+  awesome_print
+  debug_me
+  sysvmq
+
+RUBY VERSION
+   ruby 2.3.1p112
+
+BUNDLED WITH
+   1.12.5
