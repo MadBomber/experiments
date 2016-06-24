@@ -99,6 +99,9 @@ configatron.workers.times do |x|
   Process.detach workers.last
 end
 
+=begin
+# The shared memory stuff sucks.
+
 sleep(configatron.workers)
 
 configatron.workers.times do |x|
@@ -111,6 +114,7 @@ configatron.workers.times do |x|
 end
 
 
+# This shaared memory stuff is junk
 
 # Write data:
 
@@ -129,4 +133,20 @@ end
 
 sh.detach(shmaddr)
 
+=end
 
+puts <<~EOS
+
+The shared memory capability sucks.  Ruby's inability to anchor an object
+to a specific memory address precludes the use of shm for IPC work.  The
+unix IPC message queque works okay.
+
+Currently the workers are spinning their wheels crunching random numbers.  To
+see the multi-core activity launch 'htop' in a terminal window.  You can
+get htop via 'brew install htop' - its cross platform unix utility.
+
+To terminate all the workers use 'killall ruby'
+
+
+
+EOS

@@ -33,6 +33,13 @@ msg = mq.receive(0, 100)
 debug_me(tag: "worker:#{Process.pid}", header: false){[ :msg ]}
 
 
+until false
+  rand(100_000)
+end
+
+
+=begin
+
 my_pid = Process.pid.to_s
 
 # NOTE: Lets monitor some shared memory.
@@ -48,6 +55,7 @@ my_pid = Process.pid.to_s
 #       a "modern" requirement ... until its needed ... after all who
 #       in their right mind would ever write a device driver in Ruby?
 #       I mean besides me.
+
 msg = []
 until msg.first == my_pid && msg.last == 'quit'
   data = shmaddr.read(my_pid.size + ',quit'.size)
@@ -63,5 +71,5 @@ sh.detach(shmaddr)
 
 debug_me(tag: "worker:#{Process.pid} ending")
 
-
+=end
 
