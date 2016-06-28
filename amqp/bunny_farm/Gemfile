@@ -1,0 +1,12 @@
+# Gemfile
+
+source "https://rubygems.org"
+
+ruby "2.3.1"
+
+# Development Utilities
+gem 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+gem 'debug_me'       # A tool to print the labeled value of variables.
+
+# All you need is a bunny farm
+gem 'bunny_farm'  # My opinion on how intelligent messages could be handled.
