@@ -1,3 +1,4 @@
 source 'https://rubygems.org'
 
 gem 'mail'
+#brew install 'html2text'
