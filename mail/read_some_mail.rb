@@ -4,29 +4,223 @@ require 'awesome_print'
 require 'debug_me'
 include DebugMe
 
+require 'progress_bar'
+require 'rethinkdb_helper'
+require 'date'
+
 require 'mail'
 
+
+
+###################################################################
+## Regular Expressions to extract data from upgrades and downgrades
+
+re = Array.new
+
+# The first regular expression should get everything.
+# company_name
+# exchange
+# ticker_symbol
+# analyst
+# from_rating
+# to_rating
+# price_target
+# percent_change
+# prev_close
+re << /^(?<company_name>.*) \((?<exchange>.*):(?<ticker_symbol>.*)\).*analysts at (?<analyst>.*) from a.* "(?<from_rating>.*)" rating .* "(?<to_rating>.*)".*\$(?<price_target>[1-9]\d?(?:,\d{3})*(?:\.\d{2})?) price target.* (?<percent_change>.*)%.*\$(?<prev_close>[1-9]\d?(?:,\d{3})*(?:\.\d{2})?)/
+
+
+# company_name, exchange, ticker_symbol, analyst, to_rating, price_target
+re << /^(?<company_name>.*) \((?<exchange>.*):(?<ticker_symbol>.*)\).*analysts at (?<analyst>.*) to a.*"(?<to_rating>.*)" rating\. .* \(\$(?<price_target>\d+.\d+)\) price target/
+
+
+# company_name, exchange, ticker_symbol, analyst, to_rating, prev_close
+re << /^(?<company_name>.*) \((?<exchange>.*):(?<ticker_symbol>.*)\).*analysts at (?<analyst>.*) from a.*"(?<from_rating>.*)" rating to a.*"(?<to_rating>.*)" rating\. .*closing price of \$(?<prev_close>\d+.\d+)\./
+
+
+# company_name, exchange, ticker_symbol, analyst, to_rating, prev_close
+re << /^(?<company_name>.*) \((?<exchange>.*):(?<ticker_symbol>.*)\).*analysts at (?<analyst>.*) .*to a.*"(?<to_rating>.*)" rating\. .*closing price of \$(?<prev_close>\d+.\d+)\./
+
+
+# The last regular expression should get only the most common.
+# company_name, exchange, ticker_symbol, analyst, to_rating
+re << /^(?<company_name>.*) \((?<exchange>.*):(?<ticker_symbol>.*)\).*analysts at (?<analyst>.*) from a.*"(?<from_rating>.*)".*to a.*"(?<to_rating>.*)" rating\./
+
+
+# Shawbrook Group PLC (LON:SHAW)  was downgraded by analysts at Barclays to an "equal weight" rating. 
+
+# company_name, exchange, ticker_symbol, analyst, to_rating
+re << /^(?<company_name>.*) \((?<exchange>.*):(?<ticker_symbol>.*)\).*analysts at (?<analyst>.*) .*to a.*"(?<to_rating>.*)" rating\./
+
+########################################################
+
+
 Mail.defaults do
-  retriever_method :imap, :address    => "imap.gmail.com",
-                          :port       => 993,
-                          :user_name  => ENV['GMAIL_USER'],
-                          :password   => ENV['GMAIL_PASS'],
-                          :enable_ssl => true
+  retriever_method :imap, address:    "imap.gmail.com",
+                          port:       993,
+                          user_name:  ENV['GMAIL_USER'],
+                          password:   ENV['GMAIL_PASS'],
+                          enable_ssl: true
 end
 
 
-emails = Mail.find(:what => :last, :count => 40, :order => :asc, :keys => 'ALL')
+emails = Mail.find( what:   :last, 
+                    count:  10000,      # how many days back from today
+                    order:  :asc, 
+                    keys:   'FROM newsletters@analystratings.net')
 
+bar = ProgressBar.new(emails.size)
+
+
+# IMAPv4 RFC 3501 March 2003
+# Section 6.4.4 the SEARCH command
+# value for 'keys:' can take on these values
+
+=begin
+
+      ALL
+         All messages in the mailbox; the default initial key for
+         ANDing.
+
+      ANSWERED
+         Messages with the \Answered flag set.
+
+      BCC <string>
+         Messages that contain the specified string in the envelope
+         structure's BCC field.
+
+      BEFORE <date>
+         Messages whose internal date (disregarding time and timezone)
+         is earlier than the specified date.
+
+      BODY <string>
+         Messages that contain the specified string in the body of the
+         message.
+
+      CC <string>
+         Messages that contain the specified string in the envelope
+         structure's CC field.
+
+      DELETED
+         Messages with the \Deleted flag set.
+
+      DRAFT
+         Messages with the \Draft flag set.
+
+      FLAGGED
+         Messages with the \Flagged flag set.
+
+      FROM <string>
+         Messages that contain the specified string in the envelope
+         structure's FROM field.
+
+      HEADER <field-name> <string>
+         Messages that have a header with the specified field-name (as
+         defined in [RFC-2822]) and that contains the specified string
+         in the text of the header (what comes after the colon).  If the
+         string to search is zero-length, this matches all messages that
+         have a header line with the specified field-name regardless of
+         the contents.
+
+      KEYWORD <flag>
+         Messages with the specified keyword flag set.
+
+      LARGER <n>
+         Messages with an [RFC-2822] size larger than the specified
+         number of octets.
+
+      NEW
+         Messages that have the \Recent flag set but not the \Seen flag.
+         This is functionally equivalent to "(RECENT UNSEEN)".
+
+      NOT <search-key>
+         Messages that do not match the specified search key.
+
+      OLD
+         Messages that do not have the \Recent flag set.  This is
+         functionally equivalent to "NOT RECENT" (as opposed to "NOT
+         NEW").
+
+      ON <date>
+         Messages whose internal date (disregarding time and timezone)
+         is within the specified date.
+
+      OR <search-key1> <search-key2>
+         Messages that match either search key.
+
+      RECENT
+         Messages that have the \Recent flag set.
+
+      SEEN
+         Messages that have the \Seen flag set.
+
+      SENTBEFORE <date>
+         Messages whose [RFC-2822] Date: header (disregarding time and
+         timezone) is earlier than the specified date.
+
+      SENTON <date>
+         Messages whose [RFC-2822] Date: header (disregarding time and
+         timezone) is within the specified date.
+
+      SENTSINCE <date>
+         Messages whose [RFC-2822] Date: header (disregarding time and
+         timezone) is within or later than the specified date.
+
+      SINCE <date>
+         Messages whose internal date (disregarding time and timezone)
+         is within or later than the specified date.
+
+      SMALLER <n>
+         Messages with an [RFC-2822] size smaller than the specified
+         number of octets.
+
+      SUBJECT <string>
+         Messages that contain the specified string in the envelope
+         structure's SUBJECT field.
+
+      TEXT <string>
+         Messages that contain the specified string in the header or
+         body of the message.
+
+      TO <string>
+         Messages that contain the specified string in the envelope
+         structure's TO field.
+
+      UID <sequence set>
+         Messages with unique identifiers corresponding to the specified
+         unique identifier set.  Sequence set ranges are permitted.
+
+      UNANSWERED
+         Messages that do not have the \Answered flag set.
+
+      UNDELETED
+         Messages that do not have the \Deleted flag set.
+
+      UNDRAFT
+         Messages that do not have the \Draft flag set.
+
+      UNFLAGGED
+         Messages that do not have the \Flagged flag set.
+
+      UNKEYWORD <flag>
+         Messages that do not have the specified keyword flag set.
+
+      UNSEEN
+         Messages that do not have the \Seen flag set.
+
+=end
 
 #ap emails.first.methods
 
 
+db = RDB.new( db: 'analyst_ratings', table: 'upsndowns', drop: true, create_if_missing: true )
+
+
 emails.each do |mail|
+  bar.increment!
   next unless mail.from.include? "newsletters@analystratings.net"
 
-  print "\n\n"
-  puts "Date: #{mail.date}"
-  puts "HTML:"
+  # puts "Date: #{mail.date}"
 
   raw_source = mail.html_part.raw_source
   processed_source = raw_source.
@@ -89,87 +283,41 @@ emails.each do |mail|
     downgrades << t
   end
 
+  analysts_pronouncements = upgrades + downgrades
+ 
+  analysts_pronouncements.each do |ac|
+    record = Hash.new
+    record[:date] = mail.date.to_time
 
-  # ap upgrades
-  # ap downgrades
-
-  re = Array.new
-
-  # company_name
-  # exchange
-  # ticker_symbol
-  # analyst
-  # from_rating
-  # to_rating
-  # price_target
-  # upside_percent
-  # prev_close
-  re << /^(?<company_name>.*) \((?<exchange>.*):(?<ticker_symbol>.*)\).*analysts at (?<analyst>.*) from a.* "(?<from_rating>.*)" rating .* "(?<to_rating>.*)".*\$(?<price_target>\d+.\d+) price target.* (?<upside_percent>.*)%.*\$(?<prev_close>\d+.\d+)/
-
-
-  re << /^(?<company_name>.*) \((?<exchange>.*):(?<ticker_symbol>.*)\).*analysts at (?<analyst>.*) to a.* "(?<to_rating>.*)" rating\. .* \(\$(?<price_target>\d.\d+)\) price target/
-
-  re << /^(?<company_name>.*) \((?<exchange>.*):(?<ticker_symbol>.*)\).*analysts at (?<analyst>.*) from a.* "(?<from_rating>.*)" rating .* "(?<to_rating>.*)".* closing price of \$(?<prev_close>\d+.\d+)/
-
-
-  # BHP Billiton plc (LON:BLT)  was upgraded by analysts at Haitong Bank to a "buy" rating. They now have a GBX 1,002 ($13.22) price target on the stock, up previously from GBX 864 ($11.40).
-
-  re << /^(?<company_name>.*) \((?<exchange>.*):(?<ticker_symbol>.*)\).*analysts at (?<analyst>.*) to a.*"(?<to_rating>.*)" rating\. .* now have a .*\$(?<price_target>\d+.\d+).* price target/
-
-  # Crescent Point Energy Co. Ordinary Shares (Canada) (NYSE:CPG)  was upgraded by analysts at TD Securities to a "buy" rating. Previous closing price of $15.74.
-
-  re << /^(?<company_name>.*) \((?<exchange>.*):(?<ticker_symbol>.*)\).*analysts at (?<analyst>.*) to a.*"(?<to_rating>.*)" rating\. .* closing price of \$(\d+.\d+)./
-
-
-  # Ubm Plc (NASDAQ:UBMOF)  was upgraded by analysts at Bank of America from an "underperform" rating to a "neutral" rating.
-
-  # Ubm Plc (NASDAQ:UBMOF)  was upgraded by analysts at Bank of America from an \"underperform\" rating to a \"neutral\" rating.
-
-  re << /^(?<company_name>.*) \((?<exchange>.*):(?<ticker_symbol>.*)\).*analysts at (?<analyst>.*) from a.*"(?<from_rating>.*)" rating to a.*"(?<to_rating>.*)" rating\./
-
-  # Priceline Group Inc (NASDAQ:PCLN)  was upgraded by analysts at Morgan Stanley from an \"equal weight\" rating to an \"overweight\" rating. They now have a $1,525.00 price target on the stock, up previously from $1,330.00. 23.0% upside from the previous close of $1,239.41.
-  
-
-
-  upgrades.each do |u|
     match_data = nil
 
     re.each do |r|
-      match_data    = r.match u
+      match_data    = r.match ac
       break unless match_data.nil?
     end
 
     if match_data.nil?
       puts
       puts "ERROR: Need new regexp for:"
-      puts u
+      puts ac
       puts
       next
     end
 
-    company_name  = match_data.names.include?('company_name')   ? match_data[:company_name] : nil
-    exchange      = match_data.names.include?('exchange')       ? match_data[:exchange] : nil
-    ticker_symbol = match_data.names.include?('ticker_symbol')  ? match_data[:ticker_symbol] : nil
-    analyst       = match_data.names.include?('analyst')        ? match_data[:analyst] : nil
-    from_rating   = match_data.names.include?('from_rating')    ? match_data[:from_rating] : nil
-    to_rating     = match_data.names.include?('to_rating')      ? match_data[:to_rating] : nil
-    price_target  = match_data.names.include?('price_target')   ? match_data[:price_target] : nil
-    upside_percent= match_data.names.include?('upside_percent') ? match_data[:upside_percent] : nil
-    prev_close    = match_data.names.include?('prev_close')     ? match_data[:prev_close] : nil
+    %w[ company_name  exchange      ticker_symbol   analyst  from_rating
+        to_rating     price_target  percent_change  prev_close
+        ].each do |field|
+      symbol = field.to_sym
+      record[ symbol ] = match_data.names.include?(field)   ? match_data[symbol] : nil
+    end
 
-    puts
-    debug_me {[
-        :u,
-        :company_name,
-        :exchange,
-        :ticker_symbol,
-        :analyst,
-        :from_rating,
-        :to_rating,
-        :price_target,
-        :upside_percent,
-        :prev_close
-      ]}
+    # print "\n\n"
+    # debug_me {[
+    #     :u,
+    #     :record
+    #   ]}
+
+    db.insert(record)
 
   end
 

@@ -1,4 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'mail'
+gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
+gem 'progress_bar'            # Simple Progress Bar for output to a terminal
+
+gem 'mail'                    # Mail provides a nice Ruby DSL for making, sending and reading emails.
 #brew install 'html2text'

@@ -1,17 +1,29 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    highline (1.7.8)
+    json (1.8.3)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    options (2.3.2)
+    progress_bar (1.0.5)
+      highline (~> 1.6)
+      options (~> 2.3.0)
+    rethinkdb (2.3.0.0)
+      json
+    rethinkdb_helper (0.0.4)
+      rethinkdb (~> 2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   mail
+  progress_bar
+  rethinkdb_helper
 
 BUNDLED WITH
    1.12.5
