@@ -65,7 +65,7 @@ end
 
 
 emails = Mail.find( what:   :last, 
-                    count:  10000,      # how many days back from today
+                    count:  1000,      # how many days back from today
                     order:  :asc, 
                     keys:   'FROM newsletters@analystratings.net')
 
@@ -241,7 +241,11 @@ emails.each do |mail|
   processed_text  = raw_text.
                         gsub("\n(\n", " (").
                         gsub("\n)", ")").
-                        gsub("Read More\n.  \nTweet This\n.", '')
+                        gsub("Read More\n.  \nTweet This\n.", '').
+                        gsub(" \n", "\n").
+                        gsub("analysts at\n", "analysts at ").
+                        gsub("\nfrom", " from").
+                        gsub(" \n", "\n")
 
   f= File.open('content.txt','w')
   f.puts processed_text
