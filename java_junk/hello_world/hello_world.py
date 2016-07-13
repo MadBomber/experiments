@@ -1,8 +1,7 @@
-#!/usr/bin/env jruby
-# hello_world.rb 
+#!/usr/bin/env jython
+# hello_world.py
 
-require 'java'
-java_import 'HelloWorld'
+import HelloWorld
 
 HelloWorld.main()
 HelloWorld.world()
@@ -10,3 +9,4 @@ HelloWorld.earth()
 HelloWorld.moon()
 HelloWorld.somebody('Dewayne')
 HelloWorld.people( ['John', 'Paul', 'George', "Ringo"] )
+
