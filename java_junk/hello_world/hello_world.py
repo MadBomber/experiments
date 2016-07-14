@@ -11,7 +11,8 @@ HelloWorld.people( ['John', 'Paul', 'George', "Ringo"] )
 
 print '\n###########################################'
 print '## Now lets do it to the jRuby generated class HelloWorldRuby'
-print '## MUST have the jRuby jars etc in the CLASSPATH\n'
+print '## MUST have the jRuby jars etc in the CLASSPATH'
+[rint '## Problem is deeper than just the CLASSPATH.\n']
 
 import HelloWorldRuby
 
