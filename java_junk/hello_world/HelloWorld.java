@@ -1,15 +1,16 @@
 /******************************************************************************
  *  Compilation:  javac HelloWorld.java
- *  Execution:    java HelloWorld
+ *  Execution:    Because there is no "main" method you can not execute this class
+ *                It must be called from another main.  See for example:
+ *                  HelloWorldJava.java   For a Java mainline
+ *                  hello_world.rb        For a jRuby mainline
+ *                  hello_world.py        For a jython mainline
  ******************************************************************************/
+
 
 public class HelloWorld {
 
-  public static void main() { // String[] args) {
-    System.out.println("Hello, Main");
-  }
-
-    public static void world() {
+  public static void world() {
     System.out.println("Hello, World");
   }
 
