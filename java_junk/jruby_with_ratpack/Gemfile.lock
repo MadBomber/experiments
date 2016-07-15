@@ -12,16 +12,20 @@ GEM
     equalizer (0.0.11)
     ice_nine (0.11.2)
     jar-dependencies (0.3.4)
-    jbundler (0.9.3)
+    jbundler (0.9.2)
       bundler (~> 1.5)
-      jar-dependencies (~> 0.3)
-      maven-tools (~> 1.1)
-      ruby-maven (~> 3.3, >= 3.3.8)
-    maven-tools (1.1.6)
+      jar-dependencies (~> 0.2)
+      maven-tools (~> 1.0.10)
+      ruby-maven (~> 3.3, >= 3.3.3)
+    jdbc-postgres (9.4.1206)
+    jdbc-url (0.1.0)
+    maven-tools (1.0.13)
       virtus (~> 1.0)
+    rake (11.2.2)
     ruby-maven (3.3.12)
       ruby-maven-libs (~> 3.3.9)
     ruby-maven-libs (3.3.9)
+    sequel (4.36.0)
     thread_safe (0.3.5-java)
     virtus (1.0.5)
       axiom-types (~> 0.1)
@@ -33,7 +37,11 @@ PLATFORMS
   java
 
 DEPENDENCIES
-  jbundler
+  jbundler (= 0.9.2)
+  jdbc-postgres
+  jdbc-url
+  rake
+  sequel
 
 BUNDLED WITH
    1.12.5

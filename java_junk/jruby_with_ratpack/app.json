@@ -1,0 +1,8 @@
+{
+  "name": "Example Ratpack app",
+  "description": "A JRuby based Ratpack app that can easily be deployed to Heroku.",
+  "scripts": {
+    "postdeploy": "rake db:migrate"
+  },
+  "addons": ["heroku-postgresql"]
+}
