@@ -57,11 +57,6 @@ GEM
       elasticsearch-transport (= 2.0.0)
     elasticsearch-api (2.0.0)
       multi_json
-    elasticsearch-model (0.1.9)
-      activesupport (> 3)
-      elasticsearch (> 0.4)
-      hashie
-    elasticsearch-rails (0.1.9)
     elasticsearch-transport (2.0.0)
       faraday
       multi_json
@@ -181,8 +176,6 @@ DEPENDENCIES
   bootstrap-typeahead-rails
   byebug
   coffee-rails (~> 4.2)
-  elasticsearch-model
-  elasticsearch-rails
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
