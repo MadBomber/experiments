@@ -1,0 +1,22 @@
+<h1>Search Results</h1>
+
+<% if @articles %>
+  <ul class="search_results">
+    <% @articles.each do |article| %>
+      <li>
+        <h3>
+          <%= link_to article.try(:highlight).try(:title) ?
+              article.highlight.title[0].html_safe : article.title,
+              controller: "articles", action: "show", id: article._id %>
+        </h3>
+        <% if article.try(:highlight).try(:text) %>
+          <% article.highlight.text.each do |snippet| %>
+          <p><%= snippet.html_safe %>...</p>
+        <% end %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+<% else %>
+  <p>Your search did not match any documents.</p>
+<% end %>
