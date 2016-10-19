@@ -48,6 +48,23 @@ Here is the sequence:
 =end
 #
 
+if  ENV['BASE_REPO_WD'].nil?      ||
+    ENV['EXTERNAL_REPO_WD'].nil?
+
+  puts
+  puts "ERROR: Expected system environment varialbes not found."
+  puts "BASE_REPO_WD:     [#{ENV['BASE_REPO_WD']}]"
+  puts "EXTERNAL_REPO_WD: [#{ENV['EXTERNAL_REPO_WD']}]"
+  puts
+  exit -1
+end
+
+require 'pathname'
+
+base_repo_wd_path     = Pathname.new ENV['BASE_REPO_WD']
+external_repo_wd_path = Pathname.new ENV['EXTERNAL_REPO_WD']
+
+
 require 'debug_me'
 include DebugMe
 
@@ -67,6 +84,103 @@ Git.configure do |config|
   # If you need to use a custom SSH script
   #config.git_ssh = '/path/to/ssh/script'
 end
+
+
+debug_me{[
+  :base_repo_wd_path,
+  :external_repo_wd_path
+]}
+
+def git(command_string, repo_wd)
+  result = `cd #{repo_wd}; git #{command_string}`
+  return result
+end
+
+def git_current_branch(repo_wd)
+  branches  = git('branch', repo_wd).split("\n")
+  branch    = branches.select{|b| b.start_with?('*')}.shift
+  return branch[2,99_999]
+end
+
+def commit_params(external_log_entry, dry_run=true)
+  author  = external_log_entry.author.name + " <#{external_log_entry.author.email}>"
+  date    = external_log_entry.author.date.to_s
+  message = "Original Commit SHA: #{external_log_entry.sha}\n"
+  message += "Original Message:\n" + external_log_entry.message.gsub("'", "")
+  params  = dry_run ? "--dry-run " : ''
+  params  += "--date '#{date}' --author='#{author}' -m '#{message}'"
+  return params
+end
+
+
+base_repo = Git.open(base_repo_wd_path, :log => Logger.new(STDOUT))
+
+external_repo = Git.open(external_repo_wd_path, :log => Logger.new(STDOUT))
+
+
+# Make sure that both working_directories are on the correct branch: master
+
+base_repo_branch      = git_current_branch(base_repo_wd_path)
+external_repo_branch  = git_current_branch(external_repo_wd_path)
+
+unless "master" == external_repo_branch
+  puts
+  puts "ERROR: The external repo working directory must have its master branch checked out."
+  puts "        external_repo_branch: #{external_repo_branch}"
+  puts
+  exit -1
+end
+
+
+if "master" == base_repo_branch
+  # create branch splice
+  print "Creating the splice branch for the base repo working directory ... "
+  git('branch splice', base_repo_wd)
+  git('checkout splice', base_repo_wd)
+  puts "done"
+elsif 'splice' == base_repo_branch
+  puts "Using existing splice branch on base repo working directory ..."
+else
+  puts
+  puts "ERROR: The base repo working directory must have its master or splice branch checked out."
+  puts "        base_repo_branch is:  #{base_repo_branch}"
+  puts
+  exit -1
+end
+
+# At this point the working directories are correctly configured
+# Assuming we are going to do the splice in one shot
+
+external_repo_log = external_repo.log(100_000)
+
+external_repo_log_last = external_repo_log.last
+
+=begin
+debug_me("LAST") {%w[
+  external_repo_log.size
+  external_repo_log_last.date
+  external_repo_log_last.sha
+  external_repo_log_last.author.date
+  external_repo_log_last.author.name
+  external_repo_log_last.author.email
+  external_repo_log_last.committer.date
+  external_repo_log_last.committer.name
+  external_repo_log_last.committer.email
+  external_repo_log_last.message
+  external_repo_log_last.contents_array
+]}
+
+puts commit_params external_repo_log_last
+=end
+
+
+external_repo_log.reverse_each do |entry|
+  puts "="*52
+  puts commit_params(entry)
+end
+
+
+__END__
 
 
 working_dir = Pathname.pwd.parent.to_s
