@@ -13,6 +13,16 @@ require 'date'
 require 'debug_me'
 include DebugMe
 
+# Adding a little sugar to String to support
+# duck typing requirement of the extract_jira_tickets method
+
+class String
+  def join
+    self
+  end
+end
+
+
 usage = <<EOS
 
 Parse a git-based working directory's log file
@@ -96,12 +106,22 @@ def extract_description(an_array)
 end
 
 
+# from can be a string or an array of strings
+def extract_jira_tickets(projects: ['PP', 'DEAP', 'CUI'], from:)
+  minmax_string   = projects.map{|x|x.size}.minmax.join(',')
+  project_string  = projects.join + projects.join.downcase
+  project_string  = project_string.scan(/\w/).uniq.sort.join
+  regex_string    = "([#{project_string}]{#{minmax_string}}-" + '\d+)'
+  jira_re         = Regexp.new(regex_string)
+  jira_tickets    = from.join(' ').scan(jira_re).flatten.map{|t|t.upcase}.sort.uniq
+  return jira_tickets
+end
+
+
 def parse_pull_request(a_string)
   pr_details    = /^\s.*#(?<id>\d+) in (?<repo>.*) from (?<source>.*) to (?<target>.*)$/.match(a_string)
   pull_request  = Hash[ pr_details.names.map{|k|k.to_sym}.zip( pr_details.captures ) ]
-  jira_tickets  = pull_request[:source].scan(/([Pp]{2}-\d+)/).flatten.map{|t|t.upcase}.sort.uniq
-
-  pull_request[jira: jira_tickets]
+  return pull_request
 end
 
 
@@ -113,17 +133,24 @@ end
 
 
 def parse_commit(an_array)
-  commit_id = an_array.first.split().last
-  merge     = is_a_merge(an_array)
+  commit_id     = an_array.first.split().last
+  date          = extract_date(an_array)
+  author        = extract_author(an_array)
+  merge         = is_a_merge(an_array)
+  pull_request  = merge ? extract_pull_request(an_array) : {}
+  files         = extract_files(an_array)
+  description   = extract_description(an_array)
+  jira_tickets  = extract_jira_tickets from: [pull_request[:source], description]
 
   return {
     id:           commit_id,
-    date:         extract_date(an_array),
-    author:       extract_author(an_array),
+    date:         date,
+    author:       author,
     merge:        merge,
-    pull_request: merge ? extract_pull_request(an_array) : {},
-    files:        extract_files(an_array),
-    description:  extract_description(an_array)
+    pull_request: pull_request,
+    files:        files,
+    description:  description,
+    jira_tickets: jira_tickets
   }
 end
 
@@ -133,7 +160,7 @@ end
 
 result = `#{git_log_command}`.split("\n")
 
-max_commits   = 15
+max_commits   = 3000
 commit_count  = 0
 line_count    = 0
 
