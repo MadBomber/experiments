@@ -1,0 +1,13 @@
+name: simple_cli
+version: 0.1.0
+
+authors:
+  -  <>
+
+targets:
+  simple_cli:
+    main: src/simple_cli.cr
+
+crystal: 0.24.1
+
+license: MIT
