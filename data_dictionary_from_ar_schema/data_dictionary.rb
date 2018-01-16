@@ -12,8 +12,12 @@ include DebugMe
 
 require 'awesome_print'
 
-$tables   = Hash.new
-$columns  = Hash.new
+require 'active_support/all'
+
+
+$schema_version = "The date of the last migration"
+$tables         = Hash.new
+$columns        = Hash.new
 
 
 module ActiveRecord
@@ -22,7 +26,6 @@ module ActiveRecord
 
       def define(a_hash, &block)
         migration_version = a_hash[:version].to_s
-        debug_me{:migration_version}
         d = Define.new(migration_version)
         d.instance_eval(&block)
       end
@@ -35,12 +38,11 @@ end # module ActiveRecord
 class Define
 
   def initialize(migration_version)
-    @migration_version = migration_version
+    $schema_version = migration_version
   end
 
 
   def create_table(*args, &block)
-    debug_me{:args}
     t = Table.new(*args)
     t.instance_eval(&block)
   end
@@ -58,7 +60,7 @@ class Define
 
 
   def enable_extension(*args)
-    # NOOP
+    # NOOP - don't care about what extensions are installed
   end
 
 
@@ -66,27 +68,43 @@ class Define
     table_name = args.shift
     t = Table.new(table_name)
 
-    # TODO: need to get the singular version of the table name
-    reference_field_name = args.shift + '_id'
+    associated_table_name = args.shift
+
+    reference_field_name = associated_table_name.singularize + '_id'
 
     t.reference(reference_field_name)
 
-    debug_me{[ :table_name, :reference_field_name, :args]}
     unless $tables[table_name].has_key?(:foreign_key)
       $tables[table_name][:foreign_key] = [ [reference_field_name, args] ]
     else
       $tables[table_name][:foreign_key] << [reference_field_name, args]
     end
-  end
+
+    unless $tables[table_name].has_key?(:associated_with)
+      $tables[table_name][:associated_with] = [ associated_table_name ]
+    else
+      $tables[table_name][:associated_with] << associated_table_name
+    end
+
+    unless $tables[associated_table_name].has_key?(:associated_with)
+      $tables[associated_table_name][:associated_with] = [ table_name ]
+    else
+      $tables[associated_table_name][:associated_with] << table_name
+    end
+
+
+
+  end # def add_foreign_key(*args)
 
 end # class Define
 
 
 class Table
   def initialize(*args)
-    puts "="*42
     @table_name = args.shift
-    $tables[@table_name] = args.first # SMELL: assumes only a hash follows
+    unless args.empty?
+      $tables[@table_name] = args.first # SMELL: assumes only a hash follows
+    end
   end
 
   %w[
@@ -103,11 +121,12 @@ class Table
     eval <<~EOM
       def #{dsl_method_name}(*args, &block)
         @column_name = args.shift
+        @data_type   = "#{dsl_method_name}"
 
         unless $columns.has_key?(@column_name)
-          $columns[@column_name] = [ [@table_name, args] ]
+          $columns[@column_name] = [ [@table_name, @data_type, args] ]
         else
-          $columns[@column_name] << [@table_name, args]
+          $columns[@column_name] << [@table_name, @data_type, args]
         end
 
         yield if block_given?
@@ -121,31 +140,81 @@ class Table
 end # class Table
 
 
-at_exit do
-  puts "Data Dictionary"
-  ap $tables
-  ap $columns
+def table_report
+  puts "\n\n## Database Tables"
+  puts <<~EndOfHeader
+
+    | Table Name | Indexed By | Associated With |
+    | ---------- | ---------- | --------------- |
+  EndOfHeader
+
+  keys = $tables.keys.sort
+  keys.each do |table_name|
+    puts "| #{table_name} | #{$tables[table_name][:indexed_by].join(', ')} | #{$tables[table_name][:associated_with].join(', ')} |"
+  end
+
+  puts "\n\n"
+
 end
 
-__END__
-      %w[
-          enable_extension define create_table add_index add_foreign_key
-          string
-          datetime
-          text
-          boolean
-          integer
-          inet
-          json
-          date
-      ].each do |dsl_method_name|
-        eval <<~EOM
-          def #{dsl_method_name}(*args, &block)
-            debug_me{:args}
-            yield(self) if block_given?
-            self
-          end
-        EOM
-      end
+class String
+  def join(*args)
+    self
+  end
+end
 
+
+class NilClass
+  def join(*args)
+    'N/A'
+  end
+  def has_key?(*args)
+    false
+  end
+  def [](*args)
+    'N/A'
+  end
+end
+
+
+def column_report
+  puts "\n\n## Column Definitions"
+  puts <<~EndOfHeader
+
+    | Column Name | Table Name | Data Type | Qualifiers |
+    | ----------- | ---------- | --------- | ---------- |
+  EndOfHeader
+
+  keys = $columns.keys.sort
+
+  keys.each do |key|
+    tables = $columns[key].each do |table|
+      table_name  = table.shift
+      data_type   = table.shift
+      other_stuff = table.flatten
+      other_stuff = other_stuff.empty? ? '' : other_stuff.shift
+      puts "| #{key} | #{table_name} | #{data_type} | #{other_stuff} |"
+    end
+  end
+
+  # ap $columns['visn_id']
+  # ap $columns['xml']
+
+end
+
+
+at_exit do
+  puts "# Data Dictionary"
+  puts <<~EndOfHeader
+
+    This report is auto-generated from the file 'db/schema.rb'
+
+    Report Date:    #{Date.today}
+    Last Migration: #{$schema_version}
+
+  EndOfHeader
+
+  table_report
+  column_report
+end
 
