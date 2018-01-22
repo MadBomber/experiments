@@ -3,14 +3,21 @@ require 'system_package' # from MadBomber/lib_ruby
 source 'https://rubygems.org'
 
 system_package 'catdoc'   if fedora? || mac?
+system_package 'gsl'      if fedora? || mac?
 system_package 'html2txt' if fedora? || mac?
 system_package 'pdf2txt'  if fedora? || mac?
+
 
 # Database stuff
 gem 'activerecord'
 gem 'pg'
 gem 'rethinkdb'
 gem 'nobrainer'
+
+# Other data sources
+gem 'spreadsheet' # used with lurn
+gem 'mechanize'   # used with lurn
+
 
 # Utilities
 
@@ -27,7 +34,9 @@ gem 'uclassify'
 
 gem 'nbayes'
 gem 'bayesball'       # this is nice
+gem 'lurn'
 gem 'omnicat-bayes'
+
 
 
 # bayes and LSI
@@ -35,7 +44,7 @@ gem 'omnicat-bayes'
 gem 'reclassifier'
 gem 'madeleine'       # object persistence; has not worked
 
-gem 'classifier-reborn', git: 'https://github.com/MadBomber/classifier-reborn.git'
+gem 'classifier-reborn'  #, git: 'https://github.com/MadBomber/classifier-reborn.git'
 
 system_package 'gsl'  if fedora? || mac?
 gem 'gsl'  # might load its own gsl library
