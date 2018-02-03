@@ -10,17 +10,29 @@ require 'pathname'
 
 ABILITIES = Hash.new
 
+def current_user
+  rand(42)
+end
+
+
 class ApplicationController
   class << self
 
-    def desc(a_string)
+    def my_ability(a_string, &conditional_block)
       called_from_parts = caller.first.split(':')
       file_path         = Pathname.new(called_from_parts[0])
       file_line_number  = called_from_parts[1].to_i - 1  # -1 to zero-base the index
       category_name     = called_from_parts.last[0..-3].gsub('Controller', '')
       method_name = get_next_method_name(file_path, file_line_number)
 
-      insert_into_abilities category_name, method_name, a_string
+      if block_given?
+        conditional_proc = conditional_block.to_proc
+      else
+        conditional_proc = Proc.new {true}
+      end
+
+      insert_into_abilities(category_name, method_name, a_string, conditional_proc)
+
     end # ebd def desc(a_string)
 
     ##########################################################
@@ -40,11 +52,24 @@ class ApplicationController
       method_name = a_line.split(/\ +|\(|\{/)[1]
     end
 
-    def insert_into_abilities(category_name, method_name, description)
+    def insert_into_abilities(  category_name,
+                                method_name,
+                                ability_description,
+                                condition)
       unless ABILITIES.has_key? category_name
         ABILITIES[category_name] = Hash.new
       end
-      ABILITIES[category_name][method_name] = description
+      if ABILITIES[category_name].has_key? method_name
+        ABILITIES[category_name][method_name] << {
+          ability:    ability_description,
+          condition:  condition
+        }
+      else
+        ABILITIES[category_name][method_name] = [{
+          ability:    ability_description,
+          condition:  condition
+        }]
+      end
     end
   end # end class << self
 end # class ApplicationController
@@ -53,12 +78,12 @@ end # class ApplicationController
 
 class SomeObjectController < ApplicationController
 
-  desc "Vuew a list"
+  my_ability "Vuew a list"
   def index
     puts self.name
   end
 
-  desc "View a specific"
+  my_ability "View a specific"
   def show
     puts self.name
   end
@@ -67,27 +92,39 @@ end # class SomeObjectController < ApplicationController
 
 class AnotherObjectController < ApplicationController
 
-  desc "Vuew a list"
+  my_ability "Vuew a list"
   def index
     puts self.name
   end
 
-  desc "View a specific"
+  my_ability "View a specific"
   def show
     puts self.name
   end
 
-  desc "delete a specific"
+  my_ability "delete a specific superuser"
+  my_ability("delete a specific if odd one") {|current_user| puts current_user; current_user.odd? }
+  my_ability("delete a specific if odd two") {|current_user| puts current_user; current_user.odd? }
   def delete
     puts self.name
   end
 
-  desc "update a specific"
+  my_ability "update a specific superuser"
+  my_ability("update a specific if even one") {|current_user| puts current_user; current_user.even? }
+  my_ability("update a specific if even two") {|current_user| puts current_user; current_user.even? }
   def edit
     puts self.name
   end
 end # end class AnotherObjectController < ApplicationController
 
 
-
+puts "All Abilities ..."
 ap ABILITIES
+
+puts "Permissions for AnotherObject's edit action ..."
+ap ABILITIES['AnotherObject']['edit']
+
+ABILITIES['AnotherObject']['edit'].each do |a_desc_hash|
+  puts a_desc_hash[:ability]
+  puts a_desc_hash[:condition].call(current_user)
+end
