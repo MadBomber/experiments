@@ -18,6 +18,7 @@ end
 class ApplicationController
   class << self
 
+    # describe an ability with an optional condition block
     def my_ability(a_string, &conditional_block)
       called_from_parts = caller.first.split(':')
       file_path         = Pathname.new(called_from_parts[0])
@@ -32,12 +33,15 @@ class ApplicationController
       end
 
       insert_into_abilities(category_name, method_name, a_string, conditional_proc)
+    end # end def my_ability(a_string, &conditional_block)
 
-    end # ebd def desc(a_string)
 
     ##########################################################
     ## Reserved class methods
     private
+
+    # Find the method name to which this ability applies
+    # Assumes that the method name follows "def" on the same line
     def get_next_method_name(a_path, a_line_number)
       lines = a_path.read.split("\n")
       called_from_line  = lines[a_line_number]
@@ -49,9 +53,11 @@ class ApplicationController
         a_line = lines[line_number].strip
         found_def = a_line.start_with? 'def'
       end
-      method_name = a_line.split(/\ +|\(|\{/)[1]
+      a_line.split(/\ +|\(|\{/)[1]
     end
 
+
+    # store the gather information into the kernal-level constant
     def insert_into_abilities(  category_name,
                                 method_name,
                                 ability_description,
@@ -70,7 +76,7 @@ class ApplicationController
           condition:  condition
         }]
       end
-    end
+    end # end def insert_into_abilities( ...
   end # end class << self
 end # class ApplicationController
 
