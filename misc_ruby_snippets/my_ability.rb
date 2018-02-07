@@ -8,7 +8,9 @@ include DebugMe
 
 require 'pathname'
 
-ABILITIES = Hash.new
+ABILITIES = {
+  ability_identifiers: []
+}
 
 def current_user
   rand(42)
@@ -19,12 +21,13 @@ class ApplicationController
   class << self
 
     # describe an ability with an optional condition block
-    def my_ability(a_string, &conditional_block)
+    def my_ability(ability_unique_identifier, description, &conditional_block)
+
       called_from_parts = caller.first.split(':')
       file_path         = Pathname.new(called_from_parts[0])
       file_line_number  = called_from_parts[1].to_i - 1  # -1 to zero-base the index
       category_name     = called_from_parts.last[0..-3].gsub('Controller', '')
-      method_name = get_next_method_name(file_path, file_line_number)
+      method_name       = get_next_method_name(file_path, file_line_number)
 
       if block_given?
         conditional_proc = conditional_block.to_proc
@@ -32,7 +35,11 @@ class ApplicationController
         conditional_proc = Proc.new {true}
       end
 
-      insert_into_abilities(category_name, method_name, a_string, conditional_proc)
+      insert_into_abilities(  ability_unique_identifier,
+                              category_name,
+                              method_name,
+                              description,
+                              conditional_proc)
     end # end def my_ability(a_string, &conditional_block)
 
 
@@ -58,20 +65,33 @@ class ApplicationController
 
 
     # store the gather information into the kernal-level constant
-    def insert_into_abilities(  category_name,
+    def insert_into_abilities(  ability_unique_identifier,
+                                category_name,
                                 method_name,
                                 ability_description,
                                 condition)
+
+      unless ABILITIES[:ability_identifiers].include?(ability_unique_identifier)
+        ABILITIES[:ability_identifiers] << ability_unique_identifier
+      else
+        error_msg = "Non-unique ability identifier #{ability_unique_identifier} in #{category_name} at #{method_name} - #{ability_description}"
+        puts "\n** ERROR ** " + error_msg + "\n\n"
+        #raise error_msg
+      end
+
       unless ABILITIES.has_key? category_name
         ABILITIES[category_name] = Hash.new
       end
+
       if ABILITIES[category_name].has_key? method_name
         ABILITIES[category_name][method_name] << {
+          identifier: ability_unique_identifier,
           ability:    ability_description,
           condition:  condition
         }
       else
         ABILITIES[category_name][method_name] = [{
+          identifier: ability_unique_identifier,
           ability:    ability_description,
           condition:  condition
         }]
@@ -84,12 +104,17 @@ end # class ApplicationController
 
 class SomeObjectController < ApplicationController
 
-  my_ability "Vuew a list"
+  my_ability 100, "Vuew a list"
+  my_ability 100, 'invalid non-unique identifier'
+  my_ability :index_ability, 'identifiers can be anything for example a symbol'
+  my_ability 'index_ability', 'identifiers can be anything for example a string'
+  my_ability 100.10, 'identifiers can be anything for example an integer or a float'
+
   def index
     puts self.name
   end
 
-  my_ability "View a specific"
+  my_ability 110, "View a specific"
   def show
     puts self.name
   end
@@ -98,26 +123,26 @@ end # class SomeObjectController < ApplicationController
 
 class AnotherObjectController < ApplicationController
 
-  my_ability "Vuew a list"
+  my_ability 120, "Vuew a list"
   def index
     puts self.name
   end
 
-  my_ability "View a specific"
+  my_ability 130, "View a specific"
   def show
     puts self.name
   end
 
-  my_ability "delete a specific superuser"
-  my_ability("delete a specific if odd one") {|current_user| puts current_user; current_user.odd? }
-  my_ability("delete a specific if odd two") {|current_user| puts current_user; current_user.odd? }
+  my_ability 140, "delete a specific superuser"
+  my_ability(142, "delete a specific if odd one") {|current_user| puts current_user; current_user.odd? }
+  my_ability(144, "delete a specific if odd two") {|current_user| puts current_user; current_user.odd? }
   def delete
     puts self.name
   end
 
-  my_ability "update a specific superuser"
-  my_ability("update a specific if even one") {|current_user| puts current_user; current_user.even? }
-  my_ability("update a specific if even two") {|current_user| puts current_user; current_user.even? }
+  my_ability 150, "update a specific superuser"
+  my_ability(152, "update a specific if even one") {|current_user| puts current_user; current_user.even? }
+  my_ability(154, "update a specific if even two") {|current_user| puts current_user; current_user.even? }
   def edit
     puts self.name
   end
