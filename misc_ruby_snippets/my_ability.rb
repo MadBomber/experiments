@@ -171,5 +171,71 @@ ap ABILITIES.map { |key, value| value[:category] }.uniq.sort
 puts "\nList of actions for AnotherObject ..."
 ap ABILITIES.where(category: 'AnotherObject').map { |key, value| value[:action] }.uniq.sort
 
+##########################################################
+
+
+class Role
+  attr_accessor :name
+  def initialize(name, permissions={})
+    @name = name
+    @permissions = permissions
+  end
+
+  def has_permission?(permission_id)
+    @permissions.has_key? permission_id
+  end
+end # class Role
+
+editor  = Role.new( 'editor', ABILITIES.where(action: 'edit') )
+guest   = Role.new( 'editor', ABILITIES.where(action: 'index') )
+
+ROLES = { editor: editor, guest: guest }
+
+print "\nCan an editor do 100? "
+puts editor.has_permission? 100
+
+print "Can an editor do 150? "
+puts editor.has_permission? 150
+
+
+###########################################
+class User
+  def initialize(name, roles=[])
+    @name = name
+    @roles = roles.map{|r| r.to_sym}
+  end
+
+  def has_role?(role_name)
+    role_name = role_name.to_sym if String == role_name.class
+    @roles.include? role_name
+  end
+
+  def has_permission?(perm_id)
+    result = false
+    @roles.each do |role_name|
+      result ||= ROLES[role_name].has_permission? perm_id
+    end
+    result
+  end
+end # class User
+
+billy = User.new 'billy', [editor.name, :guest]
+
+print "\nIs billy an editor? "
+puts billy.has_role? 'editor'
+
+print "Is billy still an editor? "
+puts billy.has_role? :editor
+
+print "Is billy a guest? "
+puts billy.has_role? :guest
+
+
+print "Can billy do 100? "
+puts billy.has_permission? 100
+
+print "Can billy do 150? "
+puts billy.has_permission? 150
+
 
 
