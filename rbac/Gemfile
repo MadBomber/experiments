@@ -1,25 +1,25 @@
 source 'https://rubygems.org'
 
-gem 'devise'
-gem 'cancancan'
-gem 'rolify'
-gem 'kan'
+gem 'devise'                  # Flexible authentication solution for Rails with Warden
+gem 'cancancan'               # Simple authorization solution for Rails.
+gem 'rolify'                  # Roles library with resource scoping
+gem 'kan'                     # Simple, light and functional authorization library
 
-gem 'activeadmin'
-gem 'rails_admin'
+gem 'activeadmin'             # The administration framework for Ruby on Rails.
+gem 'rails_admin'             # Admin for Rails
 
-gem 'debug_me'
-gem 'awesome_print'
+gem 'debug_me'                # A tool to print the labeled value of variables.
+gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
 
-gem 'rails'
-gem 'sqlite3'
-gem 'puma'
-gem 'sass-rails'
-gem 'haml-rails'
-gem 'jbuilder'
+gem 'rails'                   # Full-stack web application framework.
+gem 'sqlite3'                 # This module allows Ruby programs to interface with the SQLite3 database engine (http://www.sqlite.org)
+gem 'puma'                    # Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for Ruby/Rack applications
+gem 'sass-rails'              # Sass adapter for the Rails asset pipeline.
+gem 'haml-rails'              # let your Gemfile do the configuring
+gem 'jbuilder'                # Create JSON structures via a Builder-style DSL
 
-gem 'byebug'
-gem 'web-console'
-gem 'spring'
+gem 'byebug'                  # Ruby fast debugger - base + CLI
+gem 'web-console'             # A debugging tool for your Ruby on Rails applications.
+gem 'spring'                  # Rails application preloader
 
 
