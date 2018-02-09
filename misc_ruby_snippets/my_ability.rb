@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -wKU
+#!/usr/bin/env ruby -wU
 # desc_method.rb
 # an idea on how to describe abilities
 require 'awesome_print'
@@ -8,9 +8,21 @@ include DebugMe
 
 require 'pathname'
 
-ABILITIES = {
-  ability_identifiers: []
-}
+class Hash
+  def where(options={})
+    return self if options.empty?  ||  options.class != Hash
+    self.select {|key, value|
+      result = true
+      options.each_pair do |field, field_value|
+        result &&= value[field] == field_value
+      end
+      result
+    }
+  end # def where(options)
+end
+
+
+ABILITIES = Hash.new
 
 def current_user
   rand(42)
@@ -71,31 +83,19 @@ class ApplicationController
                                 ability_description,
                                 condition)
 
-      unless ABILITIES[:ability_identifiers].include?(ability_unique_identifier)
-        ABILITIES[:ability_identifiers] << ability_unique_identifier
+      unless ABILITIES.has_key?(ability_unique_identifier)
+        ABILITIES[ability_unique_identifier] = {
+          category:   category_name,
+          action:     method_name,
+          ability:    ability_description,
+          condition:  condition
+        }
       else
         error_msg = "Non-unique ability identifier #{ability_unique_identifier} in #{category_name} at #{method_name} - #{ability_description}"
         puts "\n** ERROR ** " + error_msg + "\n\n"
         #raise error_msg
       end
 
-      unless ABILITIES.has_key? category_name
-        ABILITIES[category_name] = Hash.new
-      end
-
-      if ABILITIES[category_name].has_key? method_name
-        ABILITIES[category_name][method_name] << {
-          identifier: ability_unique_identifier,
-          ability:    ability_description,
-          condition:  condition
-        }
-      else
-        ABILITIES[category_name][method_name] = [{
-          identifier: ability_unique_identifier,
-          ability:    ability_description,
-          condition:  condition
-        }]
-      end
     end # end def insert_into_abilities( ...
   end # end class << self
 end # class ApplicationController
@@ -149,13 +149,27 @@ class AnotherObjectController < ApplicationController
 end # end class AnotherObjectController < ApplicationController
 
 
-puts "All Abilities ..."
+puts "\nAll Abilities ..."
 ap ABILITIES
 
-puts "Permissions for AnotherObject's edit action ..."
-ap ABILITIES['AnotherObject']['edit']
+puts "\nPermissions for AnotherObject's edit action ..."
+ap ABILITIES.where category: 'AnotherObject', action: 'edit'
 
-ABILITIES['AnotherObject']['edit'].each do |a_desc_hash|
-  puts a_desc_hash[:ability]
-  puts a_desc_hash[:condition].call(current_user)
+
+puts "\nCalling the conditional proc for AnotherObject's edit action ..."
+ABILITIES.where(category: 'AnotherObject', action: 'edit').each do |key, value|
+  print key
+  puts ' -- ' + value[:ability]
+  puts value[:condition].call(current_user)
 end
+
+
+puts "\nList of categories ..."
+ap ABILITIES.map { |key, value| value[:category] }.uniq.sort
+
+
+puts "\nList of actions for AnotherObject ..."
+ap ABILITIES.where(category: 'AnotherObject').map { |key, value| value[:action] }.uniq.sort
+
+
+
