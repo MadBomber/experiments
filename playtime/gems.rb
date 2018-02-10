@@ -1,0 +1,11 @@
+source 'https://rubygems.org'
+
+gem 'awesome_print'
+gem 'cli_helper'
+gem 'debug_me'
+gem 'fancy_irb'
+gem 'irbtools'
+gem 'irbtools-more'
+gem 'require_all'
+gem 'sketches'
+gem 'sugar_refinery'
