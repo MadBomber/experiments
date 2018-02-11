@@ -17,41 +17,53 @@ if defined?($puzzle_demo) && $puzzle_demo
 end
 
 # demo toplevel widget
-$puzzle_demo = TkToplevel.new {|w|
-  title("The Ocean of Conflict")
-  iconname("15-Puzzle")
-  positionWindow(w)
+$puzzle_demo = TkToplevel.new { |w|
+  title           "The Ocean of Conflict"
+  iconname        "15-Puzzle"
+  positionWindow  w
 }
 
-base_frame = TkFrame.new($puzzle_demo).pack(:fill=>:both, :expand=>true)
+base_frame = TkFrame.new($puzzle_demo).
+  pack( fill:   :both,
+        expand: true
+      )
 
 # label
 msg = TkLabel.new(base_frame) {
-  font $font
-  wraplength '4i'
-  justify 'left'
-  text "This is the ocean around your Navy"
+  font        $font
+  wraplength  '4i'
+  justify     'left'
+  text        "This is the ocean around your Navy"
 }
 
-msg.pack('side'=>'top')
+msg.pack( 'side' => 'top' )
 
 # frame
-TkFrame.new(base_frame) {|frame|
+TkFrame.new(base_frame) { |frame|
   TkButton.new(frame) {
-    text 'Dismiss'
+    text            'Dismiss'
     command proc{
-      tmppath = $puzzle_demo
-      $puzzle_demo = nil
+      tmppath       = $puzzle_demo
+      $puzzle_demo  = nil
       tmppath.destroy
     }
-  }.pack('side'=>'left', 'expand'=>'yes')
+  }.pack( 'side'    => 'left',
+          'expand'  => 'yes'
+        )
 
   TkButton.new(frame) {
-    text 'Show Code'
-    command proc{showCode 'puzzle'}
-  }.pack('side'=>'left', 'expand'=>'yes')
+    text      'Button TWO'
+    command   proc{
+      puts "Button TWO was clicked"
+    }
+  }.pack( 'side'    => 'left',
+          'expand'  => 'yes'
+          )
 
-}.pack('side'=>'bottom', 'fill'=>'x', 'pady'=>'2m')
+}.pack( 'side'  => 'bottom',
+        'fill'  => 'x',
+        'pady'  => '2m'
+      )
 
 # frame
 
@@ -59,64 +71,70 @@ TkFrame.new(base_frame) {|frame|
 # scrollbar widget and using its trough color.
 begin
   if Tk.windowingsystem() == 'aqua'
-    frameWidth  = 168 / 4 * 10
-    frameHeight = 168 / 4 * 10
+    frameWidth  = 42 * 10
+    frameHeight = 42 * 10
   elsif Tk.default_widget_set == :Ttk
-    frameWidth  = 148 / 4 * 10
-    frameHeight = 124 / 4 * 10
+    frameWidth  = 37 * 10
+    frameHeight = 31 * 10
   else
-    frameWidth  = 120 / 4 * 10
-    frameHeight = 120 / 4 * 10
+    frameWidth  = 30 * 10
+    frameHeight = 30 * 10
   end
 rescue
-  frameWidth  = 120 / 4 * 10
-  frameHeight = 120 / 4 * 10
+  frameWidth  = 30 * 10
+  frameHeight = 30 * 10
 end
 
 
 s = TkScrollbar.new(base_frame)
 
 base = TkFrame.new(base_frame) {
-  width  frameWidth
-  height frameHeight
-  borderwidth 2
-  relief 'sunken'
-  bg s['troughcolor']
+  width         frameWidth
+  height        frameHeight
+  borderwidth   2
+  relief        'sunken'
+  bg            s['troughcolor']
 }
 
 s.destroy
 
-base.pack('side'=>'top', 'padx'=>'1c', 'pady'=>'1c')
+base.pack(  'side'  => 'top',
+            'padx'  => '1c',
+            'pady'  =>  '1c'
+          )
 
 def ocean_clicked_proc(w, num)
   proc{ocean_clicked(w, num)}
 end
 
-# SMELL: really silly way to store a coordinate
-$xpos = {}
-$ypos = {}
+# SMELL: using a global, really?
+$button_position = Hash.new
 
 # create 100 buttons in a 10x10 grid
-100.times.each do |i|
-  num = i
-  $xpos[num] = (i % 10) * 0.1
-  $ypos[num] = (i / 10) * 0.1
-  TkButton.new(base) {|w|
-    relief 'raised'
-    text num
-    highlightthickness 0
-    command ocean_clicked_proc(w, num)
-  }.place(  'relx'=>$xpos[num],
-            'rely'=>$ypos[num],
-            'relwidth'=>0.1,
-            'relheight'=>0.1
+100.times.each do |button_index|
+  button_label        = sprintf "%02i", button_index
+
+  $button_position[button_label] = {
+    x: (button_index % 10) * 0.1,
+    y: (button_index / 10) * 0.1
+  }
+
+  TkButton.new(base) { |w|
+    relief              'raised'
+    text                button_label
+    highlightthickness  0
+    command ocean_clicked_proc(w, button_label)
+  }.place(  'relx'      => $button_position[button_label][:x], # $xpos[button_label],
+            'rely'      => $button_position[button_label][:y], # $ypos[button_label],
+            'relwidth'  => 0.1,
+            'relheight' => 0.1
           )
-end
+end # 100.times.each do |button_index|
 
 # User clicked on an ocean square on the board
-# w ..... (widget) the button object
-# num ... (integer) the button number ie. coordinate
-def ocean_clicked(w, num)
-  puts "Clicked on #{num}"
+# w .............. (widget) the button object
+# button_label ... (String) the button number ie. coordinate
+def ocean_clicked(w, button_label)
+  puts "Clicked on #{button_label}"
 end
 
