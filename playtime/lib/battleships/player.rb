@@ -2,8 +2,8 @@ module Battleships
   class Player
     attr_accessor :board, :opponent, :name
 
-    def place_ship ship, coordinates, orientation = :horizontally
-      board.place_ship ship, coordinates, orientation
+    def place_ship ship_type, coordinates, orientation = :horizontally
+      board.place_ship ship_type, coordinates, orientation
     end
 
     def receive_shot coordinates
