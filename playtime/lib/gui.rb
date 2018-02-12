@@ -297,8 +297,6 @@ end
 
 $showVarsWin = Hash.new
 
-
-
 def showVars(parent, *args)
   if $showVarsWin[parent.path]
     begin
@@ -306,32 +304,62 @@ def showVars(parent, *args)
     rescue
     end
   end
-  $showVarsWin[parent.path] = TkToplevel.new(parent) {|top|
+
+  $showVarsWin[parent.path] = TkToplevel.new(parent) { |top|
     title "Variable values"
 
-    base = TkFrame.new(top).pack(:fill=>:both, :expand=>true)
+    base = TkFrame.new(top).pack( fill: :both, expand: true )
 
-    TkLabelFrame.new(base, :text=>"Variable values:",
-                     :font=>{:family=>'Helvetica', :size=>14}){|f|
-      args.each{|vnam,vbody|
-        TkGrid(TkLabel.new(f, :text=>"#{vnam}: ", :anchor=>'w'),
-               TkLabel.new(f, :textvariable=>vbody, :anchor=>'w'),
-               :padx=>2, :pady=>2, :sticky=>'w')
+    TkLabelFrame.new(
+      base,
+      text: "Variable values:",
+      font: {
+        family:   'Helvetica',
+        size:     14
       }
+    ) { |f|
+        args.each do |vnam, vbody|
+          TkGrid(
+            TkLabel.new(
+              f,
+              :text   => "#{vnam}: ",
+              :anchor => 'w'
+            ),
+            TkLabel.new(
+              f,
+              :textvariable   => vbody,
+              :anchor         =>'w'
+            ),
+            :padx   => 2,
+            :pady   => 2,
+            :sticky => 'w'
+          )
+        end # args.each do |vnam, vbody|
 
-      f.grid(:sticky=>'news', :padx=>4)
-      f.grid_columnconfig(1, :weight=>1)
-      f.grid_rowconfig(100, :weight=>1)
+        f.grid( sticky: 'news', padx: 4 )
+        f.grid_columnconfig(  1,    weight: 1)
+        f.grid_rowconfig(     100,  weight: 1)
     }
-    TkButton.new(base, :text=>"OK", :width=>8, :default=>:active,
-                 :command=>proc{top.destroy}){|b|
-      top.bind('Return', proc{b.invoke})
-      top.bind('Escape', proc{b.invoke})
 
-      b.grid(:sticky=>'e', :padx=>4, :pady=>[6, 4])
+    TkButton.new(
+      base,
+      text:      "OK",
+      width:     8,
+      default:   :active,
+      command:   proc{top.destroy}
+    ) { |b|
+      top.bind( 'Return', proc{b.invoke} )
+      top.bind( 'Escape', proc{b.invoke} )
+
+      b.grid(
+        :sticky   => 'e',
+        :padx     => 4,
+        :pady     => [6, 4]
+      )
     }
-    base.grid_columnconfig(0, :weight=>1)
-    base.grid_rowconfig(0, :weight=>1)
+
+    base.grid_columnconfig( 0, weight: 1)
+    base.grid_rowconfig(    0, weight: 1)
   }
 end # def showVars(parent, *args)
 
@@ -431,6 +459,9 @@ private :_null_binding
 
 
 
+# SMELL: This looks like its not generic.  More specialized from the old
+#        widget demo program.
+#
 # showStatus --
 #
 #       Show the name of the demo program in the status bar. This procedure
