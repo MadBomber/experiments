@@ -187,7 +187,7 @@ class Role
 end # class Role
 
 editor  = Role.new( 'editor', ABILITIES.where(action: 'edit') )
-guest   = Role.new( 'editor', ABILITIES.where(action: 'index') )
+guest   = Role.new( 'guest',  ABILITIES.where(action: 'index') )
 
 ROLES = { editor: editor, guest: guest }
 
