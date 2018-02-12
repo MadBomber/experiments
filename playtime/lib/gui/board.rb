@@ -2,28 +2,24 @@
 # gui/board.rb
 
 # frozen_string_literal: false
-# puzzle.rb
 #
-# This demonstration script creates a 15-puzzle game using a collection
-# of buttons.
-#
-# widget demo 'puzzle' (called by 'widget')
+# Show the board for battleship game
 #
 
-# toplevel widget
-if defined?($puzzle_demo) && $puzzle_demo
-  $puzzle_demo.destroy
-  $puzzle_demo = nil
+# destory to existing toplevel window widget for board
+if defined?($board_window) && $board_window
+  $board_window.destroy
+  $board_window = nil
 end
 
-# demo toplevel widget
-$puzzle_demo = TkToplevel.new { |w|
+# Create the Board toplevel window widget
+$board_window = TkToplevel.new { |window|
   title           "The Ocean of Conflict"
-  iconname        "15-Puzzle"
-  positionWindow  w
+  iconname        "board"
+  positionWindow  window
 }
 
-base_frame = TkFrame.new($puzzle_demo).
+base_frame = TkFrame.new($board_window).
   pack( fill:   :both,
         expand: true
       )
@@ -38,13 +34,14 @@ msg = TkLabel.new(base_frame) {
 
 msg.pack( 'side' => 'top' )
 
+
 # frame
 TkFrame.new(base_frame) { |frame|
   TkButton.new(frame) {
     text            'Dismiss'
     command proc{
-      tmppath       = $puzzle_demo
-      $puzzle_demo  = nil
+      tmppath       = $board_window
+      $board_window = nil
       tmppath.destroy
     }
   }.pack( 'side'    => 'left',
@@ -96,6 +93,7 @@ base = TkFrame.new(base_frame) {
   bg            s['troughcolor']
 }
 
+
 s.destroy
 
 base.pack(  'side'  => 'top',
@@ -103,11 +101,12 @@ base.pack(  'side'  => 'top',
             'pady'  =>  '1c'
           )
 
-def ocean_clicked_proc(w, num)
-  proc{ocean_clicked(w, num)}
+def ocean_clicked_proc(button, cell_id)
+  proc{ocean_clicked(button, cell_id)}
 end
 
 # SMELL: using a global, really?
+#        There are lots of globals in this Tk junk!
 $button_position = Hash.new
 
 # create 100 buttons in a 10x10 grid
@@ -119,22 +118,38 @@ $button_position = Hash.new
     y: (button_index / 10) * 0.1
   }
 
-  TkButton.new(base) { |w|
+  $button_position[button_label][:button] = TkButton.new(base) { |button|
     relief              'raised'
     text                button_label
     highlightthickness  0
-    command ocean_clicked_proc(w, button_label)
-  }.place(  'relx'      => $button_position[button_label][:x], # $xpos[button_label],
-            'rely'      => $button_position[button_label][:y], # $ypos[button_label],
-            'relwidth'  => 0.1,
-            'relheight' => 0.1
-          )
+    command proc{ ocean_clicked(button, button_label) }
+  }.place(
+    'relx'      => $button_position[button_label][:x],
+    'rely'      => $button_position[button_label][:y],
+    'relwidth'  => 0.1,
+    'relheight' => 0.1
+  )
+
 end # 100.times.each do |button_index|
 
 # User clicked on an ocean square on the board
-# w .............. (widget) the button object
+# button ......... (button widget) the button object
 # button_label ... (String) the button number ie. coordinate
-def ocean_clicked(w, button_label)
-  puts "Clicked on #{button_label}"
+def ocean_clicked(button, button_label)
+  # TODO: shoot and record hit in label
+  debug_me("Cell Clicked") {[ :button_label ]}
+  if 1 == rand(2) # hit?
+    system 'say hit'
+    system('say you sunk my battleship') if 1 == rand(2)
+    button.text             = "HIT"
+    button.configure(
+      'background'          => 'red',
+      'foreground'          => 'red',
+      'activebackground'    => 'red',
+      'activeforeground'    => 'red',
+      'highlightbackground' => 'red'
+    )
+  end
+
 end
 
