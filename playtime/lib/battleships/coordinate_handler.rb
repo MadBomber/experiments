@@ -24,7 +24,7 @@ module Battleships
     end
 
     def validate coord
-      fail 'Invalid coordinate' unless valid? coord
+      fail "[#{coord}] is Invalid coordinate" unless valid? coord
     end
 
     def valid? coord

@@ -3,7 +3,7 @@
 # encoding: utf-8
 ##########################################################
 ###
-##  File: master.rb
+##  File: mcp.rb --- in honor of TRON
 ##  Desc: Master Controller Process for the game
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #

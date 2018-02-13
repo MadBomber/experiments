@@ -3,7 +3,7 @@
 # encoding: utf-8
 ##########################################################
 ###
-##  File: slave.rb
+##  File: tron.rb   --- in honor of the movie
 ##  Desc: Slave Player to the MCP
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
@@ -30,13 +30,7 @@ EOHELP
 
 cli_helper("__file_description__") do |o|
 
-  o.bool    '-b', '--bool',   'example boolean parameter',   default: false
-  o.string  '-s', '--string', 'example string parameter',    default: 'IamDefault'
-  o.int     '-i', '--int',    'example integer parameter',   default: 42
-  o.float   '-f', '--float',  'example float parameter',     default: 123.456
-  o.array   '-a', '--array',  'example array parameter',     default: [:bob, :carol, :ted, :alice]
-  o.path    '-p', '--path',   'example Pathname parameter',  default: Pathname.new('default/path/to/file.txt')
-  o.paths         '--paths',  'example Pathnames parameter', default: ['default/path/to/file.txt', 'file2.txt'].map{|f| Pathname.new f}
+  o.int     '-p', '--player', 'Player Number (1 or 2)',      default: 1
 
 end
 
@@ -49,12 +43,43 @@ end
 
 # Error check your stuff; use error('some message') and warning('some message')
 
+unless [1, 2].include? configatron.player
+  error "You can only select player 1 or 2"
+end
 
 abort_if_errors
 
 
 ######################################################
 # Local methods
+
+# A coordination is either "00" .. "99" or
+# ("A..J") + ("1".."10") as a symbol
+def convert_map_coordinate(map_coordinate)
+  coordinate = map_coordinate.to_s # in case it was a symbol
+  # converts first character "ABCDEFGHIJ" <=> "0123456789"
+  x_axis = coordinate[0]
+  y_axis = coordinate[1,2]
+
+  if x_axis.ord < "A".ord
+    x_axis = (x_axis.ord + 17).chr  # convert digits to characters
+    y_axis = (y_axis.to_i + 1).to_s
+    coordinate = (x_axis + y_axis).to_sym
+  else
+    x_axis = (x_axis.ord - 17).chr  # convert characters to digits
+    y_axis = (y_axis.to_i - 1).to_s
+    coordinate = x_axis + y_axis
+  end
+  return coordinate
+end
+
+def gui_coordinate?(coordinate)
+  String == coordinate.class
+end
+
+def game_engine_coordinate?(coordinate)
+  Symbol == coordinate.class
+end
 
 
 ######################################################
@@ -73,19 +98,72 @@ puts "slave is running ..."
 
 
 DRb.start_service
-game = DRbObject.new_with_uri('druby://localhost:9999')
+configatron.game = DRbObject.new_with_uri('druby://localhost:9999')
 
-begin
-  game.place_ship(1, :aircraft_carrier, :A1, :vertically)
-  game.place_ship(1, :battleship,       :B2, :vertically)
-  game.place_ship(1, :cruiser,          :C3, :vertically)
-  game.place_ship(1, :destroyer,        :D4, :vertically)
-  game.place_ship(1, :submarine,        :E5, :vertically)
-rescue
-  puts "game is in progress ..."
+
+if 1 == configatron.player
+  my_navy = [
+    ["00", :vertically, :aircraft_carrier],
+    ["11", :vertically, :battleship],
+    ["22", :vertically, :cruiser],
+    ["33", :vertically, :destroyer],
+    ["44", :vertically, :submarine]
+  ]
+else  # player 2
+  my_navy = [
+    ["55", :horizontal, :aircraft_carrier],
+    ["66", :horizontal, :battleship],
+    ["77", :horizontal, :cruiser],
+    ["88", :horizontal, :destroyer],
+    ["99", :horizontal, :submarine]
+  ]
 end
 
-puts game.own_board_view(1)
+my_navy.each do |my_ship_attributes|
+  location,
+  orientation,
+  ship_type     = my_ship_attributes
+  begin
+    configatron.game.place_ship(
+      configatron.player,
+      ship_type,
+      convert_map_coordinate(location),
+      orientation
+    )
+  rescue => e
+    puts e
+  end
+end
+
+
+puts
+puts "Player ##{configatron.player}'s own view"
+puts configatron.game.own_board_view(configatron.player)
+
+
+until configatron.game.has_winner?
+  location = convert_map_coordinate( sprintf("%02i", rand(100)) )
+  sleep 0.1 if 1 == rand(2)
+  begin
+    result = configatron.game.shoot( configatron.player, location)
+  rescue
+    result = 'dup'
+  end
+  puts "#{configatron.player}: #{location} #{result}" if %w[hit sunk].include? result.to_s
+end
+
+puts
+puts "Player ##{configatron.player}'s opponent's view"
+puts configatron.game.opponent_board_view( configatron.player )
+
+
+puts
+puts "and the winner is:"
+
+puts configatron.game.winner_name
+
+
+
 
 
 __END__

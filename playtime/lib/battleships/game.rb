@@ -37,6 +37,10 @@ TEMPLATE
 
       player_1.opponent = player_2
       player_2.opponent = player_1
+
+      player_1.name = "One for the Money"
+      player_2.name = "Two for the Show"
+
     end
 
     def player_1
@@ -84,6 +88,14 @@ TEMPLATE
 
     def place_ship player_number, ship_type, coordinates, orientation = :horizontally
       @players[player_number-1].place_ship ship_type, coordinates, orientation
+    end
+
+    def shoot(player_number, coordinate)
+      @players[player_number-1].shoot(coordinate)
+    end
+
+    def winner_name
+      winner.name
     end
 
     #################################################################
