@@ -86,7 +86,7 @@ TEMPLATE
     #################################################################
     ## Delegation methods for use under dRb
 
-    def place_ship player_number, ship_type, coordinates, orientation = :horizontally
+    def place_ship player_number, ship_type, coordinates, orientation
       @players[player_number-1].place_ship ship_type, coordinates, orientation
     end
 

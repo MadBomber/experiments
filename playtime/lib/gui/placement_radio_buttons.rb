@@ -47,8 +47,8 @@ msg.pack(
 )
 
 #
-ship_type         = TkVariable.new
-ship_orientation  = TkVariable.new
+configatron.ship_type         = TkVariable.new
+configatron.ship_orientation  = TkVariable.new
 
 # bottom frame to hold the buttons
 TkFrame.new(base_frame) { |frame|
@@ -72,8 +72,8 @@ TkFrame.new(base_frame) { |frame|
     text    'See Variables'
     command proc{
       showVars( base_frame,
-                 ['ship_type',        ship_type],
-                 ['ship_orientation', ship_orientation]
+                 ['ship_type',        configatron.ship_type],
+                 ['ship_orientation', configatron.ship_orientation]
               )
     }
   }.pack(
@@ -123,7 +123,7 @@ orientation_frame   = TkLabelFrame.new(
 ].each do |type|
   TkRadioButton.new(type_frame) {
     text      type.to_s.titleize
-    variable  ship_type
+    variable  configatron.ship_type
     relief    'flat'
     value     type
   }.pack(
@@ -137,12 +137,12 @@ end
 
 # Define the radio button set for ship orientation
 [
-  :horizontal,
-  :vertical
+  :horizontally,
+  :vertically
 ].each do |orientation|
   TkRadioButton.new(orientation_frame) {
     text      orientation.to_s.titleize
-    variable  ship_orientation
+    variable  configatron.ship_orientation
     relief    'flat'
     value     orientation
     anchor    'w'

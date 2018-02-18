@@ -1,12 +1,7 @@
-#!/usr/bin/env ruby
-# -wU
+
 # lib/gui.rb
 #
 # Assumes that Tcl/Tk is version 8.5 or greater.
-
-require 'awesome_print'
-require 'debug_me'
-include DebugMe
 
 require 'tk'
 
@@ -515,10 +510,9 @@ end # def aboutBox
 # load the Battleship game GUI windows
 
 require 'active_support/inflector' # NOTE: only using titleize
-require 'require_all'
-require_all "./gui/*.rb"
 
-
+require_relative 'gui/placement_radio_buttons.rb'
+require_relative 'gui/board.rb'
 
 
 #########################################

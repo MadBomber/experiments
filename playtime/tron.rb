@@ -17,6 +17,11 @@ require 'debug_me'
 include DebugMe
 
 require 'drb'
+require 'pathname'
+
+configatron.start_file = Pathname.pwd + 'start.txt'
+
+configatron.start_file.delete if configatron.start_file.exist?
 
 
 configatron.version = '0.0.1'
@@ -55,20 +60,23 @@ abort_if_errors
 
 # A coordination is either "00" .. "99" or
 # ("A..J") + ("1".."10") as a symbol
+# ("A1".."J1") is the same as "00".."09"
+# A..J is the x-axis  1..10 is the y-axis
 def convert_map_coordinate(map_coordinate)
   coordinate = map_coordinate.to_s # in case it was a symbol
   # converts first character "ABCDEFGHIJ" <=> "0123456789"
-  x_axis = coordinate[0]
-  y_axis = coordinate[1,2]
+  one = coordinate[0]
+  two = coordinate[1,2]
 
-  if x_axis.ord < "A".ord
-    x_axis = (x_axis.ord + 17).chr  # convert digits to characters
-    y_axis = (y_axis.to_i + 1).to_s
-    coordinate = (x_axis + y_axis).to_sym
+  if one.ord < "A".ord
+    # "00".."09" to "A1".."J1"
+    two = (two.ord + 17).chr  # convert digits to characters
+    one = (one.to_i + 1).to_s
+    coordinate = (two + one).to_sym
   else
-    x_axis = (x_axis.ord - 17).chr  # convert characters to digits
-    y_axis = (y_axis.to_i - 1).to_s
-    coordinate = x_axis + y_axis
+    one = (one.ord - 17).chr  # convert characters to digits
+    two = (two.to_i - 1).to_s
+    coordinate = two + one  # allows A1 J1 map to 00..09
   end
   return coordinate
 end
@@ -111,13 +119,14 @@ if 1 == configatron.player
   ]
 else  # player 2
   my_navy = [
-    ["55", :horizontal, :aircraft_carrier],
-    ["66", :horizontal, :battleship],
-    ["77", :horizontal, :cruiser],
-    ["88", :horizontal, :destroyer],
-    ["99", :horizontal, :submarine]
+    ["55", :horizontally, :aircraft_carrier],
+    ["66", :horizontally, :battleship],
+    ["77", :horizontally, :cruiser],
+    ["88", :horizontally, :destroyer],
+    ["99", :horizontally, :submarine]
   ]
 end
+
 
 my_navy.each do |my_ship_attributes|
   location,
@@ -138,35 +147,75 @@ end
 
 puts
 puts "Player ##{configatron.player}'s own view"
-puts configatron.game.own_board_view(configatron.player)
 
-
-until configatron.game.has_winner?
-  location = convert_map_coordinate( sprintf("%02i", rand(100)) )
-  sleep 0.1 if 1 == rand(2)
-  begin
-    result = configatron.game.shoot( configatron.player, location)
-  rescue
-    result = 'dup'
-  end
-  puts "#{configatron.player}: #{location} #{result}" if %w[hit sunk].include? result.to_s
+def get_my_board
+  board = configatron.game.own_board_view(configatron.player).split("\n")[2..11].map{|row|row[3,10]}
+  ap board
+  board.join('')
 end
 
-puts
-puts "Player ##{configatron.player}'s opponent's view"
-puts configatron.game.opponent_board_view( configatron.player )
+puts "[#{get_my_board}]"
 
 
-puts
-puts "and the winner is:"
+def war?
+  configatron.start_file.exist?
+end
 
-puts configatron.game.winner_name
+def deploy_navy?
+  !war?
+end
 
 
 
+if 1 == configatron.player
+  require_relative 'lib/gui.rb'
+else
+  while deploy_navy?
+    sleep 1
+  end
+  sleep 10 # give player 1 a head start
+  until configatron.game.has_winner?
+    location = convert_map_coordinate( sprintf("%02i", rand(100)) )
+    sleep 0.1 if 1 == rand(2)
+    begin
+      result = configatron.game.shoot( configatron.player, location)
+    rescue
+      result = 'dup'
+    end
+    puts "#{configatron.player}: #{location} #{result}" if %w[hit sunk].include? result.to_s
+  end
+
+  puts
+  puts "Player ##{configatron.player}'s opponent's view"
+  puts configatron.game.opponent_board_view( configatron.player )
+
+  puts
+  puts "and the winner is:"
+
+  puts configatron.game.winner_name
+
+end # if 1 == configatron.player
 
 
 __END__
+
+
+   ABCDEFGHIJ
+  ------------
+ 1|A         |1
+ 2|AB        |2
+ 3|ABC       |3
+ 4|ABCD      |4
+ 5|ABCDS     |5
+ 6|          |6
+ 7|          |7
+ 8|          |8
+ 9|          |9
+10|          |10
+  ------------
+   ABCDEFGHIJ
+
+
 
 
 Each player can place ships on their own board:

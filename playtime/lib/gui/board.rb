@@ -6,6 +6,8 @@
 # Show the board for battleship game
 #
 
+
+
 # destory to existing toplevel window widget for board
 if defined?($board_window) && $board_window
   $board_window.destroy
@@ -136,20 +138,55 @@ end # 100.times.each do |button_index|
 # button ......... (button widget) the button object
 # button_label ... (String) the button number ie. coordinate
 def ocean_clicked(button, button_label)
-  # TODO: shoot and record hit in label
-  debug_me("Cell Clicked") {[ :button_label ]}
-  if 1 == rand(2) # hit?
-    system 'say hit'
-    system('say you sunk my battleship') if 1 == rand(2)
-    button.text             = "HIT"
-    button.configure(
-      'background'          => 'red',
-      'foreground'          => 'red',
-      'activebackground'    => 'red',
-      'activeforeground'    => 'red',
-      'highlightbackground' => 'red'
-    )
-  end
 
-end
+  if deploy_navy?
+    debug_me("Cell Clicked") {[ :button_label,
+      'convert_map_coordinate(button_label)',
+      'configatron.ship_type.value',
+      'configatron.ship_orientation.value',
+      'configatron.ship_type.symbol',
+      'configatron.ship_orientation.symbol' ]}
+
+      begin
+        configatron.game.place_ship(
+          configatron.player,
+          configatron.ship_type.symbol,
+          convert_map_coordinate(button_label),
+          configatron.ship_orientation.symbol
+        )
+      rescue => e
+        puts e
+      end
+  else
+    begin
+      result = configatron.game.shoot( configatron.player, convert_map_coordinate(button_label))
+    rescue
+      result = 'dup'
+    end
+
+    system "say #{result}"
+
+    if %w[hit sunk].include? result.to_s
+      puts "#{configatron.player}: #{button_label} #{result}"
+      button.text             = "HIT"
+      button.configure(
+        'background'          => 'red',
+        'foreground'          => 'red',
+        'activebackground'    => 'red',
+        'activeforeground'    => 'red',
+        'highlightbackground' => 'red'
+      )
+    end # if %w[hit sunk].include? result.to_s
+  end # if deploy_navy?
+
+  board = get_my_board
+  char_index = 0
+  ('00'..'99').each do |button_name|
+    unless ' '==board[char_index]
+      $button_position[button_name][:button].text = board[char_index]
+    end
+    char_index += 1
+  end # ('00'..'99').each do |button_name|
+
+end # def ocean_clicked(button, button_label)
 
