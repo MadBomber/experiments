@@ -93,11 +93,6 @@ end
 ######################################################
 # Main
 
-at_exit do
-  puts
-  puts "Done."
-  puts
-end
 
 ap configatron.to_h  if verbose? || debug?
 
@@ -183,7 +178,7 @@ else
       result = 'dup'
     end
     puts "#{configatron.player}: #{location} #{result}" if %w[hit sunk].include? result.to_s
-  end
+  end # until configatron.game.has_winner?
 
   puts
   puts "Player ##{configatron.player}'s opponent's view"
@@ -196,6 +191,11 @@ else
 
 end # if 1 == configatron.player
 
+puts
+puts "Done."
+puts
+
+exit(0)
 
 __END__
 

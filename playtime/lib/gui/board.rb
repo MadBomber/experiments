@@ -7,7 +7,6 @@
 #
 
 
-
 # destory to existing toplevel window widget for board
 if defined?($board_window) && $board_window
   $board_window.destroy
@@ -40,20 +39,22 @@ msg.pack( 'side' => 'top' )
 # frame
 TkFrame.new(base_frame) { |frame|
   TkButton.new(frame) {
-    text            'Dismiss'
+    text            'Show Positions' # 'Dismiss'
     command proc{
-      tmppath       = $board_window
-      $board_window = nil
-      tmppath.destroy
+      # tmppath       = $board_window
+      # $board_window = nil
+      # tmppath.destroy
+      show_my_positions
     }
   }.pack( 'side'    => 'left',
           'expand'  => 'yes'
         )
 
   TkButton.new(frame) {
-    text      'Button TWO'
+    text      'Prepare to Fight'
     command   proc{
-      puts "Button TWO was clicked"
+      puts "Button 'Prepare to Fight' was clicked"
+      reset_ocean_labels
     }
   }.pack( 'side'    => 'left',
           'expand'  => 'yes'
@@ -157,6 +158,7 @@ def ocean_clicked(button, button_label)
       rescue => e
         puts e
       end
+    show_my_positions
   else
     begin
       result = configatron.game.shoot( configatron.player, convert_map_coordinate(button_label))
@@ -177,8 +179,15 @@ def ocean_clicked(button, button_label)
         'highlightbackground' => 'red'
       )
     end # if %w[hit sunk].include? result.to_s
-  end # if deploy_navy?
 
+    if configatron.game.has_winner?
+      system "say 'The battle is over.  #{configatron.game.winner_name} has won the battle.'"
+    end
+  end # if deploy_navy?
+end # def ocean_clicked(button, button_label)
+
+
+def show_my_positions
   board = get_my_board
   char_index = 0
   ('00'..'99').each do |button_name|
@@ -187,6 +196,11 @@ def ocean_clicked(button, button_label)
     end
     char_index += 1
   end # ('00'..'99').each do |button_name|
+end # def show_my_positions
 
-end # def ocean_clicked(button, button_label)
 
+def reset_ocean_labels
+  ('00'..'99').each do |button_name|
+    $button_position[button_name][:button].text = button_name
+  end # ('00'..'99').each do |button_name|
+end # def reset_ocean_labels
