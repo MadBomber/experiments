@@ -33,13 +33,14 @@ class ApplicationController
   class << self
 
     # describe an ability with an optional condition block
-    def my_ability(ability_unique_identifier, description, &conditional_block)
+    def my_ability(ability_unique_identifier, description, group: nil, &conditional_block)
 
       called_from_parts = caller.first.split(':')
       file_path         = Pathname.new(called_from_parts[0])
       file_line_number  = called_from_parts[1].to_i - 1  # -1 to zero-base the index
       category_name     = called_from_parts.last[0..-3].gsub('Controller', '')
       method_name       = get_next_method_name(file_path, file_line_number)
+      defined_at        = caller.first
 
       if block_given?
         conditional_proc = conditional_block.to_proc
@@ -51,6 +52,8 @@ class ApplicationController
                               category_name,
                               method_name,
                               description,
+                              group,
+                              defined_at,
                               conditional_proc)
     end # end def my_ability(a_string, &conditional_block)
 
@@ -81,6 +84,8 @@ class ApplicationController
                                 category_name,
                                 method_name,
                                 ability_description,
+                                group_name,
+                                defined_at,
                                 condition)
 
       unless ABILITIES.has_key?(ability_unique_identifier)
@@ -88,10 +93,12 @@ class ApplicationController
           category:   category_name,
           action:     method_name,
           ability:    ability_description,
+          group:      group_name,
+          defined_at: defined_at,
           condition:  condition
         }
       else
-        error_msg = "Non-unique ability identifier #{ability_unique_identifier} in #{category_name} at #{method_name} - #{ability_description}"
+        error_msg = "Non-unique ability identifier #{ability_unique_identifier} for #{category_name}##{method_name} - #{ability_description} - #{defined_at}"
         puts "\n** ERROR ** " + error_msg + "\n\n"
         #raise error_msg
       end
@@ -104,17 +111,18 @@ end # class ApplicationController
 
 class SomeObjectController < ApplicationController
 
-  my_ability 100, "Vuew a list"
+  my_ability 100, "Vuew a list", group: 100
   my_ability 100, 'invalid non-unique identifier'
   my_ability :index_ability, 'identifiers can be anything for example a symbol'
   my_ability 'index_ability', 'identifiers can be anything for example a string'
-  my_ability 100.10, 'identifiers can be anything for example an integer or a float'
+  my_ability 100.10, 'identifiers can be anything for example an integer or a float',
+    group: 100
 
   def index
     puts self.name
   end
 
-  my_ability 110, "View a specific"
+  my_ability 110, "View a specific", group: 100
   def show
     puts self.name
   end
@@ -123,24 +131,24 @@ end # class SomeObjectController < ApplicationController
 
 class AnotherObjectController < ApplicationController
 
-  my_ability 120, "Vuew a list"
+  my_ability 120, "Vuew a list", group: 100
   def index
     puts self.name
   end
 
-  my_ability 130, "View a specific"
+  my_ability 130, "View a specific", group: 100
   def show
     puts self.name
   end
 
   my_ability 140, "delete a specific superuser"
-  my_ability(142, "delete a specific if odd one") {|current_user| puts current_user; current_user.odd? }
-  my_ability(144, "delete a specific if odd two") {|current_user| puts current_user; current_user.odd? }
+  my_ability(142, "delete a specific if odd one", group: 140) {|current_user| puts current_user; current_user.odd? }
+  my_ability(144, "delete a specific if odd two", group: 140) {|current_user| puts current_user; current_user.odd? }
   def delete
     puts self.name
   end
 
-  my_ability 150, "update a specific superuser"
+  my_ability 150, "update a specific superuser", group: 140
   my_ability(152, "update a specific if even one") {|current_user| puts current_user; current_user.even? }
   my_ability(154, "update a specific if even two") {|current_user| puts current_user; current_user.even? }
   def edit
@@ -171,6 +179,21 @@ ap ABILITIES.map { |key, value| value[:category] }.uniq.sort
 puts "\nList of actions for AnotherObject ..."
 ap ABILITIES.where(category: 'AnotherObject').map { |key, value| value[:action] }.uniq.sort
 
+
+puts "\nThe defined groups are ...."
+groups =  ABILITIES.map { |key, value| value[:group] }.compact.uniq.sort
+ap groups
+
+
+puts "\nWhat permissions are in each group ...."
+groups.each do |group|
+  puts "Group: #{group} has the following permissions:"
+  ap ABILITIES.where(group: group).keys.sort
+end
+
+
+
+
 ##########################################################
 
 
@@ -196,6 +219,8 @@ puts editor.has_permission? 100
 
 print "Can an editor do 150? "
 puts editor.has_permission? 150
+
+
 
 
 ###########################################
@@ -236,6 +261,4 @@ puts billy.has_permission? 100
 
 print "Can billy do 150? "
 puts billy.has_permission? 150
-
-
 
