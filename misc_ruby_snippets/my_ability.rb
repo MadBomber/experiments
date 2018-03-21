@@ -1,12 +1,15 @@
 #!/usr/bin/env ruby -wU
 # desc_method.rb
 # an idea on how to describe abilities
+
+require 'active_support/all'
 require 'awesome_print'
 
 require 'debug_me'
 include DebugMe
 
 require 'pathname'
+require 'set'
 
 class Hash
   def where(options={})
@@ -14,7 +17,11 @@ class Hash
     self.select {|key, value|
       result = true
       options.each_pair do |field, field_value|
-        result &&= value[field] == field_value
+        if Array == value[field].class
+          result &&= Array(field_value).to_set.subset?(value[field].to_set)
+        else
+          result &&= value[field] == field_value
+        end
       end
       result
     }
@@ -33,7 +40,13 @@ class ApplicationController
   class << self
 
     # describe an ability with an optional condition block
-    def my_ability(ability_unique_identifier, description, group: nil, &conditional_block)
+    def my_ability(
+        ability_unique_identifier,
+        description,
+        group: nil,
+        role:  [],
+        &conditional_block
+      )
 
       called_from_parts = caller.first.split(':')
       file_path         = Pathname.new(called_from_parts[0])
@@ -41,6 +54,12 @@ class ApplicationController
       category_name     = called_from_parts.last[0..-3].gsub('Controller', '')
       method_name       = get_next_method_name(file_path, file_line_number)
       defined_at        = caller.first
+
+      roles = Array(role).map{ |role_name|
+        String == role_name.class ?
+          role_name.downcase.gsub(':', '').to_sym :
+          role_name
+      }
 
       if block_given?
         conditional_proc = conditional_block.to_proc
@@ -53,6 +72,7 @@ class ApplicationController
                               method_name,
                               description,
                               group,
+                              roles,
                               defined_at,
                               conditional_proc)
     end # end def my_ability(a_string, &conditional_block)
@@ -85,6 +105,7 @@ class ApplicationController
                                 method_name,
                                 ability_description,
                                 group_name,
+                                roles,
                                 defined_at,
                                 condition)
 
@@ -92,8 +113,9 @@ class ApplicationController
         ABILITIES[ability_unique_identifier] = {
           category:   category_name,
           action:     method_name,
-          ability:    ability_description,
-          group:      group_name,
+          ability:    String(ability_description).humanize.titlecase,
+          group:      String(group_name).humanize.titlecase,
+          roles:      roles,
           defined_at: defined_at,
           condition:  condition
         }
@@ -111,7 +133,7 @@ end # class ApplicationController
 
 class SomeObjectController < ApplicationController
 
-  my_ability 100, "Vuew a list", group: 100
+  my_ability 100, "Vuew a list", group: 100, role: 'viewer'
   my_ability 100, 'invalid non-unique identifier'
   my_ability :index_ability, 'identifiers can be anything for example a symbol'
   my_ability 'index_ability', 'identifiers can be anything for example a string'
@@ -122,10 +144,18 @@ class SomeObjectController < ApplicationController
     puts self.name
   end
 
-  my_ability 110, "View a specific", group: 100
+  my_ability 110, "View a specific", group: 100, role: 'viewer'
   def show
     puts self.name
   end
+
+  my_ability 110.1, "update a specific", role: :updater # strings and symbols are same
+  def update
+    puts self.name
+  end
+
+
+
 end # class SomeObjectController < ApplicationController
 
 
@@ -141,14 +171,14 @@ class AnotherObjectController < ApplicationController
     puts self.name
   end
 
-  my_ability 140, "delete a specific superuser"
+  my_ability 140, "delete a specific superuser", role: 'updater'
   my_ability(142, "delete a specific if odd one", group: 140) {|current_user| puts current_user; current_user.odd? }
   my_ability(144, "delete a specific if odd two", group: 140) {|current_user| puts current_user; current_user.odd? }
   def delete
     puts self.name
   end
 
-  my_ability 150, "update a specific superuser", group: 140
+  my_ability 150, "update a specific superuser", group: 140, role: 'updater'
   my_ability(152, "update a specific if even one") {|current_user| puts current_user; current_user.even? }
   my_ability(154, "update a specific if even two") {|current_user| puts current_user; current_user.even? }
   def edit
@@ -181,7 +211,7 @@ ap ABILITIES.where(category: 'AnotherObject').map { |key, value| value[:action] 
 
 
 puts "\nThe defined groups are ...."
-groups =  ABILITIES.map { |key, value| value[:group] }.compact.uniq.sort
+groups =  ABILITIES.map { |key, value| value[:group].empty? ? nil : value[:group] }.compact.uniq.sort
 ap groups
 
 
@@ -192,7 +222,16 @@ groups.each do |group|
 end
 
 
+puts "\nWhat standard roles have been defined ...."
+roles =  ABILITIES.map { |key, value| value[:roles] }.compact.flatten.uniq.sort
+ap roles
 
+
+puts "\nWhat permissions are associated with the standard roles ...."
+roles.each do |role|
+  puts "\nFor role: #{role} ..."
+  ap ABILITIES.where(roles: role)
+end
 
 ##########################################################
 
