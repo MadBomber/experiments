@@ -11,7 +11,14 @@ include DebugMe
 require 'pathname'
 require 'set'
 
+##################################################################
+## "Hey, hey we're the monkies and just like monkeying around...."
+
 class Hash
+
+  # searchs a 2-level deep hash looking for entrys (keys) whose sub-key and value
+  # are equal to (==) the values given.  If target value is an Array uses
+  # Set#subset? to determine equality.
   def where(options={})
     return self if options.empty?  ||  options.class != Hash
     self.select {|key, value|
@@ -26,8 +33,34 @@ class Hash
       result
     }
   end # def where(options)
-end
+end # class Hash
 
+
+class Set
+
+  LIKE_DEFAULT_THRESHOLD = 0.75 # Float between 0.0 and 1.0; like a %
+
+  # Given two sets s1 and s2 tha it is possible
+  # for s1.like?(s2) and NOT s2.like?(s1) depending
+  # on the relative size of each set.
+  def like?(a_set, threshold=LIKE_DEFAULT_THRESHOLD)
+    likeness(a_set) >= threshold
+  end
+
+  # The size of a_set governs the degree of likeness
+  # between any two sets.  The likeness of one set to
+  # another is dependant upon the size of the intersection
+  # to the size of the parameter set.
+  def likeness(a_set)
+    return(0.0) if Set != a_set.class || a_set.empty?
+    (self & a_set).size.to_f / a_set.size.to_f
+  end # def likeness(a_set)
+end # class Set
+
+
+##################################################################
+## Here is the guts of the idea with some test examples.  Is this
+## level of micro-RBAC worthy to be encapsulated into a Rails Engine?
 
 ABILITIES = Hash.new
 
@@ -41,8 +74,8 @@ class ApplicationController
 
     # describe an ability with an optional condition block
     def my_ability(
-        ability_unique_identifier,
-        description,
+        ability_identifier,     # required; aka slug
+        description='unknown',
         group: nil,
         role:  [],
         &conditional_block
@@ -51,7 +84,10 @@ class ApplicationController
       called_from_parts = caller.first.split(':')
       file_path         = Pathname.new(called_from_parts[0])
       file_line_number  = called_from_parts[1].to_i - 1  # -1 to zero-base the index
-      category_name     = called_from_parts.last[0..-3].gsub('Controller', '')
+
+      # category_name   = called_from_parts.last[0..-3].gsub('Controller', '')
+      category_name     = self.to_s.gsub('Controller', '').singularize
+
       method_name       = get_next_method_name(file_path, file_line_number)
       defined_at        = caller.first
 
@@ -67,7 +103,7 @@ class ApplicationController
         conditional_proc = Proc.new {true}
       end
 
-      insert_into_abilities(  ability_unique_identifier,
+      insert_into_abilities(  ability_identifier,
                               category_name,
                               method_name,
                               description,
@@ -95,12 +131,12 @@ class ApplicationController
         a_line = lines[line_number].strip
         found_def = a_line.start_with? 'def'
       end
-      a_line.split(/\ +|\(|\{/)[1]
+      a_line.split(/\ +|\(|\{/)[1].to_sym
     end
 
 
     # store the gather information into the kernal-level constant
-    def insert_into_abilities(  ability_unique_identifier,
+    def insert_into_abilities(  ability_identifier,
                                 category_name,
                                 method_name,
                                 ability_description,
@@ -109,10 +145,10 @@ class ApplicationController
                                 defined_at,
                                 condition)
 
-      unless ABILITIES.has_key?(ability_unique_identifier)
-        ABILITIES[ability_unique_identifier] = {
+      unless ABILITIES.has_key?(ability_identifier)
+        ABILITIES[ability_identifier] = {
           category:   category_name,
-          action:     method_name,
+          action:     Array(method_name),
           ability:    String(ability_description).humanize.titlecase,
           group:      String(group_name).humanize.titlecase,
           roles:      roles,
@@ -120,9 +156,41 @@ class ApplicationController
           condition:  condition
         }
       else
-        error_msg = "Non-unique ability identifier #{ability_unique_identifier} for #{category_name}##{method_name} - #{ability_description} - #{defined_at}"
-        puts "\n** ERROR ** " + error_msg + "\n\n"
-        #raise error_msg
+        # Assumes that duplicate ability_identifier mean the same
+        # ability (aka permission)  Values of other parameters on
+        # my_ability method call are ignored.  The first occurance
+        # within the system sets the values for everything else.
+        #
+        # We could do checks against these other parameters to see
+        # if there is a difference in the previous values as a way
+        # of catching potential problems where the duplicate slug
+        # was not intended.
+        error_count = 0
+        if (category_name != ABILITIES[ability_identifier][:category])    ||
+           (ABILITIES[ability_identifier][:action].include?(method_name))
+          error_count += 1
+          puts <<~ERROR
+
+            Warning: Invalid Duplicate Ability Identifier: #{ability_identifier}
+                 At: #{defined_at}
+
+              This occurance is being ignored.
+
+              Duplicate abilities are only allowed within the same category
+              for different method names (aka actions).
+
+              First occurange was: #{ABILITIES[ability_identifier][:defined_at]}
+              Current location is: #{defined_at}
+
+          ERROR
+        end
+
+        if error_count > 0
+          # raise something is wrong
+          return(nil)
+        end
+
+        ABILITIES[ability_identifier][:action] << method_name
       end
 
     end # end def insert_into_abilities( ...
