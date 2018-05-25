@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'devise'                  # Flexible authentication solution for Rails with Warden
 gem 'cancancan'               # Simple authorization solution for Rails.
+gem 'role_core'               # RoleCore is a Rails engine which could provide essential industry of Role-based access control.
 gem 'rolify'                  # Roles library with resource scoping
 gem 'kan'                     # Simple, light and functional authorization library
 
@@ -23,3 +24,6 @@ gem 'web-console'             # A debugging tool for your Ruby on Rails applicat
 gem 'spring'                  # Rails application preloader
 
 
+gem 'irbtools'                # Irbtools happy IRB.
+gem 'irbtools-more'           # irbtools-more adds bond and looksee to IRB.
+gem 'sketches'                # Sketches allows you to create and edit Ruby code from the comfort of your editor, while having it safely reloaded in IRB whenever changes to the code are saved.
