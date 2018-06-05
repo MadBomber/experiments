@@ -63,9 +63,16 @@ GEM
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
+    libv8 (3.16.14.19)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
+    lograge (0.10.0)
+      actionpack (>= 4)
+      activesupport (>= 4)
+      railties (>= 4)
+      request_store (~> 1.0)
+    logstash-event (1.2.02)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -83,7 +90,7 @@ GEM
       pkg-config (~> 1.1.7)
     pg (0.18.4)
     pkg-config (1.1.7)
-    puma (3.6.0)
+    puma (3.11.4)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -114,6 +121,9 @@ GEM
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    ref (2.0.0)
+    request_store (1.4.1)
+      rack (>= 1.4)
     sass (3.4.22)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -132,6 +142,9 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
+      ref
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.5)
@@ -160,16 +173,19 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
+  lograge
+  logstash-event
   pg (~> 0.18)
-  puma (~> 3.0)
+  puma (= 3.11.4)
   rails (~> 5.0.0, >= 5.0.0.1)
   sass-rails (~> 5.0)
   spring
   spring-watcher-listen (~> 2.0.0)
+  therubyracer
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console
 
 BUNDLED WITH
-   1.12.5
+   1.16.2
