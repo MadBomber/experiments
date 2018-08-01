@@ -41,4 +41,12 @@ module Inline
   end # class Crystal
 end # module Inline
 
+Even though this may be a good idea, the crystal language does not support
+dynamic shared libraries.  So that language will have to wait for a bit.  But
+even so dpes this syntax have any benefit over a utility class that wraps
+a full library of functions?  Don't think so.
+
+It really kinda sucks after you spend some time with it.
+
+
 
