@@ -5,16 +5,16 @@
 require 'debug_me'
 include DebugMe
 
-require_relative 'inline/crystal'
+require_relative 'inline/go'
 
 def hello_world
-  Inline::Crystal.new(
+  Inline::Go.new(
     # a metadata Hash that describes the arguments
     # and the class of the returned value
     source: # either a File object or a string
-      <<~CRYSTAL
+      <<~GO
         puts "Hello World"
-      CRYSTAL
+      GO
   )
 end # def hello_world
 

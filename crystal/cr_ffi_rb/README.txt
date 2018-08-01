@@ -48,5 +48,7 @@ a full library of functions?  Don't think so.
 
 It really kinda sucks after you spend some time with it.
 
+The Go language on the other does support dynamic shared libraries.  But this
+inline concept still sucks.
 
 
