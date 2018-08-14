@@ -1,0 +1,13 @@
+source 'https://rubygems.org'
+
+gem 'activemodel'             # A toolkit for building modeling frameworks (part of Rails).
+gem 'activerecord'            # Object-relational mapper framework (part of Rails).
+gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
+gem 'debug_me'                # A tool to print the labeled value of variables.
+gem 'json'                    # JSON Implementation for Ruby
+gem 'nokogiri'                # Nokogiri (é¸) is an HTML, XML, SAX, and Reader parser
+gem 'rake'                    # Rake is a Make-like program implemented in Ruby
+#
+gem 'bunny',          require: false  # Popular easy to use Ruby client for RabbitMQ
+gem 'guard',          require: false  # Guard keeps an eye on your file modifications
+gem 'guard-minitest', require: false  # Guard plugin for the Minitest framework

@@ -1,0 +1,12 @@
+source 'https://rubygems.org'
+
+gem 'activemodel'
+gem 'activerecord'
+gem 'awesome_print'           # Pretty print Ruby objects with proper indentation and colors
+gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
+gem 'debug_me'                # A tool to print the labeled value of variables.
+gem 'guard'                   # Guard keeps an eye on your file modifications
+gem 'guard-minitest'          # Guard plugin for the Minitest framework
+gem 'json'                    # JSON Implementation for Ruby
+gem 'nokogiri'                # Nokogiri (é¸) is an HTML, XML, SAX, and Reader parser
+gem 'rake'
