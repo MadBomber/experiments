@@ -1,0 +1,78 @@
+version: 1.0
+shards:
+  admiral:
+    github: jwaldrip/admiral.cr
+    version: 1.7.3
+
+  amqp:
+    github: datanoise/amqp.cr
+    commit: 5cb2ef8c8abb2666f2ad56d9b3b01aa52020429f
+
+  bindgen:
+    github: Papierkorb/bindgen
+    version: 0.6.2
+
+  cadmium:
+    github: watzon/cadmium
+    commit: 4733b5ebe9a2c96fbb3559fc147c2db0f171fc68
+
+  clear:
+    github: anykeyh/clear
+    version: 0.3
+
+  crest:
+    github: mamantoha/crest
+    version: 0.14.0
+
+  crystagiri:
+    github: madeindjs/crystagiri
+    version: 0.3.2
+
+  crystal-fann:
+    github: NeuraLegion/crystal-fann
+    version: 1.1.1
+
+  db:
+    github: crystal-lang/crystal-db
+    version: 0.5.0
+
+  generate:
+    github: anykeyh/generate.cr
+    commit: f374acb340ea92a79fba97c7deb2f0a0ff4be62f
+
+  inflector:
+    github: phoffer/inflector.cr
+    version: 0.1.8
+
+  libui:
+    github: fusion/libui.cr
+    commit: 2ed70afe9467f8a73891ac8e3c05cf23bdaf6707
+
+  pg:
+    github: will/crystal-pg
+    version: 0.15.0
+
+  pool:
+    github: ysbaddaden/pool
+    version: 0.2.3
+
+  progress:
+    github: askn/progress
+    version: 0.2.0
+
+  redis:
+    github: stefanwille/crystal-redis
+    version: 2.0.0
+
+  schedule:
+    github: hugoabonizio/schedule.cr
+    version: 0.2.0
+
+  shainet:
+    github: NeuraLegion/shainet
+    version: 2.3.0
+
+  toka:
+    github: Papierkorb/toka
+    version: 0.1.2
+

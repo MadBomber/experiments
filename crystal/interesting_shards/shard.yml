@@ -1,0 +1,42 @@
+name: interesting_shards
+version: 0.1.0
+
+authors:
+  - MadBomber <dvanhoozer@gmail.com>
+
+targets:
+  interesting_shards:
+    main: src/interesting_shards.cr
+
+crystal: 0.26.0
+
+license: MIT
+
+dependencies:
+  clear:
+    github: anykeyh/clear  # and ORM for PostgreSQL simular to ActiveRecord but not exactly
+  crest:
+    github: mamantoha/crest
+  shainet:
+    github: NeuraLegion/shainet
+  crystagiri:
+    github: madeindjs/crystagiri
+  progress:
+    github: askn/progress
+  redis:
+    github: stefanwille/crystal-redis
+  amqp:
+    github: datanoise/amqp.cr
+  schedule:
+    github: hugoabonizio/schedule.cr
+  bindgen:
+    github: Papierkorb/bindgen
+  cadmium:
+    github: watzon/cadmium
+    branch: master
+  crystal-fann:
+    github: NeuraLegion/crystal-fann
+  libui:
+    github: fusion/libui.cr
+
+
