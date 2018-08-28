@@ -1,0 +1,6 @@
+version: 1.0
+shards:
+  spinner:
+    github: askn/spinner
+    version: 0.1.1
+

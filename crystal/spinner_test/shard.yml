@@ -1,0 +1,17 @@
+name: spinner_test
+version: 0.1.0
+
+authors:
+  - MadBomber <dvanhoozer@gmail.com>
+
+targets:
+  spinner_test:
+    main: src/spinner_test.cr
+
+crystal: 0.26.0
+
+license: MIT
+
+dependencies:
+  spinner:
+    github: askn/spinner
