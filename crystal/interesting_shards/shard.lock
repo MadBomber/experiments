@@ -1,78 +1,570 @@
 version: 1.0
 shards:
+  aasm:
+    git: https://github.com/veelenga/aasm.cr
+    version: 0.1.1
+
+  accord:
+    git: https://github.com/neovintage/accord
+    version: 1.1.0
+
   admiral:
     github: jwaldrip/admiral.cr
     version: 1.7.3
 
+  aha:
+    git: https://github.com/chenkovsky/aha
+    commit: b377d092712d877d3ba5c97c7b673a6a587afd10
+
+  ai4cr:
+    git: https://github.com/drhuffman12/ai4cr
+    version: 0.1.3
+
+  amber:
+    git: https://github.com/amberframework/amber
+    version: 0.9.0
+
+  amber_router:
+    github: amberframework/amber-router
+    version: 0.2.0
+
+  ameba:
+    git: https://github.com/veelenga/ameba
+    version: 0.8.0
+
   amqp:
-    github: datanoise/amqp.cr
+    git: https://github.com/datanoise/amqp.cr
     commit: 5cb2ef8c8abb2666f2ad56d9b3b01aa52020429f
 
+  any_hash:
+    git: https://github.com/sija/any_hash.cr
+    version: 0.2.2
+
+  ast_viewer:
+    git: https://github.com/arcage/ast_viewer.cr
+    commit: 6ccb94ab3593e27e24e5fe058aebb00ef382431b
+
+  auto_constructor:
+    github: kostya/auto_constructor
+    version: 0.2
+
+  auto_initialize:
+    git: https://github.com/kostya/auto_initialize
+    version: 0.1.0
+
+  auto_json:
+    git: https://github.com/kostya/auto_json
+    version: 0.2
+
+  await_async:
+    git: https://github.com/anykeyh/await_async
+    commit: 3bd656de19ed587118cf5bed4c3b467e8de690ca
+
+  awesome_print:
+    git: https://github.com/evandrojr/awesome_print.cr
+    version: 0.1.15
+
   bindgen:
-    github: Papierkorb/bindgen
+    git: https://github.com/Papierkorb/bindgen
     version: 0.6.2
 
+  bloom_filter:
+    git: https://github.com/crystal-community/bloom_filter
+    version: 0.1.0
+
   cadmium:
-    github: watzon/cadmium
+    git: https://github.com/watzon/cadmium
     commit: 4733b5ebe9a2c96fbb3559fc147c2db0f171fc68
 
+  callback:
+    github: mosop/callback
+    version: 0.6.3
+
+  carbon:
+    git: https://github.com/luckyframework/carbon
+    version: 0.1.0
+
   clear:
-    github: anykeyh/clear
+    git: https://github.com/anykeyh/clear
     version: 0.3
 
+  cli:
+    github: mosop/cli
+    version: 0.7.0
+
+  clim:
+    git: https://github.com/at-grandpa/clim
+    version: 0.4.0
+
+  compiled_license:
+    github: elorest/compiled_license
+    version: 0.1.3
+
+  crayon:
+    github: crystalrealm/crayon
+    commit: 5486ebfeca12dd89e17ed3f96317f34990f98e22
+
+  crecto:
+    git: https://github.com/fridgerator/crecto
+    version: 0.9.0
+
   crest:
-    github: mamantoha/crest
+    git: https://github.com/mamantoha/crest
     version: 0.14.0
 
+  crog:
+    git: https://github.com/rishavs/crog
+    commit: 65f228b82811ba923ef8991554bd3908eb1e1dbb
+
   crystagiri:
-    github: madeindjs/crystagiri
+    git: https://github.com/madeindjs/crystagiri
     version: 0.3.2
 
+  crystal-clear:
+    git: https://github.com/Groogy/crystal-clear
+    version: 1.0.0
+
+  crystal-dfa:
+    git: https://github.com/ziprandom/crystal-dfa
+    version: 0.4.1
+
   crystal-fann:
-    github: NeuraLegion/crystal-fann
+    git: https://github.com/NeuraLegion/crystal-fann
     version: 1.1.1
+
+  crystal_on_steroids:
+    git: https://github.com/werner/crystal_on_steroids
+    version: 0.11.0
+
+  crystaledge:
+    git: https://github.com/unn4m3d/crystaledge
+    version: 0.2.1
+
+  crystalg:
+    git: https://github.com/TobiasGSmollett/crystalg
+    commit: 87babfa76c524113712160342994be29407830ca
+
+  crystime:
+    git: https://github.com/crystallabs/crystime
+    version: 0.3.0
+
+  curl-crystal:
+    github: blocknotes/curl-crystal
+    version: 0.1.2
+
+  curl-downloader:
+    git: https://github.com/kostya/curl-downloader
+    version: 0.3
+
+  cute:
+    git: https://github.com/Papierkorb/cute
+    version: 0.3.1
 
   db:
     github: crystal-lang/crystal-db
     version: 0.5.0
 
+  dbus:
+    github: oprypin/crystal-dbus
+    commit: 9bd18d5a61f54e80e41bdae4b93236732d5d34c9
+
+  docspec:
+    git: https://github.com/skippi/docspec
+    version: 0.3.0
+
+  earl:
+    git: https://github.com/ysbaddaden/earl
+    commit: e809dff93f66793498c6140feef1b3e51b6f9ee4
+
+  edits:
+    git: https://github.com/tcrouch/edits.cr
+    version: 0.4.0
+
+  epilog:
+    git: https://github.com/crystalrealm/epilog
+    commit: 2d1e13b5cd0b8eeb2f42b9707cfa0c642b17fdf7
+
+  evented:
+    git: https://github.com/krisleech/evented
+    commit: 0f820d16d7e13e73f47069e86f3eec06734f6355
+
+  exception_page:
+    git: https://github.com/crystal-loot/exception_page
+    version: 0.1.1
+
+  exec:
+    git: https://github.com/j8r/exec.cr
+    version: 0.3.3
+
+  financials:
+    git: https://github.com/drum445/financials
+    commit: 9e026f0e46d3466923243fbbdde9b3c0fffe3981
+
+  ftp:
+    git: https://github.com/vonkingsley/ftp
+    commit: b75b77f480bbdafa87a82ad0f1364eaa6fdb8d3d
+
   generate:
     github: anykeyh/generate.cr
     commit: f374acb340ea92a79fba97c7deb2f0a0ff4be62f
+
+  geocoder:
+    git: https://github.com/andre/geocoder
+    commit: d8a6e5dace67fc428e0b973e6e9f9449753fd395
+
+  gravatarcr:
+    git: https://github.com/changjoo-park/gravatarcr
+    version: 0.1.0
+
+  gsl:
+    git: https://github.com/ruivieira/crystal-gsl
+    commit: ba6d68b8b796601f644712c2ff3fd63f55479752
+
+  habitat:
+    github: luckyframework/habitat
+    version: 0.4.0
+
+  hardware:
+    git: https://github.com/crystal-community/hardware
+    version: 0.4.0
+
+  honcho:
+    git: https://github.com/faultyserver/honcho
+    commit: 8939e7651e6cfd2e427ec978fef4baddc0e098ae
+
+  hq:
+    git: https://github.com/maiha/hq.cr
+    version: 0.2.3
+
+  humanize_time:
+    git: https://github.com/mamantoha/humanize_time
+    version: 0.3.0
+
+  hydra:
+    git: https://github.com/Ghrind/hydra
+    version: 0.4.0
+
+  i18n:
+    github: TechMagister/i18n.cr
+    commit: d8a8933f6a4eb7d9790c3803cb8bec06c304ea5c
+
+  imap:
+    git: https://github.com/crisward/imap
+    commit: 4dc82971930a9943821c4f797a9f3878b918a7af
 
   inflector:
     github: phoffer/inflector.cr
     version: 0.1.8
 
+  inotify:
+    git: https://github.com/petoem/inotify.cr
+    commit: 690cdde616c4fd3869ced2d56a9bf2087fa9d25e
+
+  ip2country:
+    git: https://github.com/arcage/ip2country
+    version: 0.1.3
+
+  ipaddress:
+    git: https://github.com/sija/ipaddress.cr
+    version: 0.1.2
+
+  jq:
+    git: https://github.com/maiha/jq.cr
+    version: 0.5.1
+
+  katip:
+    git: https://github.com/guvencenanguvenal/katip
+    commit: 07b1f4c876cec9073035896a5c5c128a8a463ca5
+
+  kemal:
+    github: kemalcr/kemal
+    version: 0.24.0
+
+  kemal-json-api:
+    git: https://github.com/spoved/kemal-json-api.cr
+    version: 0.2.0
+
+  kemal-rest-api:
+    git: https://github.com/blocknotes/kemal-rest-api
+    version: 0.1.5
+
+  kemal-session:
+    git: https://github.com/kemalcr/kemal-session
+    version: 0.10.0
+
+  kemal-watcher:
+    git: https://github.com/faustinoaq/kemal-watcher
+    version: 0.4.0
+
+  kilt:
+    github: jeromegn/kilt
+    version: 0.4.0
+
+  kiwi:
+    git: https://github.com/crystal-community/kiwi
+    version: 0.1.0
+
+  libnotify:
+    git: https://github.com/splattael/libnotify.cr
+    version: 0.2.0
+
   libui:
-    github: fusion/libui.cr
+    git: https://github.com/fusion/libui.cr
     commit: 2ed70afe9467f8a73891ac8e3c05cf23bdaf6707
+
+  liquid:
+    github: TechMagister/liquid.cr
+    version: 0.3.0
+
+  markd:
+    git: https://github.com/icyleaf/markd
+    version: 0.1.1
+
+  maxminddb:
+    git: https://github.com/delef/maxminddb.cr
+    version: 0.7.1
+
+  memoized:
+    git: https://github.com/maiha/memoized.cr
+    version: 0.3.1
+
+  memory_cache:
+    git: https://github.com/kostya/memory_cache
+    version: 0.2
+
+  metascraper:
+    git: https://github.com/malina/metascraper
+    commit: 63e241bd77634af3ad9b6ac1262f3261e428243e
+
+  micrate:
+    github: amberframework/micrate
+    version: 0.3.3
+
+  microtest:
+    git: https://github.com/ragmaanir/microtest
+    version: 1.2.1
+
+  minitest:
+    git: https://github.com/ysbaddaden/minitest.cr
+    version: 0.4.0
+
+  mongo:
+    github: kalinon/mongo.cr
+    commit: c9e684d36cc755f8e7c903272d01fc6c6a0d0db5
+
+  mosquito:
+    git: https://github.com/robacarp/mosquito
+    version: 0.2.0
+
+  mqtt_crystal:
+    git: https://github.com/liu-chong/mqtt_crystal
+    commit: 06a33a56365bdf7db7a93577953272ccbc145df6
+
+  myhtml:
+    github: kostya/myhtml
+    version: 0.12
+
+  mysql:
+    github: crystal-lang/crystal-mysql
+    version: 0.5.0
+
+  ncurses:
+    git: https://github.com/agatan/ncurses.cr
+    commit: 06a4785c00f79bcb403ef47964ada837f64f453c
+
+  ngrok:
+    git: https://github.com/watzon/ngrok.cr
+    commit: 3627a6788644313d0138e08dddb54413f97588e1
+
+  notifications:
+    git: https://github.com/crystal-community/crystal-notifications
+    commit: 93a72b9c92372c948baa655fd7e118b16abbc38b
+
+  notify:
+    git: https://github.com/woodruffw/notify.cr
+    version: 0.1.0
+
+  openssl:
+    git: https://github.com/datanoise/openssl.cr
+    commit: afb878a03068abbf73548a7e57f86f739f449cfa
+
+  optarg:
+    github: mosop/optarg
+    version: 0.5.8
+
+  opts:
+    git: https://github.com/maiha/opts.cr
+    version: 0.5.0
+
+  parallel:
+    git: https://github.com/RX14/parallel.cr
+    commit: 7f88d4ce8b0a9cde962a9889abb6a95e6733e860
+
+  pegasus:
+    git: https://github.com/pawandubey/pegasus
+    version: 0.1.0
 
   pg:
     github: will/crystal-pg
     version: 0.15.0
 
+  poncho:
+    git: https://github.com/icyleaf/poncho
+    version: 0.3.0
+
   pool:
     github: ysbaddaden/pool
     version: 0.2.3
 
+  popcorn:
+    github: icyleaf/popcorn
+    version: 0.1.1
+
+  pretty:
+    git: https://github.com/maiha/pretty.cr
+    version: 0.6.0
+
   progress:
-    github: askn/progress
+    git: https://github.com/askn/progress
     version: 0.2.0
+
+  psutil:
+    git: https://github.com/kodnaplakal/psutil.cr
+    commit: 4df54cb06febd293f9989a1d1a45dd2bfa8671b9
+
+  qrencode:
+    git: https://github.com/woodruffw/qrencode.cr
+    version: 0.1.0
+
+  radix:
+    github: luislavena/radix
+    version: 0.3.8
 
   redis:
-    github: stefanwille/crystal-redis
+    git: https://github.com/stefanwille/crystal-redis
     version: 2.0.0
 
-  schedule:
-    github: hugoabonizio/schedule.cr
+  retrycr:
+    git: https://github.com/taylorfinnell/retrycr
+    version: 0.1.1
+
+  run_with_fork:
+    git: https://github.com/kostya/run_with_fork
     version: 0.2.0
 
+  sass:
+    git: https://github.com/straight-shoota/sass.cr
+    version: 0.4.0
+
+  schedule:
+    git: https://github.com/hugoabonizio/schedule.cr
+    version: 0.2.0
+
+  secrets:
+    git: https://github.com/faustinoaq/secrets
+    version: 0.1.2
+
   shainet:
-    github: NeuraLegion/shainet
+    git: https://github.com/NeuraLegion/shainet
     version: 2.3.0
+
+  shard:
+    github: maiha/shard.cr
+    version: 0.3.0
+
+  shell-table:
+    github: luckyframework/shell-table.cr
+    commit: 078a04ea58ead5203bb435a3b5fff448ddabaeea
+
+  shobj:
+    git: https://github.com/tbrand/iemon
+    commit: 99dab418815d16cf834d0a70090894bdb36153a4
+
+  slack:
+    git: https://github.com/manastech/crystal_slack
+    version: 0.9.0
+
+  slang:
+    github: jeromegn/slang
+    version: 1.7.1
+
+  smtp:
+    git: https://github.com/raydf/smtp.cr
+    version: 0.2.0
+
+  sodium:
+    git: https://github.com/EddyShure/sodium
+    commit: 37fd2945810dc8c9e557d4de40048b17098a2c25
+
+  soegen:
+    git: https://github.com/ragmaanir/soegen
+    version: 0.12.0
+
+  sqlite3:
+    github: crystal-lang/crystal-sqlite3
+    version: 0.10.0
+
+  statsd:
+    git: https://github.com/miketheman/statsd.cr
+    version: 0.1.0
+
+  string_inflection:
+    github: mosop/string_inflection
+    version: 0.2.1
+
+  stringpad:
+    github: crystalrealm/stringpad
+    commit: 27ed1fde22c2ae7d093beda95ed5be9620721183
+
+  sub_hash:
+    github: chenkovsky/sub_hash
+    commit: 43404f676b1c0cd65dd12c489f25409192cf369b
+
+  super_io:
+    github: chenkovsky/super_io
+    commit: e05da36f34d995831263c000bec1a6f760ff372c
+
+  teeplate:
+    github: mosop/teeplate
+    version: 0.6.1
+
+  termbox:
+    github: andrewsuzuki/termbox-crystal
+    commit: 9471d1f1852dec251d6bcb6f8a583e7abdf04f68
+
+  time_zone:
+    git: https://github.com/imdrasil/time_zone
+    version: 0.1.1
 
   toka:
     github: Papierkorb/toka
     version: 0.1.2
+
+  totem:
+    git: https://github.com/icyleaf/totem
+    version: 0.4.0
+
+  try:
+    github: maiha/try.cr
+    version: 0.3.0
+
+  var:
+    github: maiha/var.cr
+    version: 0.2.1
+
+  watcher:
+    git: https://github.com/faustinoaq/watcher
+    version: 0.3.0
+
+  youtube_retriever:
+    git: https://github.com/akiicat/youtube_retriever
+    version: 1.0.0
+
+  zap:
+    git: https://github.com/stepanvanzuriak/zap
+    commit: 7f7acbc422570d946cd206864e8e8a721497e5e7
+
+  zeromq:
+    git: https://github.com/benoist/zeromq-crystal
+    commit: a92be120b21743e17c9103630890b36329f819bb
 

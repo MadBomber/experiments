@@ -14,29 +14,336 @@ license: MIT
 
 dependencies:
   clear:
-    github: anykeyh/clear  # and ORM for PostgreSQL simular to ActiveRecord but not exactly
+    git: https://github.com/anykeyh/clear
+    desc: 'Advanced ORM between postgreSQL and Crystal'
   crest:
-    github: mamantoha/crest
+    git: https://github.com/mamantoha/crest
+    desc: 'Simple HTTP and REST client for Crystal, inspired by the Rubys RestClient gem.'
   shainet:
-    github: NeuraLegion/shainet
+    git: https://github.com/NeuraLegion/shainet
+    desc: 'SHAInet - a pure Crystal machine learning library'
   crystagiri:
-    github: madeindjs/crystagiri
+    git: https://github.com/madeindjs/crystagiri
+    desc: 'An Html parser library for Crystal (like Nokogiri for Ruby)'
   progress:
-    github: askn/progress
+    git: https://github.com/askn/progress
+    desc: '[==..] Progress bar for Crystal Programming Language'
   redis:
-    github: stefanwille/crystal-redis
+    git: https://github.com/stefanwille/crystal-redis
+    desc: 'Full featured Redis client for Crystal'
   amqp:
-    github: datanoise/amqp.cr
+    git: https://github.com/datanoise/amqp.cr
+    desc: 'AMQP client for Crystal language'
   schedule:
-    github: hugoabonizio/schedule.cr
+    git: https://github.com/hugoabonizio/schedule.cr
+    desc: ':clock3: Run periodic tasks in Crystal'
   bindgen:
-    github: Papierkorb/bindgen
+    git: https://github.com/Papierkorb/bindgen
+    desc: 'Binding and wrapper generator for C/C++ libraries'
   cadmium:
-    github: watzon/cadmium
+    git: https://github.com/watzon/cadmium
+    desc: 'Natural Language Processing (NLP) library for Crystal'
     branch: master
   crystal-fann:
-    github: NeuraLegion/crystal-fann
+    git: https://github.com/NeuraLegion/crystal-fann
+    desc: 'FANN (Fast Artifical Neural Network) binding in Crystal'
   libui:
-    github: fusion/libui.cr
-
-
+    git: https://github.com/fusion/libui.cr
+    desc: 'Crystal-lang bindings for libui'
+  accord:
+    git: https://github.com/neovintage/accord
+    desc: 'Validations for Crystal Objects'
+  auto_json:
+    git: https://github.com/kostya/auto_json
+    desc: 'Auto JSON convertations for classes and structs, based on auto_constructor fields'
+  katip:
+    git: https://github.com/guvencenanguvenal/katip
+    desc: 'Katip is JSONBase Logger for Crystal'
+  crystal-clear:
+    git: https://github.com/Groogy/crystal-clear
+    desc: 'Design by Contract for Crystal'
+  ipaddress:
+    git: https://github.com/sija/ipaddress.cr
+    desc: 'A Crystal library to handle IPv4 and IPv6 addresses in a modern and productive way.'
+  hardware:
+    git: https://github.com/crystal-community/hardware
+    desc: 'Get CPU, Memory and Network informations of the running OS and its processes'
+  hardware:
+    git: https://github.com/crystal-community/hardware
+    desc: 'Get CPU, Memory and Network informations of the running OS and its processes'
+  amber:
+    git: https://github.com/amberframework/amber
+    desc: 'A Crystal web framework that makes building applications fast, simple, and enjoyable. Get started with quick prototyping, less bugs, and blazing fast performance.'
+  poncho:
+    git: https://github.com/icyleaf/poncho
+    desc: 'A .env parser/loader improved for performance.'
+  totem:
+    git: https://github.com/icyleaf/totem
+    desc: 'Crystal configuration with spirit. Load and parse configuration in JSON, YAML, dotenv formats.'
+  shobj:
+    git: https://github.com/tbrand/iemon
+    desc: 'unknown'
+  await_async:
+    git: https://github.com/anykeyh/await_async
+    desc: 'Provide await and async method to Crystal Lang'
+  financials:
+    git: https://github.com/drum445/financials
+    desc: 'Collection of Financial Calculations in Crystal'
+  exception_page:
+    git: https://github.com/crystal-loot/exception_page
+    desc: 'An exceptional exception page for Crystal web libraries and frameworks'
+  shainet:
+    git: https://github.com/NeuraLegion/shainet
+    desc: 'SHAInet - a pure Crystal machine learning library'
+  curl-downloader:
+    git: https://github.com/kostya/curl-downloader
+    desc: 'Powerfull http-client for Crystal based on libcurl binding.'
+  time_zone:
+    git: https://github.com/imdrasil/time_zone
+    desc: 'Time Zone provides daylight savings aware transformations between times in different time zones.'
+  crecto:
+    git: https://github.com/fridgerator/crecto
+    desc: 'Database wrapper for Crystal, inspired by Ecto'
+  hydra:
+    git: https://github.com/Ghrind/hydra
+    desc: 'Terminal interface for Crystal'
+  parallel:
+    git: https://github.com/RX14/parallel.cr
+    desc: 'Parallelism for crystal as a shard'
+  awesome_print:
+    git: https://github.com/evandrojr/awesome_print.cr
+    desc: 'It dreams about becoming rubys awesome_print for crystal-lang, under light development.'
+  honcho:
+    git: https://github.com/faultyserver/honcho
+    desc: 'A fiber/process supervisor for Crystal, inspired by the erlang/elixir Supervisor module.'
+  earl:
+    git: https://github.com/ysbaddaden/earl
+    desc: 'Service Objects for Crystal (Agents, Artists, Supervisors, Pools, ...)'
+  geocoder:
+    git: https://github.com/andre/geocoder
+    desc: 'Simple Geocoding in Crystal'
+  redis:
+    git: https://github.com/stefanwille/crystal-redis
+    desc: 'Full featured Redis client for Crystal'
+  secrets:
+    git: https://github.com/faustinoaq/secrets
+    desc: 'Useful to get input on noecho, secrets, passwords, token, hints'
+  carbon:
+    git: https://github.com/luckyframework/carbon
+    desc: 'Email library for Crystal. Testable, adapter-based, and catches bugs for you. Comes with an adapter for SendGrid.'
+  qrencode:
+    git: https://github.com/woodruffw/qrencode.cr
+    desc: 'Crystal bindings for libqrencode (qrencode), a library for QR code generation'
+  humanize_time:
+    git: https://github.com/mamantoha/humanize_time
+    desc: 'Adds the humanize method to reports the approximate distance in time between two Time. humanize supports i18n translations too so it can be used in internationalized apps.'
+  cadmium:
+    git: https://github.com/watzon/cadmium
+    desc: 'Natural Language Processing (NLP) library for Crystal'
+  notifications:
+    git: https://github.com/crystal-community/crystal-notifications
+    desc: 'A library for notifications, this started as a port from ActiveSupport::Notifications'
+  bloom_filter:
+    git: https://github.com/crystal-community/bloom_filter
+    desc: 'Bloom filter implementation in Crystal lang'
+  smtp:
+    git: https://github.com/raydf/smtp.cr
+    desc: 'smtp shard'
+  evented:
+    git: https://github.com/krisleech/evented
+    desc: 'Publish and Subscribe for Crystal objects'
+  aasm:
+    git: https://github.com/veelenga/aasm.cr
+    desc: ':arrows_clockwise: Easy to use finite state machine for Crystal classes'
+  inflector:
+    git: https://github.com/phoffer/inflector.cr
+    desc: 'Inflector shard for Crystal. A port of ActiveSupport::Inflector'
+  kemal-session:
+    git: https://github.com/kemalcr/kemal-session
+    desc: 'Simple session handler for Kemal'
+  zeromq:
+    git: https://github.com/benoist/zeromq-crystal
+    desc: 'unknown'
+  kemal-rest-api:
+    git: https://github.com/blocknotes/kemal-rest-api
+    desc: 'Crystal library to create REST API with Kemal'
+  mosquito:
+    git: https://github.com/robacarp/mosquito
+    desc: 'A generic background task runner framework for crystal applications supporting periodic (CRON) and manually queued jobs'
+  kiwi:
+    git: https://github.com/crystal-community/kiwi
+    desc: 'A unified Crystal interface for key-value stores.'
+  crystal_on_steroids:
+    git: https://github.com/werner/crystal_on_steroids
+    desc: 'A group of methods to make Crystal more programmer friendly (extracted from Rails ActiveSupport, Powerpack and others)'
+  clim:
+    git: https://github.com/at-grandpa/clim
+    desc: 'Slim command line interface builder for Crystal.'
+  slack:
+    git: https://github.com/manastech/crystal_slack
+    desc: 'Parse Slack slash commands or send incoming web hooks from Crystal'
+  watcher:
+    git: https://github.com/faustinoaq/watcher
+    desc: 'Crystal shard to watch file changes using File.stat'
+  psutil:
+    git: https://github.com/kodnaplakal/psutil.cr
+    desc: 'Psutils.cr is a Crystal port of https://github.com/shirou/gopsutil'
+  crystal-dfa:
+    git: https://github.com/ziprandom/crystal-dfa
+    desc: 'A Crystal Implementation of a Thompson NFA/DFA Regex Matcher '
+  run_with_fork:
+    git: https://github.com/kostya/run_with_fork
+    desc: 'Some simple parallelism for Crystal. Run some heavy or blocked thread operations in background fork.'
+  kemal-watcher:
+    git: https://github.com/faustinoaq/kemal-watcher
+    desc: 'Kemal plugin to watch files and live-reload the browser'
+  crystalg:
+    git: https://github.com/TobiasGSmollett/crystalg
+    desc: 'A Generic Algorithm Library for Crystal'
+  inotify:
+    git: https://github.com/petoem/inotify.cr
+    desc: 'Inotify bindings for Crystal'
+  cute:
+    git: https://github.com/Papierkorb/cute
+    desc: 'An event-centric publisher/subscribe model for objects inspired by the Qt framework'
+  any_hash:
+    git: https://github.com/sija/any_hash.cr
+    desc: 'Better JSON::Any for Crystal'
+  ncurses:
+    git: https://github.com/agatan/ncurses.cr
+    desc: 'NCurses bindings for Crystal'
+  pegasus:
+    git: https://github.com/pawandubey/pegasus
+    desc: 'PEG based parser generator library in Crystal'
+  soegen:
+    git: https://github.com/ragmaanir/soegen
+    desc: 'Elasticsearch client library for crystal, similar to rubys stretcher gem'
+  libnotify:
+    git: https://github.com/splattael/libnotify.cr
+    desc: 'Libnotify for Crystal'
+  memory_cache:
+    git: https://github.com/kostya/memory_cache
+    desc: 'Super simple in memory key-value storage with expires for Crystal.'
+  microtest:
+    git: https://github.com/ragmaanir/microtest
+    desc: 'Smaller test framework, because it has power asserts as the only assertion.'
+  markd:
+    git: https://github.com/icyleaf/markd
+    desc: 'Yet another markdown parser, Compliant to CommonMark specification, written in Crystal.'
+  statsd:
+    git: https://github.com/miketheman/statsd.cr
+    desc: 'A statsd client library for Crystal.'
+  epilog:
+    git: https://github.com/crystalrealm/epilog
+    desc: '🏆 Elegant, fancy console logger for Crystal'
+  auto_initialize:
+    git: https://github.com/kostya/auto_initialize
+    desc: ' Generate initialize methods for classes and structs'
+  notify:
+    git: https://github.com/woodruffw/notify.cr
+    desc: 'A Crystal library for desktop notifications.'
+  pretty:
+    git: https://github.com/maiha/pretty.cr
+    desc: 'Something `pretty` stuff for Crystal'
+  zap:
+    git: https://github.com/stepanvanzuriak/zap
+    desc: ':zap: Utility library for you'
+  ast_viewer:
+    git: https://github.com/arcage/ast_viewer.cr
+    desc: 'Visualize the AST structure from ASTNode object, source file, or source code string.'
+  kemal-json-api:
+    git: https://github.com/spoved/kemal-json-api.cr
+    desc: 'A Kemal implementation of JSON-API spec'
+  crystaledge:
+    git: https://github.com/unn4m3d/crystaledge
+    desc: 'A pure Crystal Vector Math library'
+  crystime:
+    git: https://github.com/crystallabs/crystime
+    desc: 'Advanced time, calendar, schedule, and remind library for Crystal'
+  jq:
+    git: https://github.com/maiha/jq.cr
+    desc: 'thin JSON::Any wrapper to emulate jq for crystal'
+  retrycr:
+    git: https://github.com/taylorfinnell/retrycr
+    desc: 'Retry blocks of Crystal code'
+  sass:
+    git: https://github.com/straight-shoota/sass.cr
+    desc: 'Compile Sass/SCSS to CSS in Crystal (libsass binding)'
+  maxminddb:
+    git: https://github.com/delef/maxminddb.cr
+    desc: 'MaxMind DB reader, including the GeoIP2'
+  humanize_time:
+    git: https://github.com/mamantoha/humanize_time
+    desc: 'Adds the humanize method to reports the approximate distance in time between two Time. humanize supports i18n translations too so it can be used in internationalized apps.'
+  ftp:
+    git: https://github.com/vonkingsley/ftp
+    desc: 'FTP Client for crystal'
+  ip2country:
+    git: https://github.com/arcage/ip2country
+    desc: 'IP(v4) address to country name converter for Crystal'
+  edits:
+    git: https://github.com/tcrouch/edits.cr
+    desc: 'Edit distance algorithms inc. Jaro, Damerau-Levenshtein, and Optimal Alignment'
+  ai4cr:
+    git: https://github.com/drhuffman12/ai4cr
+    desc: 'Artificial Intelligence for Crystal (based on https://github.com/SergioFierens/ai4r)'
+  metascraper:
+    git: https://github.com/malina/metascraper
+    desc: 'Metascraper is a Crystal library  for web scraping.'
+  ngrok:
+    git: https://github.com/watzon/ngrok.cr
+    desc: 'Ngrok wrapper for Crystal'
+  gsl:
+    git: https://github.com/ruivieira/crystal-gsl
+    desc: 'GNU Scientific Library bindings for Crystal'
+  memoized:
+    git: https://github.com/maiha/memoized.cr
+    desc: 'Time-based memoized library for Crystal'
+  mqtt_crystal:
+    git: https://github.com/liu-chong/mqtt_crystal
+    desc: 'MQTT Crystal client'
+  opts:
+    git: https://github.com/maiha/opts.cr
+    desc: 'a wrapper for OptionParser to provide default values and handy args'
+  sodium:
+    git: https://github.com/EddyShure/sodium
+    desc: 'A fast library for graph/network manipulation'
+  hq:
+    git: https://github.com/maiha/hq.cr
+    desc: 'a simple wrapper for crystal-xml'
+  gravatarcr:
+    git: https://github.com/changjoo-park/gravatarcr
+    desc: 'Gravatar URL library for crystal language 🔮'
+  docspec:
+    git: https://github.com/skippi/docspec
+    desc: 'A crystal library for automatically testing documentation examples.'
+  exec:
+    git: https://github.com/j8r/exec.cr
+    desc: 'Thin Process wrapper for simple execution of programs with arguments'
+  aha:
+    git: https://github.com/chenkovsky/aha
+    desc: 'useful algorithm for text processing'
+  youtube_retriever:
+    git: https://github.com/akiicat/youtube_retriever
+    desc: 'crystal retrieve youtubes video information'
+  imap:
+    git: https://github.com/crisward/imap
+    desc: 'Imap client library for Crystal-Lang'
+  crog:
+    git: https://github.com/rishavs/crog
+    desc: 'A crystal metaparsing library'
+  kemal:
+    git: https://github.com/kemalcr/kemal
+    desc: 'Fast, Effective, Simple Web Framework'
+  ameba:
+    git: https://github.com/veelenga/ameba
+    desc: 'A static code analysis tool for Crystal'
+  redis:
+    git: https://github.com/stefanwille/crystal-redis
+    desc: 'Full featured Redis client for Crystal'
+  openssl:
+    git: https://github.com/datanoise/openssl.cr
+    desc: 'OpenSSL binding for Crystal language'
+  minitest:
+    git: https://github.com/ysbaddaden/minitest.cr.git
+    desc: 'Test Unit for the Crystal programming language'
