@@ -21,7 +21,6 @@ class PingHandler(tornado.web.RequestHandler):
         self.write("<h1>Pong!</h1>")
 
 
-
 def make_app():
     settings = {
         'debug':True,  # will cause an auto-reload on file changes
