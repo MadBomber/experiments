@@ -1,6 +1,28 @@
 source 'https://rubygems.org'
 
-gem 'ruby-kafka'    # A client library for the Kafka distributed commit log.
-gem 'awesome_print' # Pretty print Ruby objects with proper indentation and colors
-gem 'debug_me'      # A tool to print the labeled value of variables.
-gem 'json'
+gem 'awesome_print'   # Pretty print Ruby objects with proper indentation and colors
+gem 'debug_me'        # A tool to print the labeled value of variables.
+gem 'json'            # JSON Implementation for Ruby
+gem 'kick_the_tires'  # Provides some basic methods/assertions that are handy for exploring a new ruby library.
+
+gem 'ruby-kafka'      # A client library for the Kafka distributed commit log.
+
+gem 'delivery_boy'    # A simple way to produce messages to Kafka from Ruby applications
+gem 'phobos'          # Simplifying Kafka for ruby apps
+gem 'racecar'         # A framework for running Kafka consumers
+gem 'waterdrop'       # Kafka messaging made easy!
+
+
+__END__
+
+delivery_boy  A simple way to produce messages to Kafka from Ruby applications
+              |__ https://github.com/zendesk/delivery_boy
+
+phobos  Simplifying Kafka for ruby apps
+        |__ https://github.com/klarna/phobos
+
+racecar  A framework for running Kafka consumers
+         |__ https://github.com/zendesk/racecar
+
+waterdrop  Kafka messaging made easy!
+           |__ https://github.com/karafka/waterdrop

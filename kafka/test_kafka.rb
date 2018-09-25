@@ -2,83 +2,97 @@
 # kafka/test_kafka.rb
 # Playing with Kafka as a potentional replacement for RabbitMQ
 
-require "kafka"
-require "json"
-require 'awesome_print'
-require 'debug_me'
+# Must match the server name in config/kafka.properties
+KAFKA_HOST = `hostname`
+
+require "json"            # STDLIB
+require 'logger'          # STDLIB
+logger = Logger.new("kafka.log")
+
+require 'awesome_print'   # Pretty print Ruby objects with proper indentation and colors
+
+require 'debug_me'        # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'logger'
+require 'kick_the_tires'  # Provides some basic methods/assertions that are handy for exploring a new ruby library.
+include KickTheTires
 
-logger = Logger.new("log/kafka.log")
+require "kafka" #gem 'ruby-kafka' - A client library for the Kafka distributed commit log.
+
 
 # The first argument is a list of "seed brokers" that will be queried for the full
 # cluster topology. At least one of these *must* be available. `client_id` is
 # used to identify this client in logs and metrics. It's optional but recommended.
 kafka = Kafka.new(
-  ["kafka1:9092", "kafka2:9092"],
+  "#{KAFKA_HOST}:9092", # one or more (in Array) kafka instances in the cluster
   client_id: "my-application",
   logger: logger, # always a good idea in development
 
   # encrypt comms with SSL
-  ssl_ca_cert: File.read('my_ca_cert.pem'), # optional
-  ssl_ca_certs_from_system: true, # pr use the system store
-  ssl_client_cert: File.read('my_client_cert.pem'),
-  ssl_client_cert_key: File.read('my_client_cert_key.pem'),
+  # ssl_ca_cert: File.read('my_ca_cert.pem'), # optional
+  # ssl_ca_certs_from_system: true, # pr use the system store
+  # ssl_client_cert: File.read('my_client_cert.pem'),
+  # ssl_client_cert_key: File.read('my_client_cert_key.pem'),
 
   # or use a login as an option
-  sasl_plain_username: 'username',
-  sasl_plain_password: 'password',
-
-
+  # sasl_plain_username: 'username',
+  # sasl_plain_password: 'password'
 )
+
+debug_me{[ :kafka ]}
 
 # get an array of strings - the topics available
 # on this kafka cluster
-kafka.topics
+debug_me{[ 'kafka.topics' ]}
 
 # create a new topic
-kafka.create_topic("topic",
-  num_partitions: 3,
+topic_name = 'my_topic_name'
+
+kafka.create_topic(
+  topic_name,
+  num_partitions:     3,
   replication_factor: 2,
   config: {
     "max.message.bytes" => 100000
   }
 )
 
-kafka.create_partitions_for("topic", num_partitions: 10)
+debug_me{[ 'kafka.topics' ]}
+
+
+kafka.create_partitions_for(topic_name, num_partitions: 10)
 
 # This will write the message to a random partition in the greetings topic. If you want to write to a specific partition, pass the partition parameter:
 
-kafka.deliver_message("Hello, World!", topic: "greetings")
+kafka.deliver_message("Hello, World!", topic: topic_name)
 
 # Get some information about a topic
-kafka.describe_topic("topic", ["max.message.bytes", "retention.ms"])
+kafka.describe_topic(topic_name, ["max.message.bytes", "retention.ms"])
 # => {"max.message.bytes"=>"100000", "retention.ms"=>"604800000"}
 
 # Change a topic's configuration
-kafka.alter_topic("topic", "max.message.bytes" => 100000, "retention.ms" => 604800000)
+kafka.alter_topic(topic_name, "max.message.bytes" => 100000, "retention.ms" => 604800000)
 
-kafka.delete_topic("topic")
+kafka.delete_topic(topic_name)
 
 
 # Will write to partition 42.
 
-kafka.deliver_message("Hello, World!", topic: "greetings", partition: 42)
+kafka.deliver_message("Hello, World!", topic: topic_name, partition: 42)
 
 
 # If you don't know exactly how many partitions are in the topic, or if you'd rather have some level of indirection, you can pass in partition_key instead. Two messages with the same partition key will always be assigned to the same partition. This is useful if you want to make sure all messages with a given attribute are always written to the same partition, e.g. all purchase events for a given customer id.
 
 # Partition keys assign a partition deterministically.
 
-kafka.deliver_message("Hello, World!", topic: "greetings", partition_key: "hello")
+kafka.deliver_message("Hello, World!", topic: topic_name, partition_key: "hello")
 
 
 
 # Kafka also supports message keys. When passed, a message key can be used instead of a partition key. The message key is written alongside the message value and can be read by consumers. Message keys in Kafka can be used for interesting things such as Log Compaction. See Partitioning for more information.
 
 # Set a message key; the key will be used for partitioning since no explicit `partition_key` is set.
-kafka.deliver_message("Hello, World!", key: "hello", topic: "greetings")
+kafka.deliver_message("Hello, World!", key: "hello", topic: topic_name)
 
 
 # Efficiently Producing Messages
@@ -94,8 +108,10 @@ kafka.deliver_message("Hello, World!", key: "hello", topic: "greetings")
 # Instantiate a new producer.
 producer = kafka.producer
 
+another_topic_name = "another_topic_name"
+
 # Add a message to the producer buffer.
-producer.produce("hello1", topic: "test-messages")
+producer.produce("hello1", topic: another_topic_name)
 
 # Deliver the messages to Kafka.
 producer.deliver_messages
@@ -105,7 +121,7 @@ producer.deliver_messages
 producer = kafka.async_producer
 
 # The `#produce` API works as normal.
-producer.produce("hello", topic: "greetings")
+producer.produce("hello", topic: another_topic_name)
 
 # `#deliver_messages` will return immediately.
 producer.deliver_messages
@@ -153,7 +169,7 @@ producer = kafka.async_producer(
 )
 
 25.times do |message_number|
-  producer.produce("hello-#{message_number}", topic: "greetings")
+  producer.produce("hello-#{message_number}", topic: another_topic_name)
 end
 
 
@@ -165,23 +181,24 @@ event = {
 
 data = JSON.dump(event)
 
-producer.produce(data, topic: "events")
+producer.produce(data, topic: another_topic_name)
 
 # However, sometimes it's necessary to select a specific partition. When doing this, make sure that you don't pick a partition number outside the range of partitions for the topic:
 
-partitions = kafka.partitions_for("events") # returns integer number of partitions for the thing
+partitions = kafka.partitions_for(another_topic_name) # returns integer number of partitions for the thing
 
 # Make sure that we don't exceed the partition count!
 partition = some_number % partitions
 
-producer.produce(event, topic: "events", partition: partition)
+producer.produce(event, topic: another_topic_name, partition: partition)
 
 
 ##############################################
 ## Receiving messages
 
-kafka.each_message(topic: "greetings") do |message|
-  puts message.offset, message.key, message.value
+kafka.each_message(topic: another_topic_name) do |message|
+  # puts message.offset, message.key, message.value
+  debug_me {[ :message ]}
 end
 
 # Consumers with the same group id will form a Consumer Group together.
@@ -199,7 +216,8 @@ consumer = kafka.consumer(
 )
 # It's possible to subscribe to multiple topics by calling `subscribe`
 # repeatedly.
-consumer.subscribe("greetings",
+consumer.subscribe(
+  another_topic_name,
   # Consume messages from the very beginning of the topic. This is the default.
   start_from_beginning: true, # false means only consume new messages.
 
@@ -211,8 +229,9 @@ trap("TERM") { consumer.stop }
 
 # This will loop indefinitely, yielding each message in turn.
 consumer.each_message do |message|
-  puts message.topic, message.partition
-  puts message.offset, message.key, message.value
+  # puts message.topic, message.partition
+  # puts message.offset, message.key, message.value
+  debug_me {[ :message ]}
 end
 
 
