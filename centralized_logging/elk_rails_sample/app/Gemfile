@@ -1,51 +1,35 @@
 source 'https://rubygems.org'
 
+gem 'rails'           # Full-stack web application framework.
+gem 'pg'              # Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresql.org/]
+gem 'puma'            # Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for Ruby/Rack applications
+gem 'sass-rails'      # Sass adapter for the Rails asset pipeline.
+gem 'uglifier'        # Ruby wrapper for UglifyJS JavaScript compressor
+gem 'coffee-rails'    # CoffeeScript adapter for the Rails asset pipeline.
+gem 'therubyracer'    # Embed the V8 JavaScript interpreter into Ruby
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
-# Use postgresql as the database for Active Record
-gem 'pg', '~> 0.18'
-# Use Puma as the app server
-gem 'puma', '3.11.4' #, '~> 3.0'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+gem 'jquery-rails'          # Use jQuery with Rails 4+
+gem 'turbolinks'            # Turbolinks makes navigating your web application faster
+gem 'jbuilder'              # Create JSON structures via a Builder-style DSL
 
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-gem 'lograge'
-gem 'logstash-event'
+# gem 'lograge'
+# gem 'logstash-event'
+gem 'rails_semantic_logger'  # Feature rich logging framework that replaces the Rails logger.
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platform: :mri
+  gem 'byebug', platform: :mri  # Ruby 2.0 fast debugger - base + CLI
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console'
-  gem 'listen', '~> 3.0.5'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'web-console'             # A debugging tool for your Ruby on Rails applications.
+  gem 'listen'                  # Listen to file modifications
+  gem 'spring'                  # Rails application preloader
+  gem 'spring-watcher-listen'   # Makes spring watch files using the listen gem.
+  gem 'awesome_print'
+  gem 'debug_me'
 end
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+group :test do
+  gem 'rspec'                   # rspec-2.14.1
+end

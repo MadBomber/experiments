@@ -1,0 +1,9 @@
+# Gemfile
+# logging tools
+
+source 'https://rubygems.org'
+
+gem 'logging'           # A flexible and extendable logging library for Ruby
+gem 'lumberjack'        # A simple, powerful, and very fast logging utility that can be a drop in replacement for Logger or ActiveSupport::BufferedLogger.
+gem 'mixlib-log'        # A gem that provides a simple mixin for log functionality
+gem 'semantic_logger'   # Feature rich logging framework, and replacement for existing Ruby & Rails loggers.

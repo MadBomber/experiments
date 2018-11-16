@@ -49,6 +49,17 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
 
+
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    STDOUT.sync = true
+    config.rails_semantic_logger.add_file_appender = false
+    config.semantic_logger.add_appender(
+      io:         STDOUT,
+      level:      config.log_level,
+      formatter:  config.rails_semantic_logger.format
+    )
+  end
+
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
