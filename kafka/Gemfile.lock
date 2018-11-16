@@ -55,6 +55,8 @@ GEM
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     json (2.1.0)
+    kick_the_tires (0.0.2)
+      awesome_print
     king_konf (0.3.6)
     little-plugger (1.1.4)
     logging (2.2.2)
@@ -97,6 +99,7 @@ DEPENDENCIES
   debug_me
   delivery_boy
   json
+  kick_the_tires
   phobos
   racecar
   ruby-kafka

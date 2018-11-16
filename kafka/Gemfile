@@ -12,6 +12,8 @@ gem 'phobos'          # Simplifying Kafka for ruby apps
 gem 'racecar'         # A framework for running Kafka consumers
 gem 'waterdrop'       # Kafka messaging made easy!
 
+gem 'kril'            # A simple command line tool for interacting with Kafka
+gem 'rdkafka-ruby'
 
 __END__
 
