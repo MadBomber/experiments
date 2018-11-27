@@ -1,0 +1,17 @@
+name: hardware_test
+version: 0.1.0
+
+authors:
+  - MadBomber <dvanhoozer@gmail.com>
+
+targets:
+  interesting_shards:
+    main: hardware_test.cr
+
+crystal: 0.27.0
+
+license: MIT
+
+dependencies:
+  hardware:
+    github: crystal-community/hardware

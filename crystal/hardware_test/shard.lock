@@ -1,0 +1,6 @@
+version: 1.0
+shards:
+  hardware:
+    github: crystal-community/hardware
+    version: 0.4.0
+
