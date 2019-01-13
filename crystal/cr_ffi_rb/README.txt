@@ -22,7 +22,7 @@ crystal code to match the FFI that was build.  It will then be sent to
 the crystal compiler to create the library.  The FFI code will then
 be invoked against the library.
 
-One subsequent accesses to my_method, the initializer method will
+On subsequent accesses to my_method, the initializer method will
 recognize that the FFI wrapper already exists and will call it directly.
 
 The technique should work for any language.
@@ -48,7 +48,7 @@ a full library of functions?  Don't think so.
 
 It really kinda sucks after you spend some time with it.
 
-The Go language on the other does support dynamic shared libraries.  But this
-inline concept still sucks.
+The Go language on the other hand does support dynamic shared libraries.  But 
+this inline concept still sucks.
 
 
