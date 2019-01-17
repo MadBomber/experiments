@@ -157,13 +157,9 @@ stack.
 
 ##### Installing the Ruby Version Manager (RVM) #####
 
-Using your web-browser go to this page and follow the instructions:
+Using your web-browser go to [rvm.io/rvm/install](https://rvm.io/rvm/install) and follow the instructions.
 
-    https://rvm.io/rvm/install
-
-This will install the Ruby Version Manager (RVM) in you user
-account on your computer.  Once RVM is installed then you can
-install multiple versions of Ruby..... but you only need one.
+These instructions will allow you to install the Ruby Version Manager (RVM) in your user account on your computer.  Once RVM is installed then you can install multiple versions of Ruby..... but you only need one.
 
 ###### Installing Ruby ######
 
