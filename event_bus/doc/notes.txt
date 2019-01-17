@@ -1,0 +1,47 @@
+# Developer Notes
+
+File layout
+
+root directory for the application
+├── Gemfile ............ libraries used on this project
+├── Gemfile.lock ....... specific versions of libraries locked to the project
+├── README.md .......... how to setup and run this project
+├── doc ................ directory containing basic documentation
+│   ├── notes.txt ...... this file
+│   └── overview.key ... presentation in Apple Keynote
+├── lib ................ directory containing the business logics for the project
+│   ├__ game ........... directory containing the rules for various games
+│       ├__ utilities .. directory of common game utility and object classes
+└── sinsim.rb .......... the main application program
+
+
+In the "lib" directory the following files define the main classes
+used by this project:
+
+account.rb .......... an Account class to keep track of a player's bankroll
+casion.rb ........... a basic model of a casino operation
+event_recorder.rb ... generic collection of events from the EventBus
+game.rb ............. a base class for game
+player.rb ........... a generic player model
+stats_recorder.rb ... subscribes to all events; maintains the event log
+
+
+In the "lib/game" directory the following files define the rules for
+various casino games.
+
+black_jack.rb .... No card counters allowed!  ** WORKING **
+craps.rb ......... Can you make the point?       (PlaceHolder: TBD)
+poker.rb ......... Standard draw poker           (PlaceHolder: TBD)
+roulette.rb ...... Its just a numbers game       (PlaceHolder: TBD)
+slot.rb .......... Classic OneArmed Bandit    ** WORKING **
+texas_holdem.rb .. A special form of poker       (PlaceHolder: TBD)
+war.rb ........... card game for kids            (PlaceHolder: TBD)
+
+In the "lib/game/utilities" directory the following files implement
+common methods and objects used by the games.
+
+card.rb ..... Implements the object Card
+deck.rb ..... Defines a collection of Card instances as a Deck
+hand.rb ..... Defines a collection of Card instances as a Hand
+shoe.rb ..... Defines a collection of Deck instances as a Shoe
+
