@@ -2,8 +2,13 @@
 
 source 'https://rubygems.org'
 
+gem 'faraday'  # HTTP/REST API client library.
+gem 'nokogiri' # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
+gem 'loofah'   # Loofah is a general library for manipulating and transforming HTML/XML documents and fragments
+
+
 # Simple Exponential Backoff in Ruby
-gem 'exponential_backoff'
+gem 'exponential_backoff'  # Exponential Backoff
 
 
 # The Mechanize library is used for automating interaction with websites.
@@ -11,5 +16,5 @@ gem 'exponential_backoff'
 # follow links and submit forms. Form fields can be populated and submitted.
 # Mechanize also keeps track of the sites that you have visited as a history.
 # (https://github.com/sparklemotion/mechanize)
-gem 'mechanize'
+gem 'mechanize'  # The Mechanize library is used for automating interaction with websites
 
