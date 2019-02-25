@@ -1,0 +1,20 @@
+
+source 'https://rubygems.org'
+
+gem 'graphql'                 # A GraphQL language and runtime for Ruby
+gem 'graphql-active_record'   # Active Record Helpers for graphql-ruby
+gem 'graphql-batch'           # A query batching executor for the graphql gem
+gem 'graphql-client'          # GraphQL Client
+gem 'graphql-docs'            # Easily generate beautiful documentation from your GraphQL schema.
+gem 'graphql-errors'          # Simple error handler for graphql-ruby
+gem 'graphql-guard'           # Simple authorization gem for graphql-ruby
+gem 'graphql-preload'         # Preload ActiveRecord associations with graphql-batch
+gem 'graphql-smart_select'    # Plugin for graphql-ruby gem
+gem 'graphql_schema'          # Classes for convenient use of GraphQL introspection result
+gem 'rspec-graphql_matchers'  # Collection of rspec matchers to test your graphQL api schema.
+
+
+__END__
+
+Depends on an older version of graphql
+gem 'graphql-rails'
