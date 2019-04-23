@@ -1,39 +1,135 @@
 #!/usr/bin/env ruby
 ##########################################
 ## extract_words.rb
+#
+# This implementation is a brute force approach that relies upon
+# access to a memory structure that contains valid English language
+# words.  In this case its a Hash that is created by parsing a JSON
+# file.  The current file used contains over 370K English words.
+#
+# A less memory intensive way of detecting word boundaries would
+# be based upon rules.  The English language is a bery complex
+# set of rules.  A review of any code libraries that implement
+# sylable detection/counting in English words has a limited set of
+# rules that might be reused for this kind of application.
+#
+# This problem is really the 1-deminision hidden word puzzle.  The
+# difference is in not trying to find all the words that are present
+# but just the ones that make the most sense.  The crux is how do
+# you calculate "sense?"
 
 require 'json'
 require 'awesome_print'
 require 'debug_me'
 include DebugMe
 
-# over 370K valid English words ... might be too big!
-W = JSON.parse File.open('./words_dictionary.json').read
+# a utility model that knows whether a string is a valid
+# English word.  This implementation is very memory intensive.
+class Word
+	def initialize
+		# over 370K valid English words ... might be too big!
+		@words = JSON.parse File.open('./words_dictionary.json').read
+		clean_up_words
+    begin_end_letters
+	end
 
-# get rid of some of those words ...
+  # given the autorative collection of value English words
+  # returns whether the give string parameter is a valid word
+  def word?(a_string)
+    !@words[a_string].nil?
+  end
 
-aeiou = %w[ a e i o u ]
+  # Is the character more likely to end a word?
+  def ender?(a_character)
+    @enders.include?(a_character)
+  end
 
-('a'..'z').each {|x| W[x] = nil}
-%w[ a i ].each {|x| W[x] = 1}
+  # is the letter more likely to begin/start a word
+  def beginner?(a_character)
+    @beginners.include?(a_character)
+  end
 
-W.keys.select {|x| 2==x.size}.each do |x|
-  W[x] = nil unless (aeiou.include?(x[0]) || aeiou.include?(x[1]))
+  private 
+
+  # What I'm thinking about is when a single letter can be
+  # used as either the last letter of the left word or the
+  # beginning letter of the right word, which is more likely.
+  def begin_end_letters
+    counts = Hash.new{|h,k| h[k]=[0,0]}
+    @words.keys.select{|key| key.size >= 3}.each do |key|
+      a=key[0]
+      z=key[key.size-1]
+      counts[a] = [counts[a].first+1, counts[a].last]
+      counts[z] = [counts[z].first, counts[z].last+1]
+    end
+
+    @enders     = ''
+    @beginners  = ''
+
+    counts.keys.each do |key|
+      sum     = counts[key].first + counts[key].last
+      p_ender = 100.0 * counts[key].last / sum
+      p_begin = 100.0 * counts[key].first / sum
+      # check   = p_ender + p_begin
+      # puts "#{key}\t#{p_begin}\t#{p_ender}\t#{check}"
+      @enders     += key if p_ender > 60.0
+      @beginners  += key if p_begin > 60.0
+    end
+  end
+
+	# get rid of some of those words ...
+	def clean_up_words
+
+		aeiou = %w[ a e i o u ]
+
+		('a'..'z').each {|x| @words[x] = nil}
+		%w[ a i ].each {|x| @words[x] = 1}
+
+		@words.keys.select {|x| 2==x.size}.each do |x|
+		  @words[x] = nil unless (aeiou.include?(x[0]) || aeiou.include?(x[1]))
+		end
+
+		@words.keys.select {|x| 3==x.size}.each do |x|
+		  @words[x] = nil unless (aeiou.include?(x[0]) || aeiou.include?(x[1]) || aeiou.include?(x[2]))
+		end
+
+	end # def clean_up_words
+end # class Word
+
+Words = Word.new
+
+
+def word?(a_string)
+  Words.word?(a_string)
 end
 
-W.keys.select {|x| 3==x.size}.each do |x|
-  W[x] = nil unless (aeiou.include?(x[0]) || aeiou.include?(x[1]) || aeiou.include?(x[2]))
+def ender?(a_character)
+  Words.ender?(a_character)
+end
+
+def beginner?(a_character)
+  Words.beginner?(a_character)
 end
 
 
 ##################################
 ## Main Stuff
+#
+# There are at least two ways to approach finding hidden word
+# boundaries in a string.  The first is to start on the left
+# and collect valid words in a forward - left to right - fashion.
+#
+# Another approach is to start on the right - end - on collect
+# in a backwards fashion - right to left - words.
+#
+# Whether forward or backward the object is the same to find the
+# longest word possible.
 
 def collect_words(a_string, char_indexes, direction=:forward)
   words = Array.new
   char_indexes.each do |edge_index|
     candidate = :forward == direction ? a_string[0..edge_index] : a_string[edge_index..a_string.size-1]
-    words << candidate if W[candidate]
+    words << candidate if word?(candidate)
   end
 
   return words
@@ -63,7 +159,10 @@ def find_valid_words(a_string, direction=:forward)
   return words
 end
 
-
+# wgeb cikkectubg forward and an condition is reached inwhich
+# there are characters left over that do no make up a word, backup
+# to the previous word node and drop the longest form of a word
+# in favor of a previous longest word.
 def backtrace(tree, a_string)
   last_node = tree.last
   node_size = last_node.size
@@ -79,7 +178,7 @@ def backtrace(tree, a_string)
   return tree, a_string
 end
 
-
+# extract wirds ub a forward - left to right - fashion
 def extract_words_1(a_string, result=[], backup=0)
   return result if a_string.empty?
 
@@ -113,31 +212,41 @@ end
   girlsdressup doll sin pretty dresses
   girlsdres sup doll sin pretty dresses
   girlsd res sup doll sin pretty dresses
-
 =end
 
+# do a backtrace on the right to left - aka backwards direction
 def backtrace_2(tree, a_string)
-  last_node = tree.last
-  node_size = last_node.size
+  last_node      = tree.last
+  node_size      = last_node.size
+
+  prev_tree_node = tree[tree.size-2]
+
   if node_size > 1
-    curr = last_node[node_size-1]
-    prev = last_node[node_size-2]
+    curr = last_node[node_size-1] # left
+    prev = last_node[node_size-2] # right
+    restore_string = curr.delete_suffix(prev)
+    a_string = a_string + restore_string
 
+	puts <<~DEBUG
 
-    restore_string = curr[prev.size..]
-    a_string = restore_string + a_string
+		Node Size:  #{node_size}
+		Left/curr:  #{curr}
+		Right/prev: #{prev}
+		Restore:    #{restore_string}
+		a_string:   #{a_string}
 
-debug_me{[ :tree, :curr, :prev, :restore_string, :a_string ]}
+	DEBUG
 
     tree[tree.size-1] = last_node[0..node_size-2]
-  end
+  
+  end # if node_size > 1
 
   debug_me {[ :tree, :a_string ]}
 
   return tree, a_string
 end
 
-
+# extract words using the backwards - right to left - direction
 def extract_words_2(a_string, result=[], backup=0)
   return result if a_string.empty?
 
@@ -149,7 +258,7 @@ def extract_words_2(a_string, result=[], backup=0)
 
     result    = extract_words_2(a_string, result)
   else
-    if 0 == backup # do only one backtrace
+    if backup < 1
       result, a_string = backtrace_2(result, a_string)
       debug_me{[ :result, :a_string ]}
       result = extract_words_2(a_string, result, backup+1)
@@ -165,7 +274,9 @@ def extract_words_2(a_string, result=[], backup=0)
   return result
 end
 
-
+# extract hidden words from a string using both forward
+# and backward approaches.  Return results for each
+# approach.
 def extract_words(a_string)
   result = Array.new
   result_tree = extract_words_1(a_string)
@@ -177,18 +288,37 @@ def extract_words(a_string)
 end
 
 
+##########################################################
+## Lets do some testing
+
+def show_begin_end_candidates(test_string)
+  characters  = test_string.chars
+  beginners   = ''
+  enders      = ''
+  characters.each do |a_char|
+    beginners += beginner?(a_char) ? 'b' : ' '
+    enders    += ender?(a_char) ? 'e' : ' '
+  end
+  return [ beginners, test_string, enders]
+end
+
+
 def test
   [
     'tellthetruthmister',
     'boysplaywithtrucks',
-    'girlsdressupdollsinprettydresses'
+    'girlsliketodressupdollsinprettydresses'
   ].each do |test_string|
-    puts "\nTesting:    #{test_string}"
+    puts "\n"+"="*65
+    puts test_string
+
     results = extract_words(test_string)
 
-    puts "RESULT:"
-    puts "  Forward:  #{results.first}"
-    puts "  Backward: #{results.last}"
+    puts "\nForward:"
+    puts show_begin_end_candidates(results.first).join("\n")
+
+    puts "\nBackward"
+    puts show_begin_end_candidates(results.last).join("\n")
   end
 end
 
