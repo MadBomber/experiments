@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+
+gem 'elasticsearch'
+gem 'ruby-progressbar'
+gem 'awesome_print'

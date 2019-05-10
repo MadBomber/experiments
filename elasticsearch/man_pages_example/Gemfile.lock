@@ -1,0 +1,26 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    elasticsearch (7.0.0)
+      elasticsearch-api (= 7.0.0)
+      elasticsearch-transport (= 7.0.0)
+    elasticsearch-api (7.0.0)
+      multi_json
+    elasticsearch-transport (7.0.0)
+      faraday
+      multi_json
+    faraday (0.15.4)
+      multipart-post (>= 1.2, < 3)
+    multi_json (1.13.1)
+    multipart-post (2.1.0)
+    ruby-progressbar (1.10.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  elasticsearch
+  ruby-progressbar
+
+BUNDLED WITH
+   2.0.1
