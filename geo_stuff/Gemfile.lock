@@ -19,7 +19,7 @@ GEM
       slop (~> 4.0)
     configatron (4.5.0)
     debug_me (1.0.2)
-    ffi (1.9.10)
+    ffi (1.11.1)
     ffi-geos (1.1.0)
       ffi (>= 1.0.0)
     geocoder (1.2.11)
@@ -42,6 +42,7 @@ GEM
       symbol_decoration (~> 1.1)
     nobrainer_geospatial (1.1)
       nobrainer
+    opencage-geocoder (2.1.1)
     options (2.3.2)
     progress_bar (1.0.5)
       highline (~> 1.6)
@@ -72,6 +73,7 @@ DEPENDENCIES
   kick_the_tires
   nobrainer
   nobrainer_geospatial
+  opencage-geocoder
   progress_bar
   rethinkdb
   rethinkdb_helper
