@@ -26,11 +26,15 @@ include DebugMe
 # a utility model that knows whether a string is a valid
 # English word.  This implementation is very memory intensive.
 class Word
+  NIN_PROBILITY = [70.0, 60.0]
+
 	def initialize
 		# over 370K valid English words ... might be too big!
 		@words = JSON.parse File.open('./words_dictionary.json').read
 		clean_up_words
     begin_end_letters
+    puts "Enders:    #{@enders}"
+    puts "Beginners: #{@beginners}"
 	end
 
   # given the autorative collection of value English words
@@ -55,13 +59,22 @@ class Word
   # used as either the last letter of the left word or the
   # beginning letter of the right word, which is more likely.
   def begin_end_letters
-    counts = Hash.new{|h,k| h[k]=[0,0]}
+    counts  = Hash.new{|h,k| h[k]=[0,0]}
+    digrams = Hash.new{|h,k| h[k]=[0,0]}
+
     @words.keys.select{|key| key.size >= 3}.each do |key|
       a=key[0]
       z=key[key.size-1]
       counts[a] = [counts[a].first+1, counts[a].last]
-      counts[z] = [counts[z].first, counts[z].last+1]
+      counts[z] = [counts[z].first,   counts[z].last+1]
+
+      a=key[0,2]
+      z=key[key.size-2,2]
+      digrams[a] = [digrams[a].first+1, digrams[a].last]
+      digrams[z] = [digrams[z].first,   digrams[z].last+1]
     end
+
+    ap digrams
 
     @enders     = ''
     @beginners  = ''
@@ -72,8 +85,11 @@ class Word
       p_begin = 100.0 * counts[key].first / sum
       # check   = p_ender + p_begin
       # puts "#{key}\t#{p_begin}\t#{p_ender}\t#{check}"
-      @enders     += key if p_ender > 60.0
-      @beginners  += key if p_begin > 60.0
+      @enders     += key if p_ender >= NIN_PROBILITY.last
+      @beginners  += key if p_begin >= NIN_PROBILITY.first
+
+      @enders.gsub!(key, key.upcase)     if p_ender >= 5.0+NIN_PROBILITY.last
+      @beginners.gsub!(key, key.upcase)  if p_begin >= 5.0+NIN_PROBILITY.first
     end
   end
 
@@ -296,8 +312,23 @@ def show_begin_end_candidates(test_string)
   beginners   = ''
   enders      = ''
   characters.each do |a_char|
-    beginners += beginner?(a_char) ? 'b' : ' '
-    enders    += ender?(a_char) ? 'e' : ' '
+    beginners += 
+      if beginner?(a_char)
+        'b'
+      elsif beginner?(a_char.upcase)
+        'B'
+      else
+        ' '
+      end
+
+    enders    += 
+      if ender?(a_char)
+        'e'
+      elsif ender?(a_char.upcase)
+        'E'
+      else
+        ' '
+      end
   end
   return [ beginners, test_string, enders]
 end
