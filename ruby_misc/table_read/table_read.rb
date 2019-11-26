@@ -10,8 +10,18 @@
 
 require 'awesome_print'
 
+require 'clipboard'
+
 require 'debug_me'
 include DebugMe
+
+the_script = Clipboard.paste
+
+debug_me{[ :the_script ]}
+
+
+
+__END__
 
 require 'cli_helper'
 include CliHelper

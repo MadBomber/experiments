@@ -16,6 +16,7 @@ class TalentPool
 
   def show
     @pool.each { |actor| puts; actor.show }
+    nil
   end
 
   def add_actor_to_pool(voice_info)

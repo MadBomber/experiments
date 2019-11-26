@@ -1,53 +1,85 @@
 # table_read/spec_script.rb
 
+require_relative './db_access'
+
+
+# Provides access to the contents of
+# a ScenArtist (Scene Artist) script
+# which stored in an SQLite database.
 class SpecScript
+
   attr_accessor :raw
-  attr_accessor :tab_stops
+  attr_accessor :script
+
   attr_accessor :characters
+  attr_accessor :scenes
 
-  def initialize(a_file_path=Pathname.new('./sample_scripts/jaws.txt'))
-    @tab_stops  = {}
-    @characters = []
-    @raw          = a_file_path.read.split("\n")
-
-    collect_tab_stops
+  def initialize(a_file_path)
+    load_script(a_file_path)
+    collect_scenes
     collect_characters
   end
 
-  def collect_tab_stops
-    line = 0
-    @raw.each do |a_line|
-      key = indentation(a_line)
-      if @tab_stops.has_key? key
-        @tab_stops[key][:count] += 1
-        @tab_stops[key][:lines] << line
+  def load_script(file_path)
+    Database.setup(file_path)
+
+    @raw    = Nokogiri.parse Scenario.find(1).text
+    @script = @raw.elements[0]
+  end
+
+
+  def collect_scenes
+    @scenes       = []
+    scene_number  = 0
+
+    @script.xpath('//scene_heading').each do |e|
+      scene_number += 1
+      @scenes << scene_number.to_s + " - " + e.children[1].children[0].to_str
+    end
+
+    return @scenes
+  end
+
+
+  def collect_characters
+    @characters = []
+
+    @script.xpath('//character').each do |e|
+      character_name = e.children[1].children[0].to_str
+      @characters << character_name unless @characters.include? character_name
+    end
+
+    return @characters
+  end
+
+
+  def display_script
+    scene_number = 0
+
+    @script.elements.each do |e|
+      if 'character' == e.name
+        character_name = e.children[1].children[0].to_str
+        printf "\ncharacter: %s\n", character_name
+      elsif 'dialog' == e.name
+        dialog =  e.children[1].children[0].to_str
+        printf "\ndialog: %s\n", dialog
+      elsif 'action' == e.name
+        action =  e.children[1].children[0].to_str
+        printf "\naction: %s\n", action
+      elsif 'parenthetical' == e.name
+        parenthetical = e.children[1].children[0].to_str
+        printf "\nparenthetical: %s\n", parenthetical
+      elsif 'scene_heading' == e.name
+        scene_number += 1
+        scene_heading = e.children[1].children[0].to_str
+        printf "\nscene: SN-%d - %s\n", scene_number, scene_heading
       else
-        @tab_stops[key] = {count: 1, lines:[]}
+        puts
+        puts e.name
+        ap e
       end
-      line += 1
-    end
-    return @tab_stops
+    end # @script.elements.each do |e|
+
+    return nil
   end
-
-  def collect_characters(from_tab_stop=11)
-    raise 'Not a valid tab_stop' unless tab_stops.has_key? from_tab_stop
-
-    tab_stops[from_tab_stop][:lines].each do |line_number|
-      character = strip_direction(raw[line_number]).strip
-      next unless character.upcase == character
-      next if character.empty?
-      @characters << character
-    end
-
-    @characters.uniq!
-  end
-
-  def strip_direction(a_string)
-    a_string.gsub(/\(.*\)/, '')
-            .gsub('THE END', '')
-  end
-
-  def indentation(a_string)
-    a_string[/\A */].size
-  end
-end
+end # class SpecScript

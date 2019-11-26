@@ -13,6 +13,7 @@ class Actor
 
   def show
     puts "#{name} speaks #{@language} from #{@country} #{@greeting}"
+    nil
   end
 
   def say(a_string)
