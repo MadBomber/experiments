@@ -12,6 +12,7 @@ include DebugMe
 require 'logger'
 require 'nokogiri'
 require 'pathname'
+require 'sqlite3'
 
 class Database
   def self.setup(db_path)
@@ -37,6 +38,11 @@ end
 
 class Scenario < ActiveRecord::Base
   self.table_name = 'scenario'
+end
+
+
+at_exit do
+  ActiveRecord::Base.connection_pool.release_connection
 end
 
 __END__

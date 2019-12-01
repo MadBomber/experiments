@@ -4,6 +4,9 @@ require_relative './actor'
 require_relative './country_language_map'
 
 class TalentPool
+  attr_accessor :cast
+  attr_accessor :cast_language
+
   def initialize
     @pool = []
 
@@ -33,7 +36,7 @@ class TalentPool
                       )
   end
 
-  def langurages
+  def languages
     @pool.map{|entry| entry.language}.uniq.sort
   end
 
@@ -47,6 +50,53 @@ class TalentPool
 
   def from_country a_country
     @pool.select{|entry| entry.country.downcase == a_country.downcase}
+  end
+
+
+  def auto_cast(characters, language='English')
+    @cast_language  = language
+    @cast = Hash.new
+    parts = characters.dup
+    parts << 'action' unless parts.include?('action')
+
+    actors = who_speak(@cast_language).sample(parts.size)
+
+    parts.each do |character|
+      @cast[character] = actors.shift
+    end
+
+    return @cast
+  end
+
+
+  def save_cast(config_path=nil)
+    @cast.each_pair do |character, actor|
+      puts "#{character}: #{actor.name}"
+    end
+    return nil
+  end
+
+
+  def recast
+    actors = who_speak(@cast_language).sample(@cast.keys.size)
+
+    @cast.keys.each do |character|
+      @cast[character] = actors.shift
+    end
+
+    return @cast
+  end
+
+
+  def screen_test(scene)
+    scene.each do |entry|
+      character = entry.keys.first
+      line      = entry[character]
+
+      puts "#{character} - #{line}"
+
+      @cast[character].say(line)
+    end
   end
 
   private
