@@ -69,6 +69,14 @@ class TalentPool
   end
 
 
+  def assign_cast(a_hash)
+    @cast = {}
+    a_hash.each_pair do |character, actor_name|
+      @cast[character] = @pool.select{|actor| actor.name == actor_name }.first
+    end
+  end
+
+
   def save_cast(config_path=nil)
     @cast.each_pair do |character, actor|
       puts "#{character}: #{actor.name}"
@@ -93,7 +101,7 @@ class TalentPool
       character = entry.keys.first
       line      = entry[character]
 
-      puts "#{character} - #{line}"
+      puts "\n#{character} - #{line}"
 
       @cast[character].say(line)
     end

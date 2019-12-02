@@ -28,7 +28,7 @@ class Actor
             .gsub('-', ',')
             .gsub('(','')
             .gsub(')','')
-            .gsub("'","''")
+            # .gsub("'","''")
 
   end
 end

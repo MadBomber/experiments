@@ -1,6 +1,9 @@
 # table_read/spec_script.rb
 
+require 'pathname'
+
 require_relative './db_access'
+require_relative './talent_pool'
 
 
 # Provides access to the contents of
@@ -22,14 +25,62 @@ class SpecScript
   # { 'action | character name' => 'text'}
   attr_accessor :scenes
 
+  attr_accessor :cast
+
+  attr_accessor :talent
+
   def initialize(a_file_path)
     @db_path  = a_file_path
 
     load_script(a_file_path)
     collect_scene_names
     collect_characters
+    assign_cast(a_file_path)
     build_scenes
   end
+
+
+  def table_read(scene_number=nil)
+    raise "Bas Scebe Bynber.  Must be between 1 and #{@scenes.size}" unless scene_number.nil? || (1..@scenes.size).include?(scene_number)
+
+    debug_me{[ 'scene_number.class' ]}
+
+    case scene_number.class.to_s
+    when 'Integer'
+      sn = scene_number - 1
+      debug_me{[ '@scenes[sn][:says]', :sn ]}
+      @talent.screen_test(@scenes[sn][:says])
+    when 'Range'
+      scene_number.each do |sn|
+        @talent.screen_test(@scenes[sn-1][:says])
+      end
+    when 'NilClass'
+      @scenes.size.times do |sn|
+        @talent.screen_test(@scenes[sn][:says])
+      end
+    end
+    return nil
+  end
+
+
+  def assign_cast(ss_file_path)
+    @cast     = {}
+    @talent   = ::TalentPool.new
+    cast_path = ss_file_path.parent + ss_file_path.basename.to_s.gsub('kitsp','cast')
+
+    if cast_path.exist?
+      @cast = YAML.load cast_path.read
+      @talent.assign_cast @cast
+    else
+      @talent.auto_cast @characters
+      @talent.cast.each_pair do |character, actor|
+        @cast[character] = actor.name
+      end
+    end
+
+    return @cast
+  end
+
 
   def save_script_as_xml
 
@@ -59,7 +110,8 @@ class SpecScript
 
 
   def collect_characters
-    @characters =  @script.xpath('//character/v').map{|e| e.text.strip.upcase}.uniq
+    @characters =  @script.xpath('//character/v').map{|e| e.text.gsub(/\(.+\)/,'').strip.upcase}.uniq
+    @characters << 'action'
   end
 
 
@@ -105,8 +157,29 @@ class SpecScript
 
   def add_character(e)
     @current_character = e.xpath('./v').text.strip.upcase
+    if @current_character.include?('(')
+      sn, ssn       = get_scene_indexes
+      parenthetical = @current_character.match(/(\(.+\))/)[1]
+      @current_character.gsub!(/\(.+\)/,'').strip!
+      @scenes[sn][:says] << {
+        'action' => sayable_parenthetical(parenthetical)
+      }
+    end
+
+    return @current_character
   end
 
+
+  def sayable_parenthetical(parenthetical)
+    case parenthetical
+    when '(O.S)', '(O. S.)'
+      'from off screen'
+    when "(CONT'D)", "(CON'T)"
+      "#{@current_character} continues speaking"
+    else
+      parenthetical
+    end
+  end
 
   def add_dialog(e)
     sn, ssn  = get_scene_indexes
