@@ -2,6 +2,8 @@
 
 source 'https://rubygems.org'
 
+gem 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
+
 gem 'faraday'  # HTTP/REST API client library.
 gem 'nokogiri' # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
 gem 'loofah'   # Loofah is a general library for manipulating and transforming HTML/XML documents and fragments
@@ -17,4 +19,8 @@ gem 'exponential_backoff'  # Exponential Backoff
 # Mechanize also keeps track of the sites that you have visited as a history.
 # (https://github.com/sparklemotion/mechanize)
 gem 'mechanize'  # The Mechanize library is used for automating interaction with websites
+
+
+gem 'ferrum'     # Ruby headless Chrome driver
+gem 'vessel'     # High-level web crawling framework
 
