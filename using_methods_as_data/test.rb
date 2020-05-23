@@ -66,3 +66,13 @@ ah.each_key do |k|
   ah[k].call(x)
 end
 
+
+puts "\n\n... and now it's time for something completely different."
+
+
+my_method = def your_method( data ); puts data; end
+
+puts my_method.class
+puts my_method
+
+send(my_method, 'better than smalltalk?  no.  but interesting.')
