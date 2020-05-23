@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<scenario version="1.0">
+  <scene_heading uuid="{000000-0000000-000000}">
+    <v>
+      <![CDATA[INT. COMPUTER ROOM]]>
+    </v>
+  </scene_heading>
+  <action>
+    <v>
+      <![CDATA[The writer has just installed and activateed the new script editor.]]>
+    </v>
+  </action>
+  <character>
+    <v>
+      <![CDATA[WRITER]]>
+    </v>
+  </character>
+  <dialog>
+    <v>
+      <![CDATA[What do I do now?]]>
+    </v>
+  </dialog>
+  <character>
+    <v>
+      <![CDATA[DIGITAL ASSISTANT]]>
+    </v>
+  </character>
+  <dialog>
+    <v>
+      <![CDATA[You write your screen play.]]>
+    </v>
+  </dialog>
+  <character>
+    <v>
+      <![CDATA[WRITER]]>
+    </v>
+  </character>
+  <dialog>
+    <v>
+      <![CDATA[How do I do that? ]]>
+    </v>
+  </dialog>
+  <parenthetical>
+    <v>
+      <![CDATA[(beat)]]>
+    </v>
+  </parenthetical>
+  <dialog>
+    <v>
+      <![CDATA[I have no ideas.]]>
+    </v>
+  </dialog>
+  <character>
+    <v>
+      <![CDATA[DIGITAL ASSISTANT]]>
+    </v>
+  </character>
+  <dialog>
+    <v>
+      <![CDATA[Sounds like a personal problem.]]>
+    </v>
+  </dialog>
+  <character>
+    <v>
+      <![CDATA[WRITER]]>
+    </v>
+  </character>
+  <dialog>
+    <v>
+      <![CDATA[You are not being very helpful.]]>
+    </v>
+  </dialog>
+  <character>
+    <v>
+      <![CDATA[DIGITAL ASSISTANT]]>
+    </v>
+  </character>
+  <dialog>
+    <v>
+      <![CDATA[If you wanted a helpful assistant you should have bought a macintosh.]]>
+    </v>
+  </dialog>
+  <scene_heading uuid="{60585259-47bf-43c1-a074-0cd9f8a4a53d}">
+    <v>
+      <![CDATA[INT. COMPUTER ROOM]]>
+    </v>
+  </scene_heading>
+  <action>
+    <v>
+      <![CDATA[Days have passed. The writer appears to be in the same cloths. Paper plates with half-eaten food items and pizza boxes all visible all over the office.]]>
+    </v>
+  </action>
+  <character>
+    <v>
+      <![CDATA[WRITER]]>
+    </v>
+  </character>
+  <dialog>
+    <v>
+      <![CDATA[That's the end. 130 pages of the best stuff I have ever done. I could not have done it without your help.]]>
+    </v>
+  </dialog>
+  <character>
+    <v>
+      <![CDATA[DIGITAL ASSISTANT]]>
+    </v>
+  </character>
+  <dialog>
+    <v>
+      <![CDATA[Its a good thing you did have a macintosh.]]>
+    </v>
+  </dialog>
+</scenario>

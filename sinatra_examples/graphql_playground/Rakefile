@@ -1,0 +1,24 @@
+# Rakefile
+
+
+require 'awesome_print'
+require 'require_all'
+require 'table_print'
+
+
+require_relative 'app'
+require 'sinatra/activerecord/rake'
+
+module Rails
+  class << self
+    def root
+      ROOT
+    end
+  end
+end
+
+
+require "sinatra/activerecord/rake"
+
+
+require_all "./tasks"

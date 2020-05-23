@@ -1,0 +1,91 @@
+@charset "UTF-8";
+/* index.css */
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background: #f9f9f9;
+	font-weight: 300;
+}
+h1, h2, h3, h4, h5, h6, h7, p {
+	margin: 0;
+	padding: 0;	
+}
+#logo_header {
+	width: 100%;
+	margin: 0 auto;
+	background: #053c5c;
+}
+#logo_header h1 {
+	display: block;
+	max-width: 1240px;
+	margin: 0 auto;
+	color: #FFF;
+	font-weight: 300;
+}
+#logo_header .home {
+	float: right;
+	font-size: 16px;	
+	text-transform: uppercase;	
+	font-weight: 500;
+	margin: 9px 0 0 0;
+}
+#logo_header .home a {
+	text-decoration: none;
+	color: #FFF;
+}
+#masthead {
+	background: #FFF;
+	width: 100%;
+	border-bottom: 1px solid #CCCCCC;
+}
+#inner-masthead {
+	max-width: 1240px;
+	margin: 0 auto;	
+}
+#logo {
+	margin: 0 10px 0 0;
+}
+#header-table {
+	padding: 10px 0;	
+}
+#statement {
+}
+#main {
+	max-width: 1200px;
+	margin: 20px auto;
+	padding: 20px;
+	border: 1px solid #CCCCCC;
+	border-radius: 5px;	
+	background: #FFF;
+}
+#footer {
+	max-width: 1240px;
+	margin: 20px auto;
+}
+.button {
+	border-radius: 30px;
+	background: #053c5c;
+	padding: 12px 50px 10px 50px;
+	color: #FFF;
+	text-transform: uppercase;
+	font-weight: 300;
+	text-decoration: none;
+}
+table.data-table {
+	margin: 10px auto;	
+}
+table.data-table td {
+	border-top: 1px solid #CCC;
+	padding: 10px 0;
+}
+table.data-table th {
+	padding: 0 0 10px 0;
+}
+hr {
+	border: 0;
+    height: 1px;
+    background: #CCC;	
+	margin: 30px 0;
+}

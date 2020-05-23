@@ -1,0 +1,98 @@
+=== puma startup: 2019-04-06 15:22:37 -0500 ===
+[66181] * Starting control server on unix:///var/folders/0c/0zr4v_n14xj07kg228svqfgh0000gn/T/puma-status-1554582157366-66181
+[66181] - Worker 2 (pid: 66184) booted, phase: 0
+[66181] - Worker 3 (pid: 66185) booted, phase: 0
+[66181] - Worker 1 (pid: 66183) booted, phase: 0
+[66181] - Worker 0 (pid: 66182) booted, phase: 0
+[66181] - Gracefully shutting down workers...
+[66181] === puma shutdown: 2019-04-06 15:23:24 -0500 ===
+[66181] - Goodbye!
+=== puma startup: 2019-04-06 15:30:25 -0500 ===
+[66499] * Starting control server on unix:///var/folders/0c/0zr4v_n14xj07kg228svqfgh0000gn/T/puma-status-1554582625504-66499
+[66499] - Worker 0 (pid: 66500) booted, phase: 0
+[66499] - Worker 1 (pid: 66501) booted, phase: 0
+[66499] - Worker 2 (pid: 66502) booted, phase: 0
+[66499] - Worker 3 (pid: 66503) booted, phase: 0
+[66499] - Gracefully shutting down workers...
+[66499] === puma shutdown: 2019-04-06 15:42:51 -0500 ===
+[66499] - Goodbye!
+=== puma startup: 2019-04-06 15:42:56 -0500 ===
+[66938] * Starting control server on unix:///var/folders/0c/0zr4v_n14xj07kg228svqfgh0000gn/T/puma-status-1554583376001-66938
+[66938] - Worker 1 (pid: 66940) booted, phase: 0
+[66938] - Worker 0 (pid: 66939) booted, phase: 0
+[66938] - Worker 2 (pid: 66941) booted, phase: 0
+[66938] - Worker 3 (pid: 66942) booted, phase: 0
+[66938] - Gracefully shutting down workers...
+[66938] === puma shutdown: 2019-04-06 15:43:05 -0500 ===
+[66938] - Goodbye!
+=== puma startup: 2019-04-06 15:43:25 -0500 ===
+[67188] * Starting control server on unix:///var/folders/0c/0zr4v_n14xj07kg228svqfgh0000gn/T/puma-status-1554583405939-67188
+[67188] - Worker 0 (pid: 67189) booted, phase: 0
+[67188] - Worker 3 (pid: 67192) booted, phase: 0
+[67188] - Worker 1 (pid: 67190) booted, phase: 0
+[67188] - Worker 2 (pid: 67191) booted, phase: 0
+[67188] - Gracefully shutting down workers...
+[67188] === puma shutdown: 2019-04-06 15:43:31 -0500 ===
+[67188] - Goodbye!
+=== puma startup: 2019-04-06 15:45:40 -0500 ===
+[67695] * Starting control server on unix:///var/folders/0c/0zr4v_n14xj07kg228svqfgh0000gn/T/puma-status-1554583540290-67695
+[67695] - Worker 1 (pid: 67697) booted, phase: 0
+[67695] - Worker 2 (pid: 67698) booted, phase: 0
+[67695] - Worker 0 (pid: 67696) booted, phase: 0
+[67695] - Worker 3 (pid: 67699) booted, phase: 0
+[67695] - Gracefully shutting down workers...
+[67695] === puma shutdown: 2019-04-06 15:45:53 -0500 ===
+[67695] - Goodbye!
+=== puma startup: 2019-04-06 15:55:11 -0500 ===
+[68495] * Starting control server on unix:///var/folders/0c/0zr4v_n14xj07kg228svqfgh0000gn/T/puma-status-1554584111351-68495
+[68495] - Worker 1 (pid: 68497) booted, phase: 0
+[68495] - Worker 0 (pid: 68496) booted, phase: 0
+[68495] - Worker 2 (pid: 68498) booted, phase: 0
+[68495] - Worker 3 (pid: 68499) booted, phase: 0
+[68495] - Gracefully shutting down workers...
+[68495] === puma shutdown: 2019-04-06 15:55:30 -0500 ===
+[68495] - Goodbye!
+=== puma startup: 2019-04-09 12:17:16 -0500 ===
+[93058] * Starting control server on unix:///var/folders/0c/0zr4v_n14xj07kg228svqfgh0000gn/T/puma-status-1554830236869-93058
+[93059] + Gemfile in context: /Volumes/OneLazyCat/Documents/sandbox/git_repos/madbomber/experiments/sinatra_examples/graphql_playground/Gemfile
+[93060] + Gemfile in context: /Volumes/OneLazyCat/Documents/sandbox/git_repos/madbomber/experiments/sinatra_examples/graphql_playground/Gemfile
+[93061] + Gemfile in context: /Volumes/OneLazyCat/Documents/sandbox/git_repos/madbomber/experiments/sinatra_examples/graphql_playground/Gemfile
+[93062] + Gemfile in context: /Volumes/OneLazyCat/Documents/sandbox/git_repos/madbomber/experiments/sinatra_examples/graphql_playground/Gemfile
+[93058] - Worker 2 (pid: 93061) booted, phase: 0
+[93058] - Worker 1 (pid: 93060) booted, phase: 0
+[93058] - Worker 3 (pid: 93062) booted, phase: 0
+[93058] - Worker 0 (pid: 93059) booted, phase: 0
+[93058] - Gracefully shutting down workers...
+[93058] === puma shutdown: 2019-04-09 12:22:13 -0500 ===
+[93058] - Goodbye!
+=== puma startup: 2019-04-09 12:29:22 -0500 ===
+[93849] * Starting control server on unix:///var/folders/0c/0zr4v_n14xj07kg228svqfgh0000gn/T/puma-status-1554830962201-93849
+[93849] - Worker 1 (pid: 93855) booted, phase: 0
+[93849] - Worker 3 (pid: 93857) booted, phase: 0
+[93849] - Worker 2 (pid: 93856) booted, phase: 0
+[93849] - Worker 0 (pid: 93854) booted, phase: 0
+[93849] - Gracefully shutting down workers...
+[93849] === puma shutdown: 2019-04-09 15:33:05 -0500 ===
+[93849] - Goodbye!
+
+====================
+== config/puma.rb ==
+====================
+
+[93849] Puma starting in cluster mode...
+[93849] * Version 3.12.1 (ruby 2.6.2-p47), codename: Llamas in Pajamas
+[93849] * Min threads: 1, max threads: 6
+[93849] * Environment: development
+[93849] * Process workers: 4
+[93849] * Phased restart available
+[93849] * Listening on tcp://localhost:9292
+[93849] Use Ctrl-C to stop
+=== puma startup: 2019-04-09 15:33:06 -0500 ===
+[93849] * Starting control server on unix:///var/folders/0c/0zr4v_n14xj07kg228svqfgh0000gn/T/puma-status-1554841986319-93849
+[93849] - Worker 1 (pid: 5136) booted, phase: 0
+[93849] - Worker 2 (pid: 5137) booted, phase: 0
+[93849] - Worker 0 (pid: 5135) booted, phase: 0
+[93849] - Worker 3 (pid: 5138) booted, phase: 0
+[93849] - Gracefully shutting down workers...
+[93849] === puma shutdown: 2019-04-09 15:33:07 -0500 ===
+[93849] - Goodbye!

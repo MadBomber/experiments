@@ -1,0 +1,35 @@
+=== puma startup: 2019-04-06 15:22:37 -0500 ===
+::1 - - [06/Apr/2019:15:23:04 -0500] "GET / HTTP/1.1" 200 1394 0.1952
+::1 - - [06/Apr/2019:15:23:04 -0500] "GET /css/app.css HTTP/1.1" 200 1421 0.0019
+::1 - - [06/Apr/2019:15:23:04 -0500] "GET /images/bomb.png HTTP/1.1" 200 101482 0.0218
+::1 - - [06/Apr/2019:15:23:04 -0500] "GET /favicon.ico HTTP/1.1" 404 506 0.0068
+=== puma startup: 2019-04-06 15:30:25 -0500 ===
+127.0.0.1 - - [06/Apr/2019:15:30:37 -0500] "GET / HTTP/1.1" 200 1395 0.2325
+127.0.0.1 - - [06/Apr/2019:15:30:37 -0500] "GET /css/app.css HTTP/1.1" 200 1421 0.0038
+127.0.0.1 - - [06/Apr/2019:15:30:37 -0500] "GET /images/bomb.png HTTP/1.1" 200 101482 0.0230
+127.0.0.1 - - [06/Apr/2019:15:31:41 -0500] "GET / HTTP/1.1" 200 1395 0.2320
+127.0.0.1 - - [06/Apr/2019:15:31:41 -0500] "GET /css/app.css HTTP/1.1" 200 1421 0.0033
+127.0.0.1 - - [06/Apr/2019:15:31:41 -0500] "GET /images/bomb.png HTTP/1.1" 200 101482 0.0214
+127.0.0.1 - - [06/Apr/2019:15:32:33 -0500] "GET / HTTP/1.1" 200 1395 0.0185
+127.0.0.1 - - [06/Apr/2019:15:32:33 -0500] "GET /images/bomb.png HTTP/1.1" 304 - 0.0030
+127.0.0.1 - - [06/Apr/2019:15:32:33 -0500] "GET /css/app.css HTTP/1.1" 200 1421 0.0292
+127.0.0.1 - - [06/Apr/2019:15:33:19 -0500] "GET / HTTP/1.1" 200 1395 0.0175
+127.0.0.1 - - [06/Apr/2019:15:33:19 -0500] "GET /css/app.css HTTP/1.1" 304 - 0.0014
+127.0.0.1 - - [06/Apr/2019:15:33:19 -0500] "GET /images/bomb.png HTTP/1.1" 304 - 0.0023
+=== puma startup: 2019-04-06 15:42:56 -0500 ===
+=== puma startup: 2019-04-06 15:43:25 -0500 ===
+=== puma startup: 2019-04-06 15:45:40 -0500 ===
+=== puma startup: 2019-04-06 15:55:11 -0500 ===
+=== puma startup: 2019-04-09 12:17:16 -0500 ===
+== Sinatra has ended his set (crowd applauds)
+== Sinatra has ended his set (crowd applauds)
+== Sinatra has ended his set (crowd applauds)
+== Sinatra has ended his set (crowd applauds)
+== Sinatra has ended his set (crowd applauds)
+=== puma startup: 2019-04-09 12:29:22 -0500 ===
+== Sinatra has ended his set (crowd applauds)
+== Sinatra has ended his set (crowd applauds)
+== Sinatra has ended his set (crowd applauds)
+== Sinatra has ended his set (crowd applauds)
+== Sinatra has ended his set (crowd applauds)
+=== puma startup: 2019-04-09 15:33:06 -0500 ===

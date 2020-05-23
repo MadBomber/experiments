@@ -1,0 +1,46 @@
+# Gemfile
+
+source "https://rubygems.org"
+
+# Special Libraries
+gem 'graphql'                 # A GraphQL language and runtime for Ruby
+gem 'graphql-active_record'   # Active Record Helpers for graphql-ruby
+gem 'graphql-batch'           # A query batching executor for the graphql gem
+gem 'graphql-client'          # GraphQL Client
+gem 'graphql-docs'            # Easily generate beautiful documentation from your GraphQL schema.
+gem 'graphql-errors'          # Simple error handler for graphql-ruby
+gem 'graphql-guard'           # Simple authorization gem for graphql-ruby
+gem 'graphql-preload'         # Preload ActiveRecord associations with graphql-batch
+gem 'graphql-smart_select'    # Plugin for graphql-ruby gem
+gem 'graphql_schema'          # Classes for convenient use of GraphQL introspection result
+gem 'rspec-graphql_matchers'  # Collection of rspec matchers to test your graphQL api schema.
+
+
+# Utilities
+gem 'require_all'  # A wonderfully simple way to load your code
+
+# Web-app framework
+gem 'sinatra', require: 'sinatra/base'  # Classy web-development dressed in a DSL
+gem 'sinatra-contrib'                   # Collection of useful Sinatra extensions
+gem "sinatra-activerecord"              # Extends Sinatra with ActiveRecord helpers.
+gem 'haml'                              # An elegant, structured (X)HTML/XML templating engine.
+gem 'sassc'
+gem 'refile'                            # Simple and powerful file upload library
+gem 'sinatra-partial',  require: 'sinatra/partial'  # A sinatra extension for render partials.
+gem 'sinatra-param',    require: 'sinatra/param'    # Parameter Validation & Type Coercion for Sinatra.
+gem 'puma'                                          # Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for Ruby/Rack application
+gem 'rack-contrib'
+
+# Database tools
+gem "pg"            # Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresql.org/]
+gem "activerecord"  # Object-relational mapper framework (part of Rails).
+gem 'table_print'   # Turn objects into nicely formatted columns for easy reading
+
+
+# Development tools
+gem 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+gem 'debug_me'       # A tool to print the labeled value of variables.
+
+gem 'minitest',           require: false  # minitest provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking
+gem 'minitest-reporters', require: false  # Create customizable Minitest output formats
+gem 'rack-test',          require: false  # Simple testing API built on Rack

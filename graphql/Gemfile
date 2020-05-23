@@ -1,5 +1,12 @@
+# exoeriments/graphql/Gemfile
 
 source 'https://rubygems.org'
+
+gem 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+gem 'debug_me'       # A tool to print the labeled value of variables.
+gem 'kick_the_tires' # Provides some basic methods/assertions that are handy for exploring a new ruby library.
+
+gem 'sinatra'        # Classy web-development dressed in a DSL
 
 gem 'graphql'                 # A GraphQL language and runtime for Ruby
 gem 'graphql-active_record'   # Active Record Helpers for graphql-ruby
@@ -12,9 +19,3 @@ gem 'graphql-preload'         # Preload ActiveRecord associations with graphql-b
 gem 'graphql-smart_select'    # Plugin for graphql-ruby gem
 gem 'graphql_schema'          # Classes for convenient use of GraphQL introspection result
 gem 'rspec-graphql_matchers'  # Collection of rspec matchers to test your graphQL api schema.
-
-
-__END__
-
-Depends on an older version of graphql
-gem 'graphql-rails'

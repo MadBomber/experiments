@@ -1,0 +1,241 @@
+name: interesting_shards
+version: 0.1.0
+
+authors:
+  - MadBomber <dvanhoozer@gmail.com>
+
+targets:
+  interesting_shards:
+    main: src/interesting_shards.cr
+
+crystal: 0.26.0
+
+license: MIT
+
+dependencies:
+  clear:
+    github: anykeyh/clear
+  crest:
+    github: mamantoha/crest
+  shainet:
+    github: NeuraLegion/shainet
+  crystagiri:
+    github: madeindjs/crystagiri
+  progress:
+    github: askn/progress
+  redis:
+    github: stefanwille/crystal-redis
+  amqp:
+    github: datanoise/amqp.cr
+  schedule:
+    github: hugoabonizio/schedule.cr
+  bindgen:
+    github: Papierkorb/bindgen
+  cadmium:
+    github: watzon/cadmium
+    branch: master
+  crystal-fann:
+    github: NeuraLegion/crystal-fann
+  libui:
+    github: fusion/libui.cr
+  accord:
+    github: neovintage/accord
+  auto_json:
+    github: kostya/auto_json
+  katip:
+    github: guvencenanguvenal/katip
+  crystal-clear:
+    github: Groogy/crystal-clear
+  ipaddress:
+    github: sija/ipaddress.cr
+  hardware:
+    github: crystal-community/hardware
+  hardware:
+    github: crystal-community/hardware
+  amber:
+    github: amberframework/amber
+  poncho:
+    github: icyleaf/poncho
+  totem:
+    github: icyleaf/totem
+  shobj:
+    github: tbrand/iemon
+  await_async:
+    github: anykeyh/await_async
+  financials:
+    github: drum445/financials
+  exception_page:
+    github: crystal-loot/exception_page
+  shainet:
+    github: NeuraLegion/shainet
+  curl-downloader:
+    github: kostya/curl-downloader
+  time_zone:
+    github: imdrasil/time_zone
+  crecto:
+    github: fridgerator/crecto
+  hydra:
+    github: Ghrind/hydra
+  parallel:
+    github: RX14/parallel.cr
+  awesome_print:
+    github: evandrojr/awesome_print.cr
+  honcho:
+    github: faultyserver/honcho
+  earl:
+    github: ysbaddaden/earl
+  geocoder:
+    github: andre/geocoder
+  redis:
+    github: stefanwille/crystal-redis
+  secrets:
+    github: faustinoaq/secrets
+  carbon:
+    github: luckyframework/carbon
+  qrencode:
+    github: woodruffw/qrencode.cr
+  humanize_time:
+    github: mamantoha/humanize_time
+  cadmium:
+    github: watzon/cadmium
+  notifications:
+    github: crystal-community/crystal-notifications
+  bloom_filter:
+    github: crystal-community/bloom_filter
+  smtp:
+    github: raydf/smtp.cr
+  evented:
+    github: krisleech/evented
+  aasm:
+    github: veelenga/aasm.cr
+  inflector:
+    github: phoffer/inflector.cr
+  kemal-session:
+    github: kemalcr/kemal-session
+  zeromq:
+    github: benoist/zeromq-crystal
+  kemal-rest-api:
+    github: blocknotes/kemal-rest-api
+  mosquito:
+    github: robacarp/mosquito
+  kiwi:
+    github: crystal-community/kiwi
+  crystal_on_steroids:
+    github: werner/crystal_on_steroids
+  clim:
+    github: at-grandpa/clim
+  slack:
+    github: manastech/crystal_slack
+  watcher:
+    github: faustinoaq/watcher
+  psutil:
+    github: kodnaplakal/psutil.cr
+  crystal-dfa:
+    github: ziprandom/crystal-dfa
+  run_with_fork:
+    github: kostya/run_with_fork
+  kemal-watcher:
+    github: faustinoaq/kemal-watcher
+  crystalg:
+    github: TobiasGSmollett/crystalg
+  inotify:
+    github: petoem/inotify.cr
+  cute:
+    github: Papierkorb/cute
+  any_hash:
+    github: sija/any_hash.cr
+  ncurses:
+    github: agatan/ncurses.cr
+  pegasus:
+    github: pawandubey/pegasus
+  soegen:
+    github: ragmaanir/soegen
+  libnotify:
+    github: splattael/libnotify.cr
+  memory_cache:
+    github: kostya/memory_cache
+  microtest:
+    github: ragmaanir/microtest
+  markd:
+    github: icyleaf/markd
+  statsd:
+    github: miketheman/statsd.cr
+  epilog:
+    github: crystalrealm/epilog
+  auto_initialize:
+    github: kostya/auto_initialize
+  notify:
+    github: woodruffw/notify.cr
+  pretty:
+    github: maiha/pretty.cr
+  zap:
+    github: stepanvanzuriak/zap
+  ast_viewer:
+    github: arcage/ast_viewer.cr
+  kemal-json-api:
+    github: spoved/kemal-json-api.cr
+  crystaledge:
+    github: unn4m3d/crystaledge
+  crystime:
+    github: crystallabs/crystime
+  jq:
+    github: maiha/jq.cr
+  retrycr:
+    github: taylorfinnell/retrycr
+  sass:
+    github: straight-shoota/sass.cr
+  maxminddb:
+    github: delef/maxminddb.cr
+  humanize_time:
+    github: mamantoha/humanize_time
+  ftp:
+    github: vonkingsley/ftp
+  ip2country:
+    github: arcage/ip2country
+  edits:
+    github: tcrouch/edits.cr
+  ai4cr:
+    github: drhuffman12/ai4cr
+  metascraper:
+    github: malina/metascraper
+  ngrok:
+    github: watzon/ngrok.cr
+  gsl:
+    github: ruivieira/crystal-gsl
+  memoized:
+    github: maiha/memoized.cr
+  mqtt_crystal:
+    github: liu-chong/mqtt_crystal
+  opts:
+    github: maiha/opts.cr
+  sodium:
+    github: EddyShure/sodium
+  hq:
+    github: maiha/hq.cr
+  gravatarcr:
+    github: changjoo-park/gravatarcr
+  docspec:
+    github: skippi/docspec
+  exec:
+    github: j8r/exec.cr
+  aha:
+    github: chenkovsky/aha
+  youtube_retriever:
+    github: akiicat/youtube_retriever
+  imap:
+    github: crisward/imap
+  crog:
+    github: rishavs/crog
+  kemal:
+    github: kemalcr/kemal
+  ameba:
+    github: veelenga/ameba
+  redis:
+    github: stefanwille/crystal-redis
+  openssl:
+    github: datanoise/openssl.cr
+  minitest:
+    github: ysbaddaden/minitest.cr.git
+
+
+

@@ -1,29 +1,32 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (5.2.2)
-      activesupport (= 5.2.2)
-    activerecord (5.2.2)
-      activemodel (= 5.2.2)
-      activesupport (= 5.2.2)
+    activemodel (5.2.3)
+      activesupport (= 5.2.3)
+    activerecord (5.2.3)
+      activemodel (= 5.2.3)
+      activesupport (= 5.2.3)
       arel (>= 9.0)
-    activesupport (5.2.2)
+    activesupport (5.2.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    ansi (1.5.0)
     arel (9.0.0)
     awesome_print (1.8.0)
-    commonmarker (0.18.2)
+    backports (3.13.0)
+    builder (3.2.3)
+    commonmarker (0.19.0)
       ruby-enum (~> 0.5)
-    concurrent-ruby (1.1.4)
+    concurrent-ruby (1.1.5)
     debug_me (1.0.3)
     escape_utils (1.2.1)
     extended-markdown-filter (0.7.0)
       html-pipeline (~> 2.9)
     ffi (1.10.0)
     gemoji (3.0.0)
-    graphql (1.9.3)
+    graphql (1.9.4)
     graphql-active_record (2.2.2)
       activerecord
       graphql (>= 0.18, < 2)
@@ -33,7 +36,7 @@ GEM
     graphql-client (0.14.0)
       activesupport (>= 3.0, < 6.0)
       graphql (~> 1.6)
-    graphql-docs (1.7.1)
+    graphql-docs (1.8.0)
       commonmarker (~> 0.16)
       escape_utils (~> 1.2)
       extended-markdown-filter (~> 0.4)
@@ -43,7 +46,7 @@ GEM
       sass (~> 3.4)
     graphql-errors (0.3.0)
       graphql (>= 1.6.0, < 2)
-    graphql-guard (1.2.1)
+    graphql-guard (1.2.2)
       graphql (>= 1.6.0, < 2)
     graphql-preload (2.1.0)
       activerecord (>= 4.1, < 6)
@@ -53,39 +56,81 @@ GEM
     graphql-smart_select (0.1.3)
       graphql
     graphql_schema (0.1.6)
+    haml (5.0.4)
+      temple (>= 0.8.0)
+      tilt
     html-pipeline (2.10.0)
       activesupport (>= 2)
       nokogiri (>= 1.4)
-    i18n (1.5.3)
+    i18n (1.6.0)
       concurrent-ruby (~> 1.0)
-    kick_the_tires (0.0.2)
-      awesome_print
+    mime-types (2.99.3)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
+    minitest-reporters (1.3.6)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
+    multi_json (1.13.1)
     mustermann (1.0.3)
-    nokogiri (1.10.1)
+    netrc (0.11.0)
+    nokogiri (1.10.2)
       mini_portile2 (~> 2.4.0)
+    pg (1.1.4)
     promise.rb (0.7.4)
+    puma (3.12.1)
     rack (2.0.7)
+    rack-contrib (2.1.0)
+      rack (~> 2.0)
     rack-protection (2.0.5)
       rack
+    rack-test (1.1.0)
+      rack (>= 1.0, < 3)
+    rake (12.3.2)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    refile (0.3.0)
+      rest-client (~> 1.7.2)
+    require_all (2.0.0)
+    rest-client (1.7.3)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec-graphql_matchers (0.7.1)
       graphql (>= 0.9, < 2)
     ruby-enum (0.7.2)
       i18n
-    sass (3.7.3)
+    ruby-progressbar (1.10.0)
+    sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
+    sassc (2.0.1)
+      ffi (~> 1.9)
+      rake
     sinatra (2.0.5)
       mustermann (~> 1.0)
       rack (~> 2.0)
       rack-protection (= 2.0.5)
       tilt (~> 2.0)
+    sinatra-activerecord (2.0.13)
+      activerecord (>= 3.2)
+      sinatra (>= 1.0)
+    sinatra-contrib (2.0.5)
+      backports (>= 2.8.2)
+      multi_json
+      mustermann (~> 1.0)
+      rack-protection (= 2.0.5)
+      sinatra (= 2.0.5)
+      tilt (>= 1.3, < 3)
+    sinatra-param (1.6.0)
+      sinatra (>= 1.3)
+    sinatra-partial (1.0.1)
+      sinatra (>= 1.4)
+    table_print (1.5.6)
+    temple (0.8.1)
     thread_safe (0.3.6)
     tilt (2.0.9)
     tzinfo (1.2.5)
@@ -95,6 +140,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord
   awesome_print
   debug_me
   graphql
@@ -107,9 +153,23 @@ DEPENDENCIES
   graphql-preload
   graphql-smart_select
   graphql_schema
-  kick_the_tires
+  haml
+  minitest
+  minitest-reporters
+  pg
+  puma
+  rack-contrib
+  rack-test
+  refile
+  require_all
   rspec-graphql_matchers
+  sassc
   sinatra
+  sinatra-activerecord
+  sinatra-contrib
+  sinatra-param
+  sinatra-partial
+  table_print
 
 BUNDLED WITH
    2.0.1

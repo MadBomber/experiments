@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+<title>16 New ML Gems for Ruby</title>
+<meta content="In August, I set out to improve the machine learning ecosystem for Ruby. I wasn’t sure where it would go. Over the next 5 months, I ended up..." name="description">
+<meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="jcfUqqXh6Pnt4BK9zVIJYADcnG1epbhur1ocFfiXK/eT6G5uWVkBPPdrQTBt+m84UV3WEn0K+FnnMc/6Qxv7Vg==">
+
+<link rel="stylesheet" media="all" href="ML%20Gems%20for%20Ruby_files/application-b0784ff0b485875036c029b4da4abfa84580a583a9384ba9.css">
+<script src="ML%20Gems%20for%20Ruby_files/application-4a5847371758a9178365b69c039acc4396b4e7756b8a6a237.js"></script>
+<link href="https://ankane.org/feed.rss" rel="alternate" type="application/rss+xml">
+<meta content="summary_large_image" name="twitter:card">
+<meta content="ankane.org" name="twitter:site">
+<meta content="16 New ML Gems for Ruby" name="twitter:title">
+<meta content="In August, I set out to improve the machine learning ecosystem for Ruby. I wasn’t sure where it would go. Over the next 5 months, I ended up..." name="twitter:description">
+<meta content="https://ankane.org/images/ml-gems-2.png" name="twitter:image">
+<meta content="@andrewkane" name="twitter:creator">
+<meta content="website" property="og:type">
+<meta content="ankane.org" property="og:site_name">
+<meta content="16 New ML Gems for Ruby" property="og:title">
+<meta content="https://ankane.org/new-ml-gems" property="og:url">
+<meta content="In August, I set out to improve the machine learning ecosystem for Ruby. I wasn’t sure where it would go. Over the next 5 months, I ended up..." property="og:description">
+<meta content="https://ankane.org/images/ml-gems-2.png" property="og:image">
+<script src="ML%20Gems%20for%20Ruby_files/prompt.js"></script></head>
+<body cz-shortcut-listen="true">
+<nav class="navbar">
+<ul>
+<li><a href="https://ankane.org/">Home</a></li>
+<li><a href="https://ankane.org/shorts">Shorts</a></li>
+<li><a href="https://ankane.org/opensource">Open Source</a></li>
+<li><a href="https://ankane.org/projects">Projects</a></li>
+<li><a href="https://ankane.org/talks">Talks</a></li>
+<li><a href="https://ankane.org/me">About Me</a></li>
+</ul>
+</nav>
+<section><article style="margin-bottom: 2rem;">
+<h1>16 New ML Gems for Ruby</h1>
+
+<p style="text-align: center; margin-bottom: 0;">
+  <img src="ML%20Gems%20for%20Ruby_files/ml-gems-2.png" alt="New ML Gems" style="max-height: 300px;">
+</p>
+
+<p>In August, I set out to improve the machine learning ecosystem for 
+Ruby. I wasn’t sure where it would go. Over the next 5 months, I ended 
+up releasing 16 libraries and learned a lot along the way. I wanted to 
+share some of that knowledge and introduce some of the libraries you can
+ now use in Ruby.</p>
+<h2 id="the-theme">The Theme</h2>
+<p>There are many great machine libraries for Python, so a natural place
+ to start was to see what it’d take to bring them to Ruby. It turned out
+ to be a lot less work than expected based on a common theme.</p>
+
+<p>ML libraries want to be fast. This means less time waiting and more 
+time iterating. However, interpreted languages like Python and Ruby 
+aren’t relatively fast. How do libraries overcome this?</p>
+
+<p>The key is they do most of the work in a compiled language - typically C++ - and have wrappers for other languages like Python.</p>
+
+<p>This was really great news. The same approach and code could be used for Ruby.</p>
+<h2 id="the-patterns">The Patterns</h2>
+<p>Ruby has a number of ways to call C and C++ code.</p>
+
+<p>Native extensions are one method. They’re written in C or C++ and use <a href="https://silverhammermba.github.io/emberb/c/">Ruby’s C API</a>. You may have noticed gems with native extensions taking longer to install, as they need to compile.</p>
+
+<pre><code class="c hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Init_stats</span><span class="hljs-params">()</span>
+</span>{
+    VALUE mStats = rb_define_module(<span class="hljs-string">"Stats"</span>);
+    rb_define_module_function(mStats, <span class="hljs-string">"mean"</span>, mean, <span class="hljs-number">2</span>);
+}
+</code></pre>
+
+<p>A more general way for one language to call another is a foreign 
+function interface, or FFI. It requires a C API (due to C++ name 
+mangling), which many machine learning libraries had. An advantage of 
+FFI is you can define the interface in the host language - in our case, 
+Ruby.</p>
+
+<p>Ruby supports FFI with Fiddle. It was added in Ruby 1.9, but appears to be <a href="https://www.honeybadger.io/blog/use-any-c-library-from-ruby-via-fiddle-the-ruby-standard-librarys-best-kept-secret/">“the Ruby standard library’s best kept secret.”</a></p>
+
+<pre><code class="ruby hljs"><span class="hljs-class"><span class="hljs-keyword">module</span> <span class="hljs-title">Stats</span></span>
+  extend Fiddle::Importer
+  dlload <span class="hljs-string">"libstats.so"</span>
+  extern <span class="hljs-string">"double mean(int a, int b)"</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+
+<p>There’s also the <a href="https://github.com/ffi/ffi">FFI</a> gem, 
+which provides higher-level functionality and overcomes some limitations
+ of Fiddle (like the ability to pass structs by value).</p>
+
+<pre><code class="ruby hljs"><span class="hljs-class"><span class="hljs-keyword">module</span> <span class="hljs-title">Stats</span></span>
+  extend FFI::Library
+  ffi_lib <span class="hljs-string">"stats"</span>
+  attach_function <span class="hljs-symbol">:mean</span>, [<span class="hljs-symbol">:int</span>, <span class="hljs-symbol">:int</span>], <span class="hljs-symbol">:double</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+
+<p>For libraries without a C API, <a href="https://github.com/jasonroelofs/rice">Rice</a> provides a really nice way to bind C++ code (similar to Python’s pybind11).</p>
+
+<pre><code class="cpp hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Init_stats</span><span class="hljs-params">()</span>
+</span>{
+    Module mStats = define_module(<span class="hljs-string">"Stats"</span>);
+    mStats.define_singleton_method(<span class="hljs-string">"mean"</span>, &amp;mean);
+}
+</code></pre>
+
+<p>Another approach is SWIG (Simplified Wrapper and Interface 
+Generator). You create an interface file and then run SWIG to generate 
+the bindings. Gusto has a <a href="https://engineering.gusto.com/simple-ruby-c-extensions-with-swig/">good tutorial</a> on this.</p>
+
+<pre><code class="swig hljs java">%<span class="hljs-function"><span class="hljs-keyword">module</span> stats
+
+<span class="hljs-keyword">double</span> <span class="hljs-title">mean</span><span class="hljs-params">(<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>)</span></span>;
+</code></pre>
+
+<p>There’s also <a href="https://github.com/SciRuby/rubex">Rubex</a>, 
+which lets you write Ruby-like code that compiles to C (similar to 
+Python’s Cython). It also provides the ability to interface with C 
+libraries.</p>
+
+<pre><code class="ruby hljs">lib <span class="hljs-string">"&lt;stats.h&gt;"</span>
+  double mean(int, int)
+<span class="hljs-keyword">end</span>
+</code></pre>
+
+<p>None of the approaches above are specific to machine learning, so you can use them with any C or C++ library.</p>
+<h2 id="the-libraries">The Libraries</h2>
+<p>Libraries were chosen based on popularity and performance. Many have a
+ similar interface to their Python counterpart to make it easy to follow
+ existing tutorials. Libraries are broken down into categories below 
+with brief descriptions.</p>
+<h3 id="gradient-boosting">Gradient Boosting</h3>
+<p><a href="https://github.com/ankane/xgb">XGBoost</a> and <a href="https://github.com/ankane/lightgbm">LightGBM</a>
+ are gradient boosting libraries. Gradient boosting is a powerful 
+technique for building predictive models that fits many small decision 
+trees that together make robust predictions, even with outliers and 
+missing values. Gradient boosting performs well on tabular data.</p>
+<h3 id="deep-learning">Deep Learning</h3>
+<p><a href="https://github.com/ankane/torch-rb">Torch-rb</a> and <a href="https://github.com/ankane/tensorflow">TensorFlow</a>
+ are deep learning libraries. Torch-rb is built on LibTorch, the library
+ that powers PyTorch. Deep learning has been very successful in areas 
+like image recognition and natural language processing.</p>
+<h3 id="recommendations">Recommendations</h3>
+<p><a href="https://github.com/ankane/disco">Disco</a> is a 
+recommendation library. It looks at ratings or actions from users to 
+predict other items they might like, known as collaborative filtering. 
+Matrix factorization is a common way to accomplish this.</p>
+
+<p><a href="https://github.com/ankane/libmf">LIBMF</a> is a high-performance matrix factorization library.</p>
+
+<p>Collaborative filtering can also find similar users and items. If you
+ have a large number of users or items, an approximate nearest neighbor 
+algorithm can speed up the search. Spotify <a href="https://github.com/spotify/annoy#background">does this</a> for music recommendations.</p>
+
+<p><a href="https://github.com/ankane/ngt">NGT</a> is an approximate nearest neighbor library that performs extremely well on benchmarks (in Python/C++).</p>
+
+<p style="text-align: center; margin-bottom: 0;">
+  <img src="ML%20Gems%20for%20Ruby_files/ann-benchmarks.png" alt="ANN Benchmarks">
+</p>
+
+<p class="image-description">
+  Image from <a href="https://github.com/erikbern/ann-benchmarks" target="_blank">ANN Benchmarks</a>, MIT license
+</p>
+
+<p>Another promising technique for recommendations is factorization 
+machines. The traditional approach to collaborative filtering builds a 
+model exclusively from past ratings or actions. However, you may have 
+additional <em>side information</em> about users or items. Factorization machines can incorporate this data. They can also perform classification and regression.</p>
+
+<p><a href="https://github.com/ankane/xlearn">xLearn</a> is a high-performance library for factorization machines.</p>
+<h3 id="optimization">Optimization</h3>
+<p>Optimization finds the best solution to a problem out of many 
+possible solutions. Scheduling and vehicle routing are two common tasks.
+ Optimization problems have an objective function to minimize (or 
+maximize) and a set of constraints.</p>
+
+<p>Linear programming is an approach you can use when the objective function and constraints are linear. Here’s a really good <a href="https://www.youtube.com/watch?v=0TD9EQcheZM">introductory series</a> if you want to learn more.</p>
+
+<p><a href="https://github.com/ankane/scs">SCS</a> is a library that can solve <a href="https://www.cvxpy.org/tutorial/advanced/index.html#choosing-a-solver">many types</a> of optimization problems.</p>
+
+<p><a href="https://github.com/ankane/osqp">OSQP</a> is another that’s specifically designed for quadratic problems.</p>
+<h3 id="text-classification">Text Classification</h3>
+<p><a href="https://github.com/ankane/fasttext">fastText</a> is a text 
+classification and word representation library. It can label documents 
+with one or more categories, which is useful for content tagging, spam 
+filtering, and language detection. It can also compute word vectors, 
+which can be compared to find similar words and analogies.</p>
+<h3 id="interoperability">Interoperability</h3>
+<p>It’s nice when languages play nicely together.</p>
+
+<p><a href="https://github.com/ankane/onnxruntime">ONNX Runtime</a> is a
+ scoring engine for ML models. You can build a model in one language, 
+save it in the ONNX format, and run it in another. Here’s <a href="https://ankane.org/tensorflow-ruby">an example</a>.</p>
+
+<p><a href="https://github.com/ankane/npy">Npy</a> is a library for saving and loading NumPy <code>npy</code> and <code>npz</code> files. It uses <a href="https://ankane.org/numo">Numo</a> for multi-dimensional arrays.</p>
+<h3 id="others">Others</h3>
+<p><a href="https://github.com/ankane/vowpalwabbit">Vowpal Wabbit</a> 
+specializes in online learning. It’s great for reinforcement learning as
+ well as supervised learning where you want to train a model 
+incrementally instead of all at once. This is nice when you have a lot 
+of data.</p>
+
+<p><a href="https://github.com/ankane/thundersvm">ThunderSVM</a> is an SVM library that runs in parallel on either CPUs or GPUs.</p>
+
+<p><a href="https://github.com/ankane/gslr">GSLR</a> is a linear 
+regression library powered by GSL that supports both ordinary least 
+squares and ridge regression. It can be used alone or to improve the 
+performance of <a href="https://github.com/ankane/eps">Eps</a>.</p>
+<h2 id="shout-out">Shout-out</h2>
+<p>I wanted to also give a shout-out to another library that entered the scene in 2019.</p>
+
+<p><a href="https://github.com/yoshoku/rumale">Rumale</a> is a machine learning library that supports many, many algorithms, similar to Python’s Scikit-learn. Thanks <a href="https://github.com/yoshoku">@yoshoku</a> for the amazing work!</p>
+<h2 id="final-word">Final Word</h2>
+<p>There are now many state-of-the-art machine learning libraries 
+available for Ruby. If you’re a Ruby engineering who’s interested in 
+machine learning, now’s a good time to try it. Also, if you come across a
+ C or C++ library you want to use in Ruby, you’ve seen a few ways to do 
+it. Let’s make Ruby a great language for machine learning.</p>
+
+</article>
+<p style="color: #999;">
+Published
+January 22, 2020
+·
+<a target="_blank" href="https://twitter.com/intent/tweet?text=16%20New%20ML%20Gems%20for%20Ruby%20https%3A%2F%2Fankane.org%2Fnew-ml-gems">Tweet</a>
+</p>
+<p>Ruby logo is licensed under <a href="https://creativecommons.org/licenses/by-sa/2.5/" target="_blank" style="color: inherit;">CC BY-SA 2.5</a>.</p>
+<hr>
+<p>You might also enjoy</p>
+<h2>
+<a href="https://ankane.org/ruby-ml-for-python-coders">Ruby ML for Python Coders</a>
+</h2>
+<h2>
+<a href="https://ankane.org/gem-patterns">Gem Patterns</a>
+</h2>
+<h2>
+<a href="https://ankane.org/decryption-keys">Why and How to Keep Your Decryption Keys Off Web Servers</a>
+</h2>
+<hr>
+<p style="color: #999; text-align: center; font-size: 0.9rem;">
+All code examples are public domain.
+<br>
+Use them however you’d like (licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>).
+</p>
+</section>
+
+
+</body></html>
