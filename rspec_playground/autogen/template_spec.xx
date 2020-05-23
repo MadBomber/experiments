@@ -1,0 +1,46 @@
+# spec/models/report_data/template/template_spec.rb
+=begin
+
+  ReportData::Template is a sub-class of ReportData::Base which
+  deals specifically with the processing of the template Report.
+
+=end
+
+
+require File.expand_path('../../report_data_helper', __FILE__)
+
+RSpec.describe ReportData::Template, report_data: true do
+  before(:all) do
+    @report        = FactoryGirl.create(:report, :template)
+    @site_settings = FactoryGirl.create :site_setting,  number_of_locations: 0
+    @current_user  = FactoryGirl.create :user, roles: [:super_admin]
+    @report_result = FactoryGirl.create :report_result
+
+    @rd =  ReportData.new(
+            {
+              'report'        => @report,
+              'current_user'  => @current_user,
+              'site_settings' => @site_settings
+            }
+          )
+
+    @rd.rr   = @report_result
+    @rd.job  = ReportData::MockJob.new(true)
+  end
+
+  pending("TODO: add regression tests for ReportData::Template to #{__FILE__}")
+
+  # it 'should do something' do
+  #   result    = something
+  #   expected  = 'hello world'
+  #
+  #   expect(result).to eq(expected)
+  # end
+
+  it "should be the correct sub-class of ReportData::Base" do
+    expect(@rd.class).to be(ReportData::Template)
+  end
+
+__methods__
+
+end # RSpec.feature 'template', type: :feature, report_data: true do

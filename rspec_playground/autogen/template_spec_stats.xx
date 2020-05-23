@@ -1,0 +1,40 @@
+# spec/models/report_data/base/template_spec.rb
+=begin
+
+  ReportData::Base#template will 
+
+=end
+
+
+# TODO: write this puppy
+
+require File.expand_path('../../report_data_helper', __FILE__)
+
+RSpec.describe 'ReportData::Base#template', report_data: true do
+  before(:all) do
+    @report        = FactoryGirl.create(:report, :patients)
+    @site_settings = FactoryGirl.create :site_setting,  number_of_locations: 0
+    @current_user  = FactoryGirl.create :user, roles: [:super_admin]
+    @report_result = FactoryGirl.create :report_result
+
+    @base =  ReportData::Base.new(
+              {
+                'report'        => @report,
+                'current_user'  => @current_user,
+                'site_settings' => @site_settings
+              }
+            )
+
+    @base.rr   = @report_result
+    @base.job  = ReportData::MockJob.new(true)
+  end
+
+  pending("TODO: add regression tests for ReportData::Base#template to #{__FILE__}")
+
+  # it 'should do something' do
+  #   expect(false).to be(true)
+  # end
+
+__methods__
+
+end # RSpec.feature 'ReportData::Base#template', type: :feature, report_data: true do
