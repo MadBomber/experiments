@@ -9,3 +9,5 @@ gem 'feriados'        # Holidays calendars
 gem 'holidays'        # A collection of Ruby methods to deal with statutory and other holidays.
 gem 'ice_cube'        # Ruby Date Recurrence Library
 gem 'montrose'        # Recurring events in Ruby
+
+gem 'string-similarity' # Various methods for calculating string similarities.
