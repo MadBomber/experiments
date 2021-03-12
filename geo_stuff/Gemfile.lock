@@ -1,22 +1,21 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (4.2.4)
-      activesupport (= 4.2.4)
-      builder (~> 3.1)
-    activesupport (4.2.4)
-      i18n (~> 0.7)
-      json (~> 1.7, >= 1.7.7)
+    activemodel (6.0.3.1)
+      activesupport (= 6.0.3.1)
+    activesupport (6.0.3.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 0.7, < 2)
       minitest (~> 5.1)
-      thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+      zeitwerk (~> 2.2, >= 2.2.2)
     awesome_print (1.6.1)
-    builder (3.2.2)
     cli_helper (0.1.5)
       configatron
       inifile
       nenv
       slop (~> 4.0)
+    concurrent-ruby (1.1.6)
     configatron (4.5.0)
     debug_me (1.0.2)
     ffi (1.9.10)
@@ -26,13 +25,14 @@ GEM
     geokit (1.10.0)
     geospatial (0.0.1)
     highline (1.7.7)
-    i18n (0.7.0)
+    i18n (1.8.2)
+      concurrent-ruby (~> 1.0)
     inifile (3.0.0)
-    json (1.8.3)
+    json (2.3.0)
     kick_the_tires (0.0.2)
       awesome_print
     middleware (0.1.0)
-    minitest (5.8.1)
+    minitest (5.14.1)
     nenv (0.2.0)
     nobrainer (0.30.0)
       activemodel (>= 4.1.0)
@@ -42,6 +42,7 @@ GEM
       symbol_decoration (~> 1.1)
     nobrainer_geospatial (1.1)
       nobrainer
+    opencage-geocoder (2.1.2)
     options (2.3.2)
     progress_bar (1.0.5)
       highline (~> 1.6)
@@ -55,9 +56,10 @@ GEM
       rgeo (~> 0.3)
     slop (4.2.0)
     symbol_decoration (1.1.0)
-    thread_safe (0.3.5)
-    tzinfo (1.2.2)
+    thread_safe (0.3.6)
+    tzinfo (1.2.7)
       thread_safe (~> 0.1)
+    zeitwerk (2.3.0)
 
 PLATFORMS
   ruby
@@ -72,6 +74,7 @@ DEPENDENCIES
   kick_the_tires
   nobrainer
   nobrainer_geospatial
+  opencage-geocoder
   progress_bar
   rethinkdb
   rethinkdb_helper
