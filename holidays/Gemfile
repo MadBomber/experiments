@@ -1,0 +1,11 @@
+# .../holidays/Gemfile
+# Experimenting with closing on a given set of "holidays"
+
+source 'https://rubygems.org'
+
+gem 'activesupport'   # A toolkit of support libraries and Ruby core extensions extracted from the Rails framework.
+gem 'chronic'         # Natural language date/time parsing.
+gem 'feriados'        # Holidays calendars
+gem 'holidays'        # A collection of Ruby methods to deal with statutory and other holidays.
+gem 'ice_cube'        # Ruby Date Recurrence Library
+gem 'montrose'        # Recurring events in Ruby
