@@ -207,9 +207,15 @@ dates_closed = <<~DATA.split("\n")
 
     december 31
     january 1
+
     feburary 28
     feburary 29
     feburary 30
+
+    february 28
+    february 29
+    february 30
+
     july 4th
     decimal 25th
 
@@ -354,11 +360,37 @@ $holidays = Holidays.between(from, to, :ca, :us, :informal)
 # $holidays = Holidays.between(from, to, :ca, :informal)
 # $holidays = Holidays.between(from, to, :ca)
 
+$holiday_names = $holidays.map{|e| e[:name].downcase}.sort.uniq
+
+
+def best_match(a_string)
+  return nil if a_string =~ /\d/
+
+  looking_for   = a_string.strip.downcase.gsub("'",'')
+  max_value     = 0.8
+  matching_name = nil
+
+  $holiday_names.each do |try_this|
+    value = String::Similarity.cosine(try_this.gsub("'",''), looking_for)
+
+    if value > max_value
+      max_value     = value
+      matching_name = try_this
+    end
+  end
+
+  unless matching_name.nil?
+    matching_name += " (#{max_value})"
+  end
+
+  return matching_name
+end
+
+
+
 # ap $holidays.map{|e| e[:name]}.sort.uniq
 
-def find_a_holiday(a_string, how_close=0.9)
-  looking_for = a_string.strip.downcase
-
+def find_a_holiday(looking_for, how_close=0.9)
   found_date = nil
   $holidays.each do |entry|
     if String::Similarity.cosine(entry[:name].downcase, looking_for) >= how_close
@@ -371,9 +403,32 @@ def find_a_holiday(a_string, how_close=0.9)
 end
 
 
+def normalize_closing_date_string(a_string)
+  given_this  = a_string.strip.squeeze(' ').downcase.gsub("'",'')
+
+  return_this = if given_this.include?('feburary')
+                  given_this.gsub('feburary', 'february')
+                elsif 'new years' == given_this
+                  'new years day'
+                elsif 'easter' == given_this
+                  'easter sunday'
+                elsif 'christmas' == given_this
+                  'christmas day'
+                elsif 'thanksgiving day' == given_this
+                  'thanksgiving'
+                elsif given_this.end_with?(' eve')
+                  (convert_to_date(given_this.gsub(' eve', ' day')) - 1.day).to_s
+                else
+                  given_this
+                end
+
+  return return_this
+end
+
+
 def convert_to_date(a_string)
   return nil unless a_string.is_a?(String)  ||  a_string.empty?
-  looking_for = a_string.strip.downcase
+  looking_for = normalize_closing_date_string(a_string)
   return nil if looking_for.empty?
 
   found_date  = nil
@@ -400,29 +455,32 @@ header = ['input']
 header << 'convert_to_date'
 tests << -> (a_string){convert_to_date(a_string)}
 
+header << 'Best Match'
+tests << -> (a_string){best_match(a_string)}
+
 # header << 'Date.parse'
 # tests << -> (a_string){ Date.parse(a_string)}
 
 # header << 'ActiveSupport#to_date'
 # tests << -> (a_string){ a_string.to_date}
 
-header << 'Chronic.parse'
-tests << -> (a_string){
-  result = Chronic.parse(a_string, {context: :future, guess: true})
-  result.nil? ? nil : result.to_date
-}
+# header << 'Chronic.parse'
+# tests << -> (a_string){
+#   result = Chronic.parse(a_string, {context: :future, guess: true})
+#   result.nil? ? nil : result.to_date
+# }
 
-header << 'Named Holiday 0.95'
-tests << -> (a_string){find_a_holiday(a_string, 0.95)}
+# header << 'Named Holiday 0.95'
+# tests << -> (a_string){find_a_holiday(a_string.strip.downcase, 0.95)}
 
-header << 'Named Holiday 0.925'
-tests << -> (a_string){find_a_holiday(a_string, 0.925)}
+# header << 'Named Holiday 0.925'
+# tests << -> (a_string){find_a_holiday(a_string.strip.downcase, 0.925)}
 
-header << 'Named Holiday 0.90'
-tests << -> (a_string){find_a_holiday(a_string, 0.90)}
+# header << 'Named Holiday 0.90'
+# tests << -> (a_string){find_a_holiday(a_string.strip.downcase, 0.90)}
 
-header << 'Named Holiday 0.85'
-tests << -> (a_string){find_a_holiday(a_string, 0.85)}
+# header << 'Named Holiday 0.85'
+# tests << -> (a_string){find_a_holiday(a_string.strip.downcase, 0.85)}
 
 result = []
 
