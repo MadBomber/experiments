@@ -5,7 +5,7 @@
 ##########################################################
 ###
 ##  File: we_are_closed.rb
-##  Desc: Playing with Holidays
+##  Desc: Playing with Holidays and Chronic gems
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
@@ -26,6 +26,14 @@ require 'debug_me'
 include DebugMe
 
 require 'tty-table'
+
+
+
+def normalize_holiday_name(a_string)
+  return nil unless a_string.is_a?(String)
+  a_string.strip.squeeze(' ').downcase.gsub("'",'')
+end
+
 
 dates_closed = <<~DATA.split("\n")
   # Start with Common ways to express month and day
@@ -50,7 +58,6 @@ dates_closed = <<~DATA.split("\n")
   06/03
   07/04
   10/17
-
 
   # adding some spaces
 
@@ -184,7 +191,6 @@ dates_closed = <<~DATA.split("\n")
   30-2
   3-6
 
-
   # Use some abbreviations and leading spaces
 
     dec 31
@@ -229,6 +235,14 @@ dates_closed = <<~DATA.split("\n")
   4th thursday  november
   5th friday  november
   6th friday  november
+
+  first monday  in november
+  second tuesday  in november
+  third wednesday  in november
+  fourth thursday  in november
+  fifth friday  in november
+  sixth friday  in november
+
   1st monday  nov
   2nd tuesday  nov
   3rd wednesday  nov
@@ -303,7 +317,11 @@ dates_closed = <<~DATA.split("\n")
   new years day
 
   canada day
+  canada
+
   independance day
+  independence day
+  independence
 
   good friday
   easter
@@ -319,6 +337,15 @@ dates_closed = <<~DATA.split("\n")
 
   labor day
   labour day
+
+  Martin Luther King, Jr. Day
+  Martin Luther King Jr Day
+  MLK Junior Day
+  MLK Day
+  MLK
+  Martin Luther
+  Martin Luther King
+  MLK, JR day
 
   # full exact names of the holidays
 
@@ -347,11 +374,29 @@ dates_closed = <<~DATA.split("\n")
     Veterans Day
 
   xyzzy
+  xyzzy eve
+  xyzzy eve eve
+
+  # multiple on one line
+
+  12-31 1-1
+  12-31 1-1 2-14
+  12-31 1-1 2-14 4-25
+  12-31 1-1 2-14 4-25 5/16
+  12-31 1-1 2-14 4-25 5/16 6-3
+  12-31 1-1 2-14 4-25 5/16 6-3 10/17
+  12-31 1-1 2-14 4-25 5/16 6-3 10/17 4th of july, christmas
+
+  4th of july; thanksgiven; christmas
+
+  december 24, december 25, december 31, jan 1st
+
 DATA
 
+year  = Date.today.year
 
-from  = Date.civil(2021,1,1)
-to    = Date.civil(2022,12,31)
+from  = Date.civil(year,1,1)
+to    = Date.civil(year+1,12,31)
 
 $holidays = Holidays.between(from, to, :ca, :us, :informal)
 # $holidays = Holidays.between(from, to, :ca, :us)
@@ -360,14 +405,18 @@ $holidays = Holidays.between(from, to, :ca, :us, :informal)
 # $holidays = Holidays.between(from, to, :ca, :informal)
 # $holidays = Holidays.between(from, to, :ca)
 
-$holiday_names = $holidays.map{|e| e[:name].downcase}.sort.uniq
+$holidays.each do |entry|
+  entry[:name] = normalize_holiday_name( entry[:name] )
+end
+
+$holiday_names = $holidays.map{|e| e[:name]}.sort.uniq
 
 
 def best_match(a_string)
   return nil if a_string =~ /\d/
 
-  looking_for   = a_string.strip.downcase.gsub("'",'')
-  max_value     = 0.8
+  looking_for   = normalize_holiday_name(a_string)
+  max_value     = 0.89
   matching_name = nil
 
   $holiday_names.each do |try_this|
@@ -387,24 +436,40 @@ def best_match(a_string)
 end
 
 
+def holiday_name_on_date(a_date)
+  return nil unless a_date.is_a?(Date)
+  holiday_name = 'Closed'
 
-# ap $holidays.map{|e| e[:name]}.sort.uniq
+  holidays = Holidays.on(a_date, :ca, :us, :informal)
 
-def find_a_holiday(looking_for, how_close=0.9)
-  found_date = nil
-  $holidays.each do |entry|
-    if String::Similarity.cosine(entry[:name].downcase, looking_for) >= how_close
-      found_date = entry[:date]
-      break
-    end
+  unless holidays.empty?
+    result = holidays.map{|e| e[:name]}.uniq
+    holiday_name = result.join('; ')
   end
 
-  return found_date
+  return holiday_name
 end
 
 
-def normalize_closing_date_string(a_string)
-  given_this  = a_string.strip.squeeze(' ').downcase.gsub("'",'')
+# ap $holidays.map{|e| e[:name]}.sort.uniq
+
+
+def find_a_holiday(a_string, how_close=0.9)
+  temp        = best_match(a_string)
+  return nil if temp.nil?
+
+  lp_inx      = temp.index(' (') - 1
+  looking_for = temp[0..lp_inx]
+
+  holiday = $holidays.select {|e| e[:name] == looking_for}
+
+  return holiday.empty? ? nil : holiday[0][:date]
+end
+
+
+
+def transform_holiday_name(a_string)
+  given_this  = normalize_holiday_name(a_string)
 
   return_this = if given_this.include?('feburary')
                   given_this.gsub('feburary', 'february')
@@ -417,7 +482,24 @@ def normalize_closing_date_string(a_string)
                 elsif 'thanksgiving day' == given_this
                   'thanksgiving'
                 elsif given_this.end_with?(' eve')
-                  (convert_to_date(given_this.gsub(' eve', ' day')) - 1.day).to_s
+                  real_holiday_name = given_this.gsub(' eve', ' day')
+                  real_holiday_date = convert_to_date(real_holiday_name)
+                  if real_holiday_date.is_a?(Date)
+                    return (real_holiday_date - 1.day)
+                  else
+                    return '*** EVE Conversion Error ***'
+                  end
+                elsif given_this.start_with?('mlk')
+                  given_this.gsub('mlk','martin luther king')
+                elsif given_this.split().any?{|part| %w[first second third forth fourth fifth sixth].include?(part)}
+                  given_this
+                    .gsub('first', '1st')
+                    .gsub('second','2nd')
+                    .gsub('third', '3rd')
+                    .gsub('forth', '4th')
+                    .gsub('fourth', '4th')
+                    .gsub('fifth', '5th')
+                    .gsub('sixth', '6th')
                 else
                   given_this
                 end
@@ -428,13 +510,15 @@ end
 
 def convert_to_date(a_string)
   return nil unless a_string.is_a?(String)  ||  a_string.empty?
-  looking_for = normalize_closing_date_string(a_string)
+  looking_for = transform_holiday_name(a_string)
+  return looking_for if looking_for.is_a?(Date)
+
   return nil if looking_for.empty?
 
   found_date  = nil
 
   if looking_for =~ /\d/
-    found_date = Chronic.parse(a_string, {context: :future, guess: true})
+    found_date = Chronic.parse(looking_for, {context: :future, guess: true})
   else
     # holiday names contain no digits
     found_date = find_a_holiday(looking_for, 0.95)
@@ -444,10 +528,6 @@ def convert_to_date(a_string)
 end
 
 
-puts
-puts "Testing 'date.parse' at #{Time.now}"
-puts
-
 
 tests = []
 header = ['input']
@@ -455,8 +535,11 @@ header = ['input']
 header << 'convert_to_date'
 tests << -> (a_string){convert_to_date(a_string)}
 
-header << 'Best Match'
-tests << -> (a_string){best_match(a_string)}
+header << 'Holiday Name on Date'
+tests << -> (a_string){holiday_name_on_date(convert_to_date(a_string))}
+
+# header << 'Best Match'
+# tests << -> (a_string){best_match(a_string)}
 
 # header << 'Date.parse'
 # tests << -> (a_string){ Date.parse(a_string)}
@@ -502,4 +585,20 @@ dates_closed.each do |a_string|
   result << entry
 end
 
+
+puts
+puts "Testing parsing of date references at #{Time.now}"
+puts
 puts TTY::Table.new(header,result).render(:ascii)
+puts
+puts "Get Holiday Name on a Specific Date"
+puts
+
+
+__END__
+
+dates = %w[ 1-1 2-14 4-25 5-16 6-3 7-4 10-17 12-25 ].map{|d8| Chronic.parse(d8).to_date}
+
+dates.each do |a_date|
+  puts "#{a_date} is #{holiday_name_on_date(a_date)}"
+end
