@@ -44,24 +44,33 @@ end
 
 
 # somg;e-level inclusion
-def include_content_from(file_name)
-  file = Pathname.pwd + file_name
-  content  = []
-  content << "\n# #{file_name} >>>"
-  content << file.readlines.map{|x| x.chomp} # TODO: support recursion??
-  content << "# <<< #{file_name}\n"
+def include_content_from(file_path)
+  content   = []
+  content  << "\n# #{file_path} >>>"
+  content  << file_path.readlines.map{|x| x.chomp} # TODO: support recursion??
+  content  << "# <<< #{file_path}\n"
 
   return content.flatten
 end
 
+
+# look for first occurace of mainfile
+def just_find_it(here=Pathname.pwd)
+  mainfile = here + MAINFILE
+  return mainfile if mainfile.exist?
+  return nil if here == here.parent
+  return just_find_it(here.parent)
+end
+
+
 ######################################################
 # Main
 
-cwd       = Pathname.pwd
-basefile  = cwd + BASEFILE
-mainfile  = cwd + MAINFILE
+mainfile  = just_find_it
 
-exit(0) unless mainfile.exist?
+exit(0) if mainfile.nil?
+
+basefile  = mainfile.parent + BASEFILE
 
 text = mainfile.readlines.map{|x| x.chomp} # drop the line ending from each line
 
@@ -75,7 +84,7 @@ end
 modules.each do |a_line|
   an_index        = text.index a_line
   parts           = a_line.split
-  text[an_index]  = include_content_from parts.last
+  text[an_index]  = include_content_from(mainfile.parent + parts.last)
 end
 
 basefile.write text.flatten!.join "\n"
