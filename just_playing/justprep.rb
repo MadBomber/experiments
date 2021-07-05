@@ -63,6 +63,18 @@ def just_find_it(here=Pathname.pwd)
 end
 
 
+# use an external shell to expand system environment variables
+def expand_file_path(a_path_string)
+  if a_path_string.start_with? '~'
+    a_path_string = "${HOME}" + a_path_string[1, a_path_string.size-1]
+  end
+
+  a_path_string = `echo "#{a_path_string}"`.chomp
+
+  return a_path_string
+end
+
+
 ######################################################
 # Main
 
@@ -84,7 +96,13 @@ end
 modules.each do |a_line|
   an_index        = text.index a_line
   parts           = a_line.split
-  module_path     = Pathname.new(parts.last)
+  module_filename = parts.last
+
+  if module_filename.include?('~')  || module_filename.include?('$')
+    module_filename = expand_file_path(module_filename)
+  end
+
+  module_path     = Pathname.new(module_filename)
 
   if module_path.relative?
     module_path = mainfile.parent + module_path
