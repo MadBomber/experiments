@@ -65,7 +65,8 @@ def include_content_from(file_path : String) : Array(String)
 end
 
 # look for first occurace of mainfile
-def just_find_it(here = FileUtils.pwd)
+# returns nil when none are found.
+def just_find_it(here = FileUtils.pwd) : String | Nil
   mainfile_path = here + "/" + MAINFILE
   return mainfile_path if File.exists?(mainfile_path)
 
@@ -74,6 +75,17 @@ def just_find_it(here = FileUtils.pwd)
 
   return nil if parts.empty?
   return just_find_it(parts.join('/'))
+end
+
+# use an external shell to expand system environment variables
+def expand_file_path(a_path_string : String) : String
+  if a_path_string.starts_with? '~'
+    a_path_string = "${HOME}" + a_path_string[1, a_path_string.size - 1]
+  end
+
+  a_path_string = `echo "#{a_path_string}"`.chomp
+
+  return a_path_string
 end
 
 ######################################################
@@ -109,6 +121,10 @@ modules.each do |a_line|
   an_index = text.index(a_line) # Should never be nil
   parts = a_line.split
   module_path = parts.last.strip
+
+  if module_path.includes?('~') || module_path.includes?('$')
+    module_path = expand_file_path(module_path)
+  end
 
   unless module_path.starts_with?('/')
     module_path = mainfile_path.gsub(MAINFILE, module_path)
