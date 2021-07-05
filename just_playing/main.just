@@ -22,3 +22,17 @@ with            four.just
 # where did those come from?
 @what: one two three four five six
   echo "what?"
+
+#############################################
+
+alias cr  := compile
+alias ins := install
+
+# Compile the crystal version of justprep
+compile:
+  crystal build --no-debug --release -p -o bin/justprep justprep.cr
+
+
+# Install the justprep executable in ~/bin
+install: compile
+  cp bin/justprep ~/bin

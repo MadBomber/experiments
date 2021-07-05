@@ -1,0 +1,10 @@
+name: justprep
+version: 0.0.1
+
+authors:
+  - Dewayne VanHoozer <dvanhoozer@gmail.com>
+
+description: |
+  justprep - a prototype pre-processor for the "just" command running utility.
+
+license: MIT

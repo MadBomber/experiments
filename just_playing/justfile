@@ -1,0 +1,26 @@
+# experiments/just_playing/justfile
+#
+# brew install just
+# Handy way to save and run project-specific commands
+# https://github.com/casey/just
+#
+# NOTE: This file will be overwritten when "justprep" ie excuted
+#       by the contents of the "main.just" file and its inclusions.
+#
+# By default the "just" CLI utility looks for a file named "justfile"
+# in its current directory hiearchie.  Using "justprep" as a pre-processor
+# (in an alias wrapper for example) the file "main.just" will be used
+# to build a new "justfile" by incorporating various user defined modules.
+
+
+alias cr  := compile
+alias ins := install
+
+# Compile the crystal version of justprep
+compile:
+  crystal build --no-debug --release -p -o bin/justprep justprep.cr
+
+
+# Install the justprep executable in ~/bin
+install: compile
+  cp bin/justprep ~/bin
