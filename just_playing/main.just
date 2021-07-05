@@ -13,6 +13,15 @@
 
 # All sorts of interesting keywords
 # from which to choose ...
+#
+# The parameter is a file name/path.  The path can be
+# relative to the location of the main.just file OR it
+# can be absolute (ie. starts with a / character).
+# If the file does not exists and error message will
+# be displayed to STDERR.
+#
+# FIXME:  The file name/path can not contain a space character.
+# TODO:   Add system environment variable substitution and $HOME for ~
 
 import one.just
 include   two.just

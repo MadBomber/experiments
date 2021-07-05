@@ -46,7 +46,7 @@ end
 # somg;e-level inclusion
 def include_content_from(file_path)
   content   = []
-  content  << "\n# #{file_path} >>>"
+  content  << "\n# >>> #{file_path}"
   content  << file_path.readlines.map{|x| x.chomp} # TODO: support recursion??
   content  << "# <<< #{file_path}\n"
 
@@ -84,7 +84,18 @@ end
 modules.each do |a_line|
   an_index        = text.index a_line
   parts           = a_line.split
-  text[an_index]  = include_content_from(mainfile.parent + parts.last)
+  module_path     = Pathname.new(parts.last)
+
+  if module_path.relative?
+    module_path = mainfile.parent + module_path
+  end
+
+  if module_path.exist?
+    text[an_index]  = include_content_from(module_path)
+  else
+    STDERR.puts "#{an_index}: #{a_line}"
+    STDERR.puts "| ERROR: File Does Not Exist - #{module_path}"
+  end
 end
 
 basefile.write text.flatten!.join "\n"
