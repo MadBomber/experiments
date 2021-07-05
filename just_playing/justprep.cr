@@ -51,7 +51,7 @@ end
 def include_content_from(file_path : String) : Array(String)
   file = File.open(file_path, "r")
   content = Array(String).new
-  content << "\n# #{file_path} >>>"
+  content << "\n# >>> #{file_path}"
 
   file.gets_to_end.split("\n").each do |a_line|
     content << a_line
@@ -108,8 +108,18 @@ end
 modules.each do |a_line|
   an_index = text.index(a_line) # Should never be nil
   parts = a_line.split
-  module_file_path = mainfile_path.gsub(MAINFILE, parts.last)
-  text[an_index] = include_content_from(module_file_path) unless an_index.nil?
+  module_path = parts.last.strip
+
+  unless module_path.starts_with?('/')
+    module_path = mainfile_path.gsub(MAINFILE, module_path)
+  end
+
+  if File.exists?(module_path)
+    text[an_index] = include_content_from(module_path) unless an_index.nil?
+  else
+    STDERR.puts "#{an_index}: #{a_line}"
+    STDERR.puts "| ERROR: File Does Not Exist - #{module_path}"
+  end
 end
 
 basefile.puts text.flatten.join "\n"
