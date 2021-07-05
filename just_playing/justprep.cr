@@ -48,34 +48,46 @@ def find_modules(main_text : Array(String | Array(String))) : Array(String)
 end
 
 # single-level inclusion
-def include_content_from(file_name : String) : Array(String)
-  file_path = FileUtils.pwd + "/" + file_name
+def include_content_from(file_path : String) : Array(String)
   file = File.open(file_path, "r")
   content = Array(String).new
-  content << "\n# #{file_name} >>>"
+  content << "\n# #{file_path} >>>"
 
   file.gets_to_end.split("\n").each do |a_line|
     content << a_line
   end
 
-  content << "# <<< #{file_name}\n"
+  content << "# <<< #{file_path}\n"
 
   file.close
 
   return content
 end
 
+# look for first occurace of mainfile
+def just_find_it(here = FileUtils.pwd)
+  mainfile_path = here + "/" + MAINFILE
+  return mainfile_path if File.exists?(mainfile_path)
+
+  parts = here.split('/')
+  parts.pop
+
+  return nil if parts.empty?
+  return just_find_it(parts.join('/'))
+end
+
 ######################################################
 # Main
 
-pwd = FileUtils.pwd
-basefile_path = pwd + "/" + BASEFILE
-mainfile_path = pwd + "/" + MAINFILE
+mainfile_path = just_find_it(FileUtils.pwd)
 
-basefile = File.new(basefile_path, "w")
+exit(0) if mainfile_path.nil?
+
+basefile_path = mainfile_path.gsub(MAINFILE, BASEFILE)
+
 mainfile = File.open(mainfile_path, "r")
 
-exit(0) unless File.exists?(mainfile_path)
+basefile = File.new(basefile_path, "w")
 
 text = Array(String | Array(String)).new
 
@@ -96,7 +108,8 @@ end
 modules.each do |a_line|
   an_index = text.index(a_line) # Should never be nil
   parts = a_line.split
-  text[an_index] = include_content_from(parts.last) unless an_index.nil?
+  module_file_path = mainfile_path.gsub(MAINFILE, parts.last)
+  text[an_index] = include_content_from(module_file_path) unless an_index.nil?
 end
 
 basefile.puts text.flatten.join "\n"
