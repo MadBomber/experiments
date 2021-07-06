@@ -31,7 +31,7 @@ include help.just
 ...
 ```
 
-The path to the file `help.just` is relative to the location of the `main.kust` file in which it is designated.  So that makes its absolute path `~/tmp/kist_playing/help.just`
+The path to the file `help.just` is relative to the location of the `main.kust` file in which it is designated.  So that makes its absolute path `~/tmp/just_playing/help.just`
 
 To designate an absolute path start the filename/path with the `'/'` character.  You may also use the `'~'` character as the first character of an absolute path as a shortcut to the user's home directory.
 
