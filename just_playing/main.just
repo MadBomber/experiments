@@ -19,17 +19,18 @@
 # can be absolute (ie. starts with a / character).
 # If the file does not exists and error message will
 # be displayed to STDERR.
-#
-# FIXME:  The file name/path can not contain a space character.
 
 import one.just
 include   two.just
 require       three.just
 with            four.just
 
+# NOTE: no use of quotes around file name
+require file with spaces.just
+
 
 # where did those come from?
-@what: one two three four five six
+@what: one two three four five six worked
   echo "what?"
 
 #############################################

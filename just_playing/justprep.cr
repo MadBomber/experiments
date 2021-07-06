@@ -119,8 +119,18 @@ end
 
 modules.each do |a_line|
   an_index = text.index(a_line) # Should never be nil
-  parts = a_line.split
-  module_path = parts.last.strip
+  begin_filepath = a_line.index(' ')
+
+  unless begin_filepath.nil?
+    filepath_size = a_line.size - begin_filepath
+    module_path = a_line[begin_filepath, filepath_size].strip
+  end
+
+  if module_path.nil? || 0 == module_path.size
+    STDERR.puts "#{an_index}: #{a_line}"
+    STDERR.puts "ERROR: No path/to/file was provided"
+    next
+  end
 
   if module_path.includes?('~') || module_path.includes?('$')
     module_path = expand_file_path(module_path)

@@ -20,6 +20,8 @@ include ~/.justfile
 
 This is accomplished by auto-generation of the `justfile` dynamically from a seed file.  That seed file in this experiment is `main.just`
 
+A keywork that is not followed by a spece will not be processed.  It will be passed on to `just` as is.
+
 ## Relative Paths
 
 When a relative inclusionary filename/path is provided its full absolute path will be calculated based upon the location of the `main.just` file within which it is designated.  For example consider this `main.just` file in the directory `~/tmp/just_playing`
@@ -49,7 +51,6 @@ The filename/path designated on an inclusionary line can make use of the `'~'` c
 
 ## Experiment Limitations
 
-* filenames may not contain a space
 * filenames may not contain `just` variables
 * the keyword must start in column 1
 * included files may not contain inclusionary keywords - only single-level inclusions are allowed
