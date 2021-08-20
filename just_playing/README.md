@@ -2,6 +2,15 @@
 A pre-processor experiment for the "just" command line utility.
 https://github.com/casey/just
 
+## Breaking News
+This experiment proved to be pretty useful to me so its been elevated to its own repo.  http://github.com/MadBomber/justprep
+
+The Ruby version was turned into a gem and released through rubygems.org
+
+The Crystal version is still waiting for me to figure out a way to distribute.
+
+Also the code for both versions has been updated to use system environment variables for the input and output files as well as the keywords.  See the README file in the new repo.
+
 ## Experiment
 The purpose of this experiment is to see how well the potential integration of "modules" might be accomplished using inclusionary keywords to reference other files containing "just" recipes, aliases and variables.  The keywords supported are:
 
