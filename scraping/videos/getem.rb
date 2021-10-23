@@ -17,8 +17,8 @@ require "json"
 require "ferrum"
 require 'mhtml'
 
-
 require 'amazing_print'
+
 
 require 'debug_me'
 include DebugMe
@@ -154,6 +154,47 @@ def create_meta_and_ref_files
   end
 end # def create_meta_and_ref_files
 
+
+
+def associated_content_file_to_reference(debug: false)
+
+  here              = Pathname.pwd
+  toc_filename      = 'sermons_archive_toc.txt'
+  toc_filepath      = here + toc_filename
+  ref_xref          = {}
+  sermon_filenames  = toc_filepath.read.split("\n")
+
+  sermon_filenames.each do |filename|
+    filepath = here + filename
+    extension = filepath.extname
+
+    puts "\n\nProcessing #{filename} ... "   if debug
+    parts = filename.split('_')
+    uuid  = parts[0..1].join("_")
+    hits  = `ag #{filename} *.ref`.split(":")
+
+    ref_filename  = hits[0]
+    ref_line      = hits[1]
+    parts         = hits[2].split('.').map{|part| part.strip}
+    reference     = "[#{parts.first}]"
+    ref_href      = parts.last + ':' + hits[3]
+
+    if debug
+      puts "  ref_filename: #{ref_filename}"
+      puts "  reference:    #{reference}"
+      puts "  more(#{hits.size}) ..." if hits.size > 4
+    end
+
+    unless ref_xref.has_key?(ref_filename)
+      ref_xref[ref_filename] = {}
+    end
+
+    ref_xref[ref_filename][reference] = filename
+  end
+
+  return ref_xref
+end
+
 ######################################################
 # Main
 
@@ -163,34 +204,138 @@ at_exit do
   puts
 end
 
-here          = Pathname.pwd
-toc_filename  = 'sermons_archive_toc.txt'
-toc_filepath  = here + toc_filename
 
-sermon_filenames = toc_filepath.read.split("\n")
+ref_db = associated_content_file_to_reference
 
-sermon_filenames.each do |filename|
-  filepath = here + filename
-  extension = filepath.extname
+# ap ref_db
 
-  puts "\n\nProcessing #{filename} ... "
-  parts = filename.split('_')
-  uuid  = parts[0..1].join("_")
-  hits  =  `ag #{filename} *.ref`.split(":")
+Sermon = Struct.new(:speaker, :date, :title, :series, :filename)
 
-  ref_filename  = hits[0]
-  ref_line      = hits[1]
-  parts         = hits[2].split('.').map{|part| part.strip}
-  reference     = "[#{parts.first}]"
-  ref_href      = parts.last + ':' + hits[3]
+def rewrite_meta(ref_db, debug: false)
 
-  puts "  ref_filename: #{ref_filename}"
-  puts "  reference:    #{reference}"
-  puts "  more(#{hits.size}) ..." if hits.size > 4
+  here            = Pathname.pwd
+  ref_regex       = /\[(\d+)\]/
+
+  content_file_start_tags = ["uploaded%2Fi%2F", "uploaded%2Ft%2F", "uploaded%2Ff%2F", "uploaded%2Fl%2F"]
+  content_file_end_tag    = "&amp;"
+
+  meta_filepaths  = here.children.select{|c| '.meta' == c.extname}
+
+
+  file_count = 0
+
+  meta_filepaths.each do |meta_filepath|
+    meta_filename = meta_filepath.basename.to_s
+    ref_filename  = meta_filename.gsub('.meta', '.ref')
+    ref_filepath  = here + ref_filename
+
+    meta_lines    = meta_filepath.readlines.map{|x| x.strip}
+    ref_lines     = ref_filepath.readlines.map{|x| x.strip}
+
+    # ap meta_lines,  plain: true, indent: 2, index: false
+    # ap ref_lines,   plain: true, indent: 2, index: true
+
+    meta_lines.each_with_index do |meta_line, meta_index|
+      dc = meta_line.downcase
+
+      if dc == "**** Sunday At Bellaire ****".downcase ||
+          dc.start_with?('[')
+        meta_lines[meta_index] = nil
+        next
+      end
+
+      parts = dc.split(' ')
+
+      if 4 == parts.last.size  &&  parts.last.start_with?('20')
+        sermon_date = Date.parse meta_line
+        sermon = Sermon.new
+        sermon.date = sermon_date
+
+        meta_lines[meta_index] = sermon
+        next
+      end
+
+
+      if dc.start_with?('keyword')
+        meta_lines[meta_index] = '__END__'
+        next
+      end
+
+
+      if dc.start_with?('****')
+        # Its either a title or a series; can't tell the difference
+        sermon        = Sermon.new
+        sermon_title  = meta_line.gsub('*', ' ').strip
+
+        if sermon_title.include?('[')
+          xxx           = sermon_title.index('[')
+          sermon_title  = sermon_title[0,xxx].strip
+        end
+
+        sermon.title            = sermon_title.gsub('_', ' ')
+        meta_lines[meta_index]  = sermon
+
+        next
+      end
+
+
+      next unless dc.end_with?(']') || dc.end_with?('] ****')
+
+      if dc.start_with?('speaker')
+        sermon          = Sermon.new
+        sermon_speaker  = meta_line.split(":")[1].split('[').first.strip.gsub('_', ' ')
+        sermon.speaker  = sermon_speaker
+        meta_lines[meta_index] = sermon
+        next
+      end
+
+
+      ref_index = meta_lines[meta_index].match(ref_regex)[1].to_i
+
+
+      ref_line =  ref_lines[ref_index]
+
+
+      found_content_tag = false
+
+      content_file_start_tags.each do |content_file_start_tag|
+        if ref_line.include?(content_file_start_tag)
+          found_content_tag = true
+          start_index     = ref_line.index(content_file_start_tag) + content_file_start_tag.size
+          content_length  = ref_line[start_index..].index(content_file_end_tag)
+
+          ref_line    = ref_line[start_index, content_length]
+
+          sermon_filename = ref_line.dup
+
+          sermon = Sermon.new
+          sermon.filename = sermon_filename
+
+          meta_lines[meta_index] = sermon
+        end
+      end
+
+      next if found_content_tag
+
+      meta_lines[meta_index] += "\t" + ref_line
+
+    end
+
+    meta_lines << '__END__' unless '__END__' == meta_lines.last
+
+    ap meta_lines
+
+    puts "="*65
+
+    file_count += 1
+
+    break if file_count > 3
+
+  end
+
 end
 
 
-
-
+rewrite_meta(ref_db, debug: true)
 
 __END__
