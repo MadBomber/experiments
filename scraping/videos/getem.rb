@@ -12,6 +12,7 @@
 URL = "http://bellairebaptist.org/sermons/month/"
 MONTHS = %w[ 1-2016  1-2017  1-2018  1-2019  1-2020  10-2015  10-2016  10-2017  10-2018  11-2015  11-2016  11-2017  11-2018  12-2015  12-2016  12-2017  12-2018  2-2016  2-2017  2-2018  2-2020  3-2016  3-2017  3-2018  3-2019  3-2020  4-2016  4-2017  4-2018  5-2015  5-2016  5-2017  6-2015  6-2016  6-2017  6-2018  6-2020  7-2015  7-2016  7-2017  7-2018  7-2020  8-2015  8-2016  8-2017  8-2018  8-2019  8-2020  9-2015  9-2016  9-2017  9-2018  9-2019  9-2020  ]
 
+
 require 'date'
 require "json"
 require "ferrum"
@@ -24,7 +25,9 @@ require 'debug_me'
 include DebugMe
 
 
+NAS_SERMON_ARCHIVE = Pathname.new '/Volumes/share/bellaire_baptist/sermon_archive'
 
+Sermon = Struct.new(:source, :speaker, :date, :title, :series, :filename, :errors)
 
 
 
@@ -195,28 +198,72 @@ def associated_content_file_to_reference(debug: false)
   return ref_xref
 end
 
-######################################################
-# Main
 
-at_exit do
-  puts
-  puts "Done."
-  puts
+def create_info_file_for(sermons)
+  here = Pathname.pwd
+
+  sermons.each do |sermon|
+    next if sermon.date.nil?
+
+    unless sermon.date.is_a? Date
+      ap sermon
+
+      problem_count = 1
+      filepath = here + "#{sermon.source}-problem-#{problem_count}.info"
+
+      while filepath.exist? do
+        problem_count += 1
+        filepath = here + "#{sermon.source}-problem-#{problem_count}.info"
+      end
+
+      filepath.write sermon.ai(plain: true)
+
+      next
+    end
+
+    if sermon.title.is_a? Array
+      if 2 == sermon.title.size
+        sermon.series = sermon.title.last
+        sermon.title  = sermon.title.first
+      else
+        sermon.title  = sermon.title.join("; ")
+      end
+    end
+
+    filename = "sermons_#{sermon.date.to_s}.info"
+    filepath = here + filename
+
+    filepath.write <<~END_OF_SERMON_INFO
+      Date:       #{sermon.date}
+
+      series:     #{sermon.series}
+
+      Title:      #{sermon.title}
+
+      Speaker:    #{sermon.speaker}
+
+      Media File Name: #{sermon.filename}
+
+      Website Source Filename: #{sermon.source}
+
+      Errors: #{sermon.errors}
+    END_OF_SERMON_INFO
+  end
+
 end
 
 
-ref_db = associated_content_file_to_reference
-
-# ap ref_db
-
-Sermon = Struct.new(:speaker, :date, :title, :series, :filename)
 
 def rewrite_meta(ref_db, debug: false)
 
   here            = Pathname.pwd
   ref_regex       = /\[(\d+)\]/
 
-  content_file_start_tags = ["uploaded%2Fi%2F", "uploaded%2Ft%2F", "uploaded%2Ff%2F", "uploaded%2Fl%2F"]
+  tags  = [
+            "uploaded%2F",
+            "ssl.cf2.rackcdn.com%2Fh264-720%2F"
+          ]
+
   content_file_end_tag    = "&amp;"
 
   meta_filepaths  = here.children.select{|c| '.meta' == c.extname}
@@ -240,7 +287,7 @@ def rewrite_meta(ref_db, debug: false)
 
       if dc == "**** Sunday At Bellaire ****".downcase ||
           dc.start_with?('[')
-        meta_lines[meta_index] = nil
+        meta_lines[meta_index] = Sermon.new(meta_filename)
         next
       end
 
@@ -248,7 +295,7 @@ def rewrite_meta(ref_db, debug: false)
 
       if 4 == parts.last.size  &&  parts.last.start_with?('20')
         sermon_date = Date.parse meta_line
-        sermon = Sermon.new
+        sermon = Sermon.new(meta_filename)
         sermon.date = sermon_date
 
         meta_lines[meta_index] = sermon
@@ -264,7 +311,7 @@ def rewrite_meta(ref_db, debug: false)
 
       if dc.start_with?('****')
         # Its either a title or a series; can't tell the difference
-        sermon        = Sermon.new
+        sermon        = Sermon.new(meta_filename)
         sermon_title  = meta_line.gsub('*', ' ').strip
 
         if sermon_title.include?('[')
@@ -282,10 +329,17 @@ def rewrite_meta(ref_db, debug: false)
       next unless dc.end_with?(']') || dc.end_with?('] ****')
 
       if dc.start_with?('speaker')
-        sermon          = Sermon.new
+        sermon          = Sermon.new(meta_filename)
         sermon_speaker  = meta_line.split(":")[1].split('[').first.strip.gsub('_', ' ')
         sermon.speaker  = sermon_speaker
         meta_lines[meta_index] = sermon
+        meta_index_next = meta_index + 1
+        unless meta_index_next >= meta_lines.size
+          unless meta_lines[meta_index_next].downcase.start_with?('keyword')
+            meta_lines.insert(meta_index_next, '__END__')
+          end
+        end
+
         next
       end
 
@@ -298,18 +352,24 @@ def rewrite_meta(ref_db, debug: false)
 
       found_content_tag = false
 
-      content_file_start_tags.each do |content_file_start_tag|
+      tags.each do |content_file_start_tag|
         if ref_line.include?(content_file_start_tag)
           found_content_tag = true
-          start_index     = ref_line.index(content_file_start_tag) + content_file_start_tag.size
+          start_index     = ref_line.index(content_file_start_tag) + content_file_start_tag.size + 4
           content_length  = ref_line[start_index..].index(content_file_end_tag)
 
           ref_line    = ref_line[start_index, content_length]
 
           sermon_filename = ref_line.dup
 
-          sermon = Sermon.new
+          sermon = Sermon.new(meta_filename)
           sermon.filename = sermon_filename
+
+          sermon_filepath = NAS_SERMON_ARCHIVE + sermon_filename
+
+          unless sermon_filepath.exist?
+            sermon.errors = "File does not exist: #{sermon.filename}"
+          end
 
           meta_lines[meta_index] = sermon
         end
@@ -323,19 +383,75 @@ def rewrite_meta(ref_db, debug: false)
 
     meta_lines << '__END__' unless '__END__' == meta_lines.last
 
-    ap meta_lines
+    ap meta_lines if debug
 
-    puts "="*65
+    sermons = build_sermons(meta_lines.compact.reverse)
+
+    create_info_file_for(sermons)
+
+    puts "="*65 # if debug
 
     file_count += 1
 
-    break if file_count > 3
+    # break if file_count > 15
 
   end
 
 end
 
+######################################################
+# Main
 
-rewrite_meta(ref_db, debug: true)
+at_exit do
+  puts
+  puts "Done."
+  puts
+end
+
+
+ref_db = associated_content_file_to_reference
+
+# ap ref_db
+
+
+def combine_sermons(this_sermon, entry)
+  return this_sermon unless entry.is_a? Sermon
+
+  keys = entry.to_h.keys
+
+  keys.each do |key|
+    next if entry[key].nil?
+
+    if this_sermon[key].nil?
+      this_sermon[key] = entry[key]
+    else
+      unless this_sermon[key] == entry[key]
+        this_sermon[key] = Array(this_sermon[key])
+        this_sermon[key] << entry[key]
+      end
+    end
+  end
+
+  return this_sermon
+end
+
+def build_sermons(an_array, debug: false)
+  sermons = []
+
+  an_array.each do |entry|
+    if '__END__' == entry
+      sermons << Sermon.new
+    end
+
+    sermon_index = sermons.size - 1
+
+    sermons[sermon_index] = combine_sermons(sermons[sermon_index], entry)
+  end
+
+  return sermons
+end
+
+
+rewrite_meta(ref_db)
 
 __END__
