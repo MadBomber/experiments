@@ -27,7 +27,9 @@ include DebugMe
 
 NAS_SERMON_ARCHIVE = Pathname.new '/Volumes/share/bellaire_baptist/sermon_archive'
 
-Sermon = Struct.new(:source, :speaker, :date, :title, :series, :filename, :errors)
+Sermon = Struct.new(  :source, :speaker, :date,
+                      :title,   :series, :filename,
+                      :errors, :notes)
 
 
 
@@ -230,11 +232,26 @@ def create_info_file_for(sermons)
       end
     end
 
-    filename = "sermons_#{sermon.date.to_s}.info"
-    filepath = here + filename
+    info_basename = "sermons-#{sermon.date.to_s}-#{sermon.date.strftime('%a').downcase}"
+    info_filename = "#{info_basename}.info"
+    info_filepath = here + info_filename
 
-    filepath.write <<~END_OF_SERMON_INFO
-      Date:       #{sermon.date}
+    if sermon.errors.nil?  &&  !sermon.filename.nil?
+      media_filename  = sermon.filename
+      media_filepath  = NAS_SERMON_ARCHIVE + media_filename
+      media_extname   = media_filepath.extname
+
+      new_media_filename = info_basename + media_extname
+      new_media_filepath = NAS_SERMON_ARCHIVE + new_media_filename
+
+      sermon.notes = "#{new_media_filename} was originally #{media_filename}"
+
+      `mv #{media_filepath} #{new_media_filepath}`
+      sermon.filename = new_media_filename
+    end
+
+    info_filepath.write <<~END_OF_SERMON_INFO
+      Date:       #{sermon.date} #{sermon.date.strftime('%A')}
 
       series:     #{sermon.series}
 
