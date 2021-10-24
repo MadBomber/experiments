@@ -253,7 +253,7 @@ def create_info_file_for(sermons)
     info_filepath.write <<~END_OF_SERMON_INFO
       Date:       #{sermon.date} #{sermon.date.strftime('%A')}
 
-      series:     #{sermon.series}
+      Series:     #{sermon.series}
 
       Title:      #{sermon.title}
 
@@ -264,6 +264,8 @@ def create_info_file_for(sermons)
       Website Source Filename: #{sermon.source}
 
       Errors: #{sermon.errors}
+
+      Notes:  #{sermon.notes}
     END_OF_SERMON_INFO
   end
 

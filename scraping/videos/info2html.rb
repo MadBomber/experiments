@@ -24,7 +24,7 @@ Sermon = Struct.new(  :source, :speaker, :date,
 
 LABEL2KEY = {
   "Date"                    => :date,
-  "series"                  => :series,
+  "Series"                  => :series,
   "Speaker"                 => :speaker,
   "Title"                   => :title,
   "Media File Name"         => :filename,
@@ -56,8 +56,6 @@ def info2sermon(info_filepath)
     value       = parts.join(':').strip
     key         = LABEL2KEY[label]
 
-    debug_me{[ :label, :key ]}
-
     sermon[key] = value
   end
 
@@ -80,6 +78,7 @@ here = Pathname.pwd
 info_filepaths  = here
                     .children
                     .select{|c| '.info' == c.extname}
+                    .reject{|c| c.basename.to_s.include?('problem')}
                     .sort_by{|c| c.basename.to_s}
                     .reverse
 
@@ -148,3 +147,4 @@ Website Source Filename: sermons-2020-08.meta
 
 Errors: File does not exist: 0e10744352_1596471129_sermon-cutdown-8-2-20.mp4
 
+Notes:
