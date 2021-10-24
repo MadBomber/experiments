@@ -110,7 +110,11 @@ info_filepaths.each do |info_filepath|
   sermon  = info2sermon(info_filepath)
   keys    = LABEL2KEY.values
   keys.each do |key|
-    html += "<td>#{sermon[key]}</td>\n"
+    if :filename == key && !sermon.filename.empty?
+      html += "<td><a href=#{sermon[key]}>#{sermon[key]}</a></td>"
+    else
+      html += "<td>#{sermon[key]}</td>\n"
+    end
   end
 
   html += "</tr>\n"
