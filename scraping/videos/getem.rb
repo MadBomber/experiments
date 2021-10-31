@@ -413,24 +413,8 @@ def rewrite_meta(ref_db, debug: false)
     file_count += 1
 
     # break if file_count > 15
-
   end
-
 end
-
-######################################################
-# Main
-
-at_exit do
-  puts
-  puts "Done."
-  puts
-end
-
-
-ref_db = associated_content_file_to_reference
-
-# ap ref_db
 
 
 def combine_sermons(this_sermon, entry)
@@ -454,6 +438,7 @@ def combine_sermons(this_sermon, entry)
   return this_sermon
 end
 
+
 def build_sermons(an_array, debug: false)
   sermons = []
 
@@ -471,6 +456,39 @@ def build_sermons(an_array, debug: false)
 end
 
 
-rewrite_meta(ref_db)
+######################################################
+# Main
+
+at_exit do
+  puts
+  puts "Done."
+  puts
+end
+
+
+# ref_db = associated_content_file_to_reference
+# ap ref_db
+
+# rewrite_meta(ref_db)
+
+
+here = NAS_SERMON_ARCHIVE
+
+mp4_filepaths = here.children.select{|c| '.mp4' == c.extname}
+
+mp4_filepaths.each do |mp4_filepath|
+  mp4_filename  = mp4_filepath.basename.to_s
+  info_filename = mp4_filename.gsub('.mp4', '.info')
+  info_filepath = here + info_filename
+
+  info = info_filepath.read
+
+  next if info.include? mp4_filename
+
+  print  info_filename + "  "
+end
+
+puts
+
 
 __END__

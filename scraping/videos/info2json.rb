@@ -4,11 +4,12 @@
 # warn_indent: true
 ##########################################################
 ###
-##  File: info2html.rb
-##  Desc: Convert the INFO text files into a single index.html file
+##  File: info2json.rb
+##  Desc: Convert the INFO text files into JSON
 ##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
 #
 
+require_relative 'sermon'
 
 require 'amazing_print'
 require 'pathname'
@@ -17,11 +18,6 @@ require 'debug_me'
 include DebugMe
 
 NAS_SERMON_ARCHIVE = Pathname.new '/Volumes/share/bellaire_baptist/sermon_archive'
-
-Sermon = Struct.new(  :source, :speaker, :date,
-                      :title,   :series, :filename,
-                      :errors, :notes)
-
 
 LABEL2KEY = {
   "Date"                    => :date,
@@ -78,66 +74,22 @@ at_exit do
   puts
 end
 
-here = NAS_SERMON_ARCHIVE
 
-info_filepaths  = here
+info_filepaths  = NAS_SERMON_ARCHIVE
                     .children
                     .select{|c| '.info' == c.extname}
-                    .reject{|c| c.basename.to_s.include?('problem')}
-                    .sort_by{|c| c.basename.to_s}
-                    .reverse
-
-html_filename = "index.html"
-html_filepath = here + html_filename
-
-keys      = Sermon.new().to_h.keys
-headings  = LABEL2KEY.keys.map{|h| "<td>#{h}</td>"}.join("\n")
-
-html = <<~HTML
-<html>
-  <head>
-    <title>Sermon Archive Index</title>
-  </head>
-  <body>
-    <table><caption>Sermon Archive Index</caption>
-      <thead>
-        <tr>
-          #{headings}
-        </tr>
-      </thead>
-      <tbody>
-HTML
-
 
 info_filepaths.each do |info_filepath|
-  html += "<tr>\n"
+  info_filename = info_filepath.basename.to_s
+  json_filename = info_filename.gsub('.info', '.json')
+  json_filepath = NAS_SERMON_ARCHIVE + json_filename
+
+  puts info_filename
 
   sermon  = info2sermon(info_filepath)
-  keys    = LABEL2KEY.values
-  keys.each do |key|
-    if :filename == key && !sermon.filename&.empty?
-      html += "<td><a href=#{sermon[key]}>#{sermon[key]}</a></td>"
-    else
-      html += "<td>#{sermon[key]}</td>\n"
-    end
-  end
 
-  html += "</tr>\n"
+  json_filepath.write sermon.to_json
 end
-
-
-html += <<~TABLE
-      </tbody>
-    </table>
-  </body>
-</html>
-
-TABLE
-
-
-puts html
-
-html_filepath.write html
 
 
 __END__
