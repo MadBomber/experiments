@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+gem 'oj'
+gem 'debug_me'
+gem 'amazing_print'
+gem 'get_process_mem'

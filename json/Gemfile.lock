@@ -1,0 +1,21 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    amazing_print (1.4.0)
+    debug_me (1.1.0)
+    ffi (1.15.4)
+    get_process_mem (0.2.7)
+      ffi (~> 1.0)
+    oj (3.13.11)
+
+PLATFORMS
+  x86_64-darwin-19
+
+DEPENDENCIES
+  amazing_print
+  debug_me
+  get_process_mem
+  oj
+
+BUNDLED WITH
+   2.2.23
