@@ -22,13 +22,21 @@ module ReportData
 
     def initialize(filename=nil)
       if filename.nil?
-        @file = nil
-        @data = Array.new
-        delegate  :<<, :each, :[], :blank?, :empty?, :nil?, :size,
-              to: :@data
+        setup_array_store
       else
         setup_file_store(filename)
       end
+    end
+
+
+    def setup_array_store
+      @file = nil
+      @data = Array.new
+
+      self.class.def_delegators(
+        :@data,
+        :<<, :each, :[], :blank?, :empty?, :nil?, :size
+      )
     end
 
 
@@ -41,8 +49,12 @@ module ReportData
       @file     = File.open(@filename, 'w')
       @size     = 0
 
-      delegate  :close,
-            to: @file
+      # self.class.def_delegators :@file, :close
+    end
+
+
+    def close
+      @file.close unless @file.nil?
     end
 
 
@@ -71,7 +83,7 @@ module ReportData
       @file = File.open(@filename, 'r')
 
       while !@file.eof? do
-        yeild Oj.load(@file.gets)
+        yield Oj.load(@file.gets)
       end
     end
   end # class DataStore
