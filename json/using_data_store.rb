@@ -21,6 +21,7 @@ require 'amazing_print'
 require 'debug_me'
 include DebugMe
 
+start_time = Time.now
 
 @mem_file = File.new('mem_size.txt', 'w')
 
@@ -127,3 +128,6 @@ print "\n@data.size => #{@data.size}\n\n"
 # SMELL: what if it were an Array?
 @data.close
 
+end_time = Time.now
+
+puts "Time: #{end_time - start_time}"
