@@ -3,9 +3,10 @@ require 'system_package' # from MadBomber/lib_ruby
 source 'https://rubygems.org'
 
 system_package 'catdoc'   if fedora? || mac?
-system_package 'gsl'      if fedora? || mac?
+#system_package 'gsl'      if fedora? || mac?  # ruby lib depends on old binary
 system_package 'html2txt' if fedora? || mac?
 system_package 'pdf2txt'  if fedora? || mac?
+system_package 'sqlite3'  if fedora? || mac?
 
 
 # Database stuff
@@ -23,7 +24,7 @@ gem 'mechanize'   # used with lurn
 
 gem 'debug_me'
 gem 'kick_the_tires'
-gem 'awesome_print'
+gem 'amazing_print'
 gem 'minitest'
 gem 'cli_helper'
 
@@ -46,10 +47,10 @@ gem 'madeleine'       # object persistence; has not worked
 
 gem 'classifier-reborn'  #, git: 'https://github.com/MadBomber/classifier-reborn.git'
 
-system_package 'gsl'  if fedora? || mac?
-gem 'gsl'  # might load its own gsl library
+#system_package 'gsl'  if fedora? || mac?
+#gem 'gsl'  # might load its own gsl library
 
-gem 'stuff-classifier'  # bayes and tf-idf weights
+#gem 'stuff-classifier'  # bayes and tf-idf weights / depends on old sqlite3 version
 
 gem 'summary'  # not any good.
 
@@ -72,3 +73,4 @@ system_package 'libsvm'  if fedora? || mac?
 
 gem 'kmeans-clusterer'
 
+gem 'fasttext'
