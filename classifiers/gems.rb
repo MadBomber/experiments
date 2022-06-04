@@ -74,3 +74,8 @@ system_package 'libsvm'  if fedora? || mac?
 gem 'kmeans-clusterer'
 
 gem 'fasttext'
+
+###################################################
+# Name, entity relationships
+
+gem 'mitie'  # and it has a classifier

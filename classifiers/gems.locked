@@ -76,6 +76,7 @@ GEM
     mime-types-data (3.2022.0105)
     mini_portile2 (2.3.0)
     minitest (5.11.1)
+    mitie (0.2.0)
     narray (0.6.1.2)
     nbayes (0.1.1)
     nenv (0.3.0)
@@ -150,6 +151,7 @@ DEPENDENCIES
   madeleine
   mechanize
   minitest
+  mitie
   nbayes
   nobrainer
   omnicat-bayes
