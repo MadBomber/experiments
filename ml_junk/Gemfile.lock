@@ -22,7 +22,7 @@ GEM
     jaccard (1.0.2)
     json (1.8.1)
     k_means (0.0.7)
-      distance_measures (>= 0.0.0)
+      distance_measures
     minitest (5.3.3)
     phashion (1.1.1)
     recommendable (2.1.4)
@@ -33,8 +33,8 @@ GEM
     reentrant_mutex (1.1.1)
     sinderella (0.0.2)
       crimp
-    thread_safe (0.3.3)
-    tzinfo (1.1.0)
+    thread_safe (0.3.6)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     uber (0.0.4)
 
