@@ -25,20 +25,21 @@
   <p>Bible Book #3 Content Goes Here</p>
 </div>
 
-<script>
-function getRndInteger(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
 
-function displayBook() {
-  selected_book = document.getElementById('selected_book')
-  book_id       = "book_" + getRndInteger(1,4)
-  book_content  = document.getElementById(book_id)
-
-  while (book_content.childNodes.length > 0) {
-    selected_book.appendChild(book_content.childNodes[0]);
+<script type="text/javascript"> 
+  function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
   }
-}
+
+  function displayBook() {
+    selected_book = document.getElementById('selected_book')
+    book_id       = "book_" + getRndInteger(1,4)
+    book_content  = document.getElementById(book_id)
+
+    while (book_content.childNodes.length > 0) {
+      selected_book.appendChild(book_content.childNodes[0]);
+    }
+  }
 </script>
 
 </body>
