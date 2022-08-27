@@ -8,6 +8,10 @@
 require 'debug_me'
 include DebugMe
 
+require 'pathname'
+
+KEY_VERSES = (Pathname.pwd + 'key_verse.txt').read.split("\n")
+
 CONTENT = DATA.read.split("\n")
 
 
@@ -23,7 +27,7 @@ books = []
 
   books.last.name   = CONTENT[x + 0]
   books.last.desc   = CONTENT[x + 1]
-  books.last.verse  = CONTENT[x + 2]
+  books.last.verse  = KEY_VERSES[inx]
 end
 
 
@@ -33,7 +37,6 @@ debug_me{[
 ]}
 
 __END__
-
 Genesis
 Genesis speaks of beginnings and is foundational to the understanding of the rest of the Bible. It is supremely a book that speaks about relationships, highlighting those between God and his creation, between God and humankind, and between human beings.
 
@@ -104,8 +107,10 @@ Isaiah
 Isaiah son of Amoz is often thought of as the greatest of the writing prophets. His name means &quot;The Lord saves.&quot; Isaiah is a book that unveils the full dimensions of God&#39;s judgment and salvation.
 
 Jeremiah
-This book preserves an account of the prophetic ministry of Jeremiah, whose personal life and struggles are shown to us in greater depth and detail than those of any other Old Testament prophet.\n/lamentations/">
-Lamentations\nLamentations consists of a series of poetic and powerful laments over the destruction of Jerusalem (the royal city of the Lord&#39;s kingdom) in 586 B.C.
+This book preserves an account of the prophetic ministry of Jeremiah, whose personal life and struggles are shown to us in greater depth and detail than those of any other Old Testament prophet.
+
+Lamentations
+Lamentations consists of a series of poetic and powerful laments over the destruction of Jerusalem (the royal city of the Lord&#39;s kingdom) in 586 B.C.
 
 Ezekiel
 The Old Testament in general and the prophets in particular presuppose and teach God&#39;s sovereignty over all creation and the course of history. And nowhere in the Bible are God&#39;s initiative and control expressed more clearly and pervasively than in the book of the prophet Ezekiel.
