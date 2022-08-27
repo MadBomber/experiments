@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Casting Lots for Bible Study</h2>
+
+<p>What book of the bible should you study next?  If that "still small voice" has not directed you to a specific book try what the apostles did in Acts 1:26  "Then they cast lots for them, and the lot fell to Matthias. So he was numbered with the 11 apostles."</p>
+
+<button onclick="displayBook()">Cast your Lot</button>
+
+<div id="selected_book"></div>
+
+<div id="book_1" style="display:none;">
+  <h2>Book One</h2>
+  <p>Bible Book #1 Content Goes Here</p>
+</div>
+
+<div id="book_2" style="display:none;">
+  <h2>Book Two</h2>
+  <p>Bible Book #2 Content Goes Here</p>
+</div>
+
+<div id="book_3" style="display:none;">
+  <h2>Book Three</h2>
+  <p>Bible Book #3 Content Goes Here</p>
+</div>
+
+<script>
+function getRndInteger(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function displayBook() {
+  selected_book = document.getElementById('selected_book')
+  book_id       = "book_" + getRndInteger(1,4)
+  book_content  = document.getElementById(book_id)
+
+  while (book_content.childNodes.length > 0) {
+    selected_book.appendChild(book_content.childNodes[0]);
+  }
+}
+</script>
+
+</body>
+</html>
