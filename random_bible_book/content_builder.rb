@@ -30,9 +30,23 @@ books = []
   books.last.verse  = KEY_VERSES[inx]
 end
 
+inx = 0
+books.each do |book|
+  inx += 1
+
+  puts <<~EOS
+    <div id="book_#{inx}" style="display:none;">
+      <h2>#{book.name}</h2>
+      <p>#{book.desc}</p>
+      <p>Key Verse: #{book.verse}</p>
+    </div>
+  EOS
+end
+
+
+
 
 debug_me{[
-  :books,
   'books.size'
 ]}
 
