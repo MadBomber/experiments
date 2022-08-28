@@ -33,12 +33,14 @@ end
 inx = 0
 books.each do |book|
   inx += 1
+  parts = book.verse.split("/").map{|r| r.strip}
 
   puts <<~EOS
     <div id="book_#{inx}" style="display:none;">
       <h2>#{book.name}</h2>
       <p>#{book.desc}</p>
-      <p>Key Verse: #{book.verse}</p>
+      <dl><dt>#{parts.first}</dt>
+      <dd>#{parts.last}</dd></dl>
     </div>
   EOS
 end
