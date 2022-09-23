@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    telephone_number (1.4.16)
+
+PLATFORMS
+  arm64-darwin-21
+
+DEPENDENCIES
+  telephone_number
+
+BUNDLED WITH
+   2.3.22
