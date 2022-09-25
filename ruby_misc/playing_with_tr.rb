@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # experiments/ruby_misc/playing_with_tr.rb
 # according to rastruby.io `tr` is faster than `gsub`
 # when dealing with pure String objects
@@ -5,7 +6,15 @@
 # Also evaluating the telephone_number gem
 
 require 'pathname'
-require 'telephone_number'
+require 'bundler/inline'
+
+print "Installing gems as necessary ... "
+gemfile do
+    source 'https://rubygems.org'
+    gem 'telephone_number'
+end
+
+puts 'done'
 
 COUNTRY     = :US
 VALID_TYPES = %i[
@@ -56,9 +65,12 @@ data_path.readlines.each do |a_string|
 
   phone_number  = TelephoneNumber.parse(digits, COUNTRY)
 
-  unless phone_number.valid?(VALID_TYPES)
+  if phone_number.valid?(VALID_TYPES)
+    comment = phone_number.national_number
+  else
+    comment = "** bad **"
     print "NOT "
   end
 
-  puts "a valid #{COUNTRY} phone number.  #{phone_number.national_number}"
+  puts "a valid #{COUNTRY} phone number.  #{comment}"
 end
