@@ -15,18 +15,13 @@
 #   graph is a gem wrapper of graphviz that produces
 #   of graph structures.
 #
-# TODO: individual tasks are showing up as single
-#       entries in a cluster.  Should not be in a
-#       cluster but that is what the po.dot shows
+#   brew install graphviz
+#   gem install amazing_print dagwood graph
 #
 
 require 'amazing_print'
-
-require 'debug_me'
-include DebugMe
-
-require 'graph'
 require 'dagwood'
+require 'graph'
 
 # Hash based upon the dagwood definitions were
 # the key is dependent on the value.  Items within
@@ -49,6 +44,40 @@ dinner = {
   serve_the_dinner: %i[serve_salad    serve_roast]
 }
 
+# Adjust structure of the Array AND 
+# change its entries to strings AND
+# adds "Start" and "Done" as first and last entries
+#
+def normalize_array(thing_array)
+  an_array = thing_array.dup
+
+  an_array.map! do|e| 
+    if e.is_a?(Array)
+      if 1 == e.size
+        e.first.to_s
+      else
+        e.flatten.map!{|r| r.to_s}
+      end
+    else
+      e.to_s
+    end
+  end
+
+  if  an_array.first.is_a?(Array) || 
+      'start' != an_array.first.downcase
+    an_array = an_array.prepend('Start')
+  end
+
+  if  an_array.last.is_a?(Array) ||
+      'done' != an_array.last.downcase
+    an_array << "Done"
+  end
+
+  ap an_array
+
+  return an_array  
+end
+
 
 # global incremented with each new subgraph
 $cluster_id = 0
@@ -64,7 +93,7 @@ def build_subgraph(right)
   cluster $cluster_id.to_s do
     attrs = "{rank=same"
     right.each do |r|
-      attrs += ' "'+r.to_s+'"'
+      attrs += ' "' + r + '"'
     end
     attrs += '}'
     graph_attribs << attrs
@@ -72,7 +101,7 @@ def build_subgraph(right)
     # edge_attribs << "penwidth=0.0" << "arrowhead=none"
 
     (1..right.size-1).each do |x|
-      edge(right[x-1].to_s, right[x].to_s)
+      edge(right[x-1], right[x])
         .attributes << "penwidth=0.0" << "arrowhead=none"
     end
   end # cluster $clunster_id.to_s do
@@ -87,20 +116,18 @@ end
 # type is a String, kind of image to produce
 # an_array is a flatten Array
 #
-def simple_graph(name, type, an_array)
-  unless 'start' == an_array.first
-    an_array = ["start"] + an_array + ["done"]
-  end
+def simple_graph(name, type, thing_array)
+  an_array = normalize_array(thing_array)  
 
   digraph do 
     boxes
     
     (1..an_array.size-1).each do |x|
-      edge an_array[x-1].to_s, an_array[x].to_s
+      edge an_array[x-1], an_array[x]
     end
     
-    circle << node("start")
-    circle << node("done")  
+    circle << node("Start")
+    circle << node("Done")  
 
     save name, type
   end
@@ -115,10 +142,8 @@ end
 # type is a String, kind of image to produce
 # an_array is a flatten Array
 #
-def complex_graph(name, type, an_array)
-  unless 'start' == an_array.first
-    an_array = ["start"] + an_array + ["done"]
-  end
+def complex_graph(name, type, an_array_of_arrays)
+  an_array = normalize_array(an_array_of_arrays)
 
   digraph do 
     graph_attribs << "compound=true" << "rankdir = TB"
@@ -133,11 +158,11 @@ def complex_graph(name, type, an_array)
           # A->A        
           build_subgraph(right)
 
-          edge(left.first.to_s, right.first.to_s)
+          edge(left.first, right.first)
             .attributes << "ltail=cluster_#{$cluster_id-1}" << "lhead=cluster_#{$cluster_id}"
         else
           # A -> N
-          edge(left.first.to_s, right.to_s)
+          edge(left.first, right)
             .attributes << "ltail=cluster_#{$cluster_id}" 
         end
       else
@@ -145,17 +170,17 @@ def complex_graph(name, type, an_array)
           # N->A
           build_subgraph(right)
 
-          edge(left.to_s, right.first.to_s)
+          edge(left, right.first)
             .attributes << "lhead=cluster_#{$cluster_id}" 
         else
           # N->N
-          edge(left.to_s, right.to_s)
+          edge(left, right)
         end
       end
     end
     
-    circle << node("start")
-    circle << node("done")
+    circle << node("Start")
+    circle << node("Done")
 
     save name, type
   end
