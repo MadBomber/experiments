@@ -1,0 +1,764 @@
+US	74457	Proctor	Oklahoma	OK	Adair	001			36.0308	-94.7613	4
+US	74931	Bunch	Oklahoma	OK	Adair	001			35.6826	-94.7611	4
+US	74960	Stilwell	Oklahoma	OK	Adair	001			35.8107	-94.6313	4
+US	74964	Watts	Oklahoma	OK	Adair	001			36.1152	-94.6345	4
+US	74965	Westville	Oklahoma	OK	Adair	001			35.9912	-94.5926	4
+US	73716	Aline	Oklahoma	OK	Alfalfa	003			36.5056	-98.4574	4
+US	73719	Amorita	Oklahoma	OK	Alfalfa	003			36.9412	-98.2458	4
+US	73722	Burlington	Oklahoma	OK	Alfalfa	003			36.9036	-98.4215	4
+US	73726	Carmen	Oklahoma	OK	Alfalfa	003			36.5842	-98.4578	4
+US	73728	Cherokee	Oklahoma	OK	Alfalfa	003			36.7564	-98.3594	4
+US	73739	Goltry	Oklahoma	OK	Alfalfa	003			36.5314	-98.154	4
+US	73741	Helena	Oklahoma	OK	Alfalfa	003			36.5438	-98.2778	4
+US	73749	Jet	Oklahoma	OK	Alfalfa	003			36.6929	-98.1721	4
+US	74525	Atoka	Oklahoma	OK	Atoka	005			34.3445	-96.1418	4
+US	74533	Caney	Oklahoma	OK	Atoka	005			34.2221	-96.2584	4
+US	74540	Daisy	Oklahoma	OK	Atoka	005			34.5384	-95.7088	4
+US	74555	Lane	Oklahoma	OK	Atoka	005			34.2691	-95.9685	4
+US	74569	Stringtown	Oklahoma	OK	Atoka	005			34.4676	-96.0002	4
+US	73844	Gate	Oklahoma	OK	Beaver	007			36.8757	-100.0734	4
+US	73931	Balko	Oklahoma	OK	Beaver	007			36.5996	-100.7103	4
+US	73932	Beaver	Oklahoma	OK	Beaver	007			36.8341	-100.5177	4
+US	73938	Forgan	Oklahoma	OK	Beaver	007			36.9086	-100.5409	4
+US	73950	Turpin	Oklahoma	OK	Beaver	007			36.8664	-100.8779	4
+US	73627	Carter	Oklahoma	OK	Beckham	009			35.2208	-99.4822	4
+US	73644	Elk City	Oklahoma	OK	Beckham	009			35.4104	-99.4211	4
+US	73645	Erick	Oklahoma	OK	Beckham	009			35.2286	-99.8635	4
+US	73648	Elk City	Oklahoma	OK	Beckham	009			35.412	-99.4043	4
+US	73662	Sayre	Oklahoma	OK	Beckham	009			35.3047	-99.6429	4
+US	73668	Texola	Oklahoma	OK	Beckham	009			35.2161	-99.9915	4
+US	73040	Geary	Oklahoma	OK	Blaine	011			35.6217	-98.3905	4
+US	73043	Greenfield	Oklahoma	OK	Blaine	011			35.7333	-98.3841	4
+US	73724	Canton	Oklahoma	OK	Blaine	011			36.0372	-98.5778	4
+US	73744	Hitchcock	Oklahoma	OK	Blaine	011			35.9712	-98.3315	4
+US	73755	Longdale	Oklahoma	OK	Blaine	011			36.1212	-98.55	4
+US	73763	Okeene	Oklahoma	OK	Blaine	011			36.1165	-98.3254	4
+US	73770	Southard	Oklahoma	OK	Blaine	011			36.0581	-98.5884	4
+US	73772	Watonga	Oklahoma	OK	Blaine	011			35.8538	-98.4175	4
+US	73449	Mead	Oklahoma	OK	Bryan	013			33.9944	-96.5299	4
+US	74701	Durant	Oklahoma	OK	Bryan	013			34.0061	-96.3847	4
+US	74702	Durant	Oklahoma	OK	Bryan	013			33.922	-96.1918	4
+US	74720	Achille	Oklahoma	OK	Bryan	013			33.8396	-96.3648	4
+US	74721	Albany	Oklahoma	OK	Bryan	013			33.8815	-96.1628	4
+US	74723	Bennington	Oklahoma	OK	Bryan	013			33.9771	-96.0188	4
+US	74726	Bokchito	Oklahoma	OK	Bryan	013			33.9859	-96.1621	4
+US	74729	Caddo	Oklahoma	OK	Bryan	013			34.1157	-96.26	4
+US	74730	Calera	Oklahoma	OK	Bryan	013			33.9322	-96.4308	4
+US	74731	Cartwright	Oklahoma	OK	Bryan	013			33.8668	-96.5672	4
+US	74733	Colbert	Oklahoma	OK	Bryan	013			33.8575	-96.4953	4
+US	74741	Hendrix	Oklahoma	OK	Bryan	013			33.8016	-96.3581	4
+US	74747	Kemp	Oklahoma	OK	Bryan	013			33.773	-96.3555	4
+US	74748	Kenefic	Oklahoma	OK	Bryan	013			34.1481	-96.3622	4
+US	74753	Platter	Oklahoma	OK	Bryan	013			33.907	-96.535	4
+US	73001	Albert	Oklahoma	OK	Caddo	015			35.2032	-98.3574	4
+US	73005	Anadarko	Oklahoma	OK	Caddo	015			35.0728	-98.2429	4
+US	73006	Apache	Oklahoma	OK	Caddo	015			34.9034	-98.3695	4
+US	73009	Binger	Oklahoma	OK	Caddo	015			35.3106	-98.3148	4
+US	73015	Carnegie	Oklahoma	OK	Caddo	015			35.1235	-98.5755	4
+US	73017	Cement	Oklahoma	OK	Caddo	015			34.9321	-98.1466	4
+US	73029	Cyril	Oklahoma	OK	Caddo	015			34.8959	-98.2083	4
+US	73033	Eakly	Oklahoma	OK	Caddo	015			35.3053	-98.5578	4
+US	73038	Fort Cobb	Oklahoma	OK	Caddo	015			35.1161	-98.4303	4
+US	73042	Gracemont	Oklahoma	OK	Caddo	015			35.1875	-98.2835	4
+US	73047	Hinton	Oklahoma	OK	Caddo	015			35.4675	-98.3313	4
+US	73048	Hydro	Oklahoma	OK	Caddo	015			35.452	-98.5604	4
+US	73053	Lookeba	Oklahoma	OK	Caddo	015			35.3679	-98.3898	4
+US	73014	Calumet	Oklahoma	OK	Canadian	017			35.5476	-98.1512	4
+US	73022	Concho	Oklahoma	OK	Canadian	017			35.6193	-97.9796	4
+US	73036	El Reno	Oklahoma	OK	Canadian	017			35.5335	-97.9591	4
+US	73064	Mustang	Oklahoma	OK	Canadian	017			35.3885	-97.7309	4
+US	73078	Piedmont	Oklahoma	OK	Canadian	017			35.6695	-97.7431	4
+US	73085	Yukon	Oklahoma	OK	Canadian	017			35.4895	-97.75	4
+US	73090	Union City	Oklahoma	OK	Canadian	017			35.3913	-97.9398	4
+US	73099	Yukon	Oklahoma	OK	Canadian	017			35.4977	-97.7323	4
+US	73401	Ardmore	Oklahoma	OK	Carter	019			34.1566	-97.1792	4
+US	73402	Ardmore	Oklahoma	OK	Carter	019			34.2889	-97.2481	4
+US	73403	Ardmore	Oklahoma	OK	Carter	019			34.1743	-97.1436	4
+US	73435	Fox	Oklahoma	OK	Carter	019			34.3488	-97.4924	4
+US	73436	Gene Autry	Oklahoma	OK	Carter	019			34.2939	-97.0339	4
+US	73437	Graham	Oklahoma	OK	Carter	019			34.3762	-97.4255	4
+US	73438	Healdton	Oklahoma	OK	Carter	019			34.229	-97.4889	4
+US	73443	Lone Grove	Oklahoma	OK	Carter	019			34.1774	-97.2685	4
+US	73458	Springer	Oklahoma	OK	Carter	019			34.3038	-97.1223	4
+US	73463	Wilson	Oklahoma	OK	Carter	019			34.1364	-97.4273	4
+US	73481	Ratliff City	Oklahoma	OK	Carter	019			34.449	-97.5095	4
+US	73487	Tatums	Oklahoma	OK	Carter	019			34.4777	-97.457	4
+US	73488	Tussy	Oklahoma	OK	Carter	019			34.4852	-97.5423	4
+US	74427	Cookson	Oklahoma	OK	Cherokee	021			35.7116	-94.9132	4
+US	74441	Hulbert	Oklahoma	OK	Cherokee	021			35.9254	-95.1651	4
+US	74444	Moodys	Oklahoma	OK	Cherokee	021			36.0458	-94.9669	4
+US	74451	Park Hill	Oklahoma	OK	Cherokee	021			35.7977	-94.9822	4
+US	74452	Peggs	Oklahoma	OK	Cherokee	021			36.1154	-95.1199	4
+US	74464	Tahlequah	Oklahoma	OK	Cherokee	021			35.9094	-94.9787	4
+US	74465	Tahlequah	Oklahoma	OK	Cherokee	021			35.9001	-95.04	4
+US	74471	Welling	Oklahoma	OK	Cherokee	021			35.8819	-94.8653	4
+US	74727	Boswell	Oklahoma	OK	Choctaw	023			34.0245	-95.8403	4
+US	74735	Fort Towson	Oklahoma	OK	Choctaw	023			34.052	-95.253	4
+US	74738	Grant	Oklahoma	OK	Choctaw	023			33.9302	-95.4893	4
+US	74743	Hugo	Oklahoma	OK	Choctaw	023			34.0113	-95.5139	4
+US	74756	Sawyer	Oklahoma	OK	Choctaw	023			34.0277	-95.3558	4
+US	74759	Soper	Oklahoma	OK	Choctaw	023			34.0366	-95.6916	4
+US	74760	Spencerville	Oklahoma	OK	Choctaw	023			34.1508	-95.3771	4
+US	74761	Swink	Oklahoma	OK	Choctaw	023			34.0179	-95.2022	4
+US	73933	Boise City	Oklahoma	OK	Cimarron	025			36.7283	-102.5355	4
+US	73937	Felt	Oklahoma	OK	Cimarron	025			36.5666	-102.7974	4
+US	73946	Kenton	Oklahoma	OK	Cimarron	025			36.9031	-102.9653	4
+US	73947	Keyes	Oklahoma	OK	Cimarron	025			36.8003	-102.2361	4
+US	73019	Norman	Oklahoma	OK	Cleveland	027			35.2086	-97.4445	4
+US	73026	Norman	Oklahoma	OK	Cleveland	027			35.2343	-97.2914	4
+US	73051	Lexington	Oklahoma	OK	Cleveland	027			35.0377	-97.2609	4
+US	73068	Noble	Oklahoma	OK	Cleveland	027			35.1417	-97.3409	4
+US	73069	Norman	Oklahoma	OK	Cleveland	027			35.2204	-97.4577	4
+US	73070	Norman	Oklahoma	OK	Cleveland	027			35.1876	-97.3975	4
+US	73071	Norman	Oklahoma	OK	Cleveland	027			35.233	-97.4067	4
+US	73072	Norman	Oklahoma	OK	Cleveland	027			35.199	-97.4841	4
+US	73139	Oklahoma City	Oklahoma	OK	Cleveland	027			35.3792	-97.5362	4
+US	73160	Oklahoma City	Oklahoma	OK	Cleveland	027			35.334	-97.4768	4
+US	73165	Oklahoma City	Oklahoma	OK	Cleveland	027			35.3267	-97.3534	4
+US	73170	Oklahoma City	Oklahoma	OK	Cleveland	027			35.327	-97.5556	4
+US	73173	Oklahoma City	Oklahoma	OK	Cleveland	027			35.3425	-97.6317	4
+US	74534	Centrahoma	Oklahoma	OK	Coal	029			34.6066	-96.3386	4
+US	74535	Clarita	Oklahoma	OK	Coal	029			34.4829	-96.4333	4
+US	74538	Coalgate	Oklahoma	OK	Coal	029			34.5344	-96.2167	4
+US	74556	Lehigh	Oklahoma	OK	Coal	029			34.4756	-96.1889	4
+US	74572	Tupelo	Oklahoma	OK	Coal	029			34.5598	-96.4274	4
+US	73501	Lawton	Oklahoma	OK	Comanche	031			34.5915	-98.3698	4
+US	73502	Lawton	Oklahoma	OK	Comanche	031			34.6087	-98.3903	4
+US	73503	Fort Sill	Oklahoma	OK	Comanche	031			34.6595	-98.4004	1
+US	73505	Lawton	Oklahoma	OK	Comanche	031			34.6179	-98.4552	4
+US	73506	Lawton	Oklahoma	OK	Comanche	031			34.6309	-98.4576	4
+US	73507	Lawton	Oklahoma	OK	Comanche	031			34.6246	-98.3895	4
+US	73527	Cache	Oklahoma	OK	Comanche	031			34.6131	-98.6154	4
+US	73528	Chattanooga	Oklahoma	OK	Comanche	031			34.4262	-98.6514	4
+US	73538	Elgin	Oklahoma	OK	Comanche	031			34.772	-98.4073	4
+US	73540	Faxon	Oklahoma	OK	Comanche	031			34.4645	-98.5577	4
+US	73541	Fletcher	Oklahoma	OK	Comanche	031			34.7847	-98.2002	4
+US	73543	Geronimo	Oklahoma	OK	Comanche	031			34.4805	-98.3875	4
+US	73552	Indiahoma	Oklahoma	OK	Comanche	031			34.6242	-98.7349	4
+US	73557	Medicine Park	Oklahoma	OK	Comanche	031			34.7292	-98.5026	4
+US	73558	Meers	Oklahoma	OK	Comanche	031			34.7828	-98.579	4
+US	73567	Sterling	Oklahoma	OK	Comanche	031			34.7496	-98.1679	4
+US	73531	Devol	Oklahoma	OK	Cotton	033			34.1956	-98.577	4
+US	73562	Randlett	Oklahoma	OK	Cotton	033			34.174	-98.46	4
+US	73568	Temple	Oklahoma	OK	Cotton	033			34.2607	-98.2371	4
+US	73572	Walters	Oklahoma	OK	Cotton	033			34.3605	-98.314	4
+US	74301	Vinita	Oklahoma	OK	Craig	035			36.6334	-95.1382	4
+US	74332	Big Cabin	Oklahoma	OK	Craig	035			36.534	-95.2246	4
+US	74333	Bluejacket	Oklahoma	OK	Craig	035			36.7975	-95.1018	4
+US	74369	Welch	Oklahoma	OK	Craig	035			36.902	-95.1295	4
+US	74010	Bristow	Oklahoma	OK	Creek	037			35.8209	-96.3758	4
+US	74028	Depew	Oklahoma	OK	Creek	037			35.7561	-96.4897	4
+US	74030	Drumright	Oklahoma	OK	Creek	037			35.9931	-96.5198	4
+US	74039	Kellyville	Oklahoma	OK	Creek	037			35.9171	-96.218	4
+US	74041	Kiefer	Oklahoma	OK	Creek	037			35.9528	-96.061	4
+US	74044	Mannford	Oklahoma	OK	Creek	037			36.0927	-96.3576	4
+US	74046	Milfay	Oklahoma	OK	Creek	037			35.7551	-96.5658	4
+US	74047	Mounds	Oklahoma	OK	Creek	037			35.8896	-96.0887	4
+US	74052	Oilton	Oklahoma	OK	Creek	037			36.0685	-96.5958	4
+US	74066	Sapulpa	Oklahoma	OK	Creek	037			36.003	-96.1106	4
+US	74067	Sapulpa	Oklahoma	OK	Creek	037			36.0196	-96.0937	4
+US	74068	Shamrock	Oklahoma	OK	Creek	037			35.9124	-96.578	4
+US	74071	Slick	Oklahoma	OK	Creek	037			35.7861	-96.2806	4
+US	74131	Tulsa	Oklahoma	OK	Creek	037			36.0557	-96.0602	4
+US	73096	Weatherford	Oklahoma	OK	Custer	039			35.535	-98.6996	4
+US	73601	Clinton	Oklahoma	OK	Custer	039			35.5115	-98.9795	4
+US	73620	Arapaho	Oklahoma	OK	Custer	039			35.5789	-98.9595	4
+US	73625	Butler	Oklahoma	OK	Custer	039			35.6336	-99.2427	4
+US	73639	Custer City	Oklahoma	OK	Custer	039			35.6894	-98.912	4
+US	73669	Thomas	Oklahoma	OK	Custer	039			35.7382	-98.7388	4
+US	74338	Colcord	Oklahoma	OK	Delaware	041			36.2333	-94.6547	4
+US	74342	Eucha	Oklahoma	OK	Delaware	041			36.4063	-94.9157	4
+US	74344	Grove	Oklahoma	OK	Delaware	041			36.5929	-94.7565	4
+US	74345	Grove	Oklahoma	OK	Delaware	041			36.6036	-94.7297	4
+US	74346	Jay	Oklahoma	OK	Delaware	041			36.4363	-94.7763	4
+US	74347	Kansas	Oklahoma	OK	Delaware	041			36.2161	-94.8114	4
+US	74359	Oaks	Oklahoma	OK	Delaware	041			36.1662	-94.8547	4
+US	74368	Twin Oaks	Oklahoma	OK	Delaware	041			36.2054	-94.8513	4
+US	73646	Fay	Oklahoma	OK	Dewey	043			35.8204	-98.6587	4
+US	73654	Leedey	Oklahoma	OK	Dewey	043			35.8698	-99.3491	4
+US	73658	Oakwood	Oklahoma	OK	Dewey	043			35.9328	-98.7065	4
+US	73659	Putnam	Oklahoma	OK	Dewey	043			35.8539	-98.9638	4
+US	73663	Seiling	Oklahoma	OK	Dewey	043			36.1278	-98.8875	4
+US	73667	Taloga	Oklahoma	OK	Dewey	043			35.9972	-98.9825	4
+US	73835	Camargo	Oklahoma	OK	Dewey	043			36.0212	-99.2781	4
+US	73859	Vici	Oklahoma	OK	Dewey	043			36.1372	-99.267	4
+US	73832	Arnett	Oklahoma	OK	Ellis	045			36.0522	-99.6514	4
+US	73840	Fargo	Oklahoma	OK	Ellis	045			36.3761	-99.6237	4
+US	73843	Gage	Oklahoma	OK	Ellis	045			36.318	-99.76	4
+US	73858	Shattuck	Oklahoma	OK	Ellis	045			36.2889	-99.8793	4
+US	73701	Enid	Oklahoma	OK	Garfield	047			36.4028	-97.8623	4
+US	73702	Enid	Oklahoma	OK	Garfield	047			36.3956	-97.8784	4
+US	73703	Enid	Oklahoma	OK	Garfield	047			36.3975	-97.9157	4
+US	73705	Enid	Oklahoma	OK	Garfield	047			36.3382	-97.9026	4
+US	73706	Enid	Oklahoma	OK	Garfield	047			36.3791	-97.7826	4
+US	73720	Bison	Oklahoma	OK	Garfield	047			36.1962	-97.8805	4
+US	73727	Carrier	Oklahoma	OK	Garfield	047			36.4922	-98.0422	4
+US	73730	Covington	Oklahoma	OK	Garfield	047			36.3099	-97.5752	4
+US	73733	Douglas	Oklahoma	OK	Garfield	047			36.2481	-97.6896	4
+US	73735	Drummond	Oklahoma	OK	Garfield	047			36.2841	-98.0358	4
+US	73736	Fairmont	Oklahoma	OK	Garfield	047			36.34	-97.6848	4
+US	73738	Garber	Oklahoma	OK	Garfield	047			36.4392	-97.5789	4
+US	73743	Hillsdale	Oklahoma	OK	Garfield	047			36.5631	-97.9915	4
+US	73753	Kremlin	Oklahoma	OK	Garfield	047			36.5207	-97.8542	4
+US	73754	Lahoma	Oklahoma	OK	Garfield	047			36.385	-98.0727	4
+US	73773	Waukomis	Oklahoma	OK	Garfield	047			36.2781	-97.8996	4
+US	74640	Hunter	Oklahoma	OK	Garfield	047			36.5603	-97.6425	4
+US	73052	Lindsay	Oklahoma	OK	Garvin	049			34.8211	-97.5998	4
+US	73057	Maysville	Oklahoma	OK	Garvin	049			34.8113	-97.4131	4
+US	73074	Paoli	Oklahoma	OK	Garvin	049			34.8285	-97.2608	4
+US	73075	Pauls Valley	Oklahoma	OK	Garvin	049			34.7385	-97.2195	4
+US	73098	Wynnewood	Oklahoma	OK	Garvin	049			34.6385	-97.177	4
+US	73433	Elmore City	Oklahoma	OK	Garvin	049			34.6265	-97.4142	4
+US	73444	Hennepin	Oklahoma	OK	Garvin	049			34.4719	-97.3879	4
+US	74872	Stratford	Oklahoma	OK	Garvin	049			34.7714	-96.9763	4
+US	73002	Alex	Oklahoma	OK	Grady	051			34.9612	-97.7571	4
+US	73004	Amber	Oklahoma	OK	Grady	051			35.1526	-97.8532	4
+US	73011	Bradley	Oklahoma	OK	Grady	051			34.8741	-97.7118	4
+US	73018	Chickasha	Oklahoma	OK	Grady	051			35.0268	-97.9518	4
+US	73023	Chickasha	Oklahoma	OK	Grady	051			35.0526	-97.9364	4
+US	73059	Minco	Oklahoma	OK	Grady	051			35.3067	-97.9664	4
+US	73067	Ninnekah	Oklahoma	OK	Grady	051			34.9143	-97.9333	4
+US	73079	Pocasset	Oklahoma	OK	Grady	051			35.1544	-97.979	4
+US	73082	Rush Springs	Oklahoma	OK	Grady	051			34.7708	-97.9431	4
+US	73089	Tuttle	Oklahoma	OK	Grady	051			35.2674	-97.7446	4
+US	73092	Verden	Oklahoma	OK	Grady	051			35.0836	-98.0792	4
+US	73758	Manchester	Oklahoma	OK	Grant	053			36.9744	-98.0383	4
+US	73759	Medford	Oklahoma	OK	Grant	053			36.8142	-97.7202	4
+US	73761	Nash	Oklahoma	OK	Grant	053			36.6961	-98.0258	4
+US	73766	Pond Creek	Oklahoma	OK	Grant	053			36.6643	-97.8019	4
+US	73771	Wakita	Oklahoma	OK	Grant	053			36.8753	-97.9427	4
+US	74636	Deer Creek	Oklahoma	OK	Grant	053			36.8048	-97.5136	4
+US	74643	Lamont	Oklahoma	OK	Grant	053			36.6939	-97.5601	4
+US	73547	Granite	Oklahoma	OK	Greer	055			34.9712	-99.3881	4
+US	73554	Mangum	Oklahoma	OK	Greer	055			34.9126	-99.4606	4
+US	73673	Willow	Oklahoma	OK	Greer	055			35.0702	-99.5421	4
+US	73544	Gould	Oklahoma	OK	Harmon	057			34.665	-99.7843	4
+US	73550	Hollis	Oklahoma	OK	Harmon	057			34.6953	-99.9177	4
+US	73571	Vinson	Oklahoma	OK	Harmon	057			34.9006	-99.8598	4
+US	73834	Buffalo	Oklahoma	OK	Harper	059			36.8523	-99.5538	4
+US	73848	Laverne	Oklahoma	OK	Harper	059			36.7062	-99.8918	4
+US	73851	May	Oklahoma	OK	Harper	059			36.6226	-99.7858	4
+US	73855	Rosston	Oklahoma	OK	Harper	059			36.8789	-99.9003	4
+US	74440	Hoyt	Oklahoma	OK	Haskell	061			35.2685	-95.2994	4
+US	74462	Stigler	Oklahoma	OK	Haskell	061			35.2686	-95.1071	4
+US	74472	Whitefield	Oklahoma	OK	Haskell	061			35.2646	-95.2645	4
+US	74552	Kinta	Oklahoma	OK	Haskell	061			35.1193	-95.2377	4
+US	74941	Keota	Oklahoma	OK	Haskell	061			35.2645	-94.9028	4
+US	74943	Lequire	Oklahoma	OK	Haskell	061			35.0867	-95.0974	4
+US	74944	Mccurtain	Oklahoma	OK	Haskell	061			35.1404	-95.0127	4
+US	74531	Calvin	Oklahoma	OK	Hughes	063			34.878	-96.271	4
+US	74570	Stuart	Oklahoma	OK	Hughes	063			34.8826	-96.1381	4
+US	74827	Atwood	Oklahoma	OK	Hughes	063			34.9562	-96.3386	4
+US	74839	Dustin	Oklahoma	OK	Hughes	063			35.2519	-96.0573	4
+US	74848	Holdenville	Oklahoma	OK	Hughes	063			35.0839	-96.377	4
+US	74850	Lamar	Oklahoma	OK	Hughes	063			35.0836	-96.1142	4
+US	74883	Wetumka	Oklahoma	OK	Hughes	063			35.2396	-96.2421	4
+US	73521	Altus	Oklahoma	OK	Jackson	065			34.6484	-99.3205	4
+US	73522	Altus	Oklahoma	OK	Jackson	065			34.6381	-99.334	4
+US	73523	Altus Afb	Oklahoma	OK	Jackson	065			34.5982	-99.4408	1
+US	73526	Blair	Oklahoma	OK	Jackson	065			34.7788	-99.3334	4
+US	73532	Duke	Oklahoma	OK	Jackson	065			34.6668	-99.5482	4
+US	73537	Eldorado	Oklahoma	OK	Jackson	065			34.4727	-99.646	4
+US	73539	Elmer	Oklahoma	OK	Jackson	065			34.5137	-99.3167	4
+US	73549	Headrick	Oklahoma	OK	Jackson	065			34.6265	-99.139	4
+US	73556	Martha	Oklahoma	OK	Jackson	065			34.7253	-99.387	4
+US	73560	Olustee	Oklahoma	OK	Jackson	065			34.5496	-99.4287	4
+US	73456	Ringling	Oklahoma	OK	Jefferson	067			34.1679	-97.6029	4
+US	73520	Addington	Oklahoma	OK	Jefferson	067			34.2445	-97.967	4
+US	73548	Hastings	Oklahoma	OK	Jefferson	067			34.2251	-98.1075	4
+US	73561	Oscar	Oklahoma	OK	Jefferson	067			34.0313	-97.6481	4
+US	73565	Ryan	Oklahoma	OK	Jefferson	067			34.0238	-97.9461	4
+US	73569	Terral	Oklahoma	OK	Jefferson	067			33.9379	-97.8053	4
+US	73573	Waurika	Oklahoma	OK	Jefferson	067			34.1745	-97.9973	4
+US	73432	Coleman	Oklahoma	OK	Johnston	069			34.2625	-96.4588	4
+US	73447	Mannsville	Oklahoma	OK	Johnston	069			34.1899	-96.8778	4
+US	73450	Milburn	Oklahoma	OK	Johnston	069			34.1952	-96.5429	4
+US	73455	Ravia	Oklahoma	OK	Johnston	069			34.244	-96.7529	4
+US	73460	Tishomingo	Oklahoma	OK	Johnston	069			34.2643	-96.6675	4
+US	73461	Wapanucka	Oklahoma	OK	Johnston	069			34.3866	-96.4532	4
+US	74530	Bromide	Oklahoma	OK	Johnston	069			34.4233	-96.4867	4
+US	74836	Connerville	Oklahoma	OK	Johnston	069			34.4194	-96.6291	4
+US	74856	Mill Creek	Oklahoma	OK	Johnston	069			34.3098	-96.7884	4
+US	74601	Ponca City	Oklahoma	OK	Kay	071			36.7031	-97.0784	4
+US	74602	Ponca City	Oklahoma	OK	Kay	071			36.6954	-97.1377	4
+US	74604	Ponca City	Oklahoma	OK	Kay	071			36.7299	-97.0454	4
+US	74631	Blackwell	Oklahoma	OK	Kay	071			36.8006	-97.2867	4
+US	74632	Braman	Oklahoma	OK	Kay	071			36.9331	-97.3082	4
+US	74641	Kaw City	Oklahoma	OK	Kay	071			36.8382	-96.8833	4
+US	74646	Nardin	Oklahoma	OK	Kay	071			36.8155	-97.4325	4
+US	74647	Newkirk	Oklahoma	OK	Kay	071			36.84	-97.0561	4
+US	74653	Tonkawa	Oklahoma	OK	Kay	071			36.6806	-97.3063	4
+US	73016	Cashion	Oklahoma	OK	Kingfisher	073			35.8	-97.6795	4
+US	73734	Dover	Oklahoma	OK	Kingfisher	073			35.9848	-97.9067	4
+US	73742	Hennessey	Oklahoma	OK	Kingfisher	073			36.0868	-97.8926	4
+US	73750	Kingfisher	Oklahoma	OK	Kingfisher	073			35.8636	-97.9473	4
+US	73756	Loyal	Oklahoma	OK	Kingfisher	073			35.9705	-98.1155	4
+US	73762	Okarche	Oklahoma	OK	Kingfisher	073			35.7502	-97.93	4
+US	73764	Omega	Oklahoma	OK	Kingfisher	073			35.8507	-98.1863	4
+US	73041	Gotebo	Oklahoma	OK	Kiowa	075			35.0759	-98.876	4
+US	73062	Mountain View	Oklahoma	OK	Kiowa	075			35.0654	-98.7307	4
+US	73559	Mountain Park	Oklahoma	OK	Kiowa	075			34.7032	-98.9591	4
+US	73564	Roosevelt	Oklahoma	OK	Kiowa	075			34.847	-98.9836	4
+US	73566	Snyder	Oklahoma	OK	Kiowa	075			34.6548	-98.9508	4
+US	73651	Hobart	Oklahoma	OK	Kiowa	075			35.0255	-99.0944	4
+US	73655	Lone Wolf	Oklahoma	OK	Kiowa	075			34.9806	-99.2502	4
+US	74545	Gowen	Oklahoma	OK	Latimer	077			34.8724	-95.469	4
+US	74559	Panola	Oklahoma	OK	Latimer	077			34.9287	-95.2133	4
+US	74563	Red Oak	Oklahoma	OK	Latimer	077			34.9422	-95.0904	4
+US	74578	Wilburton	Oklahoma	OK	Latimer	077			34.9128	-95.3389	4
+US	74549	Honobia	Oklahoma	OK	Le Flore	079			34.5519	-94.9428	4
+US	74571	Talihina	Oklahoma	OK	Le Flore	079			34.7381	-94.9978	4
+US	74577	Whitesboro	Oklahoma	OK	Le Flore	079			34.6926	-94.8852	4
+US	74901	Arkoma	Oklahoma	OK	Le Flore	079			35.3434	-94.4403	4
+US	74902	Pocola	Oklahoma	OK	Le Flore	079			35.2436	-94.476	4
+US	74930	Bokoshe	Oklahoma	OK	Le Flore	079			35.1865	-94.7858	4
+US	74932	Cameron	Oklahoma	OK	Le Flore	079			35.1494	-94.506	4
+US	74935	Fanshawe	Oklahoma	OK	Le Flore	079			34.9537	-94.8998	4
+US	74937	Heavener	Oklahoma	OK	Le Flore	079			34.8353	-94.6185	4
+US	74939	Hodgen	Oklahoma	OK	Le Flore	079			34.7538	-94.6391	4
+US	74940	Howe	Oklahoma	OK	Le Flore	079			34.9512	-94.6372	4
+US	74942	Leflore	Oklahoma	OK	Le Flore	079			34.8979	-94.9758	4
+US	74947	Monroe	Oklahoma	OK	Le Flore	079			34.9906	-94.515	4
+US	74949	Muse	Oklahoma	OK	Le Flore	079			34.6641	-94.719	4
+US	74951	Panama	Oklahoma	OK	Le Flore	079			35.1535	-94.6709	4
+US	74953	Poteau	Oklahoma	OK	Le Flore	079			35.0606	-94.6096	4
+US	74956	Shady Point	Oklahoma	OK	Le Flore	079			35.1293	-94.6665	4
+US	74959	Spiro	Oklahoma	OK	Le Flore	079			35.2492	-94.6265	4
+US	74966	Wister	Oklahoma	OK	Le Flore	079			34.9556	-94.7832	4
+US	74026	Davenport	Oklahoma	OK	Lincoln	081			35.7089	-96.767	4
+US	74079	Stroud	Oklahoma	OK	Lincoln	081			35.7398	-96.6719	4
+US	74824	Agra	Oklahoma	OK	Lincoln	081			35.909	-96.8738	4
+US	74832	Carney	Oklahoma	OK	Lincoln	081			35.8054	-97.0159	4
+US	74834	Chandler	Oklahoma	OK	Lincoln	081			35.7017	-96.8809	4
+US	74855	Meeker	Oklahoma	OK	Lincoln	081			35.5211	-96.9981	4
+US	74864	Prague	Oklahoma	OK	Lincoln	081			35.5105	-96.7009	4
+US	74869	Sparks	Oklahoma	OK	Lincoln	081			35.6138	-96.8163	4
+US	74875	Tryon	Oklahoma	OK	Lincoln	081			35.8759	-96.9623	4
+US	74881	Wellston	Oklahoma	OK	Lincoln	081			35.6757	-97.0597	4
+US	73027	Coyle	Oklahoma	OK	Logan	083			35.8985	-97.2607	4
+US	73028	Crescent	Oklahoma	OK	Logan	083			35.942	-97.5969	4
+US	73044	Guthrie	Oklahoma	OK	Logan	083			35.833	-97.436	4
+US	73050	Langston	Oklahoma	OK	Logan	083			35.9419	-97.2557	4
+US	73056	Marshall	Oklahoma	OK	Logan	083			36.1485	-97.6171	4
+US	73058	Meridian	Oklahoma	OK	Logan	083			35.8451	-97.2462	4
+US	73063	Mulhall	Oklahoma	OK	Logan	083			36.0537	-97.4098	4
+US	73073	Orlando	Oklahoma	OK	Logan	083			36.142	-97.396	4
+US	73430	Burneyville	Oklahoma	OK	Love	085			33.9515	-97.3249	4
+US	73441	Leon	Oklahoma	OK	Love	085			33.8793	-97.4292	4
+US	73448	Marietta	Oklahoma	OK	Love	085			33.9431	-97.1148	4
+US	73453	Overbrook	Oklahoma	OK	Love	085			34.0539	-97.1324	4
+US	73459	Thackerville	Oklahoma	OK	Love	085			33.7882	-97.1363	4
+US	73010	Blanchard	Oklahoma	OK	McClain	087			35.1192	-97.6401	4
+US	73031	Dibble	Oklahoma	OK	McClain	087			35.009	-97.6318	4
+US	73065	Newcastle	Oklahoma	OK	McClain	087			35.2453	-97.6216	4
+US	73080	Purcell	Oklahoma	OK	McClain	087			35.0103	-97.4255	4
+US	73093	Washington	Oklahoma	OK	McClain	087			35.1324	-97.487	4
+US	73095	Wayne	Oklahoma	OK	McClain	087			34.9154	-97.329	4
+US	74831	Byars	Oklahoma	OK	McClain	087			34.8904	-97.0997	4
+US	74722	Battiest	Oklahoma	OK	McCurtain	089			34.3934	-94.9249	4
+US	74724	Bethel	Oklahoma	OK	McCurtain	089			34.3598	-94.8374	4
+US	74728	Broken Bow	Oklahoma	OK	McCurtain	089			34.027	-94.7623	4
+US	74734	Eagletown	Oklahoma	OK	McCurtain	089			34.0364	-94.5596	4
+US	74736	Garvin	Oklahoma	OK	McCurtain	089			33.9192	-94.986	4
+US	74737	Golden	Oklahoma	OK	McCurtain	089			34.0303	-94.8986	4
+US	74740	Haworth	Oklahoma	OK	McCurtain	089			33.785	-94.633	4
+US	74745	Idabel	Oklahoma	OK	McCurtain	089			33.8851	-94.802	4
+US	74750	Millerton	Oklahoma	OK	McCurtain	089			33.9801	-95.0025	4
+US	74752	Pickens	Oklahoma	OK	McCurtain	089			34.3965	-95.0119	4
+US	74754	Ringold	Oklahoma	OK	McCurtain	089			34.1799	-95.0704	4
+US	74755	Rufe	Oklahoma	OK	McCurtain	089			34.1272	-95.1174	4
+US	74764	Valliant	Oklahoma	OK	McCurtain	089			34.0091	-95.0686	4
+US	74766	Wright City	Oklahoma	OK	McCurtain	089			34.0799	-94.9929	4
+US	74957	Smithville	Oklahoma	OK	McCurtain	089			34.4954	-94.6981	4
+US	74963	Watson	Oklahoma	OK	McCurtain	089			34.4193	-94.5562	4
+US	74426	Checotah	Oklahoma	OK	McIntosh	091			35.4358	-95.535	4
+US	74432	Eufaula	Oklahoma	OK	McIntosh	091			35.2911	-95.6472	4
+US	74438	Hitchita	Oklahoma	OK	McIntosh	091			35.5297	-95.7596	4
+US	74459	Rentiesville	Oklahoma	OK	McIntosh	091			35.5214	-95.495	4
+US	74461	Stidham	Oklahoma	OK	McIntosh	091			35.3814	-95.7056	4
+US	74845	Hanna	Oklahoma	OK	McIntosh	091			35.2604	-95.8675	4
+US	73718	Ames	Oklahoma	OK	Major	093			36.2423	-98.182	4
+US	73729	Cleo Springs	Oklahoma	OK	Major	093			36.409	-98.4423	4
+US	73737	Fairview	Oklahoma	OK	Major	093			36.2871	-98.604	4
+US	73747	Isabella	Oklahoma	OK	Major	093			36.2341	-98.3374	4
+US	73760	Meno	Oklahoma	OK	Major	093			36.3815	-98.1635	4
+US	73768	Ringwood	Oklahoma	OK	Major	093			36.3753	-98.2706	4
+US	73838	Chester	Oklahoma	OK	Major	093			36.2621	-98.8838	4
+US	73439	Kingston	Oklahoma	OK	Marshall	095			33.9517	-96.712	4
+US	73440	Lebanon	Oklahoma	OK	Marshall	095			33.9687	-96.9064	4
+US	73446	Madill	Oklahoma	OK	Marshall	095			34.0784	-96.7597	4
+US	74330	Adair	Oklahoma	OK	Mayes	097			36.4115	-95.2732	4
+US	74337	Chouteau	Oklahoma	OK	Mayes	097			36.1669	-95.3416	4
+US	74340	Disney	Oklahoma	OK	Mayes	097			36.4759	-95.024	4
+US	74349	Ketchum	Oklahoma	OK	Mayes	097			36.5245	-95.0239	4
+US	74350	Langley	Oklahoma	OK	Mayes	097			36.4645	-95.0478	4
+US	74352	Locust Grove	Oklahoma	OK	Mayes	097			36.1819	-95.1689	4
+US	74361	Pryor	Oklahoma	OK	Mayes	097			36.2921	-95.3129	4
+US	74362	Pryor	Oklahoma	OK	Mayes	097			36.2925	-95.2228	4
+US	74364	Rose	Oklahoma	OK	Mayes	097			36.1951	-94.9643	4
+US	74365	Salina	Oklahoma	OK	Mayes	097			36.3116	-95.1158	4
+US	74366	Spavinaw	Oklahoma	OK	Mayes	097			36.3912	-95.0466	4
+US	74367	Strang	Oklahoma	OK	Mayes	097			36.4141	-95.0773	4
+US	73030	Davis	Oklahoma	OK	Murray	099			34.4953	-97.1084	4
+US	73032	Dougherty	Oklahoma	OK	Murray	099			34.402	-97.051	4
+US	73086	Sulphur	Oklahoma	OK	Murray	099			34.5116	-96.9797	4
+US	74401	Muskogee	Oklahoma	OK	Muskogee	101			35.7058	-95.5002	4
+US	74402	Muskogee	Oklahoma	OK	Muskogee	101			35.7642	-95.3069	4
+US	74403	Muskogee	Oklahoma	OK	Muskogee	101			35.7411	-95.3449	4
+US	74422	Boynton	Oklahoma	OK	Muskogee	101			35.6577	-95.66	4
+US	74423	Braggs	Oklahoma	OK	Muskogee	101			35.6574	-95.2033	4
+US	74428	Council Hill	Oklahoma	OK	Muskogee	101			35.5556	-95.6514	4
+US	74434	Fort Gibson	Oklahoma	OK	Muskogee	101			35.7943	-95.2297	4
+US	74436	Haskell	Oklahoma	OK	Muskogee	101			35.8108	-95.684	4
+US	74439	Braggs	Oklahoma	OK	Muskogee	101			35.6767	-95.1775	4
+US	74450	Oktaha	Oklahoma	OK	Muskogee	101			35.625	-95.4856	4
+US	74455	Porum	Oklahoma	OK	Muskogee	101			35.3631	-95.2607	4
+US	74463	Taft	Oklahoma	OK	Muskogee	101			35.7581	-95.5494	4
+US	74468	Wainwright	Oklahoma	OK	Muskogee	101			35.6126	-95.5644	4
+US	74469	Warner	Oklahoma	OK	Muskogee	101			35.4945	-95.3064	4
+US	74470	Webbers Falls	Oklahoma	OK	Muskogee	101			35.5138	-95.1659	4
+US	73061	Morrison	Oklahoma	OK	Noble	103			36.2902	-97.0228	4
+US	73077	Perry	Oklahoma	OK	Noble	103			36.2875	-97.2842	4
+US	73757	Lucien	Oklahoma	OK	Noble	103			36.2753	-97.4526	4
+US	74630	Billings	Oklahoma	OK	Noble	103			36.5246	-97.4189	4
+US	74644	Marland	Oklahoma	OK	Noble	103			36.5609	-97.1512	4
+US	74651	Red Rock	Oklahoma	OK	Noble	103			36.4748	-97.164	4
+US	74027	Delaware	Oklahoma	OK	Nowata	105			36.7804	-95.6181	4
+US	74042	Lenapah	Oklahoma	OK	Nowata	105			36.8801	-95.6233	4
+US	74048	Nowata	Oklahoma	OK	Nowata	105			36.6946	-95.6404	4
+US	74072	S Coffeyville	Oklahoma	OK	Nowata	105			36.9837	-95.6065	1
+US	74083	Wann	Oklahoma	OK	Nowata	105			36.9402	-95.7768	4
+US	74829	Boley	Oklahoma	OK	Okfuskee	107			35.4913	-96.4704	4
+US	74833	Castle	Oklahoma	OK	Okfuskee	107			35.4732	-96.3791	4
+US	74859	Okemah	Oklahoma	OK	Okfuskee	107			35.4647	-96.3287	4
+US	74860	Paden	Oklahoma	OK	Okfuskee	107			35.5182	-96.5719	4
+US	74880	Weleetka	Oklahoma	OK	Okfuskee	107			35.3416	-96.1136	4
+US	73003	Edmond	Oklahoma	OK	Oklahoma	109			35.6748	-97.4997	4
+US	73007	Arcadia	Oklahoma	OK	Oklahoma	109			35.6543	-97.3243	4
+US	73008	Bethany	Oklahoma	OK	Oklahoma	109			35.5043	-97.6399	4
+US	73012	Edmond	Oklahoma	OK	Oklahoma	109			35.6215	-97.4733	4
+US	73013	Edmond	Oklahoma	OK	Oklahoma	109			35.6215	-97.4733	4
+US	73020	Choctaw	Oklahoma	OK	Oklahoma	109			35.4718	-97.2726	4
+US	73025	Edmond	Oklahoma	OK	Oklahoma	109			35.722	-97.5133	4
+US	73034	Edmond	Oklahoma	OK	Oklahoma	109			35.6665	-97.4798	4
+US	73039	Davis	Oklahoma	OK	Oklahoma	109			34.506	-97.1131	4
+US	73045	Harrah	Oklahoma	OK	Oklahoma	109			35.4833	-97.1734	4
+US	73049	Jones	Oklahoma	OK	Oklahoma	109			35.5753	-97.2891	4
+US	73054	Luther	Oklahoma	OK	Oklahoma	109			35.6617	-97.1956	4
+US	73066	Nicoma Park	Oklahoma	OK	Oklahoma	109			35.4928	-97.3276	4
+US	73083	Edmond	Oklahoma	OK	Oklahoma	109			35.6665	-97.4654	4
+US	73084	Spencer	Oklahoma	OK	Oklahoma	109			35.5183	-97.3488	4
+US	73097	Wheatland	Oklahoma	OK	Oklahoma	109			35.397	-97.6519	4
+US	73101	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4916	-97.5628	4
+US	73102	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4726	-97.5199	4
+US	73103	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.491	-97.5196	4
+US	73104	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4794	-97.5017	4
+US	73105	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5108	-97.5003	4
+US	73106	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4853	-97.5372	4
+US	73107	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4874	-97.574	4
+US	73108	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4445	-97.5619	4
+US	73109	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4259	-97.5261	4
+US	73110	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4605	-97.3974	4
+US	73111	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5042	-97.4806	4
+US	73112	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5184	-97.5746	4
+US	73113	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73114	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5704	-97.5257	4
+US	73115	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4449	-97.446	4
+US	73116	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5463	-97.5642	4
+US	73117	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4797	-97.4722	4
+US	73118	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5136	-97.5319	4
+US	73119	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.421	-97.5616	4
+US	73120	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5835	-97.5638	4
+US	73121	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5062	-97.4452	4
+US	73122	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5184	-97.6167	4
+US	73123	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4676	-97.5164	4
+US	73124	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73125	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4654	-97.5218	4
+US	73126	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73127	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4834	-97.6299	4
+US	73128	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4444	-97.6164	4
+US	73129	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4312	-97.4913	4
+US	73130	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4604	-97.3419	4
+US	73131	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5797	-97.4691	4
+US	73132	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5583	-97.6375	4
+US	73134	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.6174	-97.5583	4
+US	73135	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.411	-97.4388	4
+US	73136	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4676	-97.5164	4
+US	73137	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73140	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5185	-97.4275	4
+US	73141	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4918	-97.3666	4
+US	73142	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.599	-97.6251	4
+US	73143	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73144	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73145	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4304	-97.3962	4
+US	73146	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73147	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73148	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73149	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.395	-97.4972	4
+US	73150	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4123	-97.3331	4
+US	73151	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5676	-97.4111	4
+US	73152	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73153	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73154	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5238	-97.5255	4
+US	73155	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73156	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73157	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73159	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.3922	-97.5567	4
+US	73162	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5806	-97.6419	4
+US	73163	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73164	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73167	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4676	-97.5164	4
+US	73169	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.3882	-97.6587	4
+US	73172	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5175	-97.6218	4
+US	73178	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73179	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4242	-97.6547	4
+US	73184	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73185	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4676	-97.5164	4
+US	73189	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73190	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.4676	-97.5164	4
+US	73194	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	73195	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.474	-97.5227	4
+US	73196	Oklahoma City	Oklahoma	OK	Oklahoma	109			35.5514	-97.4075	4
+US	74857	Newalla	Oklahoma	OK	Oklahoma	109			35.3734	-97.1971	4
+US	74421	Beggs	Oklahoma	OK	Okmulgee	111			35.7896	-96.0264	4
+US	74431	Dewar	Oklahoma	OK	Okmulgee	111			35.4551	-95.9498	4
+US	74437	Henryetta	Oklahoma	OK	Okmulgee	111			35.4622	-96.0122	4
+US	74445	Morris	Oklahoma	OK	Okmulgee	111			35.6619	-95.8319	4
+US	74447	Okmulgee	Oklahoma	OK	Okmulgee	111			35.6288	-95.9697	4
+US	74456	Preston	Oklahoma	OK	Okmulgee	111			35.7115	-95.9917	4
+US	74460	Schulter	Oklahoma	OK	Okmulgee	111			35.5145	-95.9567	4
+US	74001	Avant	Oklahoma	OK	Osage	113			36.4901	-96.0616	4
+US	74002	Barnsdall	Oklahoma	OK	Osage	113			36.5429	-96.1318	4
+US	74035	Hominy	Oklahoma	OK	Osage	113			36.4111	-96.3878	4
+US	74054	Osage	Oklahoma	OK	Osage	113			36.2832	-96.3774	4
+US	74056	Pawhuska	Oklahoma	OK	Osage	113			36.6904	-96.3121	4
+US	74060	Prue	Oklahoma	OK	Osage	113			36.2501	-96.2701	4
+US	74070	Skiatook	Oklahoma	OK	Osage	113			36.3725	-96.0123	4
+US	74084	Wynona	Oklahoma	OK	Osage	113			36.5462	-96.3272	4
+US	74127	Tulsa	Oklahoma	OK	Osage	113			36.1576	-96.0311	4
+US	74633	Burbank	Oklahoma	OK	Osage	113			36.6966	-96.7869	4
+US	74637	Fairfax	Oklahoma	OK	Osage	113			36.5577	-96.6997	4
+US	74652	Shidler	Oklahoma	OK	Osage	113			36.7819	-96.6607	4
+US	74331	Afton	Oklahoma	OK	Ottawa	115			36.6296	-94.9432	4
+US	74335	Cardin	Oklahoma	OK	Ottawa	115			36.9795	-94.8557	4
+US	74339	Commerce	Oklahoma	OK	Ottawa	115			36.9331	-94.873	4
+US	74343	Fairland	Oklahoma	OK	Ottawa	115			36.7418	-94.8279	4
+US	74354	Miami	Oklahoma	OK	Ottawa	115			36.8764	-94.8719	4
+US	74355	Miami	Oklahoma	OK	Ottawa	115			36.8341	-94.877	4
+US	74358	North Miami	Oklahoma	OK	Ottawa	115			36.9173	-94.8797	4
+US	74360	Picher	Oklahoma	OK	Ottawa	115			36.98	-94.8173	4
+US	74363	Quapaw	Oklahoma	OK	Ottawa	115			36.9282	-94.743	4
+US	74370	Wyandotte	Oklahoma	OK	Ottawa	115			36.7796	-94.7002	4
+US	74020	Cleveland	Oklahoma	OK	Pawnee	117			36.2553	-96.423	4
+US	74034	Hallett	Oklahoma	OK	Pawnee	117			36.2319	-96.562	4
+US	74038	Jennings	Oklahoma	OK	Pawnee	117			36.1863	-96.5732	4
+US	74045	Maramec	Oklahoma	OK	Pawnee	117			36.242	-96.6803	4
+US	74058	Pawnee	Oklahoma	OK	Pawnee	117			36.3362	-96.7923	4
+US	74081	Terlton	Oklahoma	OK	Pawnee	117			36.1889	-96.4876	4
+US	74650	Ralston	Oklahoma	OK	Pawnee	117			36.4992	-96.7755	4
+US	74023	Cushing	Oklahoma	OK	Payne	119			35.9822	-96.7526	4
+US	74032	Glencoe	Oklahoma	OK	Payne	119			36.2158	-96.9138	4
+US	74059	Perkins	Oklahoma	OK	Payne	119			35.9768	-97.0441	4
+US	74062	Ripley	Oklahoma	OK	Payne	119			35.9985	-96.8967	4
+US	74074	Stillwater	Oklahoma	OK	Payne	119			36.1043	-97.0609	4
+US	74075	Stillwater	Oklahoma	OK	Payne	119			36.1396	-97.063	4
+US	74076	Stillwater	Oklahoma	OK	Payne	119			36.0724	-97.0551	4
+US	74077	Stillwater	Oklahoma	OK	Payne	119			36.1156	-97.0584	4
+US	74078	Stillwater	Oklahoma	OK	Payne	119			36.1241	-97.0705	4
+US	74085	Yale	Oklahoma	OK	Payne	119			36.1101	-96.7022	4
+US	74425	Canadian	Oklahoma	OK	Pittsburg	121			35.1571	-95.6215	4
+US	74430	Crowder	Oklahoma	OK	Pittsburg	121			35.1334	-95.6602	4
+US	74442	Indianola	Oklahoma	OK	Pittsburg	121			35.1314	-95.8158	4
+US	74501	Mcalester	Oklahoma	OK	Pittsburg	121			34.9262	-95.7592	4
+US	74502	Mcalester	Oklahoma	OK	Pittsburg	121			34.9334	-95.7697	4
+US	74522	Alderson	Oklahoma	OK	Pittsburg	121			34.9001	-95.6919	4
+US	74528	Blanco	Oklahoma	OK	Pittsburg	121			34.7276	-95.7283	4
+US	74529	Blocker	Oklahoma	OK	Pittsburg	121			35.0615	-95.5683	4
+US	74546	Haileyville	Oklahoma	OK	Pittsburg	121			34.85	-95.5777	4
+US	74547	Hartshorne	Oklahoma	OK	Pittsburg	121			34.8452	-95.574	4
+US	74553	Kiowa	Oklahoma	OK	Pittsburg	121			34.7278	-95.9328	4
+US	74554	Krebs	Oklahoma	OK	Pittsburg	121			34.9255	-95.7216	4
+US	74560	Pittsburg	Oklahoma	OK	Pittsburg	121			34.6975	-95.8439	4
+US	74561	Quinton	Oklahoma	OK	Pittsburg	121			35.1547	-95.4671	4
+US	74565	Savanna	Oklahoma	OK	Pittsburg	121			34.8354	-95.838	4
+US	74576	Wardville	Oklahoma	OK	Pittsburg	121			34.6695	-96.0258	4
+US	74820	Ada	Oklahoma	OK	Pontotoc	123			34.78	-96.6924	4
+US	74821	Ada	Oklahoma	OK	Pontotoc	123			34.7745	-96.6783	4
+US	74825	Allen	Oklahoma	OK	Pontotoc	123			34.8691	-96.4151	4
+US	74842	Fittstown	Oklahoma	OK	Pontotoc	123			34.6148	-96.6345	4
+US	74843	Fitzhugh	Oklahoma	OK	Pontotoc	123			34.6615	-96.7745	4
+US	74844	Francis	Oklahoma	OK	Pontotoc	123			34.8737	-96.5956	4
+US	74865	Roff	Oklahoma	OK	Pontotoc	123			34.6153	-96.8423	4
+US	74871	Stonewall	Oklahoma	OK	Pontotoc	123			34.6511	-96.5273	4
+US	74801	Shawnee	Oklahoma	OK	Pottawatomie	125			35.2958	-96.9601	4
+US	74802	Shawnee	Oklahoma	OK	Pottawatomie	125			35.3273	-96.9253	4
+US	74804	Shawnee	Oklahoma	OK	Pottawatomie	125			35.3868	-96.9331	4
+US	74826	Asher	Oklahoma	OK	Pottawatomie	125			34.9849	-96.8763	4
+US	74840	Earlsboro	Oklahoma	OK	Pottawatomie	125			35.2628	-96.8041	4
+US	74851	Mcloud	Oklahoma	OK	Pottawatomie	125			35.4262	-97.079	4
+US	74852	Macomb	Oklahoma	OK	Pottawatomie	125			35.1205	-97.034	4
+US	74854	Maud	Oklahoma	OK	Pottawatomie	125			35.1292	-96.7627	4
+US	74866	Saint Louis	Oklahoma	OK	Pottawatomie	125			35.0588	-96.8444	4
+US	74873	Tecumseh	Oklahoma	OK	Pottawatomie	125			35.2502	-96.9667	4
+US	74878	Wanette	Oklahoma	OK	Pottawatomie	125			34.9983	-97.0419	4
+US	74521	Albion	Oklahoma	OK	Pushmataha	127			34.6516	-95.0924	4
+US	74523	Antlers	Oklahoma	OK	Pushmataha	127			34.2349	-95.6254	4
+US	74536	Clayton	Oklahoma	OK	Pushmataha	127			34.5906	-95.38	4
+US	74543	Finley	Oklahoma	OK	Pushmataha	127			34.3407	-95.5385	4
+US	74557	Moyers	Oklahoma	OK	Pushmataha	127			34.3386	-95.6639	4
+US	74558	Nashoba	Oklahoma	OK	Pushmataha	127			34.5072	-95.2075	4
+US	74562	Rattan	Oklahoma	OK	Pushmataha	127			34.2454	-95.3442	4
+US	74567	Snow	Oklahoma	OK	Pushmataha	127			34.4419	-95.4622	4
+US	74574	Tuskahoma	Oklahoma	OK	Pushmataha	127			34.6622	-95.2362	4
+US	73628	Cheyenne	Oklahoma	OK	Roger Mills	129			35.6081	-99.6725	4
+US	73638	Crawford	Oklahoma	OK	Roger Mills	129			35.8368	-99.8064	4
+US	73642	Durham	Oklahoma	OK	Roger Mills	129			35.8364	-99.9088	4
+US	73650	Hammon	Oklahoma	OK	Roger Mills	129			35.6461	-99.4027	4
+US	73660	Reydon	Oklahoma	OK	Roger Mills	129			35.6576	-99.9166	4
+US	73666	Sweetwater	Oklahoma	OK	Roger Mills	129			35.4488	-99.9006	4
+US	74015	Catoosa	Oklahoma	OK	Rogers	131			36.1721	-95.7273	4
+US	74016	Chelsea	Oklahoma	OK	Rogers	131			36.5356	-95.4489	4
+US	74017	Claremore	Oklahoma	OK	Rogers	131			36.3242	-95.5985	4
+US	74018	Claremore	Oklahoma	OK	Rogers	131			36.3436	-95.606	4
+US	74031	Foyil	Oklahoma	OK	Rogers	131			36.4348	-95.5194	4
+US	74036	Inola	Oklahoma	OK	Rogers	131			36.1503	-95.5205	4
+US	74053	Oologah	Oklahoma	OK	Rogers	131			36.4482	-95.7047	4
+US	74080	Talala	Oklahoma	OK	Rogers	131			36.5429	-95.7142	4
+US	74818	Seminole	Oklahoma	OK	Seminole	133			35.2245	-96.6706	4
+US	74830	Bowlegs	Oklahoma	OK	Seminole	133			35.1462	-96.67	4
+US	74837	Cromwell	Oklahoma	OK	Seminole	133			35.3405	-96.4546	4
+US	74849	Konawa	Oklahoma	OK	Seminole	133			34.9708	-96.7343	4
+US	74867	Sasakwa	Oklahoma	OK	Seminole	133			34.951	-96.5387	4
+US	74868	Seminole	Oklahoma	OK	Seminole	133			35.2521	-96.6683	4
+US	74884	Wewoka	Oklahoma	OK	Seminole	133			35.1463	-96.628	4
+US	74435	Gore	Oklahoma	OK	Sequoyah	135			35.5418	-95.1095	4
+US	74936	Gans	Oklahoma	OK	Sequoyah	135			35.3946	-94.6901	4
+US	74945	Marble City	Oklahoma	OK	Sequoyah	135			35.5972	-94.8094	4
+US	74946	Moffett	Oklahoma	OK	Sequoyah	135			35.3898	-94.4462	4
+US	74948	Muldrow	Oklahoma	OK	Sequoyah	135			35.402	-94.6332	4
+US	74954	Roland	Oklahoma	OK	Sequoyah	135			35.4538	-94.5291	4
+US	74955	Sallisaw	Oklahoma	OK	Sequoyah	135			35.4852	-94.779	4
+US	74962	Vian	Oklahoma	OK	Sequoyah	135			35.5404	-94.9888	4
+US	73055	Marlow	Oklahoma	OK	Stephens	137			34.6387	-97.941	4
+US	73425	Countyline	Oklahoma	OK	Stephens	137			34.4487	-97.5628	4
+US	73434	Foster	Oklahoma	OK	Stephens	137			34.6379	-97.5455	4
+US	73442	Loco	Oklahoma	OK	Stephens	137			34.3214	-97.6658	4
+US	73491	Velma	Oklahoma	OK	Stephens	137			34.4565	-97.6689	4
+US	73529	Comanche	Oklahoma	OK	Stephens	137			34.3765	-97.9793	4
+US	73533	Duncan	Oklahoma	OK	Stephens	137			34.5073	-97.9403	4
+US	73534	Duncan	Oklahoma	OK	Stephens	137			34.5189	-97.9733	4
+US	73536	Duncan	Oklahoma	OK	Stephens	137			34.4853	-97.8522	4
+US	73901	Adams	Oklahoma	OK	Texas	139			36.755	-101.078	4
+US	73939	Goodwell	Oklahoma	OK	Texas	139			36.6744	-101.7137	4
+US	73942	Guymon	Oklahoma	OK	Texas	139			36.6961	-101.4778	4
+US	73944	Hardesty	Oklahoma	OK	Texas	139			36.6018	-101.1539	4
+US	73945	Hooker	Oklahoma	OK	Texas	139			36.8109	-101.2163	4
+US	73949	Texhoma	Oklahoma	OK	Texas	139			36.5253	-101.8394	4
+US	73951	Tyrone	Oklahoma	OK	Texas	139			36.9558	-101.0594	4
+US	73530	Davidson	Oklahoma	OK	Tillman	141			34.2514	-99.064	4
+US	73542	Frederick	Oklahoma	OK	Tillman	141			34.4012	-99.0119	4
+US	73546	Grandfield	Oklahoma	OK	Tillman	141			34.2282	-98.6867	4
+US	73551	Hollister	Oklahoma	OK	Tillman	141			34.3525	-98.8814	4
+US	73553	Loveland	Oklahoma	OK	Tillman	141			34.391	-98.7235	4
+US	73555	Manitou	Oklahoma	OK	Tillman	141			34.5075	-98.9792	4
+US	73570	Tipton	Oklahoma	OK	Tillman	141			34.5098	-99.1315	4
+US	74008	Bixby	Oklahoma	OK	Tulsa	143			35.942	-95.8833	4
+US	74011	Broken Arrow	Oklahoma	OK	Tulsa	143			35.9908	-95.8143	4
+US	74012	Broken Arrow	Oklahoma	OK	Tulsa	143			36.0447	-95.8079	4
+US	74013	Broken Arrow	Oklahoma	OK	Tulsa	143			36.0526	-95.7908	4
+US	74021	Collinsville	Oklahoma	OK	Tulsa	143			36.3701	-95.8469	4
+US	74033	Glenpool	Oklahoma	OK	Tulsa	143			35.9591	-95.9997	4
+US	74037	Jenks	Oklahoma	OK	Tulsa	143			36.0148	-95.9797	4
+US	74043	Leonard	Oklahoma	OK	Tulsa	143			35.9183	-95.7988	4
+US	74050	Oakhurst	Oklahoma	OK	Tulsa	143			36.0731	-96.0621	4
+US	74055	Owasso	Oklahoma	OK	Tulsa	143			36.2863	-95.8222	4
+US	74063	Sand Springs	Oklahoma	OK	Tulsa	143			36.1341	-96.1426	4
+US	74073	Sperry	Oklahoma	OK	Tulsa	143			36.2955	-95.9804	4
+US	74101	Tulsa	Oklahoma	OK	Tulsa	143			36.0391	-95.8687	4
+US	74102	Tulsa	Oklahoma	OK	Tulsa	143			36.154	-95.9928	4
+US	74103	Tulsa	Oklahoma	OK	Tulsa	143			36.1539	-95.9954	4
+US	74104	Tulsa	Oklahoma	OK	Tulsa	143			36.1464	-95.9526	4
+US	74105	Tulsa	Oklahoma	OK	Tulsa	143			36.0948	-95.9655	4
+US	74106	Tulsa	Oklahoma	OK	Tulsa	143			36.1883	-95.986	4
+US	74107	Tulsa	Oklahoma	OK	Tulsa	143			36.1042	-96.0244	4
+US	74108	Tulsa	Oklahoma	OK	Tulsa	143			36.1499	-95.7923	4
+US	74110	Tulsa	Oklahoma	OK	Tulsa	143			36.1803	-95.9525	4
+US	74112	Tulsa	Oklahoma	OK	Tulsa	143			36.147	-95.907	4
+US	74114	Tulsa	Oklahoma	OK	Tulsa	143			36.1262	-95.9408	4
+US	74115	Tulsa	Oklahoma	OK	Tulsa	143			36.1754	-95.9112	4
+US	74116	Tulsa	Oklahoma	OK	Tulsa	143			36.175	-95.8477	4
+US	74117	Tulsa	Oklahoma	OK	Tulsa	143			36.2393	-95.8979	4
+US	74119	Tulsa	Oklahoma	OK	Tulsa	143			36.1407	-95.9902	4
+US	74120	Tulsa	Oklahoma	OK	Tulsa	143			36.1442	-95.9734	4
+US	74121	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74126	Tulsa	Oklahoma	OK	Tulsa	143			36.2383	-95.9931	4
+US	74128	Tulsa	Oklahoma	OK	Tulsa	143			36.1459	-95.8514	4
+US	74129	Tulsa	Oklahoma	OK	Tulsa	143			36.1259	-95.8654	4
+US	74130	Tulsa	Oklahoma	OK	Tulsa	143			36.2395	-95.9596	4
+US	74132	Tulsa	Oklahoma	OK	Tulsa	143			36.064	-96.0251	4
+US	74133	Tulsa	Oklahoma	OK	Tulsa	143			36.0467	-95.8841	4
+US	74134	Tulsa	Oklahoma	OK	Tulsa	143			36.1162	-95.8225	4
+US	74135	Tulsa	Oklahoma	OK	Tulsa	143			36.0976	-95.9228	4
+US	74136	Tulsa	Oklahoma	OK	Tulsa	143			36.0605	-95.9452	4
+US	74137	Tulsa	Oklahoma	OK	Tulsa	143			36.0284	-95.9306	4
+US	74141	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74145	Tulsa	Oklahoma	OK	Tulsa	143			36.0934	-95.8856	4
+US	74146	Tulsa	Oklahoma	OK	Tulsa	143			36.1093	-95.8506	4
+US	74147	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74148	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74149	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74150	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74152	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74153	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74155	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74156	Tulsa	Oklahoma	OK	Tulsa	143			36.3024	-95.9605	4
+US	74157	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74158	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74159	Tulsa	Oklahoma	OK	Tulsa	143			36.0772	-96.0835	4
+US	74169	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74170	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74171	Tulsa	Oklahoma	OK	Tulsa	143			36.154	-95.9928	4
+US	74172	Tulsa	Oklahoma	OK	Tulsa	143			36.1543	-95.9923	4
+US	74182	Tulsa	Oklahoma	OK	Tulsa	143			36.154	-95.9928	4
+US	74186	Tulsa	Oklahoma	OK	Tulsa	143			36.154	-95.9928	4
+US	74187	Tulsa	Oklahoma	OK	Tulsa	143			36.154	-95.9928	4
+US	74192	Tulsa	Oklahoma	OK	Tulsa	143			36.154	-95.9928	4
+US	74193	Tulsa	Oklahoma	OK	Tulsa	143			36.1398	-96.0297	4
+US	74014	Broken Arrow	Oklahoma	OK	Wagoner	145			36.0544	-95.7223	4
+US	74019	Claremore	Oklahoma	OK	Wagoner	145			36.2806	-95.6039	4
+US	74429	Coweta	Oklahoma	OK	Wagoner	145			35.9578	-95.6526	4
+US	74446	Okay	Oklahoma	OK	Wagoner	145			35.8507	-95.3183	4
+US	74454	Porter	Oklahoma	OK	Wagoner	145			35.8567	-95.5082	4
+US	74458	Redbird	Oklahoma	OK	Wagoner	145			35.8836	-95.5917	4
+US	74467	Wagoner	Oklahoma	OK	Wagoner	145			35.9549	-95.354	4
+US	74477	Wagoner	Oklahoma	OK	Wagoner	145			35.9636	-95.5139	4
+US	74003	Bartlesville	Oklahoma	OK	Washington	147			36.744	-95.9921	4
+US	74004	Bartlesville	Oklahoma	OK	Washington	147			36.7114	-95.894	4
+US	74005	Bartlesville	Oklahoma	OK	Washington	147			36.7473	-95.9808	4
+US	74006	Bartlesville	Oklahoma	OK	Washington	147			36.7366	-95.9251	4
+US	74022	Copan	Oklahoma	OK	Washington	147			36.9062	-95.913	4
+US	74029	Dewey	Oklahoma	OK	Washington	147			36.8013	-95.9345	4
+US	74051	Ochelata	Oklahoma	OK	Washington	147			36.5947	-95.9691	4
+US	74061	Ramona	Oklahoma	OK	Washington	147			36.5752	-95.8962	4
+US	74082	Vera	Oklahoma	OK	Washington	147			36.4501	-95.8814	4
+US	73021	Colony	Oklahoma	OK	Washita	149			35.3448	-98.6707	4
+US	73024	Corn	Oklahoma	OK	Washita	149			35.3784	-98.7818	4
+US	73622	Bessie	Oklahoma	OK	Washita	149			35.3854	-98.9896	4
+US	73624	Burns Flat	Oklahoma	OK	Washita	149			35.3492	-99.188	4
+US	73626	Canute	Oklahoma	OK	Washita	149			35.4037	-99.2816	4
+US	73632	Cordell	Oklahoma	OK	Washita	149			35.2788	-98.9511	4
+US	73641	Dill City	Oklahoma	OK	Washita	149			35.2787	-99.1537	4
+US	73647	Foss	Oklahoma	OK	Washita	149			35.4545	-99.1698	4
+US	73661	Rocky	Oklahoma	OK	Washita	149			35.1526	-99.048	4
+US	73664	Sentinel	Oklahoma	OK	Washita	149			35.1617	-99.1706	4
+US	73717	Alva	Oklahoma	OK	Woods	151			36.8016	-98.6722	4
+US	73731	Dacoma	Oklahoma	OK	Woods	151			36.6606	-98.5942	4
+US	73746	Hopeton	Oklahoma	OK	Woods	151			36.6881	-98.6659	4
+US	73842	Freedom	Oklahoma	OK	Woods	151			36.809	-99.1319	4
+US	73860	Waynoka	Oklahoma	OK	Woods	151			36.5858	-98.8487	4
+US	73801	Woodward	Oklahoma	OK	Woodward	153			36.4268	-99.402	4
+US	73802	Woodward	Oklahoma	OK	Woodward	153			36.544	-99.3003	4
+US	73841	Fort Supply	Oklahoma	OK	Woodward	153			36.5722	-99.5738	4
+US	73852	Mooreland	Oklahoma	OK	Woodward	153			36.4428	-99.1832	4
+US	73853	Mutual	Oklahoma	OK	Woodward	153			36.214	-99.1145	4
+US	73857	Sharon	Oklahoma	OK	Woodward	153			36.2699	-99.3587	4

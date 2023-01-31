@@ -1,24 +1,26 @@
 source 'https://rubygems.org'
 
-gem 'cli_helper'
-gem 'kick_the_tires'
-gem 'debug_me'
-gem 'progress_bar'
+gem 'cli_helper'              # An encapsulation of an integration of slop, nenv, inifile and configatron.
+gem 'kick_the_tires'          # Provides some basic methods/assertions that are handy for exploring a new ruby library.
+gem 'debug_me'                # A tool to print the labeled value of variables.
+gem 'progress_bar'            # Simple Progress Bar for output to a terminal
 
-gem 'rethinkdb'
-gem 'rethinkdb_helper'
-gem 'nobrainer'
-gem 'nobrainer_geospatial'
+gem 'rethinkdb'               # This package provides the Ruby driver library for the RethinkDB database server.
+gem 'rethinkdb_helper'        # A wrapper around the ruby rethinkdb gem
+gem 'nobrainer'               # A Ruby ORM for RethinkDB
+gem 'nobrainer_geospatial'    # Geospatial support for NoBrainer.
 
-gem 'ffi-geos'
+gem 'ffi-geos'                # An ffi wrapper for GEOS, a C++ port of the Java Topology Suite (JTS).
 
-gem 'rgeo'
-gem 'rgeo-geojson'
+gem 'rgeo'                    # RGeo is a geospatial data library for Ruby.
+gem 'rgeo-geojson'            # Convert RGeo data to and from GeoJSON.
 
-gem 'geocoder'
-gem 'geokit'
+gem 'geocoder'                # Complete geocoding solution for Ruby.
+gem 'geokit'                  # Geokit: encoding and distance calculation gem
 
-gem 'opencage-geocoder'
+gem 'opencage-geocoder'       # A client for the OpenCage geocoder API
 
-gem 'geospatial'   # new
+gem 'geospatial'              # Provides abstractions for dealing with geographical locations efficiently
+
+gem 'c_geohash'               # Geohash library that wraps native C in Ruby
 
