@@ -1,0 +1,16 @@
+# experiments/openai/Gemfile
+
+source 'https://rubygems.org'
+
+gem 'awesome_print'  # Pretty print Ruby objects with proper indentation and colors
+gem 'cli_helper'     # An encapsulation of an integration of slop, nenv, inifile and configatron.
+gem 'debug_me'       # A tool to print the labeled value of variables.
+gem 'irbtools'       # Irbtools happy IRB.
+gem 'os'             # Simple and easy way to know if you're on windows or not (reliably), as well as how many bits the OS is, etc.
+gem 'require_all'    # A wonderfully simple way to load your code
+gem 'terminal-size'  # A tiny gem to accomplish a simple task: Determining the terminal size.
+gem 'tty-prompt'     # A beautiful and powerful interactive command line prompt.
+gem 'tty-spinner'    # A terminal spinner for tasks that have non-deterministic time frame.
+gem 'word_wrapper'   # Pure ruby word wrapping
+
+gem 'ruby-openai'
