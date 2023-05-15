@@ -13,8 +13,8 @@
 
 service: one
 # app and org for use with dashboard.serverless.com
-#app: Lambda One
-#org: madbomber
+app: one
+org: madbomber
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -47,8 +47,9 @@ provider:
 #                - "/*"
 
 # you can define service wide environment variables here
-environment:
- USERNAME: Dewayne VanHoozer
+# TDV: No you can not
+# environment:
+#  USERNAME: "Dewayne VanHoozer"
 
 # you can add packaging information here
 #package:
@@ -60,11 +61,16 @@ environment:
 
 package:
   patterns:
-    -'!README.md'
+    - '!README.md'
+    - '!_notes.txt'
 
 functions:
   hello:
     handler: handler.hello
+    environment:
+     USERNAME: "Dewayne VanHoozer"
+
+    
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

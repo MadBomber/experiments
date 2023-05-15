@@ -1,0 +1,33 @@
+# experiments/hello_lambda/one/_ontes.txt
+
+Using serverless...  https://serverless.com
+  brew install serverless
+
+
+--- 2023-05-05 15:48:45 -0500
+	Create an account on serverless.com with GotHub oauth
+
+  Created a new directory in the experiments report
+    hello_lambda/one
+
+  # Create a blank Ruby for AWS lambda
+	serverless create --template aws-ruby
+
+  # Tie this project to my serverless.com account
+  serverless --org=madbomber
+
+  # login to the serverless.com dashboard
+  serverless login
+
+  # deploy the lambda
+	serverless
+
+  # execute the lambda's function
+	serverless invoke --function hello
+
+  # There was a deprecation warning, whats it mean?
+	serverless doctor
+	
+  
+	
+	
