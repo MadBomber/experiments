@@ -3,6 +3,9 @@
 
 require 'boxcars'
 
+require 'debug_me'
+include DebugMe
+
 require 'active_record'
 require 'nenv'
 
@@ -34,10 +37,13 @@ class Clinician         < ActiveRecord::Base; end
 class ClinicianAddress  < ActiveRecord::Base; end
 class PostalCode        < ActiveRecord::Base; end
 
-emr = Boxcars::ActiveRecord.new(name: 'emr', models: [LicenseKey, Clinician, ClinicianAddress, PostalCode])
+emr = Boxcars::ActiveRecord.new(
+  name: 'emr', 
+  models: [LicenseKey, Clinician, ClinicianAddress, PostalCode]
+)
 
 # These are all good:
-emr.run "how many license keys do we have?"
+# emr.run "how many license keys do we have?"
 # emr.run "how many clinicians do we have?"
 # emr.run "In which state is zip code 71111?"
 # emr.run "how many unique clinician_addresses are by state?"
@@ -48,6 +54,35 @@ emr.run "how many license keys do we have?"
 # emr.run "which clinicians do not have the last name 'MadBomber'"
 # emr.run "do all clinicians have the same last name?"
 
+# By default the ActiveRecord Boxcar is READ-ONLY
+
+# custom change approval proc
+
+rubber_stamp = Proc.new do |change_count, code|
+    debug_me{[
+      :change_count,
+      :code
+    ]}
+
+    puts ">>> Approving #{change_count} changes <<<"
+    true
+end
+
+rw_emr = Boxcars::ActiveRecord.new(
+  approval_callback:  rubber_stamp,
+  read_only:          false, 
+  name:               'rw_emr', 
+  models:             [Clinician]
+)
+
+# This is not working as expected.
+# Suspect defect in the active_record.rb approval? method
+# because the custom approval proc is not being called
+result = rw_emr.run "update, replace, modify, change the last name to 'MadBomber' for the first 10 clinicians"
+
+debug_me{[
+  :result
+]}
 
 # These did not work as expected.
 # emr.run "A clinician has many addresses.  how many clinicians do we have per state? return the answer as a CSV object."
