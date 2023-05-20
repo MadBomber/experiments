@@ -7,6 +7,7 @@ gem 'cli_helper'        # An encapsulation of an integration of slop, nenv, inif
 gem 'debug_me'          # A tool to print the labeled value of variables.
 gem 'irbtools'          # Irbtools happy IRB.
 gem 'os'                # Simple and easy way to know if you're on windows or not (reliably), as well as how many bits the OS is, etc.
+gem 'reline'            # Alternative GNU Readline or Editline implementation by pure Ruby.
 gem 'require_all'       # A wonderfully simple way to load your code
 gem 'terminal-size'     # A tiny gem to accomplish a simple task: Determining the terminal size.
 gem 'tty-prompt'        # A beautiful and powerful interactive command line prompt.
@@ -18,7 +19,8 @@ gem 'word_wrapper'      # Pure ruby word wrapping
 #
 # Libraries on the playground
 #
-gem 'ask_chatgpt' # AI-Powered Assistant Gem right in your Rails console.
-gem 'boxcars'     # Boxcars is a gem that enables you to create new systems with AI composability. Inspired by python langchain.
-gem 'gpt4all'     # gpt4all
-gem 'ruby-openai' # OpenAI API + Ruby! 🤖❤️
+gem 'ask_chatgpt'             # AI-Powered Assistant Gem right in your Rails console.
+gem 'boxcars'                 # Boxcars is a gem that enables you to create new systems with AI composability. Inspired by python langchain.
+gem "chat_gpt_error_handler"  # Helpful ChatGpt hints for your Rails app
+gem 'gpt4all'                 # gpt4all
+gem 'ruby-openai'             # OpenAI API + Ruby! 🤖❤️
