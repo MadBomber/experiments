@@ -3,3 +3,6 @@ source 'https://rubygems.org'
 gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
 gem 'ruby-openai'             # OpenAI API + Ruby! 🤖❤️
 gem 'sneakers'                # Fast background processing framework for Ruby and RabbitMQ
+
+gem 'terminal-size'           # A tiny gem to accomplish a simple task: Determining the terminal size.
+gem 'word_wrapper'            # Pure ruby word wrapping

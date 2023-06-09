@@ -1,8 +1,11 @@
 #!/usr/bin/env ruby
 # smart_bunny_chat.rb
 
-require 'bunny'
-require 'openai'
+require 'bunny'   # Popular easy to use Ruby client for RabbitMQ
+require 'openai'  # OpenAI API + Ruby! 🤖❤️
+
+require 'terminal-size'  # A tiny gem to accomplish a simple task: Determining the terminal size.
+require 'word_wrapper'   # Pure ruby word wrapping
 
 
 class AI
@@ -26,6 +29,8 @@ end
 
 
 class SmartBunnyChat
+  WIDTH = Terminal.size[:width] - 4
+
   def initialize(
       username: ENV.fetch('USERNAME', 'Guest'), 
       host:     'localhost', 
@@ -44,7 +49,7 @@ class SmartBunnyChat
     begin
       @connection.start
     rescue Bunny::TCPConnectionFailedForAllHosts => e
-      puts "Error: #{e.message}"
+      show "Error: #{e.message}"
       return
     end
 
@@ -64,10 +69,10 @@ class SmartBunnyChat
         if respond_to?(command)
           send(command, params)
         else
-          puts "Unknown command: #{command}"
+          show "Unknown command: #{command}"
         end
       else
-        puts body
+        show body
       end
     end
   end
@@ -88,13 +93,26 @@ class SmartBunnyChat
             @exchange.publish(message)
           end
         else
-          puts "Unknown command: #{command}"
+          show "Unknown command: #{command}"
         end
       else
         @exchange.publish("#{@username}: #{message}") unless message.empty?
       end
     end
   end
+
+
+  def show(a_string)
+    paragraphs = a_string.split("\n")
+    paragraphs.each do |text|
+      lines = WordWrapper::MinimumRaggedness.new(WIDTH, text).wrap.split("\n")
+      lines.each do |a_line|
+        puts "  " + a_line
+      end
+    end
+    puts
+  end
+
 
   def here(...)
     @exchange.publish(@username)
@@ -112,7 +130,7 @@ class SmartBunnyChat
 end
 
 Signal.trap('INT') do
-  puts "Use the command /stop instead of cntl-c"
+  show "Use the command /stop instead of cntl-c"
 end
 
 SmartBunnyChat.new().run
