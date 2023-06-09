@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'bunny'
-gem 'sneakers'
+gem 'bunny'                   # Popular easy to use Ruby client for RabbitMQ
+gem 'ruby-openai'             # OpenAI API + Ruby! 🤖❤️
+gem 'sneakers'                # Fast background processing framework for Ruby and RabbitMQ
