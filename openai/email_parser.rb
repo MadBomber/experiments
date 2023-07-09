@@ -11,58 +11,58 @@
 # See: https://dev.to/kanehooper/creating-an-ai-email-parser-using-ruby-and-openai-gpt-3-1mb4?ck_subscriber_id=791584073
 #
 
-require 'amazing_print'
+require "ruby/openai"
+# require "chat_gpt_error_handler" # For Rails
 
 require 'debug_me'
 include DebugMe
 
-require 'cli_helper'
-include CliHelper
+require 'amazing_print'
+require 'nenv'
+require 'mail'
+require 'date'          # STDLIB
 
-require 'ruby-openai'
 
-configatron.version = '0.0.1'
-
-HELP = <<EOHELP
-Important:
-
-  Put important stuff here.
-
-EOHELP
-
-cli_helper("parse an email with openAI") do |o|
-
-  o.bool    '-b', '--bool',   'example boolean parameter',   default: false
-  o.string  '-s', '--string', 'example string parameter',    default: 'IamDefault'
-  o.int     '-i', '--int',    'example integer parameter',   default: 42
-  o.float   '-f', '--float',  'example float parameter',     default: 123.456
-  o.array   '-a', '--array',  'example array parameter',     default: [:bob, :carol, :ted, :alice]
-  o.path    '-p', '--path',   'example Pathname parameter',  default: Pathname.new('default/path/to/file.txt')
-  o.paths         '--paths',  'example Pathnames parameter', default: ['default/path/to/file.txt', 'file2.txt'].map{|f| Pathname.new f}
-
+Mail.defaults do
+  retriever_method :imap, address:    "imap.gmail.com",
+                          port:       993,
+                          user_name:  Nenv.gmail_user,
+                          password:   Nenv.gmail_pass,
+                          enable_ssl: true
 end
 
-# Display the usage info
-if  ARGV.empty?
-  show_usage
-  exit
-end
-
-
-# Error check your stuff; use error('some message') and warning('some message')
-
-configatron.input_files = get_pathnames_from( configatron.arguments, '.txt')
-
-if configatron.input_files.empty?
-  error 'No text files were provided'
-end
-
-abort_if_errors
-
+AI = OpenAI::Client.new(access_token: Nenv.openai_api_key)
 
 ######################################################
 # Local methods
 
+def extract_entities(email)
+  prompt = "Extract the company names, email sender's name, and theme of the following email:\n\n#{email}"
+  send_prompt prompt
+end
+
+def send_prompt(prompt)
+ response = AI.completions(
+   parameters: {
+     model: "text-davinci-003",
+     prompt: prompt,
+     temperature: 0.5,
+     max_tokens: 1000
+   }
+ )
+
+ response['choices'][0]['text']
+end
+
+
+
+def get_email_text(username, password)
+  gmail = Gmail.connect(username, password)
+  email = gmail.inbox.emails.first
+  text = email.body.decoded
+  gmail.logout
+  return text
+end
 
 ######################################################
 # Main
@@ -73,24 +73,45 @@ at_exit do
   puts
 end
 
-ap configatron.to_h  if verbose? || debug?
 
-stub = <<EOS
+begin
 
-
-   d888888o. 8888888 8888888888 8 8888      88 8 888888888o
- .`8888:' `88.     8 8888       8 8888      88 8 8888    `88.
- 8.`8888.   Y8     8 8888       8 8888      88 8 8888     `88
- `8.`8888.         8 8888       8 8888      88 8 8888     ,88
-  `8.`8888.        8 8888       8 8888      88 8 8888.   ,88'
-   `8.`8888.       8 8888       8 8888      88 8 8888888888
-    `8.`8888.      8 8888       8 8888      88 8 8888    `88.
-8b   `8.`8888.     8 8888       ` 8888     ,8P 8 8888      88
-`8b.  ;8.`8888     8 8888         8888   ,d8P  8 8888    ,88'
- `Y8888P ,88P'     8 8888          `Y88888P'   8 888888888P
+puts "Retrieving eMails ..."
+emails = Array(
+            Mail.find( what:   :last,
+                    count:  14,      # how many days back from today
+                    order:  :asc,
+                    keys:   'FROM newsletters@analystratings.net')
+          )
 
 
-EOS
+debug_me{[
+  :emails
+]}
 
-puts stub
+rescue => error_message
+  puts "ERROR: #{error_message}"
+  puts
+  puts "Looking up possible causes and solutions ..."
+  puts 
+  
+  # TODO: Add an "I'm working spinner"
 
+  prompt = <<~EOS
+    A Ruby program has terminated with an error.
+    Clearly list possible reasons and a solution.
+    Your answer will be displayed in the terminal.
+    Do NOT repeat the error message back verbatim.
+    Here is the error message: '#{error_message}'. 
+    Possible reason or solution?"
+  EOS
+
+  puts send_prompt prompt
+
+end
+__END__
+
+answer = extract_entities email
+
+
+puts answer

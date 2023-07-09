@@ -9,19 +9,52 @@ include DebugMe
 require 'csv'
 require 'date'
 require 'pathname'
+require 'tty-table'
 
+require 'previous_dow'
+
+tickers = %w[ aapl lmt t vz ge hal f orcl ]
+
+
+
+start_date  = Date.new(2019, 1, 1)
+end_date    = previous_dow(:friday)
+
+ASOF = end_date.to_s.tr('-','')
+
+
+#######################################################################
+# download a CSV file from https://query1.finance.yahoo.com
+# given a stock ticker symbol as a String
+# start and end dates
+#
+# For ticker "aapl" the downloaded file will be named "aapl.csv"
+# That filename will be renamed to "aapl_YYYYmmdd.csv" where the
+# date suffix is the end_date of the historical data.
+#
 def download_historical_prices(ticker, start_date, end_date)
+  data_path       = Pathname.pwd + "#{ticker}_#{ASOF}.csv"
+  return if data_path.exist?
+
+  mew_path        = Pathname.pwd + "#{ticker}.csv"
+
   start_timestamp = start_date.to_time.to_i
   end_timestamp   = end_date.to_time.to_i
   ticker_upcase   = ticker.upcase
   filename        = "#{ticker.downcase}.csv"
 
   `curl -o #{filename} "https://query1.finance.yahoo.com/v7/finance/download/#{ticker_upcase}?period1=#{start_timestamp}&period2=#{end_timestamp}&interval=1d&events=history&includeAdjustedClose=true"`
+
+  mew_path.rename data_path
 end
 
 
+#######################################################################
+# Read the CSV file associated with the give ticker symbol
+# and the ASOF date.
+#
 def read_csv(ticker)
-  filename  = "#{ticker.downcase}.csv"
+  filename  = "#{ticker.downcase}_#{ASOF}.csv"
   data      = []
 
   CSV.foreach(filename, headers: true) do |row|
@@ -108,7 +141,14 @@ def rsi(data, period)
   rs        = avg_gain / avg_loss
   rsi       = 100 - (100 / (1 + rs))
 
-  return rsi
+  meaning = ""
+  if rsi >= 70.0
+    meaning = "Over Bought"
+  elsif rsi <= 30.0
+    meaning = "Over Sold"
+  end
+
+  return {rsi: rsi, meaning: meaning}
 end
 
 
@@ -223,8 +263,6 @@ end
 # and sell signals for a security, as well as to provide insight into the
 # strength of the trend.
 
-
-
 def macd(data, short_period, long_period, signal_period)
   short_ma    = moving_averages(data, short_period)
   long_ma     = moving_averages(data, long_period)
@@ -240,23 +278,87 @@ end
 #
 
 
-start_date  = Date.new(2019, 1, 1)
-end_date    = Date.new(2023, 4, 30)
+tickers.each do |ticker|
+  download_historical_prices(ticker, start_date, end_date)
+end
 
-tickers = %w[ aapl lmt t vz ge hal f ]
+result = {}
 
-# tickers.each do |ticker|
-#   download_historical_prices(ticker, start_date, end_date)
-# end
+mwfd = 14 # moving_window_forcast_days
 
-data = read_csv "aapl"
+headers = %w[ Ticker AdjClose Trend Slope RSI Analysis MACD Target Signal]
+values  = []
 
-# result = moving_averages(data, 14)
-result = trend(data, 14)
-# result = rsi(data, 14)
-# result = bollinger_bands(data, 14, 2)
-# result = macd(data, 14, 28, 7)
+tickers.each do |ticker|
 
-debug_me{[
-  :result
-]}
+  data            = read_csv ticker
+
+  result[ticker]  = {
+    date:       data.last["Date"],
+    adj_close:  data.last["Adj Close"].to_f
+  }
+
+
+  row  = [ ticker ]
+
+  # result[ticker][:moving_averages]  = moving_averages(data, mwfd)
+  result[ticker][:trend]            = trend(data, mwfd)
+  result[ticker][:rsi]              = rsi(data, mwfd)
+  result[ticker][:bollinger_bands]  = bollinger_bands(data, mwfd, 2)
+  result[ticker][:macd]             = macd(data, mwfd, 2*mwfd, mwfd/2)
+
+
+  row << result[ticker][:adj_close].round(3)
+  row << result[ticker][:trend][:trend]
+  row << result[ticker][:trend][:angle].round(3)
+  row << result[ticker][:rsi][:rsi].round(3)
+  row << result[ticker][:rsi][:meaning]
+  row << result[ticker][:macd].first.round(3)
+  row << result[ticker][:macd].last.round(3)
+  
+  signal    = ""
+  macd_diff = result[ticker][:macd].first
+  target    = result[ticker][:macd].last
+  current   = result[ticker][:adj_close]
+
+  trend_down = "down" == result[ticker][:trend][:trend]
+
+  if current < target 
+    signal = "Buy"
+  elsif (current > target) && trend_down
+    signal = "Sell"
+  end
+
+  row << signal
+
+  values << row
+end
+
+# debug_me{[
+#   :result
+# ]}
+
+
+the_table = TTY::Table.new(headers, values)
+
+puts
+puts "Analysis as of Friday Close: #{end_date}"
+
+puts  the_table.render(
+        :unicode,
+        {
+          padding:    [0, 0, 0, 0],
+          alignments: [
+            :left,    # ticker
+            :right,   # adj close
+            :center,  # trend
+            :right,   # slope
+            :right,   # rsi
+            :center,  # meaning
+            :right,   # macd
+            :right,   # target
+            :center   # signal
+          ],
+        }
+      )
+puts 

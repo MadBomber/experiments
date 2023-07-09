@@ -31,3 +31,14 @@ Using serverless...  https://serverless.com
   
 	
 	
+--- 2023-05-05 16:01:58 -0500
+	made some changes in the environment section
+
+	serverless.yml
+	
+	
+--- 2023-05-05 16:04:21 -0500
+	the changes to environment worked. Also no warnings.
+	
+	
+	
