@@ -3,18 +3,54 @@
 #
 # Some technical indicators:
 
+INVEST = 1000.00
+
+require 'pathname'
+
+STOCKS = Pathname.pwd + "stocks.txt"
+
+unless STOCKS.exist?
+  puts
+  puts "ERROR: The 'stocks.txt' file does not exist."
+  puts
+  exot(-1)
+end
+
 require 'debug_me'
 include DebugMe
 
 require 'csv'
 require 'date'
-require 'pathname'
 require 'tty-table'
 
 require 'previous_dow'
 
-tickers = %w[ aapl lmt t vz ge hal f orcl ]
+class NilClass
+  def blank?() = true
+end
 
+class String
+  def blank?() = strip().empty?
+end
+
+class Array
+  def blank?() = empty?
+end
+
+
+def tickers
+  return @tickers unless @tickers.blank?
+
+  @tickers = []
+
+  STOCKS.readlines.each do |a_line|
+    ticker_symbol = a_line.chomp.strip.split()&.first&.downcase
+    next if ticker_symbol.blank? || '#' == ticker_symbol
+    @tickers << ticker_symbol unless @tickers.include?(ticker_symbol)
+  end
+
+  @tickers.sort!
+end
 
 
 start_date  = Date.new(2019, 1, 1)
@@ -286,12 +322,20 @@ result = {}
 
 mwfd = 14 # moving_window_forcast_days
 
-headers = %w[ Ticker AdjClose Trend Slope RSI Analysis MACD Target Signal]
+headers = %w[ Ticker AdjClose Trend Slope RSI Analysis MACD Target Signal $]
 values  = []
 
 tickers.each do |ticker|
 
   data            = read_csv ticker
+
+  if data.blank?
+    puts 
+    puts "ERROR: cannot get data for #{ticker}"
+    puts 
+    next
+  end
+
 
   result[ticker]  = {
     date:       data.last["Date"],
@@ -307,8 +351,9 @@ tickers.each do |ticker|
   result[ticker][:bollinger_bands]  = bollinger_bands(data, mwfd, 2)
   result[ticker][:macd]             = macd(data, mwfd, 2*mwfd, mwfd/2)
 
-
-  row << result[ticker][:adj_close].round(3)
+  price = result[ticker][:adj_close].round(3)
+  
+  row << price
   row << result[ticker][:trend][:trend]
   row << result[ticker][:trend][:angle].round(3)
   row << result[ticker][:rsi][:rsi].round(3)
@@ -329,7 +374,16 @@ tickers.each do |ticker|
     signal = "Sell"
   end
 
+  if "Buy" == signal
+    pps     = target - price
+    shares  = INVEST.to_i / price.to_i
+    upside  = (shares * pps).round(2)
+  else
+    upside = ""
+  end
+
   row << signal
+  row << upside
 
   values << row
 end
@@ -357,7 +411,8 @@ puts  the_table.render(
             :center,  # meaning
             :right,   # macd
             :right,   # target
-            :center   # signal
+            :center,  # signal
+            :right    # upside
           ],
         }
       )
