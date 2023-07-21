@@ -2,12 +2,19 @@
 # experiments/stocks/analysis.rb 
 #
 # Some technical indicators:
+#
+# optional date CLI option in format YYYY-mm-dd
+# if not present uses Date.today
+
 
 INVEST = 1000.00
 
 require 'pathname'
 
 STOCKS = Pathname.pwd + "stocks.txt"
+TRADES = Pathname.pwd + "trades.txt"
+
+TRADES_FILE = File.open(TRADES, 'a')
 
 unless STOCKS.exist?
   puts
@@ -52,9 +59,10 @@ def tickers
   @tickers.sort!
 end
 
+given_date = ARGV.first ? Date.parse(ARGV.first) : Date.today
 
 start_date  = Date.new(2019, 1, 1)
-end_date    = previous_dow(:friday)
+end_date    = previous_dow(:friday, given_date)
 
 ASOF = end_date.to_s.tr('-','')
 
@@ -308,6 +316,13 @@ def macd(data, short_period, long_period, signal_period)
   return [macd_line, signal_line]
 end
 
+##########################
+# record a recommend trade
+
+def trade(ticker, signal, shares, price)
+  TRADES_FILE.puts "#{ticker} #{ASOF} #{signal} #{shares} #{price}"
+end 
+
 #######################################################################
 ###
 ##  Main
@@ -361,6 +376,8 @@ tickers.each do |ticker|
   row << result[ticker][:macd].first.round(3)
   row << result[ticker][:macd].last.round(3)
   
+  analysis  = result[ticker][:rsi][:meaning]
+
   signal    = ""
   macd_diff = result[ticker][:macd].first
   target    = result[ticker][:macd].last
@@ -369,15 +386,21 @@ tickers.each do |ticker|
   trend_down = "down" == result[ticker][:trend][:trend]
 
   if current < target 
-    signal = "Buy"
+    signal = "Buy" unless "Over Bought" == analysis
   elsif (current > target) && trend_down
-    signal = "Sell"
+    signal = "Sell" unless "Over Sold" == analysis
   end
 
   if "Buy" == signal
     pps     = target - price
     shares  = INVEST.to_i / price.to_i
     upside  = (shares * pps).round(2)
+    trade(ticker, signal, shares, price)
+  elsif "Sell" == signal
+    pps     = target - price
+    shares  = INVEST.to_i / price.to_i
+    upside  = (shares * pps).round(2)
+    trade(ticker, signal, shares, price)
   else
     upside = ""
   end
@@ -408,7 +431,7 @@ puts  the_table.render(
             :center,  # trend
             :right,   # slope
             :right,   # rsi
-            :center,  # meaning
+            :center,  # meaning / analysis
             :right,   # macd
             :right,   # target
             :center,  # signal
@@ -417,3 +440,5 @@ puts  the_table.render(
         }
       )
 puts 
+
+TRADES_FILE.close 

@@ -1,0 +1,123 @@
+# any line starting with a # is ignored
+# any blank line is ignored
+#
+# The first word of a line is a ticker symbole
+# everything else on the line is ignored.
+#
+# Only one ticker symbol per line.
+# case does NOT matter.
+# order does not matter.
+# duplicates are ignored??  maybe/maybe-not
+
+aapl    Apple Computer
+f       Ford
+ge      General Electric
+hal     Haliburton
+lmt     Lockheed Martin
+orcl    Oracle
+t       AT&T
+vz      Verizon
+
+
+AMAT Applied Materials, Inc
+AMD Advanced Micro Devices () ...
+AVGO Broadcom () ...
+
+
+ AMAT   Applied Materials ()
+ AMD   Advanced Micro Devices ()
+ ADI   Analog Devices ()
+ AVGO   Broadcom ()
+ INTC   Intel Corporation ()
+  NVDA  NVIDIA Corporation ()
+  MU  Micron Technology ()
+  QCOM  Qualcomm Incorporated ()
+ MCHP   Microchip Technology ()
+ SWKS   Skyworks Solutions ()
+ CREE   Cree ()
+ XLNX   Xilinx ()
+
+
+NVDA Nvidia Corp. ()
+META Meta Platforms Inc. ()
+TSM Taiwan Semiconductor Manufacturing Ltd. ()
+ASML ASML Holding N.V. ()
+
+
+MSFT    Microsoft Corp. (ticker: )  0.8%
+GOOGL    Alphabet Inc. (GOOG, )   7.1%
+ NVDA   Nvidia Corp. ()   17.6%
+META    Meta Platforms Inc. ()  10.1%
+TSM    Taiwan Semiconductor Manufacturing Co. Ltd. ()   14.7%
+ASML    ASML Holding N.V. ()  22.7%
+SAP    SAP SE ()  14.1%
+ RELX   RELX Plc ()   19.8%
+ANET    Arista Networks Inc. ()   20.3%
+BIDU    Baidu Inc. ()
+
+
+
+
+AAPL    Apple   ()  $202.6  7.6%  0.5%  Information Technology
+ GOOGL   Alphabet  ()   169.2   6.3   0   Communication Services
+MSFT    Microsoft   ()  132.3   4.9   0.8   Information Technology
+AMZN    Amazon.com  ()  86.2  3.2   0   Consumer Discretionary
+GE    General Electric  ()  67.9  2.5   0.3   Industrials
+UNH    UnitedHealth Group  ()   67.0  2.5   1.2   Health Care
+FB    Meta Platforms  ()  54.8  2.0   0   Communication Services
+PFE    Pfizer  ()   51.3  1.9   3.0   Health Care
+ANTM    Anthem  ()  38.9  1.4   1.2   Health Care
+ GM   General Motors  ()  38.4  1.4   0   Consumer Discretionary
+ KO   Coca-Cola   ()  36.2  1.3   2.7   Consumer Staples
+ F   Ford Motor  (F)   36.0  1.3   1.9   Consumer Discretionary
+  INTC  Intel   ()
+
+# Symbol Company Name  Last Price  Change  % Change  Market Time Volume  Avg Vol (3 month) Market Cap
+AGR Avangrid, Inc.  38.05 +0.81 +2.18%  4:00 PM EDT 874.83k 610.47k 15.04B
+BKH Black Hills Corporation 59.62 +1.42 +2.44%  4:00 PM EDT 911.50k 418.13k 4.06B
+CBU Community Bank System, Inc. 44.6  +0.18 +0.41%  4:00 PM EDT 409.40k 418.50k 2.40B
+CWEN  Clearway Energy, Inc. 28.01 +0.11 +0.39%  4:00 PM EDT 543.45k 985.33k 5.60B
+CWEN-A  Clearway Energy, Inc. 26.45 +0.15 +0.57%  4:00 PM EDT 169.53k 354.71k 5.58B
+CWT California Water Service Group  50.8  +0.73 +1.46%  4:00 PM EDT 239.23k 328.60k 2.89B
+ELV Elevance Health, Inc. 414.13  -20.79  -4.78%  4:00 PM EDT 3.23M 1.27M 98.74B
+FMC FMC Corporation 95.47 +1.64 +1.75%  4:03 PM EDT 2.18M 1.13M 12.09B
+HUM Humana Inc. 425.08  -12.14  -2.78%  4:03 PM EDT 3.18M 1.15M 53.42B
+LEG Leggett & Platt, Incorporated 30.12 -0.12 -0.40%  4:00 PM EDT 1.17M 915.85k 4.10B
+OAK-PB  Oaktree Capital Group, LLC  21.98 +0.39 +1.78%  4:00 PM EDT 6.96k 8.64k 5.69B
+TSEM  Tower Semiconductor Ltd.  37.42 +0.91 +2.49%  4:00 PM EDT 1.21M 813.26k 4.18B
+UGI UGI Corporation 26.9  +0.53 +2.01%  4:00 PM EDT 2.09M 2.01M 5.63B
+UNF UniFirst Corporation  155.49  +1.81 +1.18%  4:00 PM EDT 94.27k  64.62k  2.91B
+
+# Company   Price   Change  % Change
+CCL Carnival Corp   18.22   -0.68   -3.60%
+F Ford Motor Co   15.22   -0.01   -0.07%
+T AT&T Inc  15.12   -0.11   -0.72%
+BAC Bank of America Corp  29.36   +0.34   +1.17%
+KEY KeyCorp   10.23   +0.31   +3.13%
+VZ Verizon Communications Inc   34.86   -0.13   -0.37%
+C Citigroup Inc   47.38   +0.85   +1.83%
+PFE Pfizer Inc  35.99   -0.03   -0.08%
+NCLH Norwegian Cruise Line Holdings Ltd   21.80   -0.61   -2.72%
+PCG PG&E Corp
+
+
+# three stocks on the move 7-18-2023
+
+GNRC Generac Holdings (GNRC): The manufacturer of whole home generators continues to benefit from relocation and our aging electrical grid. 
+
+KNX Knight-Swift Transportation (KNX): The freight transportation/logistics company is suggesting that a recession may not be imminent. 
+
+CROX Crocs (CROX): Higher profit margins and expected high demand will support the positive momentum in CROX stock.  
+
+
+
+# top defense stocks by number of contracts
+
+LMT - Lockheed Martin (P/E: 15.42)
+BA - The Boeing Company (P/E: 20.79)
+GD - General Dynamics (P/E: 17.34)
+RTX - Raytheon Technologies Corporation (P/E: 19.87)
+NOC - Northrop Grumman Corporation (P/E: 16.55)
+
+
+
