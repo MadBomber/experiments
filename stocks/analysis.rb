@@ -12,7 +12,7 @@ INVEST = 1000.00
 require 'pathname'
 
 STOCKS = Pathname.pwd + "stocks.txt"
-TRADES = Pathname.pwd + "trades.txt"
+TRADES = Pathname.pwd + "trades.csv"
 
 TRADES_FILE = File.open(TRADES, 'a')
 
@@ -320,7 +320,7 @@ end
 # record a recommend trade
 
 def trade(ticker, signal, shares, price)
-  TRADES_FILE.puts "#{ticker} #{ASOF} #{signal} #{shares} #{price}"
+  TRADES_FILE.puts "#{ticker},#{ASOF},#{signal},#{shares},#{price}"
 end 
 
 #######################################################################
@@ -386,17 +386,17 @@ tickers.each do |ticker|
   trend_down = "down" == result[ticker][:trend][:trend]
 
   if current < target 
-    signal = "Buy" unless "Over Bought" == analysis
+    signal = "buy" unless "Over Bought" == analysis
   elsif (current > target) && trend_down
-    signal = "Sell" unless "Over Sold" == analysis
+    signal = "sell" unless "Over Sold" == analysis
   end
 
-  if "Buy" == signal
+  if "buy" == signal
     pps     = target - price
     shares  = INVEST.to_i / price.to_i
     upside  = (shares * pps).round(2)
     trade(ticker, signal, shares, price)
-  elsif "Sell" == signal
+  elsif "sell" == signal
     pps     = target - price
     shares  = INVEST.to_i / price.to_i
     upside  = (shares * pps).round(2)
