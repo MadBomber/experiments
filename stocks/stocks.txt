@@ -11,13 +11,13 @@
 
 
 AAPL    Apple   ()  $202.6  7.6%  0.5%  Information Technology
+AI      C3.AI
 ADI     Analog Devices ()
 AGR     Avangrid, Inc.  38.05 +0.81 +2.18%  4:00 PM EDT 874.83k 610.47k 15.04B
 AMAT    Applied Materials, Inc
 AMD     Advanced Micro Devices () ...
 AMZN    Amazon.com  ()  86.2  3.2   0   Consumer Discretionary
 ANET    Arista Networks Inc. ()   20.3%
-ANTM    Anthem  ()  38.9  1.4   1.2   Health Care
 ASML    ASML Holding N.V. ()
 AVGO    Broadcom () ...
 BA      The Boeing Company (P/E: 20.79)
@@ -27,13 +27,12 @@ BKH     Black Hills Corporation 59.62 +1.42 +2.44%  4:00 PM EDT 911.50k 418.13k 
 C       Citigroup Inc   47.38   +0.85   +1.83%
 CBU     Community Bank System, Inc. 44.6  +0.18 +0.41%  4:00 PM EDT 409.40k 418.50k 2.40B
 CCL     Carnival Corp   18.22   -0.68   -3.60%
-CREE    Cree ()
 CROX    Crocs (CROX): Higher profit margins and expected high demand will support the positive momentum in CROX stock.  
 CWEN    Clearway Energy, Inc. 28.01 +0.11 +0.39%  4:00 PM EDT 543.45k 985.33k 5.60B
 CWT     California Water Service Group  50.8  +0.73 +1.46%  4:00 PM EDT 239.23k 328.60k 2.89B
 ELV     Elevance Health, Inc. 414.13  -20.79  -4.78%  4:00 PM EDT 3.23M 1.27M 98.74B
 F       Ford Motor Co   15.22   -0.01   -0.07%
-FB      Meta Platforms  ()  54.8  2.0   0   Communication Services
+META    Meta Platforms  ()  54.8  2.0   0   Communication Services
 FMC     FMC Corporation 95.47 +1.64 +1.75%  4:03 PM EDT 2.18M 1.13M 12.09B
 GD      General Dynamics (P/E: 17.34)
 GE      General Electric  ()  67.9  2.5   0.3   Industrials
@@ -58,6 +57,7 @@ NVDA    NVIDIA Corporation ()
 orcl    Oracle
 PCG     PG&E Corp
 PFE     Pfizer Inc  35.99   -0.03   -0.08%
+PLTR    Palantir a data company
 QCOM    Qualcomm Incorporated ()
 RELX    RELX Plc ()   19.8%
 RTX     Raytheon Technologies Corporation (P/E: 19.87)
@@ -70,7 +70,3 @@ UGI     UGI Corporation 26.9  +0.53 +2.01%  4:00 PM EDT 2.09M 2.01M 5.63B
 UNF     UniFirst Corporation  155.49  +1.81 +1.18%  4:00 PM EDT 94.27k  64.62k  2.91B
 UNH     UnitedHealth Group  ()   67.0  2.5   1.2   Health Care
 VZ      Verizon Communications Inc   34.86   -0.13   -0.37%
-XLNX    Xilinx ()
-
-
-

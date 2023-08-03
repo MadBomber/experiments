@@ -1,10 +1,21 @@
 #!/usr/bin/env ruby
 # experiments/stocks/analysis.rb 
 #
-# Some technical indicators:
+# Some technical indicators from FinTech gem
 #
 # optional date CLI option in format YYYY-mm-dd
 # if not present uses Date.today
+#
+# TODO: Need a Stock class
+# TODO: Convert FinTech to a module
+# TODO: Need a storage class to inject into Stock
+#
+# class Stock
+#   include FinTech
+#
+#   def initialize(...); end
+# end
+
 
 
 INVEST = 1000.00
@@ -188,7 +199,7 @@ tickers.each do |ticker|
 
   row  = [ ticker ]
 
-  # result[ticker][:moving_averages]  = FinTech.moving_averages(data, mwfd)
+  # result[ticker][:moving_averages]  = FinTech.sma(data, mwfd)
   result[ticker][:trend]              = FinTech.sma_trend(data, mwfd)
   result[ticker][:momentum]           = FinTech.momentum(prices, mwfd)
   result[ticker][:rsi]                = FinTech.rsi(data, mwfd)
