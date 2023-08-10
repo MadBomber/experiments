@@ -6,21 +6,17 @@
 # optional date CLI option in format YYYY-mm-dd
 # if not present uses Date.today
 #
-# TODO: Need a Stock class
 # TODO: Convert FinTech to a module
-# TODO: Need a storage class to inject into Stock
 #
-# class Stock
-#   include FinTech
-#
-#   def initialize(...); end
-# end
-
 
 
 INVEST = 1000.00
 
 require 'pathname'
+
+require_relative 'stock'
+require_relative 'datastore'
+
 
 STOCKS = Pathname.pwd + "stocks.txt"
 TRADES = Pathname.pwd + "trades.csv"
