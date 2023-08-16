@@ -6,39 +6,37 @@
 # optional date CLI option in format YYYY-mm-dd
 # if not present uses Date.today
 #
-# TODO: Convert FinTech to a module
-#
 
-
+# Maximum amount to invest in each trade
 INVEST = 1000.00
 
-require 'pathname'
+require 'sqa'
 
-require_relative 'stock'
-require_relative 'datastore'
+require 'tty-table'
 
 
-STOCKS = Pathname.pwd + "stocks.txt"
-TRADES = Pathname.pwd + "trades.csv"
+PORTFOLIO = SQA::Config.data_dir + "portfolio.csv"
+TRADES    = SQA::Config.data_dir + "trades.csv"
 
-TRADES_FILE = File.open(TRADES, 'a')
-
-unless STOCKS.exist?
+unless PORTFOLIO.exist?
   puts
-  puts "ERROR: The 'stocks.txt' file does not exist."
+  puts "ERROR: The #{PORTFOLIO.basename} file does not exist."
   puts
   exot(-1)
 end
 
-require 'debug_me'
-include DebugMe
 
-require 'csv'
-require 'date'
-require 'tty-table'
+PORTFOLIO_DF  = Daru::DataFrame.from_csv PORTFOLIO
+TRADES_DF     = Daru::DataFrame.from_csv TRADES
 
-require 'fin_tech'
-require 'previous_dow'
+print "\nportfolio cols: "
+puts PORTFOLIO_DF.vectors.to_a.join(', ')
+
+print "\ntickers: "
+puts PORTFOLIO_DF["TICKER"].to_a.join(', ')
+
+print "\ntrades cols: "
+puts TRADES_DF.vectors.to_a.join(', ')
 
 class NilClass
   def blank?() = true
@@ -54,73 +52,24 @@ end
 
 
 def tickers
-  return @tickers unless @tickers.blank?
+  @tickers ||= PORTFOLIO_DF['TICKER'].to_a.sort
 
-  @tickers = []
-
-  STOCKS.readlines.each do |a_line|
-    ticker_symbol = a_line.chomp.strip.split()&.first&.downcase
-    next if ticker_symbol.blank? || '#' == ticker_symbol
-    @tickers << ticker_symbol unless @tickers.include?(ticker_symbol)
-  end
-
-  @tickers.sort!
+  @tickers
 end
 
-given_date = ARGV.first ? Date.parse(ARGV.first) : Date.today
-
-start_date  = Date.new(2019, 1, 1)
-end_date    = previous_dow(:friday, given_date)
-
-ASOF = end_date.to_s.tr('-','')
-
-
-#######################################################################
-# download a CSV file from https://query1.finance.yahoo.com
-# given a stock ticker symbol as a String
-# start and end dates
-#
-# For ticker "aapl" the downloaded file will be named "aapl.csv"
-# That filename will be renamed to "aapl_YYYYmmdd.csv" where the
-# date suffix is the end_date of the historical data.
-#
-def download_historical_prices(ticker, start_date, end_date)
-  data_path       = Pathname.pwd + "#{ticker}_#{ASOF}.csv"
-  return if data_path.exist?
-
-  mew_path        = Pathname.pwd + "#{ticker}.csv"
-
-  start_timestamp = start_date.to_time.to_i
-  end_timestamp   = end_date.to_time.to_i
-  ticker_upcase   = ticker.upcase
-  filename        = "#{ticker.downcase}.csv"
-
-  `curl -o #{filename} "https://query1.finance.yahoo.com/v7/finance/download/#{ticker_upcase}?period1=#{start_timestamp}&period2=#{end_timestamp}&interval=1d&events=history&includeAdjustedClose=true"`
-
-  mew_path.rename data_path
-end
-
-
-#######################################################################
-# Read the CSV file associated with the give ticker symbol
-# and the ASOF date.
-#
-def read_csv(ticker)
-  filename  = "#{ticker.downcase}_#{ASOF}.csv"
-  data      = []
-
-  CSV.foreach(filename, headers: true) do |row|
-    data << row.to_h
-  end
-
-  data
-end
 
 ##########################
 # record a recommend trade
 
 def trade(ticker, signal, shares, price)
-  TRADES_FILE.puts "#{ticker},#{ASOF},#{signal},#{shares},#{price}"
+  # TODO: insert row into TRADES_DF
+
+  debug_me{[
+    :ticker,
+    :signal,
+    :shares,
+    :price
+  ]}
 end 
 
 #######################################################################
@@ -128,101 +77,109 @@ end
 ##  Main
 #
 
+stocks = []
 
 tickers.each do |ticker|
-  download_historical_prices(ticker, start_date, end_date)
+  stocks << SQA::Stock.new(ticker: ticker)
+rescue => e
+  puts "\nERROR: #{e}"
+  puts   "  ticker: #{ticker}"
 end
 
 result = {}
 
 mwfd = 14 # moving_window_forcast_days
 
+stocks.each do |stock|
+  # TODO: do something with the stock
+  print "ticker: #{stock.ticker} "
+  puts "df size: #{stock.df.size}"
+end
+
+puts "Done."
+
 headers = %w[ Ticker AdjClose Trend Slope M'tum RSI Analysis MACD Target Signal $]
 values  = []
 
-tickers.each do |ticker|
-
-  data            = read_csv ticker
-  prices          = data.map{|r| r["Adj Close"].to_f}
-  volumes         = data.map{|r| r["volume"].to_f}
-
-  if data.blank?
-    puts 
-    puts "ERROR: cannot get data for #{ticker}"
-    puts 
-    next
-  end
+stocks.each do |stock|
+  ticker          = stock.ticker
+  data            = stock.df
+  prices          = data.adj_close_price.to_a
+  volumes         = data.volume.to_a
 
 
   result[ticker]  = {
-    date:       data.last["Date"],
-    adj_close:  data.last["Adj Close"].to_f
+    date:       data.timestamp.last(1),
+    adj_close:  data.adj_close_price.last(1)
   }
 
-  result[ticker][:market] = FinTech.classify_market_profile(
-                                      volumes.last(mwfd), 
-                                      prices.last(mwfd), 
-                                      prices.last(mwfd).first, 
+  result[ticker][:market] = SQAI.market_profile(
+                                      volumes.last(mwfd),
+                                      prices.last(mwfd),
+                                      prices.last(mwfd).first,
                                       prices.last
                                     )
 
-  fr = FinTech.fibonacci_retracement( prices.last(mwfd).first, 
+  fr = SQAI.fibonacci_retracement( prices.last(mwfd).first,
                                       prices.last).map{|x| x.round(3)}
 
 
   puts "\n#{result[ticker][:market]} .. #{ticker}\t#{fr}"
   print "\t"
-  print FinTech.head_and_shoulders_pattern?(prices.last(mwfd))
+  print SQAI.head_and_shoulders_pattern?(prices.last(mwfd))
   print "\t"
-  print FinTech.double_top_bottom_pattern?(prices.last(mwfd))
+  print SQAI.double_top_bottom_pattern(prices.last(mwfd))
   print "\t"
-  mr = FinTech.mean_reversion?(prices, mwfd, 0.5)
-  print mr 
+  mr = SQAI.mean_reversion?(prices, mwfd, 0.5)
+  print mr
 
-  if mr 
+  if mr
     print "\t"
-    print FinTech.mr_mean(prices, mwfd).round(3)
+    print SQAI.mr_mean(prices, mwfd).round(3)
   end
 
   print "\t"
-  print FinTech.identify_wave_condition?(prices, 2*mwfd, 1.0)
-  puts 
+  print SQAI.elliott_wave_theory(prices).map{|w| w[:pattern]}.last
+  puts
 
   print "\t"
-  print FinTech.ema_analysis(prices, mwfd).except(:ema_values)
+  print SQAI.exponential_moving_average_trend(prices, mwfd).except(:ema)
 
-  puts 
+  puts
 
   row  = [ ticker ]
 
-  # result[ticker][:moving_averages]  = FinTech.sma(data, mwfd)
-  result[ticker][:trend]              = FinTech.sma_trend(data, mwfd)
-  result[ticker][:momentum]           = FinTech.momentum(prices, mwfd)
-  result[ticker][:rsi]                = FinTech.rsi(data, mwfd)
-  result[ticker][:bollinger_bands]    = FinTech.bollinger_bands(data, mwfd, 2)
-  result[ticker][:macd]               = FinTech.macd(data, mwfd, 2*mwfd, mwfd/2)
+  # result[ticker][:moving_averages]  = SQAI.sma(data, mwfd)
+  result[ticker][:trend]              = SQAI.sma_trend(prices, mwfd)
+  result[ticker][:momentum]           = SQAI.momentum(prices, mwfd).last
+  result[ticker][:rsi]                = SQAI.rsi(prices, mwfd)
+  result[ticker][:bollinger_bands]    = SQAI.bollinger_bands(prices, mwfd, 2)
+
+  macd = SQAI.macd(prices, mwfd, 2*mwfd, mwfd/2)
+
+  result[ticker][:macd]               = macd[:macd]
 
   price = result[ticker][:adj_close].round(3)
-  
+
   row << price
   row << result[ticker][:trend][:trend]
   row << result[ticker][:trend][:angle].round(3)
   row << result[ticker][:momentum].round(3)
   row << result[ticker][:rsi][:rsi].round(3)
   row << result[ticker][:rsi][:meaning]
-  row << result[ticker][:macd].first.round(3)
-  row << result[ticker][:macd].last.round(3)
-  
+  row << result[ticker][:macd].round(3)  # FIXME: single float
+  row << result[ticker][:macd].round(3)
+
   analysis  = result[ticker][:rsi][:meaning]
 
   signal    = ""
-  macd_diff = result[ticker][:macd].first
-  target    = result[ticker][:macd].last
+  macd_diff = result[ticker][:macd] # FIXME: single float
+  target    = result[ticker][:macd]
   current   = result[ticker][:adj_close]
 
   trend_down = "down" == result[ticker][:trend][:trend]
 
-  if current < target 
+  if current < target
     signal = "buy" unless "Over Bought" == analysis
   elsif (current > target) && trend_down
     signal = "sell" unless "Over Sold" == analysis
@@ -256,7 +213,9 @@ end
 the_table = TTY::Table.new(headers, values)
 
 puts
-puts "Analysis as of Friday Close: #{end_date}"
+puts "Analysis"
+puts "========"
+puts
 
 puts  the_table.render(
         :unicode,
@@ -279,8 +238,3 @@ puts  the_table.render(
       )
 puts 
 
-
-
-
-
-TRADES_FILE.close 
