@@ -11,7 +11,7 @@
 INVEST = 1000.00
 
 require 'sqa'
-
+require 'ostruct'
 require 'tty-table'
 
 
@@ -39,15 +39,23 @@ print "\ntrades cols: "
 puts TRADES_DF.vectors.to_a.join(', ')
 
 class NilClass
-  def blank?() = true
+  def blank?()  = true
 end
 
 class String
-  def blank?() = strip().empty?
+  def blank?()  = strip().empty?
 end
 
 class Array
-  def blank?() = empty?
+  def blank?()  = empty?
+  def r2        = self.map{|v| v.round(2)}
+  def r3        = self.map{|v| v.round(3)}
+end
+
+class Float
+  def blank?()  = false
+  def r2        = self.round(2)
+  def r3        = self.round(3)
 end
 
 
@@ -72,6 +80,61 @@ def trade(ticker, signal, shares, price)
   ]}
 end 
 
+signals = []
+
+
+class SQA::Strategy
+  attr_accessor :signals
+
+  def initialize
+    @signals = []
+  end
+
+  def add_signal(a_proc=nil, &block)
+    @signals << a_proc unless a_proc.nil?
+    @signals << block  if block_given?
+  end
+
+  def execute_signals(v)
+    result = []
+    # Can do this in parallel ...
+    @signals.each { |signal| result << signal.call(v) }
+    result
+  end
+end
+
+ss = SQA::Strategy.new
+
+ss.add_signal do |vector|
+  case rand(10)
+  when (8..)
+    :buy
+  when (..3)
+    :sell
+  else
+    :hold
+  end
+end
+
+
+
+ss.add_signal do |vector|
+  case rand(10)
+  when (8..)
+    :sell
+  when (..3)
+    :buy
+  else
+    :keep
+  end
+end
+
+def magic(vector)
+  0 == rand(2) ? :spend : :save
+end
+
+ss.add_signal method(:magic).to_proc
+
 #######################################################################
 ###
 ##  Main
@@ -86,129 +149,104 @@ rescue => e
   puts   "  ticker: #{ticker}"
 end
 
-result = {}
+period = 14 # size of last window to consider
 
-mwfd = 14 # moving_window_forcast_days
-
-stocks.each do |stock|
-  # TODO: do something with the stock
-  print "ticker: #{stock.ticker} "
-  puts "df size: #{stock.df.size}"
-end
-
-puts "Done."
-
-headers = %w[ Ticker AdjClose Trend Slope M'tum RSI Analysis MACD Target Signal $]
-values  = []
+# counter = 0
 
 stocks.each do |stock|
-  ticker          = stock.ticker
-  data            = stock.df
-  prices          = data.adj_close_price.to_a
-  volumes         = data.volume.to_a
+  # exit if counter > 0
+
+  ticker    = stock.ticker
+  data      = stock.df
+  v         = OpenStruct.new   # v, as in vector of values
+
+  # Convert historical data to Arrays because the
+  # SQA::Indicator methods take Arry type as input.
+
+  prices    = data.adj_close_price.to_a.r2
+  volumes   = data.volume.to_a
+
+  # The last timestamp and adjusted closing price
+  # on file for this stock
+
+  timestamp = data.timestamp.last
+  adj_close = data.adj_close_price.last
 
 
-  result[ticker]  = {
-    date:       data.timestamp.last(1),
-    adj_close:  data.adj_close_price.last(1)
-  }
+  # Calculate the indicators for this stock
 
-  result[ticker][:market] = SQAI.market_profile(
-                                      volumes.last(mwfd),
-                                      prices.last(mwfd),
-                                      prices.last(mwfd).first,
-                                      prices.last
-                                    )
+  v.market_profile  = SQAI.market_profile(
+                        volumes.last(period),
+                        prices.last(period),
+                        prices.last(period).first,
+                        prices.last
+                      )
 
-  fr = SQAI.fibonacci_retracement( prices.last(mwfd).first,
-                                      prices.last).map{|x| x.round(3)}
+  v.fr  = SQAI.fibonacci_retracement(
+            prices.last(period).first,
+            prices.last
+          ).r2
+
+  v.hasp      = SQAI.head_and_shoulders_pattern?(prices.last(period))
+  v.dtbp      = SQAI.double_top_bottom_pattern(prices.last(period))
+  v.mr        = SQAI.mean_reversion?(prices, period, 0.5)
+  v.mr_mean   = SQAI.mr_mean(prices, period).round(3)
+
+  v.ewt       = SQAI.elliott_wave_theory(prices.last(4*period)).map{|w| w[:pattern]}.compact.last(3)
+
+  v.ema               = SQAI.exponential_moving_average_trend(prices, period).except(:ema)
+  v.ema[:support]     = v.ema[:support].r2
+  v.ema[:resistance]  = v.ema[:resistance].r2
+
+  # v.sma     = SQAI.simple_moving_average(prices, period).r2
+
+  v.sma_trend         = SQAI.sma_trend(prices, period).except(:sma)
+  v.sma_trend[:angle] = v.sma_trend[:angle].r2
+
+  v.momentum  = SQAI.momentum(prices, period).last.r2
+
+  v.rsi       = SQAI.rsi(prices, period)
+  v.rsi[:rsi] = v.rsi[:rsi].r2
+
+  bb          = SQAI.bollinger_bands(prices, period, 2)
+  v.bb        = [ bb[:lower_band].r2, bb[:upper_band].r2 ]
+
+  v.macd      = SQAI.moving_average_convergence_divergence(
+                  prices,
+                  period,
+                  2*period,
+                  period/2
+                )
+
+  v.macd[:macd]    = v.macd[:macd].last.r2
+  v.macd[:signal]  = v.macd[:signal].last.r2
+
+  print "#{ticker}: "
+  puts ss.execute_signals(v).join(', ')
 
 
-  puts "\n#{result[ticker][:market]} .. #{ticker}\t#{fr}"
-  print "\t"
-  print SQAI.head_and_shoulders_pattern?(prices.last(mwfd))
-  print "\t"
-  print SQAI.double_top_bottom_pattern(prices.last(mwfd))
-  print "\t"
-  mr = SQAI.mean_reversion?(prices, mwfd, 0.5)
-  print mr
 
-  if mr
-    print "\t"
-    print SQAI.mr_mean(prices, mwfd).round(3)
-  end
+  # if "buy" == signal
+  #   pps     = target - price
+  #   shares  = INVEST.to_i / price.to_i
+  #   upside  = (shares * pps).round(2)
+  #   trade(ticker, signal, shares, price)
+  # elsif "sell" == signal
+  #   pps     = target - price
+  #   shares  = INVEST.to_i / price.to_i
+  #   upside  = (shares * pps).round(2)
+  #   trade(ticker, signal, shares, price)
+  # else
+  #   upside = ""
+  # end
 
-  print "\t"
-  print SQAI.elliott_wave_theory(prices).map{|w| w[:pattern]}.last
-  puts
-
-  print "\t"
-  print SQAI.exponential_moving_average_trend(prices, mwfd).except(:ema)
-
-  puts
-
-  row  = [ ticker ]
-
-  # result[ticker][:moving_averages]  = SQAI.sma(data, mwfd)
-  result[ticker][:trend]              = SQAI.sma_trend(prices, mwfd)
-  result[ticker][:momentum]           = SQAI.momentum(prices, mwfd).last
-  result[ticker][:rsi]                = SQAI.rsi(prices, mwfd)
-  result[ticker][:bollinger_bands]    = SQAI.bollinger_bands(prices, mwfd, 2)
-
-  macd = SQAI.macd(prices, mwfd, 2*mwfd, mwfd/2)
-
-  result[ticker][:macd]               = macd[:macd]
-
-  price = result[ticker][:adj_close].round(3)
-
-  row << price
-  row << result[ticker][:trend][:trend]
-  row << result[ticker][:trend][:angle].round(3)
-  row << result[ticker][:momentum].round(3)
-  row << result[ticker][:rsi][:rsi].round(3)
-  row << result[ticker][:rsi][:meaning]
-  row << result[ticker][:macd].round(3)  # FIXME: single float
-  row << result[ticker][:macd].round(3)
-
-  analysis  = result[ticker][:rsi][:meaning]
-
-  signal    = ""
-  macd_diff = result[ticker][:macd] # FIXME: single float
-  target    = result[ticker][:macd]
-  current   = result[ticker][:adj_close]
-
-  trend_down = "down" == result[ticker][:trend][:trend]
-
-  if current < target
-    signal = "buy" unless "Over Bought" == analysis
-  elsif (current > target) && trend_down
-    signal = "sell" unless "Over Sold" == analysis
-  end
-
-  if "buy" == signal
-    pps     = target - price
-    shares  = INVEST.to_i / price.to_i
-    upside  = (shares * pps).round(2)
-    trade(ticker, signal, shares, price)
-  elsif "sell" == signal
-    pps     = target - price
-    shares  = INVEST.to_i / price.to_i
-    upside  = (shares * pps).round(2)
-    trade(ticker, signal, shares, price)
-  else
-    upside = ""
-  end
-
-  row << signal
-  row << upside
-
-  values << row
+  # counter += 1
 end
 
-# debug_me{[
-#   :result
-# ]}
 
+
+
+__END__
 
 the_table = TTY::Table.new(headers, values)
 
