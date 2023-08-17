@@ -83,29 +83,9 @@ end
 signals = []
 
 
-class SQA::Strategy
-  attr_accessor :signals
-
-  def initialize
-    @signals = []
-  end
-
-  def add_signal(a_proc=nil, &block)
-    @signals << a_proc unless a_proc.nil?
-    @signals << block  if block_given?
-  end
-
-  def execute_signals(v)
-    result = []
-    # Can do this in parallel ...
-    @signals.each { |signal| result << signal.call(v) }
-    result
-  end
-end
-
 ss = SQA::Strategy.new
 
-ss.add_signal do |vector|
+ss.add do |vector|
   case rand(10)
   when (8..)
     :buy
@@ -118,7 +98,7 @@ end
 
 
 
-ss.add_signal do |vector|
+ss.add do |vector|
   case rand(10)
   when (8..)
     :sell
@@ -133,7 +113,15 @@ def magic(vector)
   0 == rand(2) ? :spend : :save
 end
 
-ss.add_signal method(:magic).to_proc
+ss.add method(:magic)
+
+class MyClass
+  def self.my_method(vector)
+    vector.rsi[:rsi]
+  end
+end
+
+ss.add MyClass.method(:my_method)
 
 #######################################################################
 ###
@@ -222,7 +210,7 @@ stocks.each do |stock|
   v.macd[:signal]  = v.macd[:signal].last.r2
 
   print "#{ticker}: "
-  puts ss.execute_signals(v).join(', ')
+  puts ss.execute(v).join(', ')
 
 
 
