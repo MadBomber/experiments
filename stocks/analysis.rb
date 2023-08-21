@@ -213,20 +213,8 @@ stocks.each do |stock|
   puts ss.execute(v).join(', ')
 
 
+  debug_me{[ :v ]}
 
-  # if "buy" == signal
-  #   pps     = target - price
-  #   shares  = INVEST.to_i / price.to_i
-  #   upside  = (shares * pps).round(2)
-  #   trade(ticker, signal, shares, price)
-  # elsif "sell" == signal
-  #   pps     = target - price
-  #   shares  = INVEST.to_i / price.to_i
-  #   upside  = (shares * pps).round(2)
-  #   trade(ticker, signal, shares, price)
-  # else
-  #   upside = ""
-  # end
 
   # counter += 1
 end
