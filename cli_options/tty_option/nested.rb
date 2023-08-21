@@ -3,26 +3,30 @@
 
 require "tty-option"
 
-module SQA
+module App
   class Command
     include TTY::Option
 
-    header "** DO NOT USE **"
+    header "** Useful?? **"
     footer "Another questionable experiment by the MadBomber"
 
-    # banner "== bannder ==" replaces the Usage line
-
     usage do
-      program "sqa"
+      program "app"
     end
 
-    flag :force do
-      short "-f"
-      long "--force"
-      desc "Do not prompt for confirmation"
+    flag :verbse do
+      short "-v"
+      long "--verbose"
+      desc "Talk alot"
     end
 
-    option :help do
+    flag :debug do
+      short "-d"
+      long "--debug"
+      desc "Use Native Intelligence (NI) to solve the problem"
+    end
+
+    flag :help do
       short "-h"
       long "--help"
       desc "Display help information"
@@ -42,44 +46,45 @@ module SQA
   end
 
 
-  class Analysis < Command
+  class One < Command
     usage do
-      program "sqa"
-      desc "Connect to a network"
+      program "app"
+      desc "Do Number One"
     end
 
-    argument :network
-
-    option :ip do
-      long "--ip string"
-      desc "IPv4 address (e.g., 172.30.100.104)"
+    flag :one_flag_to_rule_them_all do
+      long "--one"
+      desc "Number One's Flag"
     end
   end
 
-  class Web < Command
+  class Two < Command
     usage do
-      program "sqa"
-      desc "Disconnect from a network"
+      program "app"
+      desc "Do Number Two"
     end
 
-    argument :network
+    flag :number_two do
+      long '--two'
+      desc "Flag Number Two"
+    end
   end
 end
 
 
+# Load TTY-Option's command content with available commands
+App::Command.command App::Command.names
 
-SQA::Command.command SQA::Command.names
+cmds = App::Command.new
+puts cmds.help
 
-cmd = SQA::Command.new
-puts cmd.help
+puts "="*42
 
-puts
+one = App::One.new
+puts one.help
 
-analysis = SQA::Analysis.new
-puts analysis.help
+puts "="*42
 
-puts
-
-web = SQA::Web.new
-puts web.help
+two = App::Two.new
+puts two.help
 
