@@ -14,6 +14,8 @@ module App
       program "app"
     end
 
+    # TODO: Define a section name for the options that follow
+
     flag :verbse do
       short "-v"
       long "--verbose"
