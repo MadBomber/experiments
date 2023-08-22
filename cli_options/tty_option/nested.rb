@@ -1,38 +1,18 @@
 #!/usr/bin/env ruby
 # nested.rb
 
+require 'debug_me'
+include DebugMe
+
+
+
 require "tty-option"
 
 module App
   class Command
     include TTY::Option
 
-    header "** Useful?? **"
-    footer "Another questionable experiment by the MadBomber"
-
-    usage do
-      program "app"
-    end
-
-    # TODO: Define a section name for the options that follow
-
-    flag :verbse do
-      short "-v"
-      long "--verbose"
-      desc "Talk alot"
-    end
-
-    flag :debug do
-      short "-d"
-      long "--debug"
-      desc "Use Native Intelligence (NI) to solve the problem"
-    end
-
-    flag :help do
-      short "-h"
-      long "--help"
-      desc "Display help information"
-    end
+    class_eval File.open(__dir__ + '/common_options.txt').read
 
     class << self
       @@commands_available = []
@@ -49,8 +29,9 @@ module App
 
 
   class One < Command
+    include TTY::Option
+
     usage do
-      program "app"
       desc "Do Number One"
     end
 
@@ -58,11 +39,18 @@ module App
       long "--one"
       desc "Number One's Flag"
     end
+
+    example "app one --one"
+
+    class_eval File.open(__dir__ + '/common_options.txt').read
+
+
   end
 
   class Two < Command
+    include TTY::Option
+
     usage do
-      program "app"
       desc "Do Number Two"
     end
 
@@ -70,6 +58,11 @@ module App
       long '--two'
       desc "Flag Number Two"
     end
+
+    example "app two --two"
+
+    class_eval File.open(__dir__ + '/common_options.txt').read
+
   end
 end
 
@@ -89,4 +82,6 @@ puts "="*42
 
 two = App::Two.new
 puts two.help
+
+
 
