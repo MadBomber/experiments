@@ -12,7 +12,30 @@ module App
   class Command
     include TTY::Option
 
-    class_eval File.open(__dir__ + '/common_options.txt').read
+    header "** Useful?? **"
+    footer "Another questionable experiment by the MadBomber"
+
+    usage do
+      program "app"
+    end
+
+    flag :verbse do
+      short "-v"
+      long "--verbose"
+      desc "Talk alot"
+    end
+
+    flag :debug do
+      short "-d"
+      long "--debug"
+      desc "Use Native Intelligence (NI) to solve the problem"
+    end
+
+    flag :help do
+      short "-h"
+      long "--help"
+      desc "Display help information"
+    end
 
     class << self
       @@commands_available = []
@@ -22,6 +45,7 @@ module App
       end
 
       def inherited(subclass)
+        super
         @@commands_available << subclass.to_s.downcase.split('::').last
       end
     end
@@ -32,7 +56,7 @@ module App
     include TTY::Option
 
     usage do
-      desc "Do Number One"
+      @@desc = desc "Do Number One"
     end
 
     flag :one_flag_to_rule_them_all do
@@ -41,17 +65,13 @@ module App
     end
 
     example "app one --one"
-
-    class_eval File.open(__dir__ + '/common_options.txt').read
-
-
   end
 
   class Two < Command
     include TTY::Option
 
     usage do
-      desc "Do Number Two"
+      @@desc = desc "Do Number Two"
     end
 
     flag :number_two do
@@ -60,9 +80,6 @@ module App
     end
 
     example "app two --two"
-
-    class_eval File.open(__dir__ + '/common_options.txt').read
-
   end
 end
 
@@ -83,5 +100,11 @@ puts "="*42
 two = App::Two.new
 puts two.help
 
+puts "="*42
+
+debug_me{[
+  "App::One.class_variable_get(:@@desc)",
+  "App::Two.class_variable_get(:@@desc)"
+]}
 
 
