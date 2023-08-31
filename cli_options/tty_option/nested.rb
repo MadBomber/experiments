@@ -1,10 +1,8 @@
 #!/usr/bin/env ruby
-# nested.rb
+# nested.rb with optional commands desc in help block
 
 require 'debug_me'
 include DebugMe
-
-
 
 require "tty-option"
 
@@ -15,9 +13,8 @@ module App
     header "** Useful?? **"
     footer "Another questionable experiment by the MadBomber"
 
-    usage do
-      program "app"
-    end
+    program "app"
+    desc    "A Demonstration of Dynamic Nested Commands"
 
     flag :verbse do
       short "-v"
@@ -38,7 +35,8 @@ module App
     end
 
     class << self
-      @@commands_available = []
+      @@subclasses          = []
+      @@commands_available  = []
 
       def names
         '['+ @@commands_available.join('|')+']'
@@ -46,7 +44,20 @@ module App
 
       def inherited(subclass)
         super
-        @@commands_available << subclass.to_s.downcase.split('::').last
+        @@subclasses          << subclass
+        @@commands_available  << subclass.command.join
+      end
+
+      def command_descriptions
+        help_block = "Optional Command Available:"
+
+        @@commands_available.size.times do |x|
+          klass = @@subclasses[x]
+          help_block << "\n  " + @@commands_available[x] + " - "
+          help_block << klass.desc.join
+        end
+
+        help_block
       end
     end
   end
@@ -55,9 +66,7 @@ module App
   class One < Command
     include TTY::Option
 
-    usage do
-      @@desc = desc "Do Number One"
-    end
+    desc "Do Number One"
 
     flag :one_flag_to_rule_them_all do
       long "--one"
@@ -70,9 +79,7 @@ module App
   class Two < Command
     include TTY::Option
 
-    usage do
-      @@desc = desc "Do Number Two"
-    end
+    desc "Do Number Two"
 
     flag :number_two do
       long '--two'
@@ -84,8 +91,12 @@ module App
 end
 
 
-# Load TTY-Option's command content with available commands
+# First Load TTY-Option's command content with all available commands
+# then these have access to the entire ObjectSpace ...
 App::Command.command App::Command.names
+App::Command.example App::Command.command_descriptions
+
+# Demo the Help Content ...
 
 cmds = App::Command.new
 puts cmds.help
@@ -99,12 +110,4 @@ puts "="*42
 
 two = App::Two.new
 puts two.help
-
-puts "="*42
-
-debug_me{[
-  "App::One.class_variable_get(:@@desc)",
-  "App::Two.class_variable_get(:@@desc)"
-]}
-
 
