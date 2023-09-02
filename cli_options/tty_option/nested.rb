@@ -34,6 +34,10 @@ module App
       desc "Display help information"
     end
 
+    # def initialize(params)
+    # TODO: do something
+    # end
+
     class << self
       @@subclasses          = []
       @@commands_available  = []
@@ -58,6 +62,48 @@ module App
         end
 
         help_block
+      end
+
+
+      ##################################################
+      def run(argv = ARGV)
+        if argv.is_a? String
+          argv = argv.split
+        end
+
+        debug_me('before'){[ :argv ]}
+
+        app    = dispatcher(argv)
+        parser = app.parse(argv)
+        params = parser.params
+
+        if params[:help]
+          print parser.help
+          exit(0)
+
+        elsif params.errors.any?
+          puts params.errors.summary
+          exit(1)
+
+        else
+          debug_me{[
+            :params
+          ]}
+
+        end
+
+        app
+      end
+
+      def dispatcher(argv)
+        if argv.first.start_with?('-')
+          cmd = new
+        else
+          x = @@commands_available.index argv.shift
+          cmd = @@subclasses[x].new
+        end
+
+        cmd
       end
     end
   end
@@ -98,16 +144,23 @@ App::Command.example App::Command.command_descriptions
 
 # Demo the Help Content ...
 
-cmds = App::Command.new
-puts cmds.help
+cmds = App::Command.run "one --one --debug --verbose --help"
 
-puts "="*42
+debug_me{[
+  :cmds
+]}
 
-one = App::One.new
-puts one.help
 
-puts "="*42
+# cmds = App::Command.new
+# puts cmds.help
 
-two = App::Two.new
-puts two.help
+# puts "="*42
+
+# one = App::One.new
+# puts one.help
+
+# puts "="*42
+
+# two = App::Two.new
+# puts two.help
 
