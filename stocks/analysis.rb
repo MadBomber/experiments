@@ -10,19 +10,34 @@
 # Maximum amount to invest in each trade
 INVEST = 1000.00
 
-require 'sqa'
+require 'amazing_print'
+
+require 'debug_me'
+include DebugMe
+
+
+require 'faraday'
+require 'nokogiri'
+
+
+require 'sqa'       # v0.0.9
+require 'sqa/cli'
 require 'ostruct'
 require 'tty-table'
 
 
-PORTFOLIO = SQA::Config.data_dir + "portfolio.csv"
-TRADES    = SQA::Config.data_dir + "trades.csv"
+
+SQA.init("--data-dir #{Nenv.home}/Documents/sqa_data/")
+
+
+PORTFOLIO = Pathname.new SQA.config.data_dir + "portfolio.csv"
+TRADES    = Pathname.new SQA.config.data_dir + "trades.csv"
 
 unless PORTFOLIO.exist?
   puts
-  puts "ERROR: The #{PORTFOLIO.basename} file does not exist."
+  puts "ERROR: The #{PORTFOLIO.basename} file does not exist at #{PORTFOLIO}"
   puts
-  exot(-1)
+  exit(-1)
 end
 
 
@@ -33,10 +48,15 @@ print "\nportfolio cols: "
 puts PORTFOLIO_DF.vectors.to_a.join(', ')
 
 print "\ntickers: "
-puts PORTFOLIO_DF["TICKER"].to_a.join(', ')
+puts PORTFOLIO_DF["Ticker"].to_a.join(', ')
 
 print "\ntrades cols: "
 puts TRADES_DF.vectors.to_a.join(', ')
+
+
+puts "="*62
+puts PORTFOLIO_DF.inspect(1, PORTFOLIO_DF.size)
+puts "="*62
 
 class NilClass
   def blank?()  = true
@@ -60,7 +80,7 @@ end
 
 
 def tickers
-  @tickers ||= PORTFOLIO_DF['TICKER'].to_a.sort
+  @tickers ||= PORTFOLIO_DF['Ticker'].to_a.sort
 
   @tickers
 end
@@ -72,7 +92,7 @@ end
 def trade(ticker, signal, shares, price)
   # TODO: insert row into TRADES_DF
 
-  debug_me{[
+  debug_me("== TRADE =="){[
     :ticker,
     :signal,
     :shares,
@@ -85,7 +105,7 @@ signals = []
 
 ss = SQA::Strategy.new
 
-ss.add do |vector|
+ss.add(SQA::Strategy::Random) do |vector|
   case rand(10)
   when (8..)
     :buy
@@ -98,7 +118,7 @@ end
 
 
 
-ss.add do |vector|
+ss.add(SQA::Strategy::Random) do |vector|
   case rand(10)
   when (8..)
     :sell
@@ -123,6 +143,34 @@ end
 
 ss.add MyClass.method(:my_method)
 
+
+########################################################
+## Update stock historical pricess from receint history
+
+CONNECTION = Faraday.new(url: 'https://finance.yahoo.com')
+
+def receint_history(ticker_symbol)
+  response  = CONNECTION.get("/quote/#{ticker_symbol.upcase}/history")
+  doc       = Nokogiri::HTML(response.body)
+  table     = doc.css('table').first
+  rows      = table.css('tbody tr')
+
+  markdown  = "| Date | Open | High | Low | Close | Adj Close | Volume |\n"
+  markdown += "|------|------|------|-----|-------|-----------|--------|\n"
+
+  rows.each do |row|
+    cols = row.css('td').map{|c| c&.text}
+
+    unless cols[1]&.include?('Dividend')
+       markdown += "| " + cols.join(" | ") + " | \n"
+       # #{cols[0]} | #{cols[1]} | #{cols[2]} | #{cols[3]} | #{cols[4]} | #{cols[5]} | #{cols[6]} |\n"
+    end
+  end
+
+  puts markdown
+end
+
+
 #######################################################################
 ###
 ##  Main
@@ -139,13 +187,29 @@ end
 
 period = 14 # size of last window to consider
 
-# counter = 0
+counter = 0
 
 stocks.each do |stock|
-  # exit if counter > 0
+  exit if counter > 3
 
   ticker    = stock.ticker
   data      = stock.df
+
+  # The last timestamp and adjusted closing price
+  # on file for this stock
+
+  timestamp = data.timestamp.last
+  adj_close = data.adj_close_price.last
+
+  puts
+  puts "="*62
+  puts "== #{ticker}"
+  puts "== #{timestamp} at #{adj_close}"
+  puts
+
+  receint_history(ticker)
+
+
   v         = OpenStruct.new   # v, as in vector of values
 
   # Convert historical data to Arrays because the
@@ -153,12 +217,6 @@ stocks.each do |stock|
 
   prices    = data.adj_close_price.to_a.r2
   volumes   = data.volume.to_a
-
-  # The last timestamp and adjusted closing price
-  # on file for this stock
-
-  timestamp = data.timestamp.last
-  adj_close = data.adj_close_price.last
 
 
   # Calculate the indicators for this stock
@@ -209,14 +267,19 @@ stocks.each do |stock|
   v.macd[:macd]    = v.macd[:macd].last.r2
   v.macd[:signal]  = v.macd[:signal].last.r2
 
-  print "#{ticker}: "
+
+  puts
+  puts "Trade Recommendations"
+  print "  #{ticker}: "
   puts ss.execute(v).join(', ')
 
 
-  debug_me{[ :v ]}
+  puts
+  puts "Metrics:"
+  ap v.to_h
 
 
-  # counter += 1
+  counter += 1
 end
 
 
