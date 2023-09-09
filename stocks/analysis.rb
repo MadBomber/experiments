@@ -147,28 +147,28 @@ ss.add MyClass.method(:my_method)
 ########################################################
 ## Update stock historical pricess from receint history
 
-CONNECTION = Faraday.new(url: 'https://finance.yahoo.com')
+# CONNECTION = Faraday.new(url: 'https://finance.yahoo.com')
 
-def receint_history(ticker_symbol)
-  response  = CONNECTION.get("/quote/#{ticker_symbol.upcase}/history")
-  doc       = Nokogiri::HTML(response.body)
-  table     = doc.css('table').first
-  rows      = table.css('tbody tr')
+# def receint_history(ticker_symbol)
+#   response  = CONNECTION.get("/quote/#{ticker_symbol.upcase}/history")
+#   doc       = Nokogiri::HTML(response.body)
+#   table     = doc.css('table').first
+#   rows      = table.css('tbody tr')
 
-  markdown  = "| Date | Open | High | Low | Close | Adj Close | Volume |\n"
-  markdown += "|------|------|------|-----|-------|-----------|--------|\n"
+#   markdown  = "| Date | Open | High | Low | Close | Adj Close | Volume |\n"
+#   markdown += "|------|------|------|-----|-------|-----------|--------|\n"
 
-  rows.each do |row|
-    cols = row.css('td').map{|c| c&.text}
+#   rows.each do |row|
+#     cols = row.css('td').map{|c| c&.text}
 
-    unless cols[1]&.include?('Dividend')
-       markdown += "| " + cols.join(" | ") + " | \n"
-       # #{cols[0]} | #{cols[1]} | #{cols[2]} | #{cols[3]} | #{cols[4]} | #{cols[5]} | #{cols[6]} |\n"
-    end
-  end
+#     unless cols[1]&.include?('Dividend')
+#        markdown += "| " + cols.join(" | ") + " | \n"
+#        # #{cols[0]} | #{cols[1]} | #{cols[2]} | #{cols[3]} | #{cols[4]} | #{cols[5]} | #{cols[6]} |\n"
+#     end
+#   end
 
-  puts markdown
-end
+#   puts markdown
+# end
 
 
 #######################################################################
@@ -190,7 +190,7 @@ period = 14 # size of last window to consider
 counter = 0
 
 stocks.each do |stock|
-  exit if counter > 3
+  exit if counter > PORTFOLIO.size
 
   ticker    = stock.ticker
   data      = stock.df
@@ -207,7 +207,7 @@ stocks.each do |stock|
   puts "== #{timestamp} at #{adj_close}"
   puts
 
-  receint_history(ticker)
+  # receint_history(ticker)
 
 
   v         = OpenStruct.new   # v, as in vector of values
