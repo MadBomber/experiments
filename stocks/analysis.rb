@@ -272,46 +272,91 @@ def validate_pnv(prices, predictions)
     off_by  = delta / actual * 100.0
     entry   = [actual, guess, delta, off_by]
 
-    array  << entry.map{|v| v.r3}
+    array  << entry
   end
 
   array
 end
 
-def validation_report(stock, future)
 
-prices  = stock.df.adj_close_price
-headers = %w[ Actual Guess Delta Percent]
-values  = validate_pnv(prices, future)
+def validate_pnv2(prices, predictions)
+  last_inx  = prices.size - (predictions + 1)
+  actuals   = prices[last_inx+1..]
+  guesses   = SQAI.pnv2(prices[..last_inx], predictions)
 
-the_table = TTY::Table.new(headers, values)
+  array   = []
 
-puts
-puts stock.ticker
-puts "Analysis"
-puts "========"
-puts
+  actuals.size.times do |x|
+    actual  = actuals[x]
 
-puts  the_table.render(
-        :unicode,
-        {
-          padding:    [0, 0, 0, 0],
-          alignments: [
-            :right,   # actual
-            :right,   # guess
-            :right,   # delta
-            :right,   # off_by
-          ],
-        }
-      )
-puts 
+    # debug_me("== #{x} =="){[
+    #   "guesses[x]"
+    # ]}
+
+    high    = guesses[x][0]
+    guess   = guesses[x][1]
+    low     = guesses[x][2]
+    delta   = actual - guess
+    off_by  = delta / actual * 100.0
+
+    in_window = high >= actual && actual >= low
+
+    entry   = [actual, guess, delta, off_by, in_window, high, low]
+
+    array  << entry
+  end
+
+  array
+end
+
+
+
+def validation_report(which, stock, future)
+
+  prices  = stock.df.adj_close_price
+
+  if :pnv == which
+    headers = %w[ Actual Guess Delta Percent]
+    values  = validate_pnv(prices, future)
+  else
+    headers = %w[ Actual Guess Delta Percent window high low]
+    values  = validate_pnv2(prices, future)
+  end
+
+  values.map!{|a| a.map!{|v| v.is_a?(Float) ? '%.3f' % v: v}}
+
+  the_table = TTY::Table.new(headers, values)
+
+  puts
+  puts stock.ticker
+  puts "Analysis"
+  puts "========"
+  puts
+
+  puts  the_table.render(
+          :unicode,
+          {
+            padding:    [0, 0, 0, 0],
+            alignments:  [:right]*values.first.size,
+            # alignments: [
+            #   :right,   # actual
+            #   :right,   # guess
+            #   :right,   # delta
+            #   :right,   # off_by
+            # ],
+          }
+        )
+  puts
 
 end
 
 stocks.each do |stock|
-  validation_report(stock, 3)
-  validation_report(stock, 5)
-  validation_report(stock,10)
+  validation_report(:pnv,  stock, 3)
+  validation_report(:pnv2, stock, 3)
+  validation_report(:pnv,  stock, 5)
+  validation_report(:pnv2, stock, 5)
+  validation_report(:pnv,  stock,10)
+  validation_report(:pnv2, stock,10)
 end
 
 
