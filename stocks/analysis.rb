@@ -8,7 +8,11 @@
 #
 
 # Maximum amount to invest in each trade
-INVEST = 1000.00
+INVEST    = 1000.00
+
+# contains a subset of tickers symbols from the
+# portfolio just for detailed testing.
+require_relative 'test_with'
 
 require 'amazing_print'
 
@@ -20,7 +24,7 @@ require 'faraday'
 require 'nokogiri'
 
 
-require 'sqa'       # v0.0.9
+require 'sqa'       # v0.0.10
 require 'sqa/cli'
 require 'ostruct'
 require 'tty-table'
@@ -80,7 +84,7 @@ end
 
 
 def tickers
-  @tickers ||= PORTFOLIO_DF['Ticker'].to_a.sort
+  @tickers ||= TEST_WITH || PORTFOLIO_DF['Ticker'].to_a.sort
 
   @tickers
 end
@@ -144,31 +148,6 @@ end
 ss.add MyClass.method(:my_method)
 
 
-########################################################
-## Update stock historical pricess from receint history
-
-# CONNECTION = Faraday.new(url: 'https://finance.yahoo.com')
-
-# def receint_history(ticker_symbol)
-#   response  = CONNECTION.get("/quote/#{ticker_symbol.upcase}/history")
-#   doc       = Nokogiri::HTML(response.body)
-#   table     = doc.css('table').first
-#   rows      = table.css('tbody tr')
-
-#   markdown  = "| Date | Open | High | Low | Close | Adj Close | Volume |\n"
-#   markdown += "|------|------|------|-----|-------|-----------|--------|\n"
-
-#   rows.each do |row|
-#     cols = row.css('td').map{|c| c&.text}
-
-#     unless cols[1]&.include?('Dividend')
-#        markdown += "| " + cols.join(" | ") + " | \n"
-#        # #{cols[0]} | #{cols[1]} | #{cols[2]} | #{cols[3]} | #{cols[4]} | #{cols[5]} | #{cols[6]} |\n"
-#     end
-#   end
-
-#   puts markdown
-# end
 
 
 #######################################################################
@@ -187,11 +166,8 @@ end
 
 period = 14 # size of last window to consider
 
-counter = 0
 
 stocks.each do |stock|
-  exit if counter > PORTFOLIO.size
-
   ticker    = stock.ticker
   data      = stock.df
 
@@ -267,6 +243,8 @@ stocks.each do |stock|
   v.macd[:macd]    = v.macd[:macd].last.r2
   v.macd[:signal]  = v.macd[:signal].last.r2
 
+  v.pnv   = SQAI.pnv(prices,  5)
+  v.pnv2  = SQAI.pnv2(prices, 5)
 
   puts
   puts "Trade Recommendations"
@@ -277,19 +255,39 @@ stocks.each do |stock|
   puts
   puts "Metrics:"
   ap v.to_h
-
-
-  counter += 1
 end
 
 
+def validate_pnv(prices, predictions)
+  last_inx  = prices.size - (predictions + 1)
+  actuals   = prices[last_inx+1..]
+  guesses   = SQAI.pnv(prices[..last_inx], predictions)
 
+  array   = []
 
-__END__
+  actuals.size.times do |x|
+    actual  = actuals[x]
+    guess   = guesses[x]
+    delta   = actual - guess
+    off_by  = delta / actual * 100.0
+    entry   = [actual, guess, delta, off_by]
+
+    array  << entry.map{|v| v.r3}
+  end
+
+  array
+end
+
+def validation_report(stock, future)
+
+prices  = stock.df.adj_close_price
+headers = %w[ Actual Guess Delta Percent]
+values  = validate_pnv(prices, future)
 
 the_table = TTY::Table.new(headers, values)
 
 puts
+puts stock.ticker
 puts "Analysis"
 puts "========"
 puts
@@ -299,19 +297,21 @@ puts  the_table.render(
         {
           padding:    [0, 0, 0, 0],
           alignments: [
-            :left,    # ticker
-            :right,   # adj close
-            :center,  # trend
-            :right,   # slope
-            :right,   # momentum
-            :right,   # rsi
-            :center,  # meaning / analysis
-            :right,   # macd
-            :right,   # target
-            :center,  # signal
-            :right    # upside
+            :right,   # actual
+            :right,   # guess
+            :right,   # delta
+            :right,   # off_by
           ],
         }
       )
 puts 
+
+end
+
+stocks.each do |stock|
+  validation_report(stock, 3)
+  validation_report(stock, 5)
+  validation_report(stock,10)
+end
+
 
