@@ -166,6 +166,7 @@ end
 
 period = 14 # size of last window to consider
 
+indicators = {}
 
 stocks.each do |stock|
   ticker    = stock.ticker
@@ -243,8 +244,23 @@ stocks.each do |stock|
   v.macd[:macd]    = v.macd[:macd].last.r2
   v.macd[:signal]  = v.macd[:signal].last.r2
 
-  v.pnv   = SQAI.pnv(prices,  5)
-  v.pnv2  = SQAI.pnv2(prices, 5)
+  stock.indicators = v
+
+  ############################################
+  # Make predictions
+
+  v.pnv   = SQAI.pnv(stock,  5)
+  v.pnv2  = SQAI.pnv2(stock, 5)
+  v.pnv3  = SQAI.pnv3(stock, 5)
+  v.pnv4  = SQAI.pnv4(stock, 5)
+  v.pnv5  = SQAI.pnv5(stock, 5)
+
+
+  # save predictions
+  stock.indicators = v
+
+  ########################################
+  ## Report Recommendations and Indicators
 
   puts
   puts "Trade Recommendations"
@@ -253,116 +269,90 @@ stocks.each do |stock|
 
 
   puts
-  puts "Metrics:"
-  ap v.to_h
+  puts "Indicators:"
+  ap stock.indicators.to_h
 end
 
-
-def validate_pnv(prices, predictions)
-  last_inx  = prices.size - (predictions + 1)
-  actuals   = prices[last_inx+1..]
-  guesses   = SQAI.pnv(prices[..last_inx], predictions)
-
-  array   = []
-
-  actuals.size.times do |x|
-    actual  = actuals[x]
-    guess   = guesses[x]
-    delta   = actual - guess
-    off_by  = delta / actual * 100.0
-    entry   = [actual, guess, delta, off_by]
-
-    array  << entry
-  end
-
-  array
-end
-
-
-def validate_pnv2(prices, predictions)
-  last_inx  = prices.size - (predictions + 1)
-  actuals   = prices[last_inx+1..]
-  guesses   = SQAI.pnv2(prices[..last_inx], predictions)
-
-  array   = []
-
-  actuals.size.times do |x|
-    actual  = actuals[x]
-
-    # debug_me("== #{x} =="){[
-    #   "guesses[x]"
-    # ]}
-
-    high    = guesses[x][0]
-    guess   = guesses[x][1]
-    low     = guesses[x][2]
-    delta   = actual - guess
-    off_by  = delta / actual * 100.0
-
-    in_window = high >= actual && actual >= low
-
-    entry   = [actual, guess, delta, off_by, in_window, high, low]
-
-    array  << entry
-  end
-
-  array
-end
-
-
-
-def validation_report(which, stock, future)
-
-  prices  = stock.df.adj_close_price
-
-  if :pnv == which
-    headers = %w[ Actual Guess Delta Percent]
-    values  = validate_pnv(prices, future)
-  else
-    headers = %w[ Actual Guess Delta Percent window high low]
-    values  = validate_pnv2(prices, future)
-  end
-
-  values.map!{|a| a.map!{|v| v.is_a?(Float) ? '%.3f' % v: v}}
-
-  the_table = TTY::Table.new(headers, values)
-
-  puts
-  puts stock.ticker
-  puts "Analysis"
-  puts "========"
-  puts
-
-  puts  the_table.render(
-          :unicode,
-          {
-            padding:    [0, 0, 0, 0],
-            alignments:  [:right]*values.first.size,
-            # alignments: [
-            #   :right,   # actual
-            #   :right,   # guess
-            #   :right,   # delta
-            #   :right,   # off_by
-            # ],
-          }
-        )
-  puts
-
-end
 
 stocks.each do |stock|
-  #validation_report(:pnv,  stock, 3)
-  #validation_report(:pnv2, stock, 3)
-  validation_report(:pnv3, stock, 3)
+  puts "="*64
+  puts "== #{stock.ticker}"
 
-  #validation_report(:pnv,  stock, 5)
-  #validation_report(:pnv2, stock, 5)
-  validation_report(:pnv3, stock, 5)
+  [3,5,10].each do |window|
+    headers = %w[ Predictor ]
+    (1..window).each do |x|
+      headers << x
+    end
 
-  #validation_report(:pnv,  stock,10)
-  #validation_report(:pnv2, stock,10)
-  validation_report(:pnv3, stock,10)
+    actual  = stock.df.adj_close_price.to_a.last(window)
+    entry   = ["Actual"]
+    actual.each do |v|
+      entry  << sprintf("%.1f", v.round(1))
+    end
+    values = [ entry ]
 
+
+    %i[ pnv pnv2 pnv3 pnv4 pnv5].each do |which|
+      result = SQAI.send(which, stock, window, true)
+      entry = [which]
+      result.each do |v|
+        if :pnv2 == which
+          entry << sprintf("%.1f", v[1].round(1))
+        else
+          entry << sprintf("%.1f", v.round(1))
+        end
+      end
+
+      values << entry
+    end
+
+    highs = [   0.0] * window
+    lows  = [9999.9] * window
+
+    row_inx = -1
+    values.each do |row|
+      row_inx += 1
+      next if 0 == row_inx
+
+      row[1..-1].each_with_index do |value, index|
+        lows[index]   = [lows[index].to_f,  value.to_f].min
+        highs[index]  = [highs[index].to_f, value.to_f].max
+      end
+    end
+
+    entry = ['High']
+    highs.each do |v|
+      entry << v
+    end
+
+    values << entry
+
+
+    entry = ['Low']
+    lows.each do |v|
+      entry << v
+    end
+
+    values << entry
+
+    the_table = TTY::Table.new(headers, values)
+
+    puts
+    puts "Actual vs. Forecast"
+    puts "==================="
+
+    puts  the_table.render(
+            :unicode,
+            {
+              padding:    [0, 0, 0, 0],
+              alignments:  [:right]*values.first.size,
+            }
+          )
+    puts
+
+
+
+
+
+  end
 end
-
-
