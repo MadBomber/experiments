@@ -24,7 +24,7 @@ require 'faraday'
 require 'nokogiri'
 
 
-require 'sqa'       # v0.0.10
+require 'sqa'       # v0.0.11
 require 'sqa/cli'
 require 'ostruct'
 require 'tty-table'
@@ -72,8 +72,8 @@ end
 
 class Array
   def blank?()  = empty?
-  def r2        = self.map{|v| v.round(2)}
-  def r3        = self.map{|v| v.round(3)}
+  def r2        = self.map{|v| v&.round(2)}
+  def r3        = self.map{|v| v&.round(3)}
 end
 
 class Float
@@ -351,12 +351,18 @@ def validation_report(which, stock, future)
 end
 
 stocks.each do |stock|
-  validation_report(:pnv,  stock, 3)
-  validation_report(:pnv2, stock, 3)
-  validation_report(:pnv,  stock, 5)
-  validation_report(:pnv2, stock, 5)
-  validation_report(:pnv,  stock,10)
-  validation_report(:pnv2, stock,10)
+  #validation_report(:pnv,  stock, 3)
+  #validation_report(:pnv2, stock, 3)
+  validation_report(:pnv3, stock, 3)
+
+  #validation_report(:pnv,  stock, 5)
+  #validation_report(:pnv2, stock, 5)
+  validation_report(:pnv3, stock, 5)
+
+  #validation_report(:pnv,  stock,10)
+  #validation_report(:pnv2, stock,10)
+  validation_report(:pnv3, stock,10)
+
 end
 
 
