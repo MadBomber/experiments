@@ -10,9 +10,9 @@ labels    = []
 # Training data set
 training_data = [
   # swing, acp, high, low, vol],
-  [-1, 10.0, 12.0,  9.0, 100],
-  [ 1,  9.5, 11.5,  8.5, 150],
-  [-1, 11.0, 13.0, 10.0, 200],
+  [-1.0, 10.0, 12.0,  9.0, 100],
+  [ 1.0,  9.5, 11.5,  8.5, 150],
+  [-1.0, 11.0, 13.0, 10.0, 200],
   # Add more training data here
 ]
 
@@ -38,12 +38,12 @@ model = Libsvm::Model.train(problem, parameter)
 def predict_stock_swing(stock_data)
   current_data  = stock_data
   prediction    = model.predict(Libsvm::Node.features(current_data))
-  prediction == 1 ? 'up' : 'down'
+  prediction.positive? ? 'up' : 'down'
 end
 
 # Usage
 #              ajc   high  low   vol
-stock_data = [ 12.5, 14.0, 11.0, 120}
+stock_data = [ 12.5, 14.0, 11.0, 120]
 prediction = predict_stock_swing(stock_data)
 
 puts "The stock is predicted to swing #{prediction}."
