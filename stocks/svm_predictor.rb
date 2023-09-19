@@ -18,7 +18,7 @@ training_data = [
 # Populate features and labels arrays from training data
 training_data.each do |data|
   features  << [data[:adjusted_close_price], data[:high_price], data[:low_price], data[:volume]]
-  labels    << data[:swing] == 'up' ? 1 : -1
+  labels    << (data[:swing] == 'up' ? 1 : -1)
 end
 
 # Train the SVM model using LIBSVM gem
