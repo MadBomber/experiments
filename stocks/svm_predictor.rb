@@ -9,16 +9,17 @@ labels    = []
 
 # Training data set
 training_data = [
-  {adjusted_close_price: 10.0, high_price: 12.0, low_price:  9.0, volume: 100, swing: 'up'},
-  {adjusted_close_price:  9.5, high_price: 11.5, low_price:  8.5, volume: 150, swing: 'down'},
-  {adjusted_close_price: 11.0, high_price: 13.0, low_price: 10.0, volume: 200, swing: 'up'},
+  # swing, acp, high, low, vol],
+  [-1, 10.0, 12.0,  9.0, 100],
+  [ 1,  9.5, 11.5,  8.5, 150],
+  [-1, 11.0, 13.0, 10.0, 200],
   # Add more training data here
 ]
 
 # Populate features and labels arrays from training data
 training_data.each do |data|
-  features  << [data[:adjusted_close_price], data[:high_price], data[:low_price], data[:volume]]
-  labels    << (data[:swing] == 'up' ? 1 : -1)
+  features  << data
+  labels    << data[0]
 end
 
 # Train the SVM model using LIBSVM gem
@@ -35,19 +36,14 @@ model = Libsvm::Model.train(problem, parameter)
 
 # Method to predict stock swing
 def predict_stock_swing(stock_data)
-  current_data = [
-    stock_data[:adjusted_close_price],
-    stock_data[:high_price],
-    stock_data[:low_price],
-    stock_data[:volume]
-  ]
-
-  prediction = model.predict(Libsvm::Node.features(current_data))
+  current_data  = stock_data
+  prediction    = model.predict(Libsvm::Node.features(current_data))
   prediction == 1 ? 'up' : 'down'
 end
 
 # Usage
-stock_data = {adjusted_close_price: 12.5, high_price: 14.0, low_price: 11.0, volume: 120}
+#              ajc   high  low   vol
+stock_data = [ 12.5, 14.0, 11.0, 120}
 prediction = predict_stock_swing(stock_data)
 
 puts "The stock is predicted to swing #{prediction}."
