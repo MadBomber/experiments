@@ -20,7 +20,8 @@ svc 						= Rumale::SVM::LinearSVC.new(random_seed: 1)
 
 debug_me{[
 	"samples.size",
-	:labels
+	"labels.size",
+	"labels.to_a.uniq.sort"
 ]}
 
 svc.fit(samples, labels)
