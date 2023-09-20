@@ -4,7 +4,7 @@
 require 'libsvm'
 
 # Define the features and labels array for training the SVM model
-features  = []
+samples   = []
 labels    = []
 
 # Training data set
@@ -18,7 +18,7 @@ training_data = [
 
 # Populate features and labels arrays from training data
 training_data.each do |data|
-  features  << data
+  samples   << data
   labels    << data[0]
 end
 
@@ -30,7 +30,10 @@ parameter.cache_size  = 1
 parameter.eps         = 0.001
 parameter.c           = 10
 
-problem.set_examples(labels, features)
+examples = samples.map {|ary| Libsvm::Node.features(ary) }
+
+
+problem.set_examples(labels, examples)
 
 model = Libsvm::Model.train(problem, parameter)
 
