@@ -90,6 +90,39 @@ def tickers
 end
 
 
+
+# return a recommendation as an Integer suitable to use as
+# as a label in an SVM classifier.
+#
+#   positive integer means buy
+#   negative integer means sell
+#   zero means no recommendation
+#
+#   The magnitude of the integer is its level of emphasis
+#
+# Parameters:
+#
+# current_acp (Float) Current Adjusted Closing Price
+# future_acp  (Float) Some future Adjusted Closing Price
+# delta_array (Array of Float) decisions points.
+#   Each element is a positive Float.  The Array has unique elements
+#   and is ascending order.
+#
+def recommendation(current_acp, future_acp, delta_array=[1.0, 5.0])
+  deltas  = Array(delta_array)
+  label   = 0 # No Recommendation
+  diff    = future_acp - current_acp
+
+  deltas.each_with_index do |delta, x|
+    x += 1
+    label = (diff.positive? ? x : -x) if diff.abs >= delta
+  end
+
+  label
+end
+
+
+
 ##########################
 # record a recommend trade
 
