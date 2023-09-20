@@ -1,6 +1,11 @@
 #!/usr/bin/env ruby
 # experiments/stocks/analysis.rb 
 #
+# In case you are wondering what the frack is this?
+# It is a bottom up functional design used to
+# investigate stuff which will later go into the
+# the sqa gem's top down design.
+#
 # Some technical indicators from FinTech gem
 #
 # optional date CLI option in format YYYY-mm-dd
@@ -120,6 +125,64 @@ def recommendation(current_acp, future_acp, delta_array=[1.0, 5.0])
 
   label
 end
+
+
+
+
+# Creates a libsvm formatted file for a given
+# stock classified by future adjusted closing price
+# window days into the future.
+#
+# stock   (SQA::Stock)
+# window  (Integer) forecast window into the future
+#
+# TODO: consider extracting all of this libsvm classification
+#       stuff into a different file for experimentation
+#       on just one stock at a time.  Remember that the
+#       purpose is to build a classification model for
+#       each stock.  There is not expectation that any
+#       two stocks would have the same model or the same
+#       delta_array values.
+#
+def create_libsvm_file(stock, window)
+  filename  = stock.ticker + "_libsvm.txt"
+  file      = File.open(filename, 'w')
+  features  = format_features(stock, window)
+  labels    = get_recommendations(stock.df.adj_close_price.to_a, window).map{|v| v.to_s + " "}
+  (features.size).times do |x|
+    file.puts labels[x] + features[x]
+  end
+end
+
+
+def get_recommendations(prices, window, delta_array=[1.0, 5.0])
+  last_inx = prices.size - window - 1
+  labels   = []
+
+  (0..last_inx).each do |x|
+    labels << recommendation(prices[x], prices[x+window], delta_array)
+  end
+
+  labels
+end
+
+# stub - placeholder
+# Some of the indicators return string which will
+# need to be converted into numbers because, well, math/
+#
+def format_features(stock, window)
+  how_many = stock.df.adjusted_close_price.to_a.size
+
+  features = []
+  how_many.timex do |x|
+    features << "1:1 2:2 3:3 4:4 5:5"
+  end
+
+  features
+end
+
+
+
 
 
 

@@ -3,15 +3,17 @@
 require 'libsvm'
 
 # This library is namespaced.
-problem = Libsvm::Problem.new
+problem 	= Libsvm::Problem.new
 parameter = Libsvm::SvmParameter.new
 
-parameter.cache_size = 1 # in megabytes
+parameter.cache_size 	= 1 # in megabytes
+parameter.eps 				= 0.001
+parameter.c 					= 10
 
-parameter.eps = 0.001
-parameter.c = 10
-
-samples = [ [1,0,1], [-1,0,-1] ]
+samples = [
+	[ 1, 0, 1],
+	[-1, 0, -1]
+]
 
 examples = samples.map {|ary| Libsvm::Node.features(ary) }
 

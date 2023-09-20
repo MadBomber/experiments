@@ -9,7 +9,7 @@ labels    = []
 
 # Training data set
 training_data = [
-  # swing, acp, high, low, vol],
+  # U/D,  acp, high,  low, vol],
   [-1.0, 10.0, 12.0,  9.0, 100],
   [ 1.0,  9.5, 11.5,  8.5, 150],
   [-1.0, 11.0, 13.0, 10.0, 200],
