@@ -20,8 +20,11 @@ INVEST    = 1000.00
 require_relative 'test_with'
 
 require 'amazing_print'
-require 'nenv'
 
+require 'ruby-progressbar'  # Ruby/ProgressBar is a flexible text progress bar library for Ruby.
+
+
+require 'nenv'
 require 'debug_me'
 include DebugMe
 
@@ -455,6 +458,24 @@ stocks.each do |stock|
           )
     puts
   end
+end
+
+
+# Running up against the Alpha Vantage
+# 5 api calls per minute rate limitation.
+
+wait_seconds = 60
+
+progressbar = ProgressBar.create(
+    title: 'Waiting',
+    total: wait_seconds,
+    format: '%t: [%B] %c/%C %j%% %e',
+    output: STDERR
+)
+
+wait_seconds.times do |x|
+  sleep 1
+  progressbar.increment
 end
 
 
