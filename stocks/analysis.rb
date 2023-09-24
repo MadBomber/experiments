@@ -20,16 +20,21 @@ INVEST    = 1000.00
 require_relative 'test_with'
 
 require 'amazing_print'
+require 'nenv'
 
 require 'debug_me'
 include DebugMe
 
+require 'alphavantage'
+Alphavantage.configure do |config|
+  config.api_key = Nenv.av_api_key
+end
 
 require 'faraday'
 require 'nokogiri'
 
 
-require 'sqa'       # v0.0.11
+require 'sqa'       # v0.0.14
 require 'sqa/cli'
 require 'ostruct'
 require 'tty-table'
@@ -374,6 +379,10 @@ stocks.each do |stock|
   puts "="*64
   puts "== #{stock.ticker}"
 
+  debug_me{[
+    "stock.overview"
+  ]}
+
   [3,5,10].each do |window|
     headers = %w[ Predictor ]
     (1..window).each do |x|
@@ -445,10 +454,21 @@ stocks.each do |stock|
             }
           )
     puts
-
-
-
-
-
   end
 end
+
+
+debug_me{[
+  "SQA::Stock.top"
+]}
+
+puts "="*64
+puts "== Using the AlphaVantage gem ..."
+
+quote = Alphavantage::TimeSeries.new(symbol: 'TSLA').quote
+# quote.previous_close #=> "719.6900"
+# quote.volume         #=> "27879033"
+
+debug_me{[ :quote ]}
+
+
