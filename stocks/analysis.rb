@@ -29,9 +29,6 @@ require 'debug_me'
 include DebugMe
 
 require 'alphavantage'
-Alphavantage.configure do |config|
-  config.api_key = Nenv.av_api_key
-end
 
 # require 'faraday'
 # require 'nokogiri'
@@ -45,6 +42,12 @@ require 'tty-table'
 
 
 SQA.init("--data-dir #{Nenv.home}/Documents/sqa_data/")
+
+def set_av_api_key
+  Alphavantage.configure do |config|
+    config.api_key = SQA.av.key
+  end
+end
 
 
 PORTFOLIO = Pathname.new SQA.config.data_dir + "portfolio.csv"
@@ -486,6 +489,7 @@ debug_me{[
 puts "="*64
 puts "== Using the AlphaVantage gem ..."
 
+set_av_api_key
 quote = Alphavantage::TimeSeries.new(symbol: 'TSLA').quote
 # quote.previous_close #=> "719.6900"
 # quote.volume         #=> "27879033"
