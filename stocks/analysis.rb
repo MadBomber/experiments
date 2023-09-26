@@ -33,11 +33,11 @@ Alphavantage.configure do |config|
   config.api_key = Nenv.av_api_key
 end
 
-require 'faraday'
-require 'nokogiri'
+# require 'faraday'
+# require 'nokogiri'
 
 
-require 'sqa'       # v0.0.14
+require 'sqa'       # v0.0.15
 require 'sqa/cli'
 require 'ostruct'
 require 'tty-table'
