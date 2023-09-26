@@ -1,397 +1,527 @@
 
-2023-09-25 17:48:54.053022 DEBUG Source:  ./rotate_api_keys.rb:16:in `<main>'
-2023-09-25 17:48:54.053022 DEBUG Nenv.api_keys -=> "<undefined>"
-2023-09-25 17:48:54.053022 DEBUG ENV['API_KEYS'] -=> "key1,key2,key3,key4"
+2023-09-26 14:51:22.675460 DEBUG Source:  ./rotate_api_keys.rb:24:in `<main>'
+2023-09-26 14:51:22.675460 DEBUG Nenv.api_keys -=> "<undefined>"
+2023-09-26 14:51:22.675460 DEBUG ENV['API_KEYS'] -=> "key1,key2,key3,key4"
+
+2023-09-26 14:51:22.676675 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:82:in `initialize'
+2023-09-26 14:51:22.676675 DEBUG api_keys -=> "key1,key2,key3,key4"
+2023-09-26 14:51:22.676675 DEBUG rate_count -=> "5"
+2023-09-26 14:51:22.676675 DEBUG rate_period -=> "60"
+
+2023-09-26 14:51:22.677250 == reset timer == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:107:in `reset_timer'
+
+2023-09-26 14:51:22.677294 == reset counter == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:101:in `reset_counter'
+
+2023-09-26 14:51:22.677332 == INIT == Source:  ./rotate_api_keys.rb:35:in `<main>'
+2023-09-26 14:51:22.677332 == INIT == @mgr -=> #<ApiKeyManager::Rate:0x000000010dfe2140
+ @api_keys=["key1", "key2", "key3", "key4"],
+ @counter=5,
+ @current_index=0,
+ @end_timer=1695757942,
+ @rate_count=5,
+ @rate_period=60,
+ @start_timer=1695757882>
+
+2023-09-26 14:51:22.678604 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:22.678604 DEBUG now -=> 1695757882
+2023-09-26 14:51:22.678604 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:22.678604 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:22.678604 DEBUG @counter -=> 5
+2023-09-26 14:51:22.678604 DEBUG @counter < 1 -=> false
+
+2023-09-26 14:51:22.680455 = key1 for 4 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
+
+2023-09-26 14:51:26.682419 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:26.682419 DEBUG now -=> 1695757886
+2023-09-26 14:51:26.682419 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:26.682419 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:26.682419 DEBUG @counter -=> 4
+2023-09-26 14:51:26.682419 DEBUG @counter < 1 -=> false
+
+2023-09-26 14:51:26.684448 = key1 for 4 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
+
+2023-09-26 14:51:30.687394 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:30.687394 DEBUG now -=> 1695757890
+2023-09-26 14:51:30.687394 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:30.687394 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:30.687394 DEBUG @counter -=> 3
+2023-09-26 14:51:30.687394 DEBUG @counter < 1 -=> false
+
+2023-09-26 14:51:30.689630 = key1 for 0 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
+
+2023-09-26 14:51:30.689748 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:30.689748 DEBUG now -=> 1695757890
+2023-09-26 14:51:30.689748 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:30.689748 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:30.689748 DEBUG @counter -=> 2
+2023-09-26 14:51:30.689748 DEBUG @counter < 1 -=> false
+
+2023-09-26 14:51:30.691333 = key1 for 0 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
+
+2023-09-26 14:51:30.691414 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:30.691414 DEBUG now -=> 1695757890
+2023-09-26 14:51:30.691414 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:30.691414 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:30.691414 DEBUG @counter -=> 1
+2023-09-26 14:51:30.691414 DEBUG @counter < 1 -=> false
+
+2023-09-26 14:51:30.692732 = key1 for 4 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
+
+2023-09-26 14:51:34.693446 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:34.693446 DEBUG now -=> 1695757894
+2023-09-26 14:51:34.693446 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:34.693446 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:34.693446 DEBUG @counter -=> 0
+2023-09-26 14:51:34.693446 DEBUG @counter < 1 -=> true
+
+2023-09-26 14:51:34.695586 one Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:127:in `api_key'
+
+2023-09-26 14:51:34.695669 == reset timer == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:107:in `reset_timer'
+
+2023-09-26 14:51:34.695741 == reset counter == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:101:in `reset_counter'
+
+2023-09-26 14:51:34.695811 = key2 for 0 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
+
+2023-09-26 14:51:34.695919 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:34.695919 DEBUG now -=> 1695757894
+2023-09-26 14:51:34.695919 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:34.695919 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:34.695919 DEBUG @counter -=> 4
+2023-09-26 14:51:34.695919 DEBUG @counter < 1 -=> false
+
+2023-09-26 14:51:34.697264 = key2 for 1 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
+
+2023-09-26 14:51:35.699689 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:35.699689 DEBUG now -=> 1695757895
+2023-09-26 14:51:35.699689 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:35.699689 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:35.699689 DEBUG @counter -=> 3
+2023-09-26 14:51:35.699689 DEBUG @counter < 1 -=> false
+
+2023-09-26 14:51:35.701332 = key2 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
+
+2023-09-26 14:51:37.705023 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:37.705023 DEBUG now -=> 1695757897
+2023-09-26 14:51:37.705023 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:37.705023 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:37.705023 DEBUG @counter -=> 2
+2023-09-26 14:51:37.705023 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:48:54.054336 == INIT == Source:  ./rotate_api_keys.rb:27:in `<main>'
-2023-09-25 17:48:54.054336 == INIT == @api_keys -=> ["key1", "key2", "key3", "key4"]
-2023-09-25 17:48:54.054336 == INIT == @api_key -=> "key1"
-2023-09-25 17:48:54.054336 == INIT == RATE_CNT -=> 5
-2023-09-25 17:48:54.054336 == INIT == RATE_PER -=> 15
+2023-09-26 14:51:37.706368 = key2 for 4 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
+
+2023-09-26 14:51:41.706652 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:41.706652 DEBUG now -=> 1695757901
+2023-09-26 14:51:41.706652 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:41.706652 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:41.706652 DEBUG @counter -=> 1
+2023-09-26 14:51:41.706652 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:48:54.055281 RetryCount: 4 Source:  ./rotate_api_keys.rb:104:in `<main>'
+2023-09-26 14:51:41.708357 = key2 for 3 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
+
+2023-09-26 14:51:44.713583 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:44.713583 DEBUG now -=> 1695757904
+2023-09-26 14:51:44.713583 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:44.713583 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:44.713583 DEBUG @counter -=> 0
+2023-09-26 14:51:44.713583 DEBUG @counter < 1 -=> true
+
+2023-09-26 14:51:44.715612 one Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:127:in `api_key'
+
+2023-09-26 14:51:44.715690 == reset timer == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:107:in `reset_timer'
+
+2023-09-26 14:51:44.715760 == reset counter == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:101:in `reset_counter'
 
-2023-09-25 17:48:54.055330 FakeAccess: 5 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:51:44.715829 = key3 for 0 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:48:54.055414 = key1 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:48:54.055414 = key1 = @access_counter -=> 4
-2023-09-25 17:48:54.055414 = key1 = duration -=> 1
-2023-09-25 17:48:54.055414 = key1 = @retry_count -=> 4
+2023-09-26 14:51:44.715955 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:44.715955 DEBUG now -=> 1695757904
+2023-09-26 14:51:44.715955 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:44.715955 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:44.715955 DEBUG @counter -=> 4
+2023-09-26 14:51:44.715955 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:48:55.061157 FakeAccess: 4 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:51:44.717384 = key3 for 3 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:48:55.061393 = key1 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:48:55.061393 = key1 = @access_counter -=> 3
-2023-09-25 17:48:55.061393 = key1 = duration -=> 1
-2023-09-25 17:48:55.061393 = key1 = @retry_count -=> 4
+2023-09-26 14:51:47.717754 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:47.717754 DEBUG now -=> 1695757907
+2023-09-26 14:51:47.717754 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:47.717754 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:47.717754 DEBUG @counter -=> 3
+2023-09-26 14:51:47.717754 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:48:56.063912 FakeAccess: 3 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:51:47.719772 = key3 for 1 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:48:56.064058 = key1 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:48:56.064058 = key1 = @access_counter -=> 2
-2023-09-25 17:48:56.064058 = key1 = duration -=> 2
-2023-09-25 17:48:56.064058 = key1 = @retry_count -=> 4
+2023-09-26 14:51:48.722267 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:48.722267 DEBUG now -=> 1695757908
+2023-09-26 14:51:48.722267 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:48.722267 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:48.722267 DEBUG @counter -=> 2
+2023-09-26 14:51:48.722267 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:48:58.070429 FakeAccess: 2 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:51:48.724280 = key3 for 1 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:48:58.070662 = key1 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:48:58.070662 = key1 = @access_counter -=> 1
-2023-09-25 17:48:58.070662 = key1 = duration -=> 0
-2023-09-25 17:48:58.070662 = key1 = @retry_count -=> 4
+2023-09-26 14:51:49.724465 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:49.724465 DEBUG now -=> 1695757909
+2023-09-26 14:51:49.724465 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:49.724465 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:49.724465 DEBUG @counter -=> 1
+2023-09-26 14:51:49.724465 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:48:58.071895 FakeAccess: 1 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:51:49.726047 = key3 for 3 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
+
+2023-09-26 14:51:52.726233 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:52.726233 DEBUG now -=> 1695757912
+2023-09-26 14:51:52.726233 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:52.726233 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:52.726233 DEBUG @counter -=> 0
+2023-09-26 14:51:52.726233 DEBUG @counter < 1 -=> true
 
-2023-09-25 17:48:58.071969 = key1 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:48:58.071969 = key1 = @access_counter -=> 0
-2023-09-25 17:48:58.071969 = key1 = duration -=> 4
-2023-09-25 17:48:58.071969 = key1 = @retry_count -=> 4
+2023-09-26 14:51:52.727663 one Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:127:in `api_key'
+
+2023-09-26 14:51:52.727723 == reset timer == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:107:in `reset_timer'
 
-2023-09-25 17:49:02.077360 true:8 Source:  ./rotate_api_keys.rb:56:in `time_expired?'
+2023-09-26 14:51:52.727765 == reset counter == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:101:in `reset_counter'
 
-2023-09-25 17:49:02.077565 == RESET == Source:  ./rotate_api_keys.rb:63:in `reset_rate_limits'
+2023-09-26 14:51:52.727811 = key4 for 3 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:02.077800 == RateLimitReached == Source:  ./rotate_api_keys.rb:114:in `rescue in block in <main>'
+2023-09-26 14:51:55.734623 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:55.734623 DEBUG now -=> 1695757915
+2023-09-26 14:51:55.734623 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:55.734623 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:55.734623 DEBUG @counter -=> 4
+2023-09-26 14:51:55.734623 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:02.077871 DEBUG Source:  ./rotate_api_keys.rb:119:in `rescue in block in <main>'
+2023-09-26 14:51:55.736482 = key4 for 4 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:02.077943 key2 Source:  ./rotate_api_keys.rb:38:in `next_api_key'
+2023-09-26 14:51:59.738719 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:51:59.738719 DEBUG now -=> 1695757919
+2023-09-26 14:51:59.738719 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:51:59.738719 DEBUG now <= @end_timer -=> true
+2023-09-26 14:51:59.738719 DEBUG @counter -=> 3
+2023-09-26 14:51:59.738719 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:02.078007 FakeAccess: 5 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:51:59.740323 = key4 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:02.078072 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:02.078072 = key2 = @access_counter -=> 4
-2023-09-25 17:49:02.078072 = key2 = duration -=> 3
-2023-09-25 17:49:02.078072 = key2 = @retry_count -=> 3
+2023-09-26 14:52:01.743392 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:01.743392 DEBUG now -=> 1695757921
+2023-09-26 14:52:01.743392 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:01.743392 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:01.743392 DEBUG @counter -=> 2
+2023-09-26 14:52:01.743392 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:05.081706 FakeAccess: 4 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:01.744713 = key4 for 1 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:05.081855 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:05.081855 = key2 = @access_counter -=> 3
-2023-09-25 17:49:05.081855 = key2 = duration -=> 0
-2023-09-25 17:49:05.081855 = key2 = @retry_count -=> 3
+2023-09-26 14:52:02.745785 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:02.745785 DEBUG now -=> 1695757922
+2023-09-26 14:52:02.745785 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:02.745785 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:02.745785 DEBUG @counter -=> 1
+2023-09-26 14:52:02.745785 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:05.082965 FakeAccess: 3 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:02.749218 = key4 for 0 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:05.083023 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:05.083023 = key2 = @access_counter -=> 2
-2023-09-25 17:49:05.083023 = key2 = duration -=> 2
-2023-09-25 17:49:05.083023 = key2 = @retry_count -=> 3
+2023-09-26 14:52:02.749334 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:02.749334 DEBUG now -=> 1695757922
+2023-09-26 14:52:02.749334 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:02.749334 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:02.749334 DEBUG @counter -=> 0
+2023-09-26 14:52:02.749334 DEBUG @counter < 1 -=> true
 
-2023-09-25 17:49:07.087318 FakeAccess: 2 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:02.752603 one Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:127:in `api_key'
+
+2023-09-26 14:52:02.752695 == reset timer == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:107:in `reset_timer'
 
-2023-09-25 17:49:07.087540 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:07.087540 = key2 = @access_counter -=> 1
-2023-09-25 17:49:07.087540 = key2 = duration -=> 3
-2023-09-25 17:49:07.087540 = key2 = @retry_count -=> 3
+2023-09-26 14:52:02.752758 == reset counter == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:101:in `reset_counter'
 
-2023-09-25 17:49:10.090718 FakeAccess: 1 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:02.752895 = key1 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:10.090922 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:10.090922 = key2 = @access_counter -=> 0
-2023-09-25 17:49:10.090922 = key2 = duration -=> 1
-2023-09-25 17:49:10.090922 = key2 = @retry_count -=> 3
+2023-09-26 14:52:04.753133 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:04.753133 DEBUG now -=> 1695757924
+2023-09-26 14:52:04.753133 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:04.753133 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:04.753133 DEBUG @counter -=> 4
+2023-09-26 14:52:04.753133 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:11.093190 true:9 Source:  ./rotate_api_keys.rb:56:in `time_expired?'
+2023-09-26 14:52:04.756646 = key1 for 4 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:11.093329 == RESET == Source:  ./rotate_api_keys.rb:63:in `reset_rate_limits'
+2023-09-26 14:52:08.756951 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:08.756951 DEBUG now -=> 1695757928
+2023-09-26 14:52:08.756951 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:08.756951 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:08.756951 DEBUG @counter -=> 3
+2023-09-26 14:52:08.756951 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:11.093419 == RateLimitReached == Source:  ./rotate_api_keys.rb:114:in `rescue in block in <main>'
+2023-09-26 14:52:08.759134 = key1 for 0 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:11.093483 DEBUG Source:  ./rotate_api_keys.rb:119:in `rescue in block in <main>'
+2023-09-26 14:52:08.759252 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:08.759252 DEBUG now -=> 1695757928
+2023-09-26 14:52:08.759252 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:08.759252 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:08.759252 DEBUG @counter -=> 2
+2023-09-26 14:52:08.759252 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:11.093549 key3 Source:  ./rotate_api_keys.rb:38:in `next_api_key'
+2023-09-26 14:52:08.760953 = key1 for 4 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:11.093610 FakeAccess: 5 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:12.761560 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:12.761560 DEBUG now -=> 1695757932
+2023-09-26 14:52:12.761560 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:12.761560 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:12.761560 DEBUG @counter -=> 1
+2023-09-26 14:52:12.761560 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:11.093676 = key3 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:11.093676 = key3 = @access_counter -=> 4
-2023-09-25 17:49:11.093676 = key3 = duration -=> 2
-2023-09-25 17:49:11.093676 = key3 = @retry_count -=> 2
+2023-09-26 14:52:12.762849 = key1 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:13.095141 FakeAccess: 4 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:14.765166 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:14.765166 DEBUG now -=> 1695757934
+2023-09-26 14:52:14.765166 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:14.765166 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:14.765166 DEBUG @counter -=> 0
+2023-09-26 14:52:14.765166 DEBUG @counter < 1 -=> true
 
-2023-09-25 17:49:13.095365 = key3 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:13.095365 = key3 = @access_counter -=> 3
-2023-09-25 17:49:13.095365 = key3 = duration -=> 2
-2023-09-25 17:49:13.095365 = key3 = @retry_count -=> 2
+2023-09-26 14:52:14.767435 one Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:127:in `api_key'
 
-2023-09-25 17:49:15.097266 FakeAccess: 3 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:14.767575 == reset timer == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:107:in `reset_timer'
 
-2023-09-25 17:49:15.097481 = key3 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:15.097481 = key3 = @access_counter -=> 2
-2023-09-25 17:49:15.097481 = key3 = duration -=> 0
-2023-09-25 17:49:15.097481 = key3 = @retry_count -=> 2
+2023-09-26 14:52:14.767674 == reset counter == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:101:in `reset_counter'
 
-2023-09-25 17:49:15.098810 FakeAccess: 2 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:14.767730 = key2 for 4 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:15.098893 = key3 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:15.098893 = key3 = @access_counter -=> 1
-2023-09-25 17:49:15.098893 = key3 = duration -=> 2
-2023-09-25 17:49:15.098893 = key3 = @retry_count -=> 2
+2023-09-26 14:52:18.768159 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:18.768159 DEBUG now -=> 1695757938
+2023-09-26 14:52:18.768159 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:18.768159 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:18.768159 DEBUG @counter -=> 4
+2023-09-26 14:52:18.768159 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:17.101986 FakeAccess: 1 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:18.769818 = key2 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:17.102147 = key3 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:17.102147 = key3 = @access_counter -=> 0
-2023-09-25 17:49:17.102147 = key3 = duration -=> 3
-2023-09-25 17:49:17.102147 = key3 = @retry_count -=> 2
+2023-09-26 14:52:20.770280 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:20.770280 DEBUG now -=> 1695757940
+2023-09-26 14:52:20.770280 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:20.770280 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:20.770280 DEBUG @counter -=> 3
+2023-09-26 14:52:20.770280 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:20.108579 true:9 Source:  ./rotate_api_keys.rb:56:in `time_expired?'
+2023-09-26 14:52:20.772305 = key2 for 0 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:20.108848 == RESET == Source:  ./rotate_api_keys.rb:63:in `reset_rate_limits'
+2023-09-26 14:52:20.772413 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:20.772413 DEBUG now -=> 1695757940
+2023-09-26 14:52:20.772413 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:20.772413 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:20.772413 DEBUG @counter -=> 2
+2023-09-26 14:52:20.772413 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:20.108951 == RateLimitReached == Source:  ./rotate_api_keys.rb:114:in `rescue in block in <main>'
+2023-09-26 14:52:20.773469 = key2 for 0 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:20.109050 DEBUG Source:  ./rotate_api_keys.rb:119:in `rescue in block in <main>'
+2023-09-26 14:52:20.773524 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:20.773524 DEBUG now -=> 1695757940
+2023-09-26 14:52:20.773524 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:20.773524 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:20.773524 DEBUG @counter -=> 1
+2023-09-26 14:52:20.773524 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:20.109145 key4 Source:  ./rotate_api_keys.rb:38:in `next_api_key'
+2023-09-26 14:52:20.774739 = key2 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:20.109212 FakeAccess: 5 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:22.777630 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:22.777630 DEBUG now -=> 1695757942
+2023-09-26 14:52:22.777630 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:22.777630 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:22.777630 DEBUG @counter -=> 0
+2023-09-26 14:52:22.777630 DEBUG @counter < 1 -=> true
 
-2023-09-25 17:49:20.109278 = key4 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:20.109278 = key4 = @access_counter -=> 4
-2023-09-25 17:49:20.109278 = key4 = duration -=> 4
-2023-09-25 17:49:20.109278 = key4 = @retry_count -=> 1
+2023-09-26 14:52:22.781319 one Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:127:in `api_key'
 
-2023-09-25 17:49:24.115696 FakeAccess: 4 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:22.781397 == reset timer == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:107:in `reset_timer'
 
-2023-09-25 17:49:24.115933 = key4 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:24.115933 = key4 = @access_counter -=> 3
-2023-09-25 17:49:24.115933 = key4 = duration -=> 2
-2023-09-25 17:49:24.115933 = key4 = @retry_count -=> 1
+2023-09-26 14:52:22.781452 == reset counter == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:101:in `reset_counter'
 
-2023-09-25 17:49:26.122183 FakeAccess: 3 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:22.781505 = key3 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:26.122427 = key4 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:26.122427 = key4 = @access_counter -=> 2
-2023-09-25 17:49:26.122427 = key4 = duration -=> 3
-2023-09-25 17:49:26.122427 = key4 = @retry_count -=> 1
+2023-09-26 14:52:24.782623 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:24.782623 DEBUG now -=> 1695757944
+2023-09-26 14:52:24.782623 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:24.782623 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:24.782623 DEBUG @counter -=> 4
+2023-09-26 14:52:24.782623 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:29.126486 FakeAccess: 2 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:24.784126 = key3 for 3 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:29.126706 = key4 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:29.126706 = key4 = @access_counter -=> 1
-2023-09-25 17:49:29.126706 = key4 = duration -=> 3
-2023-09-25 17:49:29.126706 = key4 = @retry_count -=> 1
+2023-09-26 14:52:27.785631 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:27.785631 DEBUG now -=> 1695757947
+2023-09-26 14:52:27.785631 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:27.785631 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:27.785631 DEBUG @counter -=> 3
+2023-09-26 14:52:27.785631 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:32.129741 FakeAccess: 1 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:27.787681 = key3 for 4 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:32.129909 = key4 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:32.129909 = key4 = @access_counter -=> 0
-2023-09-25 17:49:32.129909 = key4 = duration -=> 4
-2023-09-25 17:49:32.129909 = key4 = @retry_count -=> 1
+2023-09-26 14:52:31.789344 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:31.789344 DEBUG now -=> 1695757951
+2023-09-26 14:52:31.789344 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:31.789344 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:31.789344 DEBUG @counter -=> 2
+2023-09-26 14:52:31.789344 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:36.136199 false:16 Source:  ./rotate_api_keys.rb:56:in `time_expired?'
+2023-09-26 14:52:31.791428 = key3 for 1 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:36.136418 == RESET == Source:  ./rotate_api_keys.rb:63:in `reset_rate_limits'
+2023-09-26 14:52:32.792874 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:32.792874 DEBUG now -=> 1695757952
+2023-09-26 14:52:32.792874 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:32.792874 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:32.792874 DEBUG @counter -=> 1
+2023-09-26 14:52:32.792874 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:36.136492 FakeAccess: 5 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:32.795017 = key3 for 0 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:36.136560 = key4 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:36.136560 = key4 = @access_counter -=> 4
-2023-09-25 17:49:36.136560 = key4 = duration -=> 4
-2023-09-25 17:49:36.136560 = key4 = @retry_count -=> 1
+2023-09-26 14:52:32.795152 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:32.795152 DEBUG now -=> 1695757952
+2023-09-26 14:52:32.795152 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:32.795152 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:32.795152 DEBUG @counter -=> 0
+2023-09-26 14:52:32.795152 DEBUG @counter < 1 -=> true
 
-2023-09-25 17:49:40.143034 FakeAccess: 4 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:32.796772 one Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:127:in `api_key'
 
-2023-09-25 17:49:40.143393 = key4 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:40.143393 = key4 = @access_counter -=> 3
-2023-09-25 17:49:40.143393 = key4 = duration -=> 0
-2023-09-25 17:49:40.143393 = key4 = @retry_count -=> 1
+2023-09-26 14:52:32.796848 == reset timer == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:107:in `reset_timer'
 
-2023-09-25 17:49:40.144684 FakeAccess: 3 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:32.796905 == reset counter == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:101:in `reset_counter'
 
-2023-09-25 17:49:40.144757 = key4 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:40.144757 = key4 = @access_counter -=> 2
-2023-09-25 17:49:40.144757 = key4 = duration -=> 1
-2023-09-25 17:49:40.144757 = key4 = @retry_count -=> 1
+2023-09-26 14:52:32.796960 = key4 for 0 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:41.151073 FakeAccess: 2 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:32.797060 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:32.797060 DEBUG now -=> 1695757952
+2023-09-26 14:52:32.797060 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:32.797060 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:32.797060 DEBUG @counter -=> 4
+2023-09-26 14:52:32.797060 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:41.151322 = key4 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:41.151322 = key4 = @access_counter -=> 1
-2023-09-25 17:49:41.151322 = key4 = duration -=> 1
-2023-09-25 17:49:41.151322 = key4 = @retry_count -=> 1
+2023-09-26 14:52:32.798619 = key4 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:42.157077 FakeAccess: 1 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:34.800560 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:34.800560 DEBUG now -=> 1695757954
+2023-09-26 14:52:34.800560 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:34.800560 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:34.800560 DEBUG @counter -=> 3
+2023-09-26 14:52:34.800560 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:42.157325 = key4 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:42.157325 = key4 = @access_counter -=> 0
-2023-09-25 17:49:42.157325 = key4 = duration -=> 4
-2023-09-25 17:49:42.157325 = key4 = @retry_count -=> 1
+2023-09-26 14:52:34.801657 = key4 for 3 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:46.162067 true:10 Source:  ./rotate_api_keys.rb:56:in `time_expired?'
+2023-09-26 14:52:37.806940 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:37.806940 DEBUG now -=> 1695757957
+2023-09-26 14:52:37.806940 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:37.806940 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:37.806940 DEBUG @counter -=> 2
+2023-09-26 14:52:37.806940 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:46.162279 == RESET == Source:  ./rotate_api_keys.rb:63:in `reset_rate_limits'
+2023-09-26 14:52:37.809064 = key4 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:46.162391 == RateLimitReached == Source:  ./rotate_api_keys.rb:114:in `rescue in block in <main>'
+2023-09-26 14:52:39.809698 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:39.809698 DEBUG now -=> 1695757959
+2023-09-26 14:52:39.809698 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:39.809698 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:39.809698 DEBUG @counter -=> 1
+2023-09-26 14:52:39.809698 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:46.162458 DEBUG Source:  ./rotate_api_keys.rb:119:in `rescue in block in <main>'
+2023-09-26 14:52:39.812147 = key4 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:46.162521 key1 Source:  ./rotate_api_keys.rb:38:in `next_api_key'
+2023-09-26 14:52:41.812416 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:41.812416 DEBUG now -=> 1695757961
+2023-09-26 14:52:41.812416 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:41.812416 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:41.812416 DEBUG @counter -=> 0
+2023-09-26 14:52:41.812416 DEBUG @counter < 1 -=> true
 
-2023-09-25 17:49:46.162583 FakeAccess: 5 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:41.814456 one Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:127:in `api_key'
 
-2023-09-25 17:49:46.162646 = key1 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:46.162646 = key1 = @access_counter -=> 4
-2023-09-25 17:49:46.162646 = key1 = duration -=> 2
-2023-09-25 17:49:46.162646 = key1 = @retry_count -=> 0
+2023-09-26 14:52:41.814726 == reset timer == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:107:in `reset_timer'
 
-2023-09-25 17:49:48.168476 FakeAccess: 4 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:41.814821 == reset counter == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:101:in `reset_counter'
 
-2023-09-25 17:49:48.168643 = key1 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:48.168643 = key1 = @access_counter -=> 3
-2023-09-25 17:49:48.168643 = key1 = duration -=> 3
-2023-09-25 17:49:48.168643 = key1 = @retry_count -=> 0
+2023-09-26 14:52:41.814866 = key1 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:51.175078 FakeAccess: 3 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:43.818562 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:43.818562 DEBUG now -=> 1695757963
+2023-09-26 14:52:43.818562 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:43.818562 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:43.818562 DEBUG @counter -=> 4
+2023-09-26 14:52:43.818562 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:51.175367 = key1 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:51.175367 = key1 = @access_counter -=> 2
-2023-09-25 17:49:51.175367 = key1 = duration -=> 1
-2023-09-25 17:49:51.175367 = key1 = @retry_count -=> 0
+2023-09-26 14:52:43.820142 = key1 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:52.177027 FakeAccess: 2 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:45.825496 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:45.825496 DEBUG now -=> 1695757965
+2023-09-26 14:52:45.825496 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:45.825496 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:45.825496 DEBUG @counter -=> 3
+2023-09-26 14:52:45.825496 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:52.177253 = key1 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:52.177253 = key1 = @access_counter -=> 1
-2023-09-25 17:49:52.177253 = key1 = duration -=> 0
-2023-09-25 17:49:52.177253 = key1 = @retry_count -=> 0
+2023-09-26 14:52:45.827523 = key1 for 0 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:52.178543 FakeAccess: 1 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:45.827638 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:45.827638 DEBUG now -=> 1695757965
+2023-09-26 14:52:45.827638 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:45.827638 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:45.827638 DEBUG @counter -=> 2
+2023-09-26 14:52:45.827638 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:52.178628 = key1 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:52.178628 = key1 = @access_counter -=> 0
-2023-09-25 17:49:52.178628 = key1 = duration -=> 2
-2023-09-25 17:49:52.178628 = key1 = @retry_count -=> 0
+2023-09-26 14:52:45.829210 = key1 for 1 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:54.181221 true:8 Source:  ./rotate_api_keys.rb:56:in `time_expired?'
+2023-09-26 14:52:46.832058 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:46.832058 DEBUG now -=> 1695757966
+2023-09-26 14:52:46.832058 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:46.832058 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:46.832058 DEBUG @counter -=> 1
+2023-09-26 14:52:46.832058 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:54.181531 == RESET == Source:  ./rotate_api_keys.rb:63:in `reset_rate_limits'
+2023-09-26 14:52:46.833866 = key1 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:54.181784 == RateLimitReached == Source:  ./rotate_api_keys.rb:114:in `rescue in block in <main>'
+2023-09-26 14:52:48.835828 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:48.835828 DEBUG now -=> 1695757968
+2023-09-26 14:52:48.835828 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:48.835828 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:48.835828 DEBUG @counter -=> 0
+2023-09-26 14:52:48.835828 DEBUG @counter < 1 -=> true
 
-2023-09-25 17:49:54.182187 DEBUG Source:  ./rotate_api_keys.rb:119:in `rescue in block in <main>'
+2023-09-26 14:52:48.837442 one Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:127:in `api_key'
 
-2023-09-25 17:49:54.182328 key2 Source:  ./rotate_api_keys.rb:38:in `next_api_key'
+2023-09-26 14:52:48.837504 == reset timer == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:107:in `reset_timer'
 
-2023-09-25 17:49:54.182386 FakeAccess: 5 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:48.837561 == reset counter == Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:101:in `reset_counter'
 
-2023-09-25 17:49:54.182441 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:54.182441 = key2 = @access_counter -=> 4
-2023-09-25 17:49:54.182441 = key2 = duration -=> 2
-2023-09-25 17:49:54.182441 = key2 = @retry_count -=> -1
+2023-09-26 14:52:48.837625 = key2 for 1 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:56.188373 FakeAccess: 4 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:49.841129 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:49.841129 DEBUG now -=> 1695757969
+2023-09-26 14:52:49.841129 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:49.841129 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:49.841129 DEBUG @counter -=> 4
+2023-09-26 14:52:49.841129 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:56.188629 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:56.188629 = key2 = @access_counter -=> 3
-2023-09-25 17:49:56.188629 = key2 = duration -=> 2
-2023-09-25 17:49:56.188629 = key2 = @retry_count -=> -1
+2023-09-26 14:52:49.843146 = key2 for 2 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:49:58.191984 FakeAccess: 3 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:51.843412 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:51.843412 DEBUG now -=> 1695757971
+2023-09-26 14:52:51.843412 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:51.843412 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:51.843412 DEBUG @counter -=> 3
+2023-09-26 14:52:51.843412 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:49:58.192212 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:49:58.192212 = key2 = @access_counter -=> 2
-2023-09-25 17:49:58.192212 = key2 = duration -=> 3
-2023-09-25 17:49:58.192212 = key2 = @retry_count -=> -1
+2023-09-26 14:52:51.845993 = key2 for 0 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:50:01.194932 FakeAccess: 2 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:51.846110 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:51.846110 DEBUG now -=> 1695757971
+2023-09-26 14:52:51.846110 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:51.846110 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:51.846110 DEBUG @counter -=> 2
+2023-09-26 14:52:51.846110 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:50:01.195130 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:50:01.195130 = key2 = @access_counter -=> 1
-2023-09-25 17:50:01.195130 = key2 = duration -=> 4
-2023-09-25 17:50:01.195130 = key2 = @retry_count -=> -1
+2023-09-26 14:52:51.848415 = key2 for 4 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
 
-2023-09-25 17:50:05.201115 FakeAccess: 1 Source:  ./rotate_api_keys.rb:70:in `access'
+2023-09-26 14:52:55.848583 DEBUG Source:  /Users/dewayne/Documents/sandbox/git_repos/madbomber/experiments/api_key_rotater/api_key_manager.rb:117:in `api_key'
+2023-09-26 14:52:55.848583 DEBUG now -=> 1695757975
+2023-09-26 14:52:55.848583 DEBUG @end_timet -=> "<undefined>"
+2023-09-26 14:52:55.848583 DEBUG now <= @end_timer -=> true
+2023-09-26 14:52:55.848583 DEBUG @counter -=> 1
+2023-09-26 14:52:55.848583 DEBUG @counter < 1 -=> false
 
-2023-09-25 17:50:05.201344 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:50:05.201344 = key2 = @access_counter -=> 0
-2023-09-25 17:50:05.201344 = key2 = duration -=> 4
-2023-09-25 17:50:05.201344 = key2 = @retry_count -=> -1
-
-2023-09-25 17:50:09.207755 false:15 Source:  ./rotate_api_keys.rb:56:in `time_expired?'
-
-2023-09-25 17:50:09.208014 == RESET == Source:  ./rotate_api_keys.rb:63:in `reset_rate_limits'
-
-2023-09-25 17:50:09.208090 FakeAccess: 5 Source:  ./rotate_api_keys.rb:70:in `access'
-
-2023-09-25 17:50:09.208158 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:50:09.208158 = key2 = @access_counter -=> 4
-2023-09-25 17:50:09.208158 = key2 = duration -=> 4
-2023-09-25 17:50:09.208158 = key2 = @retry_count -=> -1
-
-2023-09-25 17:50:13.214589 FakeAccess: 4 Source:  ./rotate_api_keys.rb:70:in `access'
-
-2023-09-25 17:50:13.214967 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:50:13.214967 = key2 = @access_counter -=> 3
-2023-09-25 17:50:13.214967 = key2 = duration -=> 2
-2023-09-25 17:50:13.214967 = key2 = @retry_count -=> -1
-
-2023-09-25 17:50:15.221403 FakeAccess: 3 Source:  ./rotate_api_keys.rb:70:in `access'
-
-2023-09-25 17:50:15.221675 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:50:15.221675 = key2 = @access_counter -=> 2
-2023-09-25 17:50:15.221675 = key2 = duration -=> 2
-2023-09-25 17:50:15.221675 = key2 = @retry_count -=> -1
-
-2023-09-25 17:50:17.228046 FakeAccess: 2 Source:  ./rotate_api_keys.rb:70:in `access'
-
-2023-09-25 17:50:17.228301 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:50:17.228301 = key2 = @access_counter -=> 1
-2023-09-25 17:50:17.228301 = key2 = duration -=> 4
-2023-09-25 17:50:17.228301 = key2 = @retry_count -=> -1
-
-2023-09-25 17:50:21.234811 FakeAccess: 1 Source:  ./rotate_api_keys.rb:70:in `access'
-
-2023-09-25 17:50:21.234962 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:50:21.234962 = key2 = @access_counter -=> 0
-2023-09-25 17:50:21.234962 = key2 = duration -=> 3
-2023-09-25 17:50:21.234962 = key2 = @retry_count -=> -1
-
-2023-09-25 17:50:24.241476 false:15 Source:  ./rotate_api_keys.rb:56:in `time_expired?'
-
-2023-09-25 17:50:24.241717 == RESET == Source:  ./rotate_api_keys.rb:63:in `reset_rate_limits'
-
-2023-09-25 17:50:24.241790 FakeAccess: 5 Source:  ./rotate_api_keys.rb:70:in `access'
-
-2023-09-25 17:50:24.241859 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:50:24.241859 = key2 = @access_counter -=> 4
-2023-09-25 17:50:24.241859 = key2 = duration -=> 3
-2023-09-25 17:50:24.241859 = key2 = @retry_count -=> -1
-
-2023-09-25 17:50:27.247349 FakeAccess: 4 Source:  ./rotate_api_keys.rb:70:in `access'
-
-2023-09-25 17:50:27.247597 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:50:27.247597 = key2 = @access_counter -=> 3
-2023-09-25 17:50:27.247597 = key2 = duration -=> 2
-2023-09-25 17:50:27.247597 = key2 = @retry_count -=> -1
-
-2023-09-25 17:50:29.254084 FakeAccess: 3 Source:  ./rotate_api_keys.rb:70:in `access'
-
-2023-09-25 17:50:29.254322 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:50:29.254322 = key2 = @access_counter -=> 2
-2023-09-25 17:50:29.254322 = key2 = duration -=> 0
-2023-09-25 17:50:29.254322 = key2 = @retry_count -=> -1
-
-2023-09-25 17:50:29.255619 FakeAccess: 2 Source:  ./rotate_api_keys.rb:70:in `access'
-
-2023-09-25 17:50:29.255692 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:50:29.255692 = key2 = @access_counter -=> 1
-2023-09-25 17:50:29.255692 = key2 = duration -=> 4
-2023-09-25 17:50:29.255692 = key2 = @retry_count -=> -1
-
-2023-09-25 17:50:33.261780 FakeAccess: 1 Source:  ./rotate_api_keys.rb:70:in `access'
-
-2023-09-25 17:50:33.262010 = key2 = Source:  ./rotate_api_keys.rb:89:in `access_a_rate_limited_api'
-2023-09-25 17:50:33.262010 = key2 = @access_counter -=> 0
-2023-09-25 17:50:33.262010 = key2 = duration -=> 3
-2023-09-25 17:50:33.262010 = key2 = @retry_count -=> -1
-
-2023-09-25 17:50:36.267103 true:12 Source:  ./rotate_api_keys.rb:56:in `time_expired?'
-
-2023-09-25 17:50:36.267239 == RESET == Source:  ./rotate_api_keys.rb:63:in `reset_rate_limits'
-
-2023-09-25 17:50:36.267328 == RateLimitReached == Source:  ./rotate_api_keys.rb:114:in `rescue in block in <main>'
-
-2023-09-25 17:50:36.267392 == RETRY < 0 == Source:  ./rotate_api_keys.rb:116:in `rescue in block in <main>'
+2023-09-26 14:52:55.850308 = key2 for 4 = Source:  ./rotate_api_keys.rb:45:in `access_a_rate_limited_api'
