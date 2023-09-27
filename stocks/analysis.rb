@@ -476,10 +476,10 @@ progressbar = ProgressBar.create(
     output: STDERR
 )
 
-wait_seconds.times do |x|
-  sleep 1
-  progressbar.increment
-end
+# wait_seconds.times do |x|
+#   sleep 1
+#   progressbar.increment
+# end
 
 
 debug_me{[
