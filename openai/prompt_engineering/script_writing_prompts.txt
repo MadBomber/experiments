@@ -1,0 +1,221 @@
+# This is a collection of single line prompts
+# collected from various places.  I've gone through
+# and made some replacements with place holders
+# in double curly brackets in an effort to
+# make them potentially more target-able.
+#
+# I am not convinced that single line prompts
+# are any good.
+#
+# So far these are all Can, How and What questions.
+#
+# Look at the bottom of the file for gen-AI categorization
+# of these one-liners.
+#
+
+
+##################################################
+## CAN ...
+
+Can you provide a framework for creating [KIND_OF] video scripts for educational content in the technology niche?
+Can you provide a framework for structuring a [KIND_OF] video script to keep viewers engaged?
+Can you provide a template for creating a [KIND_OF] video script for product reviews in the beauty niche?
+Can you provide some tips on how to make an effective intro for a [KIND_OF] video?
+Can you recommend any strategies for creating [KIND_OF] video scripts for long-form content, such as documentaries or interviews?
+Can you recommend any tools or resources for improving my [KIND_OF] video scriptwriting skills?
+Can you suggest some frameworks for creating product review videos on [KIND_OF]?
+Can you suggest some frameworks for creating [KIND_OF] video series?
+Can you suggest some frameworks for creating [KIND_OF] videos that feature interviews with industry experts?
+Can you suggest some frameworks for creating [KIND_OF] videos that showcase customer testimonials?
+Can you suggest some techniques for creating [KIND_OF] videos that address controversial topics in my niche?
+Can you suggest some techniques for creating [KIND_OF] videos that are entertaining and informative at the same time?
+Can you suggest some techniques for creating [KIND_OF] videos that showcase my company's social responsibility efforts?
+Can you suggest some techniques for using emotion to connect with viewers in [KIND_OF] videos?
+Can you suggest some techniques for writing engaging titles for [KIND_OF] videos?
+
+##################################################
+## HOW ...
+
+How can I create a script that addresses common pain points or challenges that my target audience faces?
+How can I create a script that builds trust and credibility with my audience?
+How can I create a script that effectively conveys the benefits of my product or service?
+How can I create a script that helps build my authority and expertise in my niche?
+How can I create a script that is optimized for mobile devices?
+How can I create a script that is well-suited to my brand's overall marketing strategy?
+How can I create a script that showcases my unique perspective or approach to my niche?
+How can I create an effective script that engages my audience?
+How can I create an outline for my [KIND_OF] video script to ensure that it flows well?
+How can I create [KIND_OF] videos that address common questions and concerns in my niche?
+How can I create [KIND_OF] videos that showcase my company culture?
+How can I incorporate my brand's values and mission into my [KIND_OF] script?
+How can I incorporate my niche into my [KIND_OF] script in a meaningful way?
+How can I make my [KIND_OF] script sound natural and conversational?
+How can I make my [KIND_OF] video scripts more conversational and relatable to viewers?
+How can I make my [KIND_OF] video scripts stand out from competitors in my niche?
+How can I make my [KIND_OF] videos more visually appealing?
+How can I make my [KIND_OF] videos stand out from competitors in my niche?
+How can I make sure my [KIND_OF] video scripts have a clear and concise message?
+How can I optimize my [KIND_OF] video scripts for SEO purposes?
+How can I structure my [KIND_OF] video to keep viewers engaged throughout the entire video?
+How can I tailor my script to appeal to my target audience?
+How can I tailor my [KIND_OF] video scripts to appeal to a specific niche audience?
+How can I use data and analytics to improve my [KIND_OF] script and video performance?
+How can I use data and statistics in my [KIND_OF] video scripts to add credibility and authority?
+How can I use humor effectively in my [KIND_OF] script to engage my audience?
+How can I use humor effectively in my [KIND_OF] videos?
+How can I use my [KIND_OF] script to build a deeper connection with my viewers?
+How can I use my [KIND_OF] script to build my email list or drive traffic to my website?
+How can I use my [KIND_OF] script to generate leads or sales?
+How can I use personal experiences and anecdotes in my [KIND_OF] video scripts to build a connection with viewers?
+How can I use psychological triggers in my [KIND_OF] video scripts to increase engagement and conversions?
+How can I use storytelling in my [KIND_OF] video scripts to make them more interesting?
+How can I use storytelling to create a stronger connection with my audience?
+How can I use storytelling to make my [KIND_OF] videos more engaging?
+How can I use the power of emotion to create a more impactful [KIND_OF] video?
+How can I use visuals in my [KIND_OF] video scripts to make them more engaging?
+How can I use [KIND_OF] videos to build my personal brand?
+How can I use [KIND_OF] videos to generate leads for my business?
+How can I use [KIND_OF] videos to promote my products or services?
+How do I create a script that aligns with my brand's tone and personality?
+How do I create a script that is clear and concise?
+How do I structure my video to keep viewers interested and engaged?
+How do I use visual aids to support my script and make my videos stand out?
+
+
+##################################################
+## WHAT ...
+
+What are some common mistakes to avoid when writing a [KIND_OF] script?
+What are some common mistakes to avoid when writing [KIND_OF] video scripts?
+What are some effective ways to convey complex ideas in my [KIND_OF] script?
+What are some effective ways to create a compelling opening to a [KIND_OF] video script?
+What are some effective ways to end a [KIND_OF] video script to encourage viewers to take action?
+What are some effective ways to incorporate humor into [KIND_OF] video scripts for a cooking channel?
+What are some effective ways to incorporate keywords into [KIND_OF] video scripts?
+What are some effective ways to promote my [KIND_OF] videos through my scripts?
+What are some effective ways to use humor to create viral [KIND_OF] videos?
+What are some effective ways to use music and sound effects in my [KIND_OF] videos?
+What are some effective ways to use storytelling in my [KIND_OF] videos?
+What are some effective ways to use visual aids in [KIND_OF] videos?
+What are some effective ways to use visuals to support my script and create a more engaging video?
+What are some effective ways to use [KIND_OF] videos to promote events?
+What are some frameworks for creating educational [KIND_OF] videos?
+What are some frameworks for creating [KIND_OF] videos that showcase my expertise in my niche?
+What are some proven frameworks for creating engaging [KIND_OF] videos?
+What are some proven frameworks for creating tutorials or how-to videos?
+What are some proven techniques for creating a strong opening for my [KIND_OF] video?
+What are some techniques for creating a memorable and impactful [KIND_OF] video?
+What are some techniques for creating a script that is optimized for different social media platforms?
+What are some techniques for creating a script that resonates with my target audience on an emotional level?
+What are some techniques for incorporating humor into my [KIND_OF] videos without being offensive?
+What are some templates for writing [KIND_OF] scripts that have proven successful?
+What are some tips for creating a call to action that encourages viewers to take action?
+What are some tips for creating a script that is accessible to viewers with disabilities?
+What are some tips for creating a script that is optimized for search engines?
+What are some tips for creating a script that is optimized for voice search?
+What are some tips for creating a sense of urgency in my [KIND_OF] script?
+What are some tips for creating tutorial videos on [KIND_OF]?
+What are some tips for creating [KIND_OF] videos that promote affiliate products?
+What are some tips for using humor in [KIND_OF] video scripts to keep viewers engaged?
+What are some tips for using music and sound effects in [KIND_OF] videos to enhance the viewing experience?
+What are some tips for using music effectively in [KIND_OF] videos?
+What are some tips for writing attention-grabbing titles and descriptions for [KIND_OF] videos based on the script?
+What are some ways to incorporate calls-to-action into my [KIND_OF] video scripts?
+What are some ways to incorporate keywords into my [KIND_OF] video scripts without sounding forced?
+What are some ways to keep my [KIND_OF] script fresh and engaging over time?
+What are the best practices for formatting my [KIND_OF] script?
+What are the key elements of a successful [KIND_OF] script?
+What is the best way to start a [KIND_OF] script that grabs viewers' attention?
+
+
+__END__
+
+# Prompt Categories
+## CAN Questions
+### Creating Video Scripts
+
+- Creating video scripts for educational content in the technology niche
+- Structuring a video script to keep viewers engaged
+- Creating a video script for product reviews in the beauty niche
+- Creating long-form content video scripts, such as documentaries or interviews
+- Creating video scripts for product review videos
+- Creating video series scripts
+- Creating videos that feature interviews with industry experts
+- Creating videos that showcase customer testimonials
+- Creating videos that address controversial topics in my niche
+- Creating entertaining and informative videos
+- Creating videos that showcase my company's social responsibility efforts
+- Writing engaging titles for videos
+
+## HOW Questions
+### Creating Scripts
+
+- Addressing pain points or challenges in a script
+- Building trust and credibility with the audience
+- Conveying the benefits of a product or service
+- Building authority and expertise in a niche
+- Optimizing scripts for mobile devices
+- Aligning scripts with brand's overall marketing strategy
+- Showcasing a unique perspective or approach in a niche
+- Engaging the audience effectively
+- Outlining video scripts for better flow
+- Creating videos that address common questions and concerns
+- Incorporating brand's values and mission into a script
+- Incorporating niche into a script in a meaningful way
+- Making video scripts sound natural and conversational
+- Making video scripts stand out from competitors in a niche
+- Making videos more visually appealing
+- Making videos stand out from competitors in a niche
+- Ensuring clear and concise message in video scripts
+- Optimizing video scripts for SEO purposes
+- Structuring videos to keep viewers engaged
+- Tailoring scripts to appeal to target audience
+- Tailoring video scripts to appeal to specific niche audience
+- Using data and analytics to improve scripts and video performance
+- Using data and statistics to add credibility and authority in video scripts
+- Using humor effectively in scripts and videos
+- Using scripts to build a deeper connection with viewers
+- Using scripts to build email list or drive website traffic
+- Using scripts to generate leads or sales
+- Using personal experiences and anecdotes to build a connection with viewers
+- Using psychological triggers to increase engagement and conversions
+- Using storytelling to make videos more interesting and engaging
+- Using the power of emotion to create impactful videos
+- Using visuals to make video scripts more engaging
+- Using videos to build personal brand, generate leads, or promote products/services
+- Creating script that aligns with brand's tone and personality
+- Creating clear and concise script
+- Structuring videos to keep viewers interested and engaged
+- Using visual aids to support scripts and make videos stand out
+
+## WHAT Questions
+### Writing Scripts
+
+- Common mistakes to avoid when writing a script
+- Effective ways to convey complex ideas in a script
+- Effective ways to create a compelling opening and ending in video scripts
+- Effective ways to incorporate humor and keywords in video scripts
+- Effective ways to promote videos through scripts
+- Effective ways to use humor, music, storytelling, and visual aids in videos
+- Effective ways to use videos to promote events
+- Frameworks for creating educational and expertise-showcasing videos
+- Proven frameworks for creating engaging how-to videos
+- Creating a strong opening for a video
+- Creating a memorable and impactful video
+- Creating a script optimized for different social media platforms
+- Creating a script that resonates with target audience on an emotional level
+- Incorporating humor into videos without being offensive
+- Templates for successful video scripts
+- Tips for creating a call to action, accessible and optimized scripts
+- Tips for creating a sense of urgency in a script
+- Tips for creating tutorial videos and promoting affiliate products
+- Using humor and music in videos to enhance the viewing experience
+- Writing attention-grabbing titles and descriptions based on the script
+- Incorporating calls-to-action and keywords smoothly in video scripts
+- Keeping scripts fresh and engaging over time
+- Best practices for formatting a script
+- Key elements of a successful script
+- Starting a script that grabs viewers' attention
+
+
+
