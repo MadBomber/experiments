@@ -6,6 +6,10 @@
 # 			regardless of the RATE_PER.  Or maybe
 # 			switch on an X < RATE_CNT.
 
+# NOTE: This experiment is over.  It was turned into the
+# 			gem api_key_manager with a RateLimited class
+
+
 
 class RateLimitReached < StandardError; end
 
@@ -14,6 +18,8 @@ require 'debug_me'
 include DebugMe
 
 require 'nenv'
+
+require_relative './api_key_manager'
 
 # You have more than one official API_KEY.  Each
 # key is rate limited to something like 5 accesses per
@@ -24,79 +30,23 @@ debug_me{[
 	"ENV['API_KEYS']"
 ]}
 
-@api_keys = Nenv.api_keys ? Nenv.api_keys.split(',') : raise("No API keys")
-@api_key  = @api_keys.first
-
-RATE_CNT 	= Nenv.rate_cnt ? Nenv.rate_cnt.to_i :  5
-RATE_PER 	= Nenv.rate_per ? Nenv.rate_per.to_i : 15
+@mgr = ApiKeyManager::Rate.new(
+				ENV['API_KEYS'],
+				ENV['RATE_CNT'],
+				ENV['RATE_PER']
+			)
 
 debug_me('== INIT =='){[
-	"@api_keys",
-	"@api_key",
-	"RATE_CNT",
-	"RATE_PER",
+	'@mgr'
 ]}
 
 
-def next_api_key
-	@api_key 			= @api_keys.rotate!.first
-	@access_time 	= Time.now.to_i
-	debug_me("#{@api_key}")
-end
-
-
-def api_key
-	@api_key.nil? ? next_api_key : @api_key
-	debug_me("#{@api_key}")
-end
-
-
-
-def time_expired?
-	old_time 		= @access_time
-	now_time 		= Time.now.to_i
-	delta_time 	= now_time - old_time
-
-	result = delta_time < RATE_PER
-
-	debug_me("#{result}:#{delta_time}")
-
-	result
-end
-
-
-def reset_rate_limits
-	debug_me("== RESET ==")
-	@access_counter = RATE_CNT
-	@access_time 		= Time.now.to_i
-end
-
-
-def access
-	debug_me("FakeAccess: #{@access_counter}")
-
-	@access_counter -= 1
-		access_a_rate_limited_api
-
-	if @access_counter <= 0
-		if time_expired?
-			reset_rate_limits
-			raise RateLimitReached
-		else
-			reset_rate_limits
-		end
-	end
-end
-
 
 def access_a_rate_limited_api
-	duration = rand(5)
+	duration 	= rand(5)
+	api_key 	= @mgr.api_key
 
-	debug_me("= #{@api_key} ="){[
-		"@access_counter",
-		:duration,
-		"@retry_count"
-	]}
+	debug_me("= #{api_key} for #{duration} =")
 
 	sleep(duration)
 end
@@ -104,29 +54,7 @@ end
 #####################################################
 ## Main line
 
-@retry_count 		= @api_keys.size
-@access_counter = RATE_CNT
-
-debug_me("RetryCount: #{@retry_count}")
-
-
-@access_time = @access_time.nil? ? Time.now.to_i : @access_time
-
 50.times do |x|
-
-	begin
-	  access
-	rescue RateLimitReached => e
-		debug_me("== RateLimitReached ==")
-	  if @retry_count < 0
-	  	debug_me("== RETRY < 0 ==")
-	    raise RateLimitReached, "Consider slowing down or adding another key or spending money and buying better access rights."
-	  else
-	  	debug_me
-	    @retry_count -= 1
-	    next_api_key
-	    retry
-	  end
-	end
+	access_a_rate_limited_api
 end
 
