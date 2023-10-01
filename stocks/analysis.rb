@@ -20,6 +20,7 @@ INVEST    = 1000.00
 require_relative 'test_with'
 
 require 'amazing_print'
+require 'csv'
 
 require 'ruby-progressbar'  # Ruby/ProgressBar is a flexible text progress bar library for Ruby.
 
@@ -496,4 +497,30 @@ quote = Alphavantage::TimeSeries.new(symbol: 'TSLA').quote
 
 debug_me{[ :quote ]}
 
+#####################################
+## News and Sentiment
 
+puts
+puts "getting news and sentiment for aapl"
+puts
+
+# https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&apikey=demo
+
+set_av_api_key
+
+from_datetime_s = "20230915T0000"
+
+news = Alphavantage::Client.new(function: 'NEWS_SENTIMENT', tickers: 'VZ', time_from: from_datetime_s ).json
+
+ap news
+
+# Listings is Arrany of Array
+# where the first entry is the CSV headers
+listings = Alphavantage::Client.new(function: 'LISTING_STATUS').csv
+
+
+CSV.open('listings.csv', 'w') do |csv|
+  listings.each do |row|
+    csv << row
+  end
+end
