@@ -76,7 +76,7 @@ puts TRADES_DF.vectors.to_a.join(', ')
 
 
 puts "="*62
-puts PORTFOLIO_DF.inspect(1, PORTFOLIO_DF.size)
+ap PORTFOLIO_DF #.inspect(1, PORTFOLIO_DF.size)
 puts "="*62
 
 class NilClass
