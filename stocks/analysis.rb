@@ -62,8 +62,8 @@ unless PORTFOLIO.exist?
 end
 
 
-PORTFOLIO_DF  = Rover.read_csv PORTFOLIO
-TRADES_DF     = Rover.read_csv TRADES
+PORTFOLIO_DF  = SQA::DataFrame.load PORTFOLIO
+TRADES_DF     = SQA::DataFrame.load TRADES
 
 print "\nportfolio cols: "
 puts PORTFOLIO_DF.vectors.to_a.join(', ')
