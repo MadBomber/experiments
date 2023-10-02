@@ -35,7 +35,7 @@ require 'alphavantage'
 # require 'nokogiri'
 
 
-require 'sqa'       # v0.0.15
+require 'sqa'       # v0.0.16 # dropped Daru for Rover
 require 'sqa/cli'
 require 'ostruct'
 require 'tty-table'
@@ -62,8 +62,8 @@ unless PORTFOLIO.exist?
 end
 
 
-PORTFOLIO_DF  = Daru::DataFrame.from_csv PORTFOLIO
-TRADES_DF     = Daru::DataFrame.from_csv TRADES
+PORTFOLIO_DF  = SQA::DataFrame.from_csv PORTFOLIO
+TRADES_DF     = SQA::DataFrame.from_csv TRADES
 
 print "\nportfolio cols: "
 puts PORTFOLIO_DF.vectors.to_a.join(', ')

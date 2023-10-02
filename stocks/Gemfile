@@ -1,0 +1,9 @@
+source 'https://rubygems.org'
+
+gem 'sqa'                     # sqa - Stock Qualitative Analysis
+
+gem 'alphavantage'            # Ruby library for Alpha Vantage API
+gem 'descriptive_statistics'  # Descriptive Statistics
+gem 'prophet'
+gem 'rover-df'
+gem 'statsample'              # A suite for basic and advanced statistics on Ruby
