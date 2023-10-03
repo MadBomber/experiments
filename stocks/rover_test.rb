@@ -19,7 +19,7 @@ class NormalizeKeys
   	return mapping if keys.empty?
 
   	keys.each do |key|
-	    return @key if is_date?(key)
+          next if is_date?(key)
   	  mapping[key] = underscore_key(sanitize_key(key))
   	end
 
@@ -58,6 +58,12 @@ end
 # end
 
 
+def create_accessor_methods(df)
+
+  df
+end
+
+
 ########################################################
 aapl_csv = Pathname.pwd + 'aapl.csv'
 
@@ -73,5 +79,15 @@ debug_me{[
 mapping = NormalizeKeys.call(aapl_df.keys)
 
 
-debug_me{[ mapping ]}
+debug_me{[ :mapping ]}
+
+aapl_df.rename(mapping)
+
+debug_me{[ "aapl_df.keys" ]}
+
+debug_me{[ "aapl_df[:adj_close]" ]}
+
+create_accessor_methods(aapl_df)
+
+ap aapl_df.adj_close
 
