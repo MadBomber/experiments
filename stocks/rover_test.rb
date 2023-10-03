@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'normalize_key'
-
 require 'amazing_print'
 require 'debug_me'
 include DebugMe
@@ -11,6 +9,56 @@ require 'pathname'
 
 require 'rover-df'
 
+########################################################
+## Possible Patches to rover-df
+
+class NormalizeKeys
+  def self.call(keys)
+  	mapping = {} # old_key: new_key
+
+  	return mapping if keys.empty?
+
+  	keys.each do |key|
+	    return @key if is_date?(key)
+  	  mapping[key] = underscore_key(sanitize_key(key))
+  	end
+
+  	mapping
+  end
+
+  private
+
+  def self.underscore_key(key)
+    key.to_s.gsub(/::/, '/').
+    gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+    gsub(/([a-z\d])([A-Z])/,'\1_\2').
+    tr("-", "_").
+    downcase.to_sym
+  end
+
+  def self.sanitize_key(key)
+    key.tr('.():/','').gsub(/^\d+.?\s/, "").tr(' ','_')
+  end
+
+  def self.is_date?(key)
+    !/(\d{4}-\d{2}-\d{2})/.match(key.to_s).nil?
+  end
+end
+
+# SMELL: not needed?
+# def sekf.convert_hash_keys(value)
+#   case value
+#   when Array
+#     value.map { |v| convert_hash_keys(v) }
+#   when Hash
+#     Hash[value.map { |k, v| [ NormalizeKey.new(key: k).call, convert_hash_keys(v) ] }]
+#   else
+#     value
+#   end
+# end
+
+
+########################################################
 aapl_csv = Pathname.pwd + 'aapl.csv'
 
 aapl_df = Rover.read_csv aapl_csv
@@ -21,14 +69,9 @@ debug_me{[
 	"aapl_df.methods"
 ]}
 
-mapping = {}
 
-keys = aapl_df.keys
+mapping = NormalizeKeys.call(aapl_df.keys)
 
-keys.each do |key|
-  new_key = NormalizeKey.new( key: key ).call
-  mapping[key] = new_key
-end
 
 debug_me{[ mapping ]}
 
