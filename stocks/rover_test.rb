@@ -45,20 +45,15 @@ class NormalizeKeys
   end
 end
 
-# SMELL: not needed?
-# def sekf.convert_hash_keys(value)
-#   case value
-#   when Array
-#     value.map { |v| convert_hash_keys(v) }
-#   when Hash
-#     Hash[value.map { |k, v| [ NormalizeKey.new(key: k).call, convert_hash_keys(v) ] }]
-#   else
-#     value
-#   end
-# end
-
 
 def create_accessor_methods(df)
+	return if df.keys.empty?
+
+	df.keys.each do |key|
+	  df.define_singleton_method(key) do
+  	  df[key]
+  	end
+  end
 
   df
 end
@@ -89,5 +84,5 @@ debug_me{[ "aapl_df[:adj_close]" ]}
 
 create_accessor_methods(aapl_df)
 
-ap aapl_df.adj_close
+debug_me{[ "aapl_df.adj_close" ]}
 
