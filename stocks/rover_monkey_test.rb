@@ -14,8 +14,9 @@ require 'rover-df'
 # Add new instance methods for normalizing keys
 
 class Rover::DataFrame
+  alias_method :old_initialize, :initialize
   def initialize(*args)
-    super
+    old_initialize(*args)
 
     normalize_keys
     create_accessor_methods
@@ -26,7 +27,7 @@ class Rover::DataFrame
   def normalize_keys
   	mapping = {} # old_key: new_key
 
-  	return mapping if keys.empty?
+  	return if keys.empty?
 
   	keys.each do |key|
       next if is_date?(key)
@@ -58,9 +59,9 @@ class Rover::DataFrame
   def create_accessor_methods
   	return if keys.empty?
 
-  	df.keys.each do |key|
+  	keys.each do |key|
   	  define_singleton_method(key) do
-    	  [key]
+    	  self[key]
     	end
     end
   end
