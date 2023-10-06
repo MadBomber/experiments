@@ -99,12 +99,18 @@ def puts_table(title: "An SQA::DataFrame", df:)
                 df.rows
               )
 
+  alignments = []
+
+  df.row(0).each do |v|
+    alignments << (v.is_a?(String) ? :left : :right)
+  end
+
   puts title
   puts  the_table.render(
           :unicode,
           {
             padding:    [0, 0, 0, 0],
-            alignments: [:left]*df.keys.size,
+            alignments: alignments,
           }
         )
 end
@@ -232,6 +238,16 @@ end
 ##
 ###############################################
 
+trades_transformers = {
+  shares: -> (v) { v.to_i},
+  price:  -> (v) { (v.to_f + 0.004).round(3)}
+}
+
+
+portfolio_transformers = {
+  pe:  -> (v) { (v.to_f + 0.004).round(3)}
+}
+
 
 PORTFOLIO = Pathname.new SQA.config.data_dir + "portfolio.csv"
 TRADES    = Pathname.new SQA.config.data_dir + "trades.csv"
@@ -244,8 +260,8 @@ unless PORTFOLIO.exist?
 end
 
 
-PORTFOLIO_DF  = SQA::DataFrame.load PORTFOLIO
-TRADES_DF     = SQA::DataFrame.load TRADES
+PORTFOLIO_DF  = SQA::DataFrame.load source: PORTFOLIO,  transformers: portfolio_transformers
+TRADES_DF     = SQA::DataFrame.load source: TRADES,     transformers: trades_transformers
 
 print "\nportfolio cols: "
 puts PORTFOLIO_DF.vectors.join(', ')
