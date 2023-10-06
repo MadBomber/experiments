@@ -35,7 +35,7 @@ require 'alphavantage'
 # require 'nokogiri'
 
 
-require 'sqa'       # v0.0.16 # dropped Daru for Rover
+require 'sqa'       # v0.0.17 # dropped Daru for wrapper on Hashie::Mash
 require 'sqa/cli'
 require 'ostruct'
 require 'tty-table'
@@ -44,40 +44,11 @@ require 'tty-table'
 
 SQA.init("--data-dir #{Nenv.home}/Documents/sqa_data/")
 
-def set_av_api_key
-  Alphavantage.configure do |config|
-    config.api_key = SQA.av.key
-  end
-end
 
 
-PORTFOLIO = Pathname.new SQA.config.data_dir + "portfolio.csv"
-TRADES    = Pathname.new SQA.config.data_dir + "trades.csv"
-
-unless PORTFOLIO.exist?
-  puts
-  puts "ERROR: The #{PORTFOLIO.basename} file does not exist at #{PORTFOLIO}"
-  puts
-  exit(-1)
-end
-
-
-PORTFOLIO_DF  = SQA::DataFrame.load PORTFOLIO
-TRADES_DF     = SQA::DataFrame.load TRADES
-
-print "\nportfolio cols: "
-puts PORTFOLIO_DF.vectors.to_a.join(', ')
-
-print "\ntickers: "
-puts PORTFOLIO_DF["Ticker"].to_a.join(', ')
-
-print "\ntrades cols: "
-puts TRADES_DF.vectors.to_a.join(', ')
-
-
-puts "="*62
-ap PORTFOLIO_DF #.inspect(1, PORTFOLIO_DF.size)
-puts "="*62
+###############################################
+## Class patches.  SMELL !!!
+#
 
 class NilClass
   def blank?()  = true
@@ -100,12 +71,55 @@ class Float
 end
 
 
+# Example trading strategy
+class MyClass
+  def self.my_method(vector)
+    vector.rsi[:rsi]
+  end
+end
+
+
+
+#
+##
+###############################################
+## Methods for SQA inclusion???
+#
+
+def set_av_api_key
+  Alphavantage.configure do |config|
+    config.api_key = SQA.av.key
+  end
+end
+
+
+def puts_table(title: "An SQA::DataFrame", df:)
+  the_table = TTY::Table.new(
+                df.keys,
+                df.rows
+              )
+
+  puts title
+  puts  the_table.render(
+          :unicode,
+          {
+            padding:    [0, 0, 0, 0],
+            alignments: [:left]*df.keys.size,
+          }
+        )
+end
+
+#
+##
+###############################################
+## Main Application Methods
+#
+
 def tickers
-  @tickers ||= TEST_WITH || PORTFOLIO_DF['Ticker'].to_a.sort
+  @tickers ||= TEST_WITH || PORTFOLIO_DF.ticker.sort
 
   @tickers
 end
-
 
 
 # return a recommendation as an Integer suitable to use as
@@ -194,13 +208,8 @@ def format_features(stock, window)
 end
 
 
-
-
-
-
-##########################
 # record a recommend trade
-
+#
 def trade(ticker, signal, shares, price)
   # TODO: insert row into TRADES_DF
 
@@ -210,10 +219,57 @@ def trade(ticker, signal, shares, price)
     :shares,
     :price
   ]}
-end 
+end
 
+
+def magic(vector)
+  0 == rand(2) ? :spend : :save
+end
+
+
+
+#
+##
+###############################################
+
+
+PORTFOLIO = Pathname.new SQA.config.data_dir + "portfolio.csv"
+TRADES    = Pathname.new SQA.config.data_dir + "trades.csv"
+
+unless PORTFOLIO.exist?
+  puts
+  puts "ERROR: The #{PORTFOLIO.basename} file does not exist at #{PORTFOLIO}"
+  puts
+  exit(-1)
+end
+
+
+PORTFOLIO_DF  = SQA::DataFrame.load PORTFOLIO
+TRADES_DF     = SQA::DataFrame.load TRADES
+
+print "\nportfolio cols: "
+puts PORTFOLIO_DF.vectors.join(', ')
+
+print "\ntickers: "
+puts PORTFOLIO_DF.ticker.join(', ')
+
+
+puts
+puts_table(title: "Trades", df: TRADES_DF)
+puts
+
+
+puts
+puts_table(title: "Portfolio", df: PORTFOLIO_DF)
+puts
+
+
+# Buy/Sell signals from trading strategies
 signals = []
 
+#################################
+# Setup Some Trading Strategies #
+#################################
 
 ss = SQA::Strategy.new
 
@@ -228,8 +284,6 @@ ss.add(SQA::Strategy::Random) do |vector|
   end
 end
 
-
-
 ss.add(SQA::Strategy::Random) do |vector|
   case rand(10)
   when (8..)
@@ -241,17 +295,7 @@ ss.add(SQA::Strategy::Random) do |vector|
   end
 end
 
-def magic(vector)
-  0 == rand(2) ? :spend : :save
-end
-
 ss.add method(:magic)
-
-class MyClass
-  def self.my_method(vector)
-    vector.rsi[:rsi]
-  end
-end
 
 ss.add MyClass.method(:my_method)
 
@@ -463,6 +507,9 @@ stocks.each do |stock|
     puts
   end
 end
+
+
+__END__
 
 
 # Running up against the Alpha Vantage
