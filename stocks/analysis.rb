@@ -334,7 +334,6 @@ end
 
 period = 14 # size of last window to consider
 
-indicators = {}
 
 stocks.each do |stock|
   ticker    = stock.ticker
@@ -351,8 +350,9 @@ stocks.each do |stock|
   puts "== #{ticker}"
   puts "== #{timestamp} at #{adj_close}"
   puts
+  ap stock.overview
+  puts
 
-  # receint_history(ticker)
 
 
   v         = OpenStruct.new   # v, as in vector of values
@@ -360,9 +360,8 @@ stocks.each do |stock|
   # Convert historical data to Arrays because the
   # SQA::Indicator methods take Arry type as input.
 
-  prices    = data.adj_close_price.to_a.r2
-  volumes   = data.volume.to_a
-
+  prices    = data.adj_close_price
+  volumes   = data.volume
 
   # Calculate the indicators for this stock
 
@@ -412,23 +411,25 @@ stocks.each do |stock|
   v.macd[:macd]    = v.macd[:macd].last.r2
   v.macd[:signal]  = v.macd[:signal].last.r2
 
-  stock.indicators = v
+
+  # save indicators
+  stock.indicators = v.to_h
+
 
   ############################################
   # Make predictions
 
-  v.pnv   = SQAI.pnv(stock,  5)
-  v.pnv2  = SQAI.pnv2(stock, 5)
-  v.pnv3  = SQAI.pnv3(stock, 5)
-  v.pnv4  = SQAI.pnv4(stock, 5)
-  v.pnv5  = SQAI.pnv5(stock, 5)
+  stock.indicators.pnv   = SQAI.pnv(stock,  5)
+  stock.indicators.pnv2  = SQAI.pnv2(stock, 5)
+  stock.indicators.pnv3  = SQAI.pnv3(stock, 5)
+  stock.indicators.pnv4  = SQAI.pnv4(stock, 5)
+  stock.indicators.pnv5  = SQAI.pnv5(stock, 5)
 
-
-  # save predictions
-  stock.indicators = v
 
   ########################################
   ## Report Recommendations and Indicators
+
+  v = stock.indicators
 
   puts
   puts "Trade Recommendations"
@@ -438,17 +439,16 @@ stocks.each do |stock|
 
   puts
   puts "Indicators:"
-  ap stock.indicators.to_h
+  ap stock.indicators
 end
 
 
 stocks.each do |stock|
   puts "="*64
   puts "== #{stock.ticker}"
-
-  debug_me{[
-    "stock.overview"
-  ]}
+  puts
+  ap stock.overview
+  puts
 
   [3,5,10].each do |window|
     headers = %w[ Predictor ]
@@ -480,13 +480,15 @@ stocks.each do |stock|
 
     highs = [   0.0] * window
     lows  = [9999.9] * window
+    in_hl = [""] * window
+
 
     row_inx = -1
     values.each do |row|
       row_inx += 1
       next if 0 == row_inx
 
-      row[1..-1].each_with_index do |value, index|
+      row[1..].each_with_index do |value, index|
         lows[index]   = [lows[index].to_f,  value.to_f].min
         highs[index]  = [highs[index].to_f, value.to_f].max
       end
@@ -506,6 +508,26 @@ stocks.each do |stock|
     end
 
     values << entry
+
+
+    # entry = ["In Cone?"]
+
+    # actuals = values.first
+    # highs   = values.last(2).first
+    # lows    = values.last(2).last
+
+    # actuals[1..].each_with_index do |actual, x|
+    #   debug_me("== #{x} =="){[
+    #     "lows[x]",
+    #     :actual,
+    #     "highs[x]"
+    #   ]}
+
+    #   # entry << (lows[x] <= actual <= highs[x]) ? "Yes" : ""
+    # end
+
+    # values << entry
+
 
     the_table = TTY::Table.new(headers, values)
 
@@ -531,15 +553,15 @@ __END__
 # Running up against the Alpha Vantage
 # 5 api calls per minute rate limitation.
 
-wait_seconds = 60
-
-progressbar = ProgressBar.create(
-    title: 'Waiting',
-    total: wait_seconds,
-    format: '%t: [%B] %c/%C %j%% %e',
-    output: STDERR
-)
-
+# wait_seconds = 60
+#
+# progressbar = ProgressBar.create(
+#     title: 'Waiting',
+#     total: wait_seconds,
+#     format: '%t: [%B] %c/%C %j%% %e',
+#     output: STDERR
+# )
+#
 # wait_seconds.times do |x|
 #   sleep 1
 #   progressbar.increment
