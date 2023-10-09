@@ -330,6 +330,7 @@ tickers.each do |ticker|
 rescue => e
   puts "\nERROR: #{e}"
   puts   "  ticker: #{ticker}"
+  raise
 end
 
 period = 14 # size of last window to consider
