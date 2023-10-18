@@ -35,15 +35,23 @@ require 'alphavantage'
 # require 'nokogiri'
 
 
-require 'sqa'       # v0.0.17 # dropped Daru for wrapper on Hashie::Mash
+require 'sqa'; required_sqa_version = SemVersion("0.0.18")
 require 'sqa/cli'
 require 'ostruct'
 require 'tty-table'
 
 
+if SQA.version >= required_sqa_version
+  SQA.init("--data-dir #{Nenv.home}/Documents/sqa_data/")
+else
+  STDERR.puts <<~EOS
 
-SQA.init("--data-dir #{Nenv.home}/Documents/sqa_data/")
+    ERROR: SQA version too old: #{SQA.version}
+           This program needs:  #{required_sqa_version}
 
+  EOS
+  exit(1)
+end
 
 
 ###############################################
@@ -335,12 +343,12 @@ rescue => e
 end
 
 
-period = 14 # size of last window to consider
+period = 15 # size of last window to consider
 
 
 stocks.each do |stock|
   ticker    = stock.ticker
-  data      = stock.df
+  data      = stock.df      # FIXME: chanage data to df
 
   # The last timestamp and adjusted closing price
   # on file for this stock
@@ -356,6 +364,27 @@ stocks.each do |stock|
   ap stock.overview
   puts
 
+  puts "Adjust Close Prices"
+  puts "Last Period Descriptive Statistics"
+  puts "=================================="
+  puts
+
+  stats = data.adj_close_price.last(15).sample_summary
+
+  # stats.each_pair do |k,v|
+  #   if :number == k
+  #     stats[k] = v.to_i
+  #   else
+  #     stats[k] = v.round(3)
+  #   end
+  # end
+
+  ap stats
+
+
+  ##############################
+  ## Calculate the Indicators ##
+  ##############################
 
 
   v         = OpenStruct.new   # v, as in vector of values

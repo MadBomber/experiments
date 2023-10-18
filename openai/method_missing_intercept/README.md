@@ -28,6 +28,9 @@ end
 
 Sending this file as part of the context of my `todo` prompt will generate a new Ruby file that implements all the TODO requirements in the provided file.
 
+This works pretty good.  I'm going to stop playing with the other ideas.
+
+
 ## Exception Intercept
 
 I often use a custome exception `NotImplemented` in method which I leave for later development.  When I get to the point in my testing where the expection is being raised I then focus on that method's implementation.
