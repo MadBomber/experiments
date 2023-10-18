@@ -330,8 +330,10 @@ tickers.each do |ticker|
 rescue => e
   puts "\nERROR: #{e}"
   puts   "  ticker: #{ticker}"
+  ap e.backtrace
   raise
 end
+
 
 period = 14 # size of last window to consider
 
@@ -568,6 +570,7 @@ __END__
 #   progressbar.increment
 # end
 
+__END__
 
 debug_me{[
   "SQA::Stock.top"
