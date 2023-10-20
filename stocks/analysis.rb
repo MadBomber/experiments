@@ -123,6 +123,59 @@ def puts_table(title: "An SQA::DataFrame", df:)
         )
 end
 
+# natrix is an Array or Arrays where the
+# first column is a String lable.  The remaining
+# columns are Float values
+#
+# The first row is the actual values.
+# The remain rows are the results from different
+# predictors
+#
+# Returns an Array of winners - which predictor came closest
+# to the actual value.  And an Array of those deltas.
+#
+def closest_prediction(matrix)
+  actuals     = matrix[0][1..]
+  predictions = matrix[1..]
+  closest     = []
+  deltas      = ["Delta"]
+  winners     = ["Winner"]
+
+  actuals.each_with_index do |actual, x|
+    closest   = predictions.min_by{|prediction| (prediction[x+1].to_f - actual.to_f).abs }
+    delta     = (closest[x+1].to_f - actual.to_f).abs
+    winners   << closest[0]
+    deltas    << delta.round(2)
+  end
+
+  [winners, deltas]
+end
+
+
+# matrix is an Array of Arrays where the
+# first column is a label.  The remaining columns are Floats
+#
+# The first row is actual values.  The remaining rows are
+# predicted values.
+#
+# returns the min and max values for each colum of the predictions.
+#
+def min_max_columns(given_matrix)
+  matrix = given_matrix.dup # NOTE: was thinking about side-effects
+  matrix = matrix[1..].map { |row| row[1..] }
+
+  max_values = ["Highs"]
+  min_values = ["Lows"]
+
+  # Loop through each column (after having transposed the matrix)
+  matrix.transpose.each do |col|
+    max_values << col.map(&:to_f).max
+    min_values << col.map(&:to_f).min
+  end
+
+  [min_values, max_values]
+end
+
 #
 ##
 ###############################################
@@ -475,6 +528,12 @@ stocks.each do |stock|
 end
 
 
+###################################################
+## Apply some prediction indicators to see how well
+## they compare to the actuals
+
+predictors = %i[ pnv pnv2 pnv3 pnv4 pnv5]
+
 stocks.each do |stock|
   puts "="*64
   puts "== #{stock.ticker}"
@@ -482,13 +541,15 @@ stocks.each do |stock|
   ap stock.overview
   puts
 
-  [3,5,10].each do |window|
+  #[3,5,10].each do |window|
+  [10].each do |window|
     headers = %w[ Predictor ]
     (1..window).each do |x|
       headers << x
     end
 
-    actual  = stock.df.adj_close_price.to_a.last(window)
+    actual  = stock.df.adj_close_price.last(window)
+
     entry   = ["Actual"]
     actual.each do |v|
       entry  << sprintf("%.1f", v.round(1))
@@ -496,7 +557,8 @@ stocks.each do |stock|
     values = [ entry ]
 
 
-    %i[ pnv pnv2 pnv3 pnv4 pnv5].each do |which|
+
+    predictors.each do |which|
       result = SQAI.send(which, stock, window, true)
       entry = [which]
       result.each do |v|
@@ -510,55 +572,61 @@ stocks.each do |stock|
       values << entry
     end
 
-    highs = [   0.0] * window
-    lows  = [9999.9] * window
+=begin
+At this point values is a matrix that looks like this:
+  ┌─────────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+  │        0│    1│    2│    3│    4│    5│    6│    7│    8│    9│   10│
+  ├─────────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
+0 │   Actual│177.5│179.0│178.4│179.8│180.7│178.9│178.7│177.2│175.8│175.5│
+1 │      pnv│177.4│178.6│179.9│181.1│182.4│183.6│184.8│186.1│187.3│188.6│
+2 │     pnv2│174.3│173.7│173.7│173.1│172.8│172.7│172.7│173.3│173.3│173.3│
+3 │     pnv3│175.7│177.4│167.9│168.9│171.0│171.7│176.3│171.1│174.9│176.2│
+4 │     pnv4│174.9│176.2│177.5│176.1│178.7│179.2│179.5│177.9│173.7│175.0│
+5 │     pnv5│184.9│195.5│206.7│218.5│231.0│244.3│258.2│273.0│288.7│305.2│
+  └─────────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+
+"Actual" == values[0][0]
+   "pnv" == values[1][0]
+
+What we want to do is to find out which of the predictors came
+the closes to the actual value for each prediction.
+
+We will save that predictor's name in the winners array
+
+=end
+
+    # winners is an Array of Arrays
+    # first row is the predictor names
+    # second row is the ABS deltas from actual
+    #
+    winners = closest_prediction(values)
+    min_max = min_max_columns(values)
+    lows    = min_max.first
+    highs   = min_max.last
+
+    values << highs
+    values << lows
+
+    values << winners.first # predictor names
+    values << winners.last  # delta
+
+
+    #################################################
+    ## Now look at the "cone" to see if the actuals were
+    ## within the predicted highs and lows
+
     in_hl = [""] * window
+    entry = ["In Cone?"]
+
+    actuals = values.first
 
 
-    row_inx = -1
-    values.each do |row|
-      row_inx += 1
-      next if 0 == row_inx
-
-      row[1..].each_with_index do |value, index|
-        lows[index]   = [lows[index].to_f,  value.to_f].min
-        highs[index]  = [highs[index].to_f, value.to_f].max
-      end
-    end
-
-    entry = ['High']
-    highs.each do |v|
-      entry << v
+    actuals[1..].map(&:to_f).each_with_index do |actual, x|
+      in_hl[x] = (lows[x+1] <= actual && actual <= highs[x+1]) ? "YES" : "no"
+      entry << in_hl[x]
     end
 
     values << entry
-
-
-    entry = ['Low']
-    lows.each do |v|
-      entry << v
-    end
-
-    values << entry
-
-
-    # entry = ["In Cone?"]
-
-    # actuals = values.first
-    # highs   = values.last(2).first
-    # lows    = values.last(2).last
-
-    # actuals[1..].each_with_index do |actual, x|
-    #   debug_me("== #{x} =="){[
-    #     "lows[x]",
-    #     :actual,
-    #     "highs[x]"
-    #   ]}
-
-    #   # entry << (lows[x] <= actual <= highs[x]) ? "Yes" : ""
-    # end
-
-    # values << entry
 
 
     the_table = TTY::Table.new(headers, values)
@@ -582,24 +650,6 @@ end
 __END__
 
 
-# Running up against the Alpha Vantage
-# 5 api calls per minute rate limitation.
-
-# wait_seconds = 60
-#
-# progressbar = ProgressBar.create(
-#     title: 'Waiting',
-#     total: wait_seconds,
-#     format: '%t: [%B] %c/%C %j%% %e',
-#     output: STDERR
-# )
-#
-# wait_seconds.times do |x|
-#   sleep 1
-#   progressbar.increment
-# end
-
-__END__
 
 debug_me{[
   "SQA::Stock.top"
