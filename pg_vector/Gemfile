@@ -1,0 +1,8 @@
+source "https://rubygems.org"
+
+gem 'activerecord'            # Object-relational mapper framework (part of Rails).
+gem 'ancestry'                # Organize ActiveRecord model into a tree structure
+gem 'neighbor'                # Nearest neighbor search for Rails and Postgres
+
+gem 'llm_memory_pgvector'
+gem 'pgvector'
