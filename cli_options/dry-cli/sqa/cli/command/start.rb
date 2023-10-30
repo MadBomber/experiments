@@ -9,7 +9,9 @@ class Start < Base
 
   desc "Start Foo machinery"
 
-  argument :root, required: true, desc: "Root directory"
+  argument :root,
+    required: true,
+    desc:     "Root directory"
 
   example [
     "path/to/root # Start Foo at root directory"

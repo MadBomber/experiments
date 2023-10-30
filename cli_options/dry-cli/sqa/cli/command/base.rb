@@ -15,4 +15,10 @@ class SQA::CLI::Command::Base < Dry::CLI::Command
     default:  false,
     desc:     'Print verbose information',
     aliases:  %w[-v --verbose]
+
+  option :xyzzy,
+    type:     :boolean,
+    default:  false,
+    desc:     "Magic",
+    aliases:  %w[ -x --xyzzy ]
 end
