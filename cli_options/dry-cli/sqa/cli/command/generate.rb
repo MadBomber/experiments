@@ -1,13 +1,8 @@
 # .../sqa/cli/command/generate.rb
 
 module SQA::CLI::Command::Generate
-  def self.prefix
-    main_command = nil
+  VERSION = "1.0.0-generate"
 
-    SQA::CLI::Command.register "generate", aliases: ["g"] do |an_object|
-      main_command = an_object
-    end
-
-    main_command
-  end
+  Command.register "generate", aliases: ["g"]
+  Command.register "generate version", PrintVersion.new(VERSION), aliases: %w[--version]
 end

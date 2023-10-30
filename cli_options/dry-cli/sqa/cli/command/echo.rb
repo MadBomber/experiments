@@ -2,7 +2,7 @@
 
 module SQA::CLI::Command
 class Echo < Base
-  SQA::CLI::Command.register "echo", self
+  Command.register "echo", self
 
   desc "Print input"
 

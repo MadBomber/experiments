@@ -1,14 +1,22 @@
 # .../sqa/cli/command/version.rb
 
+
 module SQA::CLI::Command
 class Version < Base
-  SQA::CLI::Command.register "version", self, aliases: ["v", "-v", "--version"]
+  Command.register "version", self, aliases: %w[--version]
 
   desc "Print version"
 
+  def initialize(version=SQA::VERSION)
+    @version = version
+  end
+
   def call(**options)
-    debug_me{[ :options ]}
-    puts "1.0.0"
+    puts @version
+    exit(0)
   end
 end
 end
+
+# Create a short-cut to the class
+PrintVersion = SQA::CLI::Command::Version

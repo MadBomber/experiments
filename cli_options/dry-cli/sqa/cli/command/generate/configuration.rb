@@ -1,8 +1,8 @@
 # .../sqa/cli/command/generate/configuration.rb
 
 module SQA::CLI::Command::Generate
-class Configuration < SQA::CLI::Command::Base
-  SQA::CLI::Command::Generate.prefix.register "config", self
+class Configuration < Command::Base
+  Command.register "generate config", self
 
   desc "Generate configuration"
 
@@ -15,3 +15,14 @@ class Configuration < SQA::CLI::Command::Base
   end
 end
 end
+
+
+__END__
+
+command_class = Foo::CLI::Commands::Configure
+
+command_name = Foo::CLI::Commands.commands.detect { |name, cmd| cmd == command_class }.first
+
+
+puts command_name  # Outputs: "generate config"
+

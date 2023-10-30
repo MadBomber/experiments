@@ -2,7 +2,10 @@
 
 module SQA::CLI::Command
 class Stop < Base
-  SQA::CLI::Command.register "stop", self
+  VERSION = '0.1.0-stop'
+
+  Command.register "stop", self
+  Command.register "stop version", PrintVersion.new(VERSION), aliases: %w[--version]
 
   desc "Stop Foo machinery"
 

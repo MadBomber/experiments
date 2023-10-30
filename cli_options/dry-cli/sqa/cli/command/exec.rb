@@ -2,7 +2,8 @@
 
 module SQA::CLI::Command
 class Exec < Base
-  SQA::CLI::Command.register "exec", self
+  Command.register "exec", self
+  Command.register "exec version", PrintVersion, aliases: %w[--version]
 
   desc "Execute a task"
 

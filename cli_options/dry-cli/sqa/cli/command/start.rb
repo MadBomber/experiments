@@ -2,7 +2,10 @@
 
 module SQA::CLI::Command
 class Start < Base
-  SQA::CLI::Command.register "start", self
+  VERSION = "0.0.1-start"
+
+  Command.register "start", self
+  Command.register "start version", PrintVersion.new(VERSION), aliases: %w[--version]
 
   desc "Start Foo machinery"
 

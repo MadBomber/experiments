@@ -1,8 +1,11 @@
 # .../sqa/cli/command/generate/test.rb
 
 module SQA::CLI::Command::Generate
-class Test < SQA::CLI::Command::Base
-  SQA::CLI::Command::Generate.prefix.register "test", self
+class Test < Command::Base
+  VERSION = "2.0.0-test"
+
+  Command.register "generate test", self
+  Command.register "generate test version", PrintVersion.new(VERSION), aliases: %w[--version]
 
   desc "Generate tests"
 
