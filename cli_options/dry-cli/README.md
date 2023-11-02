@@ -12,11 +12,11 @@ To define a new command as a gem for use with the SQA framework setup this file 
 
 ```plaintext
 
-sqa
+foo
 └── cli
-    └── command
+    └── commands
         |-- xyzzy
- 			  └── xyzzy.rb
+        └── xyzzy.rb
 
 ```
 
@@ -25,23 +25,24 @@ Where xyzzy.rb is the file that implements your command. You can put additional 
 You command file xyzzy.rb should look something like this:
 
 ```ruby
-class Command::Xyzzy < Command::Base
-	VERSION = "1.0.0-xyzzy"
+class Commands::Xyzzy < Commands::Base
+  VERSION = "1.0.0-xyzzy"
 
-	# :help, :debug and :verbose are automatically defined
+  # :help, :debug and :verbose are automatically defined
 
-	# your DRY::CLI options if any specific to your command
+  # your DRY::CLI options if any specific to your command
 
-	Command.register "xyzzy", self #, aliases: %w[ whatever you want]
-	Command.register "xyzzy version", PrintVersion.new(VERSION), aliases: %w[--version]
+  Command.register "xyzzy", self #, aliases: %w[ whatever you want]
+  Command.register "xyzzy version", PrintVersion.new(VERSION), aliases: %w[--version]
 
-	def initialize(*)
-		# whatever you need
-	end
+  def initialize(*)
+    # whatever you need
+  end
 
-	def call(*)
-		# your command business logic starts here
-	end
+  # Use an orchestrator pattern
+  def call(*)
+    # your command business logic starts here
+  end
 end
 ```
 

@@ -1,8 +1,7 @@
-# .../sqa/cli/command/echo.rb
+# .../Foo/cli/commands/echo.rb
 
-module SQA::CLI::Command
-class Echo < Base
-  Command.register "echo", self
+class Commands::Echo < Commands::Base
+  Commands.register "echo", self
 
   desc "Print input"
 
@@ -14,7 +13,6 @@ class Echo < Base
   ]
 
   def call(input: nil, **options)
-    debug_me{[ :options ]}
     if input.nil?
       puts "wuh?"
     else
@@ -22,4 +20,4 @@ class Echo < Base
     end
   end
 end
-end
+

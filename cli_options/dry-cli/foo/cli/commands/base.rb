@@ -1,9 +1,9 @@
-# .../sqa/cli/command/base.rb
+# .../Foo/cli/commands/base.rb
 
 # Establish a Base command class that has global options
 # available to all commands.
 
-class SQA::CLI::Command::Base < Dry::CLI::Command
+class Foo::CLI::Commands::Base < Dry::CLI::Command
   option :debug,
     type:     :boolean,
     default:  false,

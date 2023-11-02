@@ -1,11 +1,10 @@
-# .../sqa/cli/command/start.rb
+# .../Foo/cli/commands/start.rb
 
-module SQA::CLI::Command
-class Start < Base
+class Commands::Start < Commands::Base
   VERSION = "0.0.1-start"
 
-  Command.register "start", self
-  Command.register "start version", PrintVersion.new(VERSION), aliases: %w[--version]
+  Commands.register "start", self
+  Commands.register "start version", PrintVersion.new(VERSION), aliases: %w[--version]
 
   desc "Start Foo machinery"
 
@@ -18,8 +17,6 @@ class Start < Base
   ]
 
   def call(root:, **options)
-    debug_me{[ :options ]}
     puts "started - root: #{root}"
   end
-end
 end

@@ -1,10 +1,12 @@
-# .../sqa.rb
+# .../foo.rb
 
 require 'debug_me'
 include DebugMe
 
+$DEBUG_ME = false
+
 # Establish the application namespace
-module SQA
+module Foo
 	VERSION = '0.0.1-alpha'
 end
 

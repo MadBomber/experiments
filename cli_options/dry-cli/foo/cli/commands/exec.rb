@@ -1,9 +1,8 @@
-# .../sqa/cli/command/exec.rb
+# .../Foo/cli/commands/exec.rb
 
-module SQA::CLI::Command
-class Exec < Base
-  Command.register "exec", self
-  Command.register "exec version", PrintVersion, aliases: %w[--version]
+class Commands::Exec < Commands::Base
+  Commands.register "exec", self
+  Commands.register "exec version", PrintVersion, aliases: %w[--version]
 
   desc "Execute a task"
 
@@ -25,9 +24,7 @@ class Exec < Base
     aliases:  %w[ -x ]
 
   def call(task:, dirs: [], **options)
-    debug_me{[ :options ]}
     puts "exec - task: #{task}, dirs: #{dirs.inspect}"
     exit(options[:exit])
   end
-end
 end
