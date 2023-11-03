@@ -1,8 +1,7 @@
 # foo/monkey_patch_dry_cli.rb
 
 =begin
-  This monkey patch Dry::CLI help capability with four new
-  class methods added to the Command class:
+  This monkey patch adds four new class methods to the Command class:
 
     global_header .. Program/Glocal context custom header/footer
     global_footer ..
@@ -14,13 +13,13 @@
   with the appropriate global and command level header and footer
   text.
 
-  Expected usage patter is to have the global customer
+  The expected usage pattern is to have the global customerized
   header / footer help text defined in the Base command class
-  for an application.  All other command inherent from this
+  for an application.  All other commands inherent from this
   Base class.
 
-  The header / footer class methods are used wrap the command
-  help text.  When "--help" is used on a command, the customer
+  The header / footer class methods are used to wrap the command
+  help text.  When "--help" is used on a command, the customerized
   global header and footer text are on the outside of the help text.
   The customized command header / footer are inside of the
   global context but still wrap the original help text
