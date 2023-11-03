@@ -9,8 +9,8 @@ module Dry::CLI::Banner
     def call(command, name)
     	global_header 	= Dry::CLI::Command.global_header
     	global_footer 	= Dry::CLI::Command.global_footer
-      command_header 	= command.header_string
-      command_footer 	= command.footer_string
+      command_header 	= command.header
+      command_footer 	= command.footer
 
       <<~EOS
       	#{global_header}
@@ -47,19 +47,20 @@ end
 
 
 class Dry::CLI::Command
-	module ClassMethods
-		# attr_reader :global_header_string
-		# attr_reader :global_footer_string
-		attr_reader :header_string
-		attr_reader :footer_string
+	def self.header(a_string=nil)
+		if a_string.nil?
+			@header_string
+		else
+			@header_string = a_string
+		end
 	end
 
-	def self.header(a_string)
-		@header_string = a_string
-	end
-
-	def self.footer(a_string)
-		@footer_string = a_string
+	def self.footer(a_string=nil)
+		if a_string.nil?
+			@footer_string
+		else
+			@footer_string = a_string
+		end
 	end
 
 	def self.global_header(a_string=nil)

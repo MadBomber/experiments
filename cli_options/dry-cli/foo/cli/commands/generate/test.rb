@@ -6,6 +6,8 @@ class Commands::Generate::Test < Commands::Base
   Commands.register "generate test", self
   Commands.register "generate test version", PrintVersion.new(VERSION), aliases: %w[--version]
 
+  header "++ TEST header only no footer ++"
+
   desc "Generate tests"
 
   option :framework, default: "minitest", values: %w[minitest rspec]
