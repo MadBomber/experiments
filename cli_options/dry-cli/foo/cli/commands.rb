@@ -23,6 +23,3 @@ Dir.glob("#{__dir__}/commands/*.rb")
   # puts "done."
 end
 
-
-Foo::CLI::Commands.before("my_help") { print "\n== TOP Header ==\n\n" }
-Foo::CLI::Commands.after("my_help")  { print "\n\n== TOP Footer ==\n" }
