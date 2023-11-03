@@ -6,6 +6,9 @@ class Commands::Stop < Commands::Base
   Commands.register "stop", self
   Commands.register "stop version", PrintVersion.new(VERSION), aliases: %w[--version]
 
+  header "== STOP Header =="
+  footer "== STOP Footer =="
+
   desc "Stop Foo machinery"
 
   option :graceful, type: :boolean, default: true, desc: "Graceful stop"

@@ -4,6 +4,9 @@
 # available to all commands.
 
 class Foo::CLI::Commands::Base < Dry::CLI::Command
+  global_header "== Base Global Header =="
+  global_footer "== Base Global Footer =="
+
   option :debug,
     type:     :boolean,
     default:  false,

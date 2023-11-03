@@ -6,6 +6,9 @@ class Commands::Start < Commands::Base
   Commands.register "start", self
   Commands.register "start version", PrintVersion.new(VERSION), aliases: %w[--version]
 
+  header "== Start Header =="
+  footer "== Start Footer =="
+
   desc "Start Foo machinery"
 
   argument :root,
