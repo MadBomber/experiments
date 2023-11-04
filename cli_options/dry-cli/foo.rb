@@ -3,7 +3,7 @@
 require 'debug_me'
 include DebugMe
 
-$DEBUG_ME = false
+$DEBUG_ME = true
 
 # Establish the application namespace
 module Foo

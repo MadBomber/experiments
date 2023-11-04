@@ -186,6 +186,43 @@ class Dry::CLI::Command
 	end
 end
 
+
+# Add option value transformation based upon the value of the
+# option's "type:" parameter.
+
+module Dry::CLI::Parser
+  TRANSFORMERS = {
+    integer:  -> (v) { v&.to_i },
+    float:    -> (v) { v&.to_f }
+  }
+
+  def self.call(command, arguments, prog_name)
+    original_arguments = arguments.dup
+    parsed_options = {}
+
+    OptionParser.new do |opts|
+      command.options.each do |option|
+        opts.on(*option.parser_options) do |value|
+          if TRANSFORMERS.has_key?(option.options[:type])
+            value = TRANSFORMERS[option.options[:type]].call(value)
+          end
+
+          parsed_options[option.name.to_sym] = value
+        end
+      end
+
+      opts.on_tail("-h", "--help") do
+        return Result.help
+      end
+    end.parse!(arguments)
+
+    parsed_options = command.default_params.merge(parsed_options)
+    parse_required_params(command, arguments, prog_name, parsed_options)
+  rescue ::OptionParser::ParseError
+    Result.failure("ERROR: \"#{prog_name}\" was called with arguments \"#{original_arguments.join(" ")}\"") # rubocop:disable Metrics/LineLength
+  end
+end
+
 #
 ## End of Monkey patches
 ##############################################
