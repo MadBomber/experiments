@@ -1,4 +1,0 @@
-source httsp://rubygems.org
-
-gem 'tty-spinner'
-
