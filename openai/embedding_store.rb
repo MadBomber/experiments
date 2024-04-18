@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -wKU
+#!/usr/bin/env ruby
 # openai/embedding_store.rb
 # see: https://gist.github.com/peterc/b9723e648cd2fc95c2689dedf9c6b6d2
 

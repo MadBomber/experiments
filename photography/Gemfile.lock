@@ -1,0 +1,16 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ffi (1.15.5)
+    ffi-gphoto2 (0.10.0)
+      ffi (~> 1.15.0)
+
+PLATFORMS
+  arm64-darwin-23
+  ruby
+
+DEPENDENCIES
+  ffi-gphoto2
+
+BUNDLED WITH
+   2.5.9
