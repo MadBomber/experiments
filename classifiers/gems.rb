@@ -9,6 +9,10 @@ system_package 'pdf2txt'  if fedora? || mac?
 system_package 'sqlite3'  if fedora? || mac?
 
 
+# Inline Crystall compiler
+gem 'crystalruby'
+
+
 # Database stuff
 gem 'activerecord'
 gem 'pg'
@@ -45,12 +49,17 @@ gem 'omnicat-bayes'
 gem 'reclassifier'
 gem 'madeleine'       # object persistence; has not worked
 
+
 gem 'classifier-reborn'  #, git: 'https://github.com/MadBomber/classifier-reborn.git'
+system_package 'lapack'     if fedora? || mac?
+system_package 'openblas'   if fedora? || mac?
+gem 'numo-narray'
+gem 'numo-linalg'
 
 #system_package 'gsl'  if fedora? || mac?
 #gem 'gsl'  # might load its own gsl library
 
-#gem 'stuff-classifier'  # bayes and tf-idf weights / depends on old sqlite3 version
+gem 'stuff-classifier'  # bayes and tf-idf weights / depends on old sqlite3 version
 
 gem 'summary'  # not any good.
 
@@ -63,7 +72,7 @@ gem 'libsvmffi'
 gem 'rb-libsvm'
 gem 'hoatzin'
 
-#gem 'omnicat-svm' 	# out of sync with omnicat-bayes
+gem 'omnicat-svm' 	# out of sync with omnicat-bayes
                     # wants an older version of omnicat
 
 system_package 'libsvm'  if fedora? || mac?
