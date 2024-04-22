@@ -5,7 +5,7 @@
 # TODO: Add CliHelper; get data files from command line; allow directory recursion
 # TODO: allow for skip extensions - extensions of files to be skipped
 
-require 'awesome_print'
+require 'amazing_print'
 
 require 'debug_me'
 include DebugMe

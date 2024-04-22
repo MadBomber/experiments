@@ -5,14 +5,18 @@
 ##  Desc: simple classifier (bayes and LSI)
 #
 
+puts "The reclassifier gem is too old and requires GSL"
+raise "Outdated!"
+
 require 'assertions'
 include Assertions
 
-require 'awesome_print'
+require 'amazing_print'
 require 'date'
 
 
-require "gsl"
+# require "gsl" Does not work under Ruby v3+
+
 require 'reclassifier'    # FIXME: needs require 'set'; also need gsl for lsi
 
 b = Reclassifier::Bayes.new( [ :interesting, :uninteresting ] )

@@ -8,7 +8,6 @@ system_package 'html2txt' if fedora? || mac?
 system_package 'pdf2txt'  if fedora? || mac?
 system_package 'sqlite3'  if fedora? || mac?
 
-
 # Inline Crystall compiler
 gem 'crystalruby'
 

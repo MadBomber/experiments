@@ -4,8 +4,10 @@
 ##  File: nbayes_test.rb
 ##  Desc: simple classifier
 #
+# nbayes may be a candidate for crystalruby
 
-require 'awesome_print'
+
+require 'amazing_print'
 require 'date'
 
 require 'nbayes'

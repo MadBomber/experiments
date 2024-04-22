@@ -5,7 +5,7 @@
 ##  Desc: simple classifier
 #
 
-require 'awesome_print'
+require 'amazing_print'
 
 # In this example let's have 3 documents.  2 of the documents
 # will go into our training set and 1 will be used as our

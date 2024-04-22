@@ -5,7 +5,7 @@
 ##  Desc: simple classifier
 #
 
-require 'awesome_print'
+require 'amazing_print'
 
 begin
   require 'libsvmffi'

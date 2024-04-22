@@ -11,8 +11,11 @@
 ##    strings
 #
 
+puts "gem hoatzin is a problem"
+raise "Outdated!"
+
 #require 'bag_of_words'
-require 'awesome_print'
+require 'amazing_print'
 
 require 'pathname'  # STDLIB
 require 'hoatzin'   # GEM that implements an SVM-based classifier

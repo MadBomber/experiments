@@ -4,16 +4,31 @@
 ##  File: stuff_classifier_test.rb
 ##  Desc: simple classifier
 #
+#
+# The stuff_classifier gem is a good candidate for the
+# crystalruby experiment.
+
+
+
+
+# Stuff Classifier has an error so this fixes it
+class File
+  class << self
+    alias_method :exists?, :exist?
+  end
+end
 
 require 'date'
 require 'pathname'
 
-require 'awesome_print'
+require 'amazing_print'
 
 require 'stuff-classifier'
 
 def assert(expected, got)
-  unless expected == got
+  if expected == got
+    puts "Good: got #{got}"
+  else
     puts "Expected: #{expected} (#{expected.class})   Got: #{got} (#{got.class})  Where: #{caller}"
   end
 end
@@ -50,6 +65,7 @@ cls = StuffClassifier::Bayes.new(data_set_name)
 
 
 if previously_trained
+  puts "Previously trained!"
   cls = StuffClassifier::TfIdf.open(data_set_name)
 
   # to start fresh, deleting the saved training data for this classifier
@@ -59,6 +75,7 @@ if previously_trained
   puts "delete the file: #{training_db_path}"
 
 else
+  puts "training the difference between cats and dogs..."
 
   cls = StuffClassifier::TfIdf.new(data_set_name)
 
@@ -87,6 +104,8 @@ cls.save_state
 
 # And finally, classifying stuff:
 
+puts "Testing statement classification."
+
 assert :cat, cls.classify("This test is about cats.").to_sym
 assert :cat, cls.classify("I hate ...").to_sym
 assert :cat, cls.classify("The most annoying animal on earth.").to_sym
@@ -102,12 +121,3 @@ assert :dog, cls.classify("Willy, where the heck are you?").to_sym
 assert :dog, cls.classify("I like big dogs and I cannot lie.").to_sym
 assert :dog, cls.classify("Why is the front door of our house open?").to_sym
 assert :dog, cls.classify("Who is eating my meat?").to_sym
-
-
-
-
-
-
-
-
-

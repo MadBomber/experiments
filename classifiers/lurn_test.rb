@@ -4,7 +4,7 @@
 ##  File: lurn_test.rb
 #
 
-require 'awesome_print'
+require 'amazing_print'
 
 require 'lurn'
 
