@@ -22,6 +22,8 @@ end
 
 __END__
 
+require_relative './simple_flow'
+
 # Usage example
 pipeline = SimpleFlow::Pipeline.new do
   use_middleware SimpleFlow::MiddleWare::Instrumentation, api_key: '1234'
