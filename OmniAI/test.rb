@@ -5,6 +5,12 @@
 ENV['ANTHROPIC_API_KEY']  = '123'
 ENV['GOOGLE_API_KEY']     = '456'
 ENV['MISTRAL_API_KEY']    = '489'
+#
+ENV['LOCALAI_API_KEY']    = '987'
+ENV['LOCALAI_HOST']       = 'http://localhost:8080'
+
+ENV['OLLAMA_API_KEY']     = '654'
+ENV['OLLAMA_HOST']        = 'http://localhost:11434'
 
 require 'debug_me'
 include DebugMe
@@ -19,9 +25,9 @@ module OmniAI
   module LocalAI
     class Client
       def initialize(**kwargs)
-        kwargs[:host]     = 'http://localhost:8080'
-        kwargs[:api_key]  = nil
-        @openai_client    = OmniAI::OpenAI::Client.new(**kwargs)
+        kwargs[:host]     ||= ENV.fetch('LOCALAI_HOST','http://localhost:8080')
+        kwargs[:api_key]  ||= ENV.fetch('LOCALAI_API_KEY')
+        @openai_client      = OmniAI::OpenAI::Client.new(**kwargs)
       end
 
       # Forward all missing instance methods to the internal OpenAI client
@@ -50,9 +56,9 @@ module OmniAI
   module Ollama
     class Client
       def initialize(**kwargs)
-        kwargs[:host]     = 'http://localhost:11434'
-        kwargs[:api_key]  = nil
-        @openai_client    = OmniAI::OpenAI::Client.new(**kwargs)
+        kwargs[:host]     ||= ENV.fetch('OLLAMA_HOST','http://localhost:11434')
+        kwargs[:api_key]  ||= ENV.fetch('OLLAMA_API_KEY')
+        @openai_client      = OmniAI::OpenAI::Client.new(**kwargs)
       end
 
       # Forward all missing instance methods to the internal OpenAI client
