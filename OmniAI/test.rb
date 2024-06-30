@@ -21,89 +21,64 @@ require 'omniai/google'
 require 'omniai/mistral'
 require 'omniai/openai'
 
+# Sub-class the OmniAI::OpenAI::Client for both
+# LocalAI and Ollama both of which use the same API
+# as OpenAI but can be processed on the localhost or
+# some other LAN-based system.  Using LocalAI and Ollama
+# there is no need to ship your private information
+# out to cloud providers.
+
 module OmniAI
   module LocalAI
-    class Client
+    class Client < OmniAI::OpenAI::Client
       def initialize(**kwargs)
         kwargs[:host]     ||= ENV.fetch('LOCALAI_HOST','http://localhost:8080')
-        kwargs[:api_key]  ||= ENV.fetch('LOCALAI_API_KEY')
-        @openai_client      = OmniAI::OpenAI::Client.new(**kwargs)
-      end
-
-      # Forward all missing instance methods to the internal OpenAI client
-      def method_missing(method, *args, &block)
-        if @openai_client.respond_to?(method)
-          @openai_client.send(method, *args, &block)
-        else
-          super
-        end
-      end
-
-      # Forward all missing class methods to the internal OpenAI client's class
-      def self.method_missing(method, *args, &block)
-        if OmniAI::OpenAI::Client.respond_to?(method)
-          OmniAI::OpenAI::Client.send(method, *args, &block)
-        else
-          super
-        end
+        kwargs[:api_key]  ||= ENV.fetch('LOCALAI_API_KEY', nil)
+        super(**kwargs)
       end
     end
   end
-end
 
-
-module OmniAI
   module Ollama
-    class Client
+    class Client < OmniAI::OpenAI::Client
       def initialize(**kwargs)
-        kwargs[:host]     ||= ENV.fetch('OLLAMA_HOST','http://localhost:11434')
-        kwargs[:api_key]  ||= ENV.fetch('OLLAMA_API_KEY')
-        @openai_client      = OmniAI::OpenAI::Client.new(**kwargs)
-      end
-
-      # Forward all missing instance methods to the internal OpenAI client
-      def method_missing(method, *args, &block)
-        if @openai_client.respond_to?(method)
-          @openai_client.send(method, *args, &block)
-        else
-          super
-        end
-      end
-
-      # Forward all missing class methods to the internal OpenAI client's class
-      def self.method_missing(method, *args, &block)
-        if OmniAI::OpenAI::Client.respond_to?(method)
-          OmniAI::OpenAI::Client.send(method, *args, &block)
-        else
-          super
-        end
+        kwargs[:host]     ||= ENV.fetch('Ollama_HOST','http://localhost:11434')
+        kwargs[:api_key]  ||= ENV.fetch('OLLAMA_API_KEY', nil)
+        super(**kwargs)
       end
     end
   end
 end
 
 
-%w[claude-3.5 gemini-2 mistral gpt-4o local-llm llama-3 codestral].each do | model |
-client  = case model
-          # Hit the remote APIs
-          when /claude/   then OmniAI::Anthropic::Client.new
-          when /gemini/   then OmniAI::Google::Client.new
-          when /mistral/  then OmniAI::Mistral::Client.new
-          when /gpt/      then OmniAI::OpenAI::Client.new
-          
-          # Keep everything on the localhost
-          when /local/      then OmniAI::LocalAI::Client.new
-          when /llama/      then OmniAI::Ollama::Client.new
-          when /codestral/  then OmniAI::Ollama::Client.new
-          else
-            # Error: Unknown model prefix
-            nil
-          end
+%w[
+    claude-3.5 gemini-2 mistral gpt-4o 
+    local-llm llama-3 
+    codestral
+].each do |model|
+  client  = case model
+            # Hit the remote APIs
+            when /claude/   then OmniAI::Anthropic::Client.new
+            when /gemini/   then OmniAI::Google::Client.new
+            when /mistral/  then OmniAI::Mistral::Client.new
+            when /gpt/      then OmniAI::OpenAI::Client.new
+            
+            # Keep everything on the localhost
+            when /local/      then OmniAI::LocalAI::Client.new
+            when /llama/      then OmniAI::Ollama::Client.new
+            when /codestral/  then OmniAI::Ollama::Client.new
+                      
+            else
+              # Error: Unknown model prefix
+              nil
+            end
 
-debug_me{[
-  :model,
-  "client.class.name"
-]}
+
+  debug_me(skip2: true){[
+    :client,
+    :model,
+    'client.class',
+  ]}
 
 end
 
