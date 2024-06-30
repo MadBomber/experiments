@@ -15,6 +15,26 @@ ENV['OLLAMA_HOST']        = 'http://localhost:11434'
 require 'debug_me'
 include DebugMe
 
+DebugMeDefaultOptions = {
+  tag:    'DEBUG',  # A tag to prepend to each output line
+  time:   true,     # Include a time-stamp in front of the tag
+  strftime:  '%Y-%m-%d %H:%M:%S.%6N', # timestamp format
+  header: true,     # Print a header string before printing the variables
+  levels: 0,        # Number of additional backtrack entries to display
+  skip1:  false,    # skip 1 lines between different outputs
+  skip2:  true,     # skip 2 lines between different outputs
+  lvar:   true,     # Include local variables
+  ivar:   true,     # Include instance variables in the output
+  cvar:   true,     # Include class variables in the output
+  cconst: true,     # Include class constants
+  logger: nil,      # Pass in an instance of logger class like Rails.logger
+                    # must respond_to? :debug
+  file:   $stdout   # The output file
+}
+
+
+
+
 require 'omniai'
 require 'omniai/anthropic'
 require 'omniai/google'
@@ -74,7 +94,7 @@ end
             end
 
 
-  debug_me(skip2: true){[
+  debug_me{[
     :client,
     :model,
     'client.class',
@@ -82,30 +102,43 @@ end
 
 end
 
-__END__
+
+puts "\n"*3
+puts "="*64
+puts "== individual method examples"
 
 #################################################
 # Logging the request / response is configurable by passing a logger into any client:
 
-require 'omniai/openai'
+# require 'omniai/openai'
 require 'logger'
 
 logger = Logger.new(STDOUT)
-client = OmniAI::Example::Client.new(logger:)
+client = OmniAI::OpenAI::Client.new(logger:)
+
+debug_me('OpenAI with logger'){[
+  :client
+]}
 
 #################################################
 # Timeouts are configurable by passing a `timeout` an integer duration for the request / response of any APIs using:
 
-require 'omniai/openai'
+# require 'omniai/openai'
 require 'logger'
 
 logger = Logger.new(STDOUT)
 client = OmniAI::OpenAI::Client.new(timeout: 8) # i.e. 8 seconds
 
+debug_me('OpenAI with logger and timeout'){[
+  :client
+]}
+
+
+
 #################################################
 # Timeouts are also be configurable by passing a `timeout` hash with `timeout` / `read` / `write` / `keys using:
 
-require 'omniai/openai'
+# require 'omniai/openai'
 require 'logger'
 
 logger = Logger.new(STDOUT)
@@ -116,14 +149,33 @@ client = OmniAI::OpenAI::Client.new(timeout: {
 })
 
 
+debug_me('OpenAI with logger and expanded timeout'){[
+  :client
+]}
+
 #################################################
 ### Chat - Clients that support chat (e.g. Anthropic w/ "Claude", Google w/ "Gemini", Mistral w/ "LeChat", OpenAI w/ "ChatGPT", etc) generate completions using the following calls:
 
 #### Completions using Single Message
 
 completion = client.chat('Tell me a joke.')
-completion.choice.message.content # '...'
 
+
+debug_me('OpenAI.chat'){[
+  :completion
+]}
+
+
+puts completion.choice.message.content # '...'
+
+
+puts <<~HERE
+
+===============
+== HERE ==
+==========
+
+HERE
 
 #### Completions using Multiple Messages
 
@@ -134,11 +186,19 @@ messages = [
   },
   'What is the capital of Canada?'
 ]
-completion = client.chat(messages, model: '...', temperature: 0.7, format: :json)
-completion.choice.message.content  # '...'
+completion = client.chat(messages, model: 'gpt-4o-2024-05-13', temperature: 0.7, format: :json)
+
+debug_me('OpenAI.chat'){[
+  :message,
+  :completion
+]}
+
+puts completion.choice.message.content  # '...'
 
 
 #### Completions using Real-Time Streaming
+
+debug_me("streaming a chat")
 
 stream = proc do |chunk|
   print(chunk.choice.delta.content) # '...'
@@ -152,16 +212,20 @@ client.chat('Tell me a joke.', stream:)
 
 #### Transcriptions with Path
 
-transcription = client.transcribe("example.ogg")
-transcription.text # '...'
+debug_me("transcribe is disabled")
+
+# transcription = client.transcribe("example.ogg")
+# transcription.text # '...'
 
 
 #### Transcriptions with Files
 
-File.open("example.ogg", "rb") do |file|
-  transcription = client.transcribe(file)
-  transcription.text # '...'
-end
+debug_me("transcribe-2 is disabled")
+
+# File.open("example.ogg", "rb") do |file|
+#   transcription = client.transcribe(file)
+#   transcription.text # '...'
+# end
 
 
 #################################################
@@ -169,14 +233,18 @@ end
 
 #### Speech with Stream
 
-File.open('example.ogg', 'wb') do |file|
-  client.speak('The quick brown fox jumps over a lazy dog.', voice: 'HAL') do |chunk|
-    file << chunk
-  end
-end
+debug_me("transcribe-3 is disabled")
+
+# File.open('example.ogg', 'wb') do |file|
+#   client.speak('The quick brown fox jumps over a lazy dog.', voice: 'HAL') do |chunk|
+#     file << chunk
+#   end
+# end
 
 
 #### Speech with File
+
+debug_me('OpenAI.speak')
 
 tempfile = client.speak('The quick brown fox jumps over a lazy dog.', voice: 'HAL')
 tempfile.close
@@ -187,7 +255,11 @@ tempfile.unlink
 # 
 # LocalAI offers built in compatability with the OpenAI specification. To initialize a client that points to a Ollama change the host accordingly:
 
-client = OmniAI::OpenAI::Client.new(host: 'http://localhost:8080', api_key: nil)
+client = OmniAI::LocalAI::Client.new
+
+debug_me('LocalAI'){[
+  :client
+]}
 
 # For details on installation or running LocalAI see the getting started tutorial.
 
@@ -197,7 +269,11 @@ client = OmniAI::OpenAI::Client.new(host: 'http://localhost:8080', api_key: nil)
 # 
 # Ollama offers built in compatability with the OpenAI specification. To initialize a client that points to a Ollama change the host accordingly:
 
-client = OmniAI::OpenAI::Client.new(host: 'http://localhost:11434', api_key: nil)
+client = OmniAI::Ollama::Client.new
+
+debug_me('Ollama'){[
+  :client
+]}
 
 # For details on installation or running Ollama checkout the project README.
 
