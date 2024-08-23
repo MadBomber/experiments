@@ -1,8 +1,38 @@
+# experiments/OmniAI/my_client.rb
+# Usage example:
+# MyClient.configure do |config|
+#   config.max_retries = 5
+#   config.base_delay = 2
+#   config.max_delay = 30
+# end
+#
+# MyClient.configure_provider(:openai) do
+#   {
+#     organization: 'org-123',
+#     api_version: 'v1'
+#   }
+# end
+#
+# MiddleWarz idea to implement comments, directives and RAG
+#
+# Usage:
+# class LoggingMiddleware
+#   def self.call(client, next_middleware, *args)
+#     start_time = Time.now
+#     result = next_middleware.call
+#     end_time = Time.now
+#     client.logger.info("API call took #{end_time - start_time} seconds")
+#     result
+#   end
+# end
+#
+# MyClient.use(LoggingMiddleware)
+
 require 'faraday'
 require 'omniai'
 require 'logger'
 
-class Client
+class MyClient
   class BaseError < StandardError; end
   class APIError < BaseError; end
   class RateLimitError < APIError; end
@@ -14,6 +44,17 @@ class Client
   class TimeoutError < BaseError; end
   class QuotaExceededError < BaseError; end
   class InvalidModelError < BaseError; end
+
+  class Configuration
+    attr_accessor :max_retries, :base_delay, :max_delay
+
+    def initialize
+      @max_retries = 3
+      @base_delay = 2
+      @max_delay = 16
+    end
+  end
+
 
   PROVIDER_ERROR_MAPPING = {
     anthropic: {
@@ -49,36 +90,177 @@ class Client
 
   attr_reader :provider, :model_type
 
-  def initialize(api_key, model, base_url: nil, logger: Logger.new(STDOUT), **options)
-    @api_key = api_key
+  def initialize(model, base_url: nil, logger: Logger.new(STDOUT), timeout: nil, **options)
     @model = model
+
     @provider = determine_provider(model)
+    @provider_config = self.class.provider_config[@provider]&.call || {}
+
     @model_type = determine_model_type(model)
     @base_url = base_url
     @logger = logger
+    @timeout = timeout
     @options = options
     @client = create_client
   end
 
-  def process(input, **params)
-    case @model_type
-    when :text_to_text
-      generate_text(input, **params)
-    when :speech_to_text
-      transcribe_audio(input, **params)
-    when :text_to_speech
-      generate_speech(input, **params)
-    when :text_to_image
-      generate_image(input, **params)
-    else
-      raise NotImplementedError, "Unsupported model type: #{@model_type}"
+  def chat(messages, tools: nil, **params)
+    @client.chat(messages, model: @model, tools: tools, **params)
+  end
+
+  # Update existing methods to use middlewares:
+  # def chat(messages, **params)
+  #   call_with_middlewares(:chat_without_middlewares, messages, **params)
+  # end
+  #
+  # def chat_without_middlewares(messages, **params)
+  #   @client.chat(messages, model: @model, **params)
+  # end
+
+
+
+
+  def transcribe(audio, format: nil, **params)
+    @client.transcribe(audio, model: @model, format: format, **params)
+  end
+
+  def speak(text, format: nil, **params)
+    @client.speak(text, model: @model, format: format, **params)
+  end
+
+  def embed(input, **params)
+    @client.embed(input, model: @model, **params)
+  end
+
+  def batch_embed(inputs, batch_size: 100, **params)
+    inputs.each_slice(batch_size).flat_map do |batch|
+      embed(batch, **params)
     end
+  end
+
+
+  def process(input, request_id: SecureRandom.uuid, **params)
+    debug_me{[
+      :input,
+      :request_id,
+      :params
+    ]}
+
+    @logger.info("Processing request #{request_id}")
+
+    result = if self.class.middlewares.any?
+      debug_me('using middleware')
+      call_with_middlewares(:process_without_middlewares, input, **params)
+    else
+      debug_me('NOT using MW')
+      process_without_middlewares(input, **params)
+    end
+
+    debug_me
+
+    @logger.info("Finished processing request #{request_id}")
+    result
   rescue StandardError => e
     @logger.error("Error processing input: #{e.message}")
     raise
   end
 
+
+
+  def process_without_middlewares(input, **params)
+    debug_me{[
+      :input,
+      :params,
+      '@model_type'
+    ]}
+
+
+    case @model_type
+    when :text_to_text
+      debug_me
+      generate_text(input, **params)
+    when :speech_to_text
+      debug_me
+      transcribe_audio(input, **params)
+    when :text_to_speech
+      debug_me
+      generate_speech(input, **params)
+    when :text_to_image
+      debug_me
+      generate_image(input, **params)
+    else
+      debug_me
+      raise NotImplementedError, "Unsupported model type: #{@model_type}"
+    end
+  end
+
+
+
+  def call_with_middlewares(method, *args, &block)
+    stack = self.class.middlewares.reverse.reduce(-> { send(method, *args, &block) }) do |next_middleware, middleware|
+      -> { middleware.call(self, next_middleware, *args) }
+    end
+    stack.call
+  end
+
+  ##############################################
+
+  def self.configure
+    yield(configuration)
+  end
+
+  def self.configuration
+    @configuration ||= Configuration.new
+  end
+
+  def self.provider_config
+    @provider_config ||= {}
+  end
+
+  def self.configure_provider(provider, &block)
+    provider_config[provider] = block
+  end
+
+  def self.middlewares
+    @middlewares ||= []
+  end
+
+  def self.use(middleware)
+    middlewares << middleware
+  end
+
+  def self.clear_middlewares
+    @middlewares = []
+  end
+
+  ##############################################
   private
+
+  def create_client
+    api_key = fetch_api_key
+    client_options = {
+      api_key: api_key,
+      logger: @logger,
+      timeout: @timeout
+    }
+    client_options[:base_url] = @base_url if @base_url
+    client_options.merge!(@options)
+
+    OmniAI::Client.find(provider: @provider.to_s, **client_options)
+  end
+
+
+  def fetch_api_key
+    env_var_name = "#{@provider.upcase}_API_KEY"
+    api_key = ENV[env_var_name]
+
+    if api_key.nil? || api_key.empty?
+      raise ArgumentError, "API key not found in environment variable #{env_var_name}"
+    end
+
+    api_key
+  end
+
 
   def determine_provider(model)
     PROVIDER_PATTERNS.find { |provider, pattern| model.match?(pattern) }&.first ||
@@ -90,36 +272,51 @@ class Client
       raise(ArgumentError, "Unable to determine model type for: #{model}")
   end
 
-  def create_client
-    client_options = { api_key: @api_key }
-    client_options[:base_url] = @base_url if @base_url
-    client_options.merge!(@options)
-
-    OmniAI::Client.new(**client_options)
-  end
-
 
   def generate_text(prompt, max_tokens: 100, stream: false, **params)
+    debug_me{[
+      :prompt,
+      :max_tokens,
+      :stream,
+      :params
+    ]}
+
     messages = [{ role: 'user', content: prompt }]
+
+    debug_me{[
+      :messages
+    ]}
+
     with_retries do
       if stream
+        debug_me
         stream_response(messages, max_tokens, params)
       else
+        debug_me
         single_response(messages, max_tokens, params)
       end
     end
   rescue StandardError => e
+    debug_me('== ERROR =='){[ :e ]}
     handle_error(e)
   end
 
 
   def single_response(messages, max_tokens, params)
+    debug_me{[
+      :messages,
+      :max_tokens,
+      :params
+    ]}
     response = @client.chat(
       model: @model,
       messages: messages,
       max_tokens: max_tokens,
       **params
     )
+    debug_me{[
+      :response
+    ]}
     extract_content(response)
   end
 
@@ -138,6 +335,10 @@ class Client
   end
 
   def extract_content(response)
+    debug_me{[
+      :response,
+      '@provider'
+    ]}
     case @provider
     when :anthropic, :openai, :google, :localai, :ollama
       response.dig('choices', 0, 'message', 'content') || response.dig('choices', 0, 'delta', 'content')
@@ -190,7 +391,11 @@ class Client
     when SocketError, defined?(Faraday::ConnectionFailed) ? Faraday::ConnectionFailed : StandardError
       raise NetworkError, "Network error when connecting to #{@provider}"
     else
-      raise BaseError, "Unexpected error: #{error.message}"
+      if error.message.downcase.include?('quota exceeded')
+        raise QuotaExceededError, "Quota exceeded for #{@provider}"
+      else
+        raise BaseError, "Unexpected error: #{error.message}"
+      end
     end
   ensure
     @logger.error("Error in #{@provider} API call: #{error.class} - #{error.message}")
@@ -198,14 +403,20 @@ class Client
   end
 
 
-  def with_retries(max_retries: 3, base_delay: 1, max_delay: 16)
+
+
+  def with_retries(
+    max_retries: self.class.configuration.max_retries,
+    base_delay: self.class.configuration.base_delay,
+    max_delay: self.class.configuration.max_delay
+  )
     retries = 0
     begin
       yield
     rescue RateLimitError, NetworkError => e
       if retries < max_retries
         retries += 1
-        delay = [base_delay * (2 ** retries), max_delay].min
+        delay = [base_delay * (2 ** (retries - 1)), max_delay].min
         @logger.warn("Retrying in #{delay} seconds due to error: #{e.message}")
         sleep(delay)
         retry
@@ -214,6 +425,7 @@ class Client
       end
     end
   end
+
 end
 
 __END__
