@@ -1,4 +1,7 @@
 # experiments/OmniAI/my_client.rb
+# WIP:  a generic client to access LLM providers
+#       kinda like the SaaS "open router"
+#
 
 unless defined?(DebugMe)
   require 'debug_me'
@@ -34,7 +37,7 @@ require 'logger'
 #   MyClient.use(RetryMiddleware.new(max_retries: 5, base_delay: 2, max_delay: 30))
 #   MyClient.use(LoggingMiddleware.new(MyClient.configuration.logger))
 #
-# # Create a client instance
+# Create a generic client instance using only model name
 #   client = MyClient.new('gpt-3.5-turbo')
 
 class MyClient
@@ -42,9 +45,9 @@ class MyClient
     attr_accessor :logger, :timeout, :return_raw
 
     def initialize
-      @logger = Logger.new(STDOUT)
-      @timeout = nil
-      @providers = {}
+      @logger     = Logger.new(STDOUT)
+      @timeout    = nil
+      @providers  = {}
       @return_raw = false
     end
 
@@ -58,46 +61,44 @@ class MyClient
   end
 
   PROVIDER_PATTERNS = {
-    anthropic: /^claude/i,
-    openai: /^(gpt|davinci|curie|babbage|ada|whisper|tts|dall-e)/i,
-    google: /^(gemini|palm)/i,
-    mistral: /^mistral/i,
-    localai: /^local-/i,
-    ollama: /llama-/i
+    anthropic:  /^claude/i,
+    openai:     /^(gpt|davinci|curie|babbage|ada|whisper|tts|dall-e)/i,
+    google:     /^(gemini|palm)/i,
+    mistral:    /^mistral/i,
+    localai:    /^local-/i,
+    ollama:     /llama-/i
   }
 
   MODEL_TYPES = {
-    text_to_text: /^(gpt|davinci|curie|babbage|ada|claude|gemini|palm|command|generate|j2-|mistral)/i,
+    text_to_text:   /^(gpt|davinci|curie|babbage|ada|claude|gemini|palm|command|generate|j2-|mistral)/i,
     speech_to_text: /^whisper/i,
     text_to_speech: /^tts/i,
-    text_to_image: /^dall-e/i
+    text_to_image:  /^dall-e/i
   }
 
   attr_reader :provider, :model_type, :logger, :last_response
 
   def initialize(model, **options)
-
-    debug_me{[
-      :model,
-      :options
-    ]}
-
-    @model = model
-    @provider = determine_provider(model)
+    @model      = model
+    @provider   = determine_provider(model)
     @model_type = determine_model_type(model)
 
-    config = self.class.configuration
+    config          = self.class.configuration
     provider_config = config.provider(@provider)
 
-    @logger = options[:logger] || config.logger
-    @timeout = options[:timeout] || config.timeout
-    @base_url = options[:base_url] || provider_config[:base_url]
+    @logger   = options[:logger]    || config.logger
+    @timeout  = options[:timeout]   || config.timeout
+    @base_url = options[:base_url]  || provider_config[:base_url]
 
-    @options = options.merge(provider_config)
-    @client = create_client
+    @options  = options.merge(provider_config)
+    @client   = create_client
 
     @last_response = nil
     @return_raw = config.return_raw
+  end
+
+  def raw?
+    @return_raw
   end
 
   def response
@@ -108,7 +109,7 @@ class MyClient
   def chat(messages, **params)
     result = call_with_middlewares(:chat_without_middlewares, messages, **params)
     @last_response = result
-    @return_raw ? result : get_content(result)
+    raw? ? result : content
   end
 
 
@@ -117,8 +118,8 @@ class MyClient
   end
 
   ######################################
-  def transcribe(messages, **params)
-    call_with_middlewares(:transcribe_without_middlewares, messages, **params)
+  def transcribe(audio, format: nil, **params)
+    call_with_middlewares(:transcribe_without_middlewares, audio, format: format, **params)
   end
 
   def transcribe_without_middlewares(audio, format: nil, **params)
@@ -126,13 +127,14 @@ class MyClient
   end
 
   ######################################
-  def speak(messages, **params)
-    call_with_middlewares(:speak_without_middlewares, messages, **params)
+  def speak(text, **params)
+    call_with_middlewares(:speak_without_middlewares, text, **params)
   end
 
-  def speak_without_middlewares(text, format: nil, **params)
-    @client.speak(text, model: @model, format: format, **params)
+  def speak_without_middlewares(text, **params)
+    @client.speak(text, model: @model, **params)
   end
+
 
   ######################################
   def embed(input, **params)
@@ -145,12 +147,13 @@ class MyClient
     end
   end
 
-  def call_with_middlewares(method, *args, &block)
-    stack = self.class.middlewares.reverse.reduce(-> { send(method, *args, &block) }) do |next_middleware, middleware|
-      -> { middleware.call(self, next_middleware, *args) }
+  def call_with_middlewares(method, *args, **kwargs, &block)
+    stack = self.class.middlewares.reverse.reduce(-> { send(method, *args, **kwargs, &block) }) do |next_middleware, middleware|
+      -> { middleware.call(self, next_middleware, *args, **kwargs) }
     end
     stack.call
   end
+
 
   def content
     case @provider
@@ -169,6 +172,8 @@ class MyClient
   alias_method :text, :content
 
   ##############################################
+  ## Public Class Methods
+
   class << self
     def configure
       yield(configuration)
@@ -197,9 +202,9 @@ class MyClient
   def create_client
     api_key = fetch_api_key
     client_options = {
-      api_key: api_key,
-      logger: @logger,
-      timeout: @timeout
+      api_key:  api_key,
+      logger:   @logger,
+      timeout:  @timeout
     }
     client_options[:base_url] = @base_url if @base_url
     client_options.merge!(@options)
@@ -238,7 +243,6 @@ class MyClient
     MODEL_TYPES.find { |type, pattern| model.match?(pattern) }&.first ||
       raise(ArgumentError, "Unable to determine model type for: #{model}")
   end
-
 end
 
 #####################################
@@ -247,17 +251,17 @@ end
 
 # MyClient.use(
 #   RetryMiddleware.new(
-#     max_retries: 5,
-#     base_delay: 2,
-#     max_delay: 30
+#     max_retries:  5,
+#     base_delay:   2,
+#     max_delay:    30
 #   )
 # )
 
 class RetryMiddleware
   def initialize(max_retries: 3, base_delay: 2, max_delay: 16)
-    @max_retries = max_retries
-    @base_delay = base_delay
-    @max_delay = max_delay
+    @max_retries  = max_retries
+    @base_delay   = base_delay
+    @max_delay    = max_delay
   end
 
   def call(client, next_middleware, *args)
