@@ -67,7 +67,7 @@ class MyClient
   }
 
   MODEL_TYPES = {
-    text_to_text: /^(gpt|davinci|curie|babbage|ada|claude|gemini|palm|command|generate|j2-)/i,
+    text_to_text: /^(gpt|davinci|curie|babbage|ada|claude|gemini|palm|command|generate|j2-|mistral)/i,
     speech_to_text: /^whisper/i,
     text_to_speech: /^tts/i,
     text_to_image: /^dall-e/i
@@ -157,11 +157,11 @@ class MyClient
     when :openai, :localai, :ollama
       last_response.data.dig('choices', 0, 'message', 'content')
     when :anthropic
-      last_response['completion']
+      last_response.data.dig('content',0,'text')
     when :google
-      last_response.dig('candidates', 0, 'content', 'parts', 0, 'text')
+      last_response.data.dig('candidates', 0, 'content', 'parts', 0, 'text')
     when :mistral
-      last_response.dig('choices', 0, 'message', 'content')
+      last_response.data.dig('choices', 0, 'message', 'content')
     else
       raise NotImplementedError, "Content extraction not implemented for provider: #{@provider}"
     end
