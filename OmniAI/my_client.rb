@@ -1,5 +1,10 @@
 # experiments/OmniAI/my_client.rb
 
+unless defined?(DebugMe)
+  require 'debug_me'
+  include DebugMe
+end
+
 require 'omniai'
 require 'omniai/anthropic'
 require 'omniai/google'
@@ -11,6 +16,7 @@ require 'logger'
 # Configure general settings
 #   MyClient.configure do |config|
 #     config.logger = Logger.new('my_client.log')
+#     config.return_raw = true
 #   end
 #
 # Configure provider-specific settings
@@ -33,12 +39,13 @@ require 'logger'
 
 class MyClient
   class Configuration
-    attr_accessor :logger, :timeout
+    attr_accessor :logger, :timeout, :return_raw
 
     def initialize
       @logger = Logger.new(STDOUT)
       @timeout = nil
       @providers = {}
+      @return_raw = false
     end
 
     def provider(name, &block)
@@ -54,10 +61,9 @@ class MyClient
     anthropic: /^claude/i,
     openai: /^(gpt|davinci|curie|babbage|ada|whisper|tts|dall-e)/i,
     google: /^(gemini|palm)/i,
-    cohere: /^(command|generate)/i,
-    ai21: /^j2-/i,
+    mistral: /^mistral/i,
     localai: /^local-/i,
-    ollama: /^ollama-/i
+    ollama: /llama-/i
   }
 
   MODEL_TYPES = {
@@ -70,6 +76,12 @@ class MyClient
   attr_reader :provider, :model_type, :logger
 
   def initialize(model, **options)
+
+    debug_me{[
+      :model,
+      :options
+    ]}
+
     @model = model
     @provider = determine_provider(model)
     @model_type = determine_model_type(model)
@@ -83,12 +95,26 @@ class MyClient
 
     @options = options.merge(provider_config)
     @client = create_client
+
+    @last_response = nil
+    @return_raw = config.return_raw
+  end
+
+  def response
+    @last_response
+  end
+
+  def text
+    get_content @last_response
   end
 
   ######################################
   def chat(messages, **params)
-    call_with_middlewares(:chat_without_middlewares, messages, **params)
-  end
+      result = call_with_middlewares(:chat_without_middlewares, messages, **params)
+      @last_response = result
+      @return_raw ? result : get_content(result)
+    end
+
 
   def chat_without_middlewares(messages, **params)
     @client.chat(messages, model: @model, **params)
@@ -132,12 +158,25 @@ class MyClient
 
   ##############################################
   class << self
-    def configure()         yield(configuration)
-    def configuration()     @configuration ||= Configuration.new
+    def configure
+      yield(configuration)
+    end
 
-    def middlewares()       @middlewares ||= []
-    def use(middleware)     middlewares << middleware
-    def clear_middlewares() @middlewares = []
+    def configuration
+      @configuration ||= Configuration.new
+    end
+
+    def middlewares
+      @middlewares ||= []
+    end
+
+    def use(middleware)
+      middlewares << middleware
+    end
+
+    def clear_middlewares
+      @middlewares = []
+    end
   end
 
   ##############################################
@@ -153,7 +192,18 @@ class MyClient
     client_options[:base_url] = @base_url if @base_url
     client_options.merge!(@options)
 
-    OmniAI::Client.find(provider: @provider.to_s, **client_options)
+    case @provider
+    when :openai, :localai, :ollama
+      OmniAI::OpenAI::Client.new(**client_options)
+    when :anthropic
+      OmniAI::Anthropic::Client.new(**client_options)
+    when :google
+      OmniAI::Google::Client.new(**client_options)
+    when :mistral
+      OmniAI::Mistral::Client.new(**client_options)
+    else
+      raise ArgumentError, "Unsupported provider: #{@provider}"
+    end
   end
 
   def fetch_api_key
@@ -175,6 +225,21 @@ class MyClient
   def determine_model_type(model)
     MODEL_TYPES.find { |type, pattern| model.match?(pattern) }&.first ||
       raise(ArgumentError, "Unable to determine model type for: #{model}")
+  end
+
+  def get_content(response)
+    case @provider
+    when :openai, :localai, :ollama
+      response.data.dig('choices', 0, 'message', 'content')
+    when :anthropic
+      response['completion']
+    when :google
+      response.dig('candidates', 0, 'content', 'parts', 0, 'text')
+    when :mistral
+      response.dig('choices', 0, 'message', 'content')
+    else
+      raise NotImplementedError, "Content extraction not implemented for provider: #{@provider}"
+    end
   end
 end
 
@@ -246,6 +311,3 @@ class LoggingMiddleware
     result
   end
 end
-
-
-__END__
