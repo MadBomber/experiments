@@ -73,7 +73,7 @@ class MyClient
     text_to_image: /^dall-e/i
   }
 
-  attr_reader :provider, :model_type, :logger
+  attr_reader :provider, :model_type, :logger, :last_response
 
   def initialize(model, **options)
 
@@ -101,19 +101,15 @@ class MyClient
   end
 
   def response
-    @last_response
-  end
-
-  def text
-    get_content @last_response
+    last_response
   end
 
   ######################################
   def chat(messages, **params)
-      result = call_with_middlewares(:chat_without_middlewares, messages, **params)
-      @last_response = result
-      @return_raw ? result : get_content(result)
-    end
+    result = call_with_middlewares(:chat_without_middlewares, messages, **params)
+    @last_response = result
+    @return_raw ? result : get_content(result)
+  end
 
 
   def chat_without_middlewares(messages, **params)
@@ -155,6 +151,22 @@ class MyClient
     end
     stack.call
   end
+
+  def content
+    case @provider
+    when :openai, :localai, :ollama
+      last_response.data.dig('choices', 0, 'message', 'content')
+    when :anthropic
+      last_response['completion']
+    when :google
+      last_response.dig('candidates', 0, 'content', 'parts', 0, 'text')
+    when :mistral
+      last_response.dig('choices', 0, 'message', 'content')
+    else
+      raise NotImplementedError, "Content extraction not implemented for provider: #{@provider}"
+    end
+  end
+  alias_method :text, :content
 
   ##############################################
   class << self
@@ -227,20 +239,6 @@ class MyClient
       raise(ArgumentError, "Unable to determine model type for: #{model}")
   end
 
-  def get_content(response)
-    case @provider
-    when :openai, :localai, :ollama
-      response.data.dig('choices', 0, 'message', 'content')
-    when :anthropic
-      response['completion']
-    when :google
-      response.dig('candidates', 0, 'content', 'parts', 0, 'text')
-    when :mistral
-      response.dig('choices', 0, 'message', 'content')
-    else
-      raise NotImplementedError, "Content extraction not implemented for provider: #{@provider}"
-    end
-  end
 end
 
 #####################################
