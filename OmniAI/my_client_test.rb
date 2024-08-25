@@ -46,7 +46,17 @@ class MyClientTest < Minitest::Test
     @client.instance_variable_set(:@client, mock_client)
 
     result = @client.chat([{role: 'user', content: 'Hello'}])
-    assert_equal OpenStruct.new(data: {'choices' => [{'message' => {'content' => 'Generated text'}}]}), result
+    assert_equal "Generated text", result
+  end
+
+  def test_middleware
+    MyClient.use(TestMiddleware)
+    mock_client = mock()
+    mock_client.expects(:chat).returns(OpenStruct.new(data: {'choices' => [{'message' => {'content' => 'Generated text'}}]}))
+    @client.instance_variable_set(:@client, mock_client)
+
+    result = @client.chat([{role: 'user', content: 'Hello'}])
+    assert_equal "Generated text - Processed by TestMiddleware", result
   end
 
   def test_transcribe
@@ -85,15 +95,6 @@ class MyClientTest < Minitest::Test
     assert_equal [0.1, 0.2, 0.3, 0.1, 0.2, 0.3], result
   end
 
-  def test_middleware
-    MyClient.use(TestMiddleware)
-    mock_client = mock()
-    mock_client.expects(:chat).returns(OpenStruct.new(data: {'choices' => [{'message' => {'content' => 'Generated text'}}]}))
-    @client.instance_variable_set(:@client, mock_client)
-
-    result = @client.chat([{role: 'user', content: 'Hello'}])
-    assert_equal OpenStruct.new(data: {'choices' => [{'message' => {'content' => 'Generated text - Processed by TestMiddleware'}}]}), result
-  end
 
   def test_configuration
     MyClient.configure do |config|
