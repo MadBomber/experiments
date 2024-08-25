@@ -28,9 +28,7 @@ end
 
 __END__
 
-This is Bethany's answer to TUcker Carson's first question:
-
-Tucker Carson: How do you deal with fear? 
+Tucker Carlson: How do you deal with fear? 
 
 Bethany Hamilton: Okay, so I deal with fear maybe more naturally and
 better than your average human, but I would say It's not like a really
@@ -58,4 +56,4 @@ a lot of us just want to like avoid that instead. And in the long run, that
 just makes the relationship less beautiful and less meaningful and less
 filled with depth, and then eventually that relationship may dissipate.
 
-Tucker Carson: Absolutely right.
+Tucker Carlson: Absolutely right.
