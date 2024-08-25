@@ -60,17 +60,25 @@ class MyClient
     end
   end
 
+  # TODO: Need a centralized service where
+  #       metadata about LLMs are available
+  #       via and API call.  Would hope that
+  #       the providers would add a "list"
+  #       endpoint to their API which would
+  #       return the metadata for all of their
+  #       models.
+
   PROVIDER_PATTERNS = {
     anthropic:  /^claude/i,
     openai:     /^(gpt|davinci|curie|babbage|ada|whisper|tts|dall-e)/i,
     google:     /^(gemini|palm)/i,
-    mistral:    /^mistral/i,
+    mistral:    /^(mistral|codestral)/i,
     localai:    /^local-/i,
     ollama:     /llama-/i
   }
 
   MODEL_TYPES = {
-    text_to_text:   /^(gpt|davinci|curie|babbage|ada|claude|gemini|palm|command|generate|j2-|mistral)/i,
+    text_to_text:   /^(gpt|davinci|curie|babbage|ada|claude|gemini|palm|command|generate|j2-|mistral|codestral)/i,
     speech_to_text: /^whisper/i,
     text_to_speech: /^tts/i,
     text_to_image:  /^dall-e/i
