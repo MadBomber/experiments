@@ -76,7 +76,7 @@ class MyClient
     text_to_image:  /^dall-e/i
   }
 
-  attr_reader :provider, :model_type, :logger, :last_response
+  attr_reader :provider, :model, :model_type, :logger, :last_response
 
   def initialize(model, **options)
     @model      = model
