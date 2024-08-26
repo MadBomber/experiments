@@ -13,6 +13,10 @@ require 'omniai/anthropic'
 require 'omniai/google'
 require 'omniai/mistral'
 require 'omniai/openai'
+
+require_relative 'omniai-ollama'
+require_relative 'omniai-localai'
+
 require 'logger'
 
 # Usage example:
@@ -228,11 +232,9 @@ class MyClient
     when :mistral
       OmniAI::Mistral::Client.new(**client_options)
     when :ollama
-      client_options[:host] = 'http://localhost:11434'
-      OmniAI::OpenAI::Client.new(**client_options)
+      OmniAI::Ollama::Client.new(**client_options)
     when :localai
-      client_options[:host] = 'http://localhost:8080'
-      OmniAI::OpenAI::Client.new(**client_options)
+      OmniAI::LocalAI::Client.new(**client_options)
     else
       raise ArgumentError, "Unsupported provider: #{@provider}"
     end
