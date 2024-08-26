@@ -6,6 +6,9 @@ require_relative '../my_client'
 
 require 'amazing_print'
 
+require 'debug_me'
+include DebugMe
+
 def title(a_string='Something Different', chr='=')
   puts
   puts a_string

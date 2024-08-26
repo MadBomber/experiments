@@ -3,7 +3,36 @@
 
 require_relative 'common'
 
-models  = [ 
+
+###################################
+## Working with Ollama
+
+# This is the default configuration which returns
+# text content from the client.
+#
+MyClient.configure do |o|
+  o.return_raw = false
+end
+
+title "Using Mistral model with Ollama locally"
+
+ollama_client = MyClient.new('mistral', provider: :ollama)
+
+puts "\nModel: mistral  Provider: Ollama (local)"
+result = ollama_client.chat('Hello, how are you?', model: 'mistral')
+puts result
+
+puts "\nRaw response:"
+puts ollama_client.response.pretty_inspect
+puts
+
+
+
+###############################################################
+## Lets look an generic configurations based upon model name ##
+###############################################################
+
+models  = [
   'gpt-3.5-turbo',        # OpenAI
   'claude-2.1',           # Anthropic
   'gemini-1.5-flash',     # Google
@@ -44,4 +73,3 @@ raw_clients.each do |c|
 end
 
 puts
-

@@ -88,7 +88,7 @@ class MyClient
 
   def initialize(model, **options)
     @model      = model
-    @provider   = determine_provider(model)
+    @provider   = options[:provider] || determine_provider(model)
     @model_type = determine_model_type(model)
 
     config          = self.class.configuration
@@ -151,6 +151,7 @@ class MyClient
 
   def batch_embed(inputs, batch_size: 100, **params)
     inputs.each_slice(batch_size).flat_map do |batch|
+      sleep 1 # DEBUG rate limits being exceeded
       embed(batch, **params)
     end
   end
@@ -215,10 +216,10 @@ class MyClient
       timeout:  @timeout
     }
     client_options[:base_url] = @base_url if @base_url
-    client_options.merge!(@options)
+    client_options.merge!(@options).delete(:provider)
 
-    case @provider
-    when :openai, :localai, :ollama
+    case provider
+    when :openai
       OmniAI::OpenAI::Client.new(**client_options)
     when :anthropic
       OmniAI::Anthropic::Client.new(**client_options)
@@ -226,6 +227,12 @@ class MyClient
       OmniAI::Google::Client.new(**client_options)
     when :mistral
       OmniAI::Mistral::Client.new(**client_options)
+    when :ollama
+      client_options[:host] = 'http://localhost:11434'
+      OmniAI::OpenAI::Client.new(**client_options)
+    when :localai
+      client_options[:host] = 'http://localhost:8080'
+      OmniAI::OpenAI::Client.new(**client_options)
     else
       raise ArgumentError, "Unsupported provider: #{@provider}"
     end
@@ -236,7 +243,9 @@ class MyClient
     api_key = ENV[env_var_name]
 
     if api_key.nil? || api_key.empty?
-      raise ArgumentError, "API key not found in environment variable #{env_var_name}"
+      unless [:localai, :ollama].include? provider
+        raise ArgumentError, "API key not found in environment variable #{env_var_name}"
+      end
     end
 
     api_key

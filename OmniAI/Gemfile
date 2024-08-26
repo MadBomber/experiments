@@ -10,6 +10,8 @@ gem "omniai-google"     # A generalized framework for interacting with Google
 gem "omniai-mistral"    # A generalized framework for interacting with Mistral
 gem "omniai-openai"     # A generalized framework for interacting with OpenAI
 
+gem 'kmeans-clusterer'
+
 
 ######################
 ## From aia gemspec

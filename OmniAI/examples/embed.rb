@@ -27,7 +27,12 @@ texts = [
 
 title "Generating Embeddings"
 
-embeddings = client.batch_embed(texts)
+embeddings = client.batch_embed(texts, batch_size: 1)
+
+debug_me{[
+  :embeddings,
+  'embeddings.methods.sort'
+]}
 
 # Helper function to compute cosine similarity
 def cosine_similarity(a, b)
@@ -40,7 +45,13 @@ end
 title "Clustering Embeddings"
 
 # Convert embeddings to a format suitable for KMeans
-data = embeddings.map { |e| e.embedding }
+data = embeddings.map(&:embedding)
+
+debug_me{[
+  'data.class',
+  'data.size',
+  'data.first.size'
+]}
 
 # Perform K-means clustering
 k = 3  # Number of clusters
@@ -57,10 +68,15 @@ title "Finding Similar Texts"
 sleep 1 # Rate Limit gets exceeded without this
 
 query_text = "Artificial intelligence and machine learning"
-query_embedding = client.embed(query_text).embedding
+query_embedding = client.embed(query_text)
+
+debug_me{[
+  :query_embedding,
+  'query_embedding.methods.sort'
+]}
 
 similarities = texts.zip(embeddings).map do |text, embedding|
-  similarity = cosine_similarity(query_embedding, embedding.embedding)
+  similarity = cosine_similarity(query_embedding.embedding, embedding.embedding)
   [text, similarity]
 end
 
@@ -79,17 +95,18 @@ categories = {
 }
 
 # Generate embeddings for category descriptions
-category_embeddings = client.batch_embed(categories.values)
+category_embeddings = client.batch_embed(categories.values, batch_size: 1)
 
 # Classify each text
 puts "Classification results:"
 texts.each do |text|
-  text_embedding = client.embed(text).embedding
+  sleep 1 # DEBUG: Rate Limited
+  text_embedding = client.embed(text)
 
   # Find the category with the highest similarity
   best_category = categories.keys.max_by do |category|
     category_index = categories.keys.index(category)
-    cosine_similarity(text_embedding, category_embeddings[category_index].embedding)
+    cosine_similarity(text_embedding.embedding, category_embeddings[category_index].embedding)
   end
 
   puts "#{text} => #{best_category}"
