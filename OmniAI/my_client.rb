@@ -88,7 +88,7 @@ class MyClient
     text_to_image:  /^dall-e/i
   }
 
-  attr_reader :provider, :model, :model_type, :logger, :last_response
+  attr_reader :client, :provider, :model, :model_type, :logger, :last_response
 
   def initialize(model, **options)
     @model      = model
@@ -208,6 +208,21 @@ class MyClient
       @middlewares = []
     end
   end
+
+  def method_missing(method_name, *args, &block)
+    if @client.respond_to?(method_name)
+      result = @client.send(method_name, *args, &block)
+      @last_response = result if result.is_a?(OmniAI::Response)
+      result
+    else
+      super
+    end
+  end
+
+  def respond_to_missing?(method_name, include_private = false)
+    @client.respond_to?(method_name) || super
+  end
+
 
   ##############################################
   private
