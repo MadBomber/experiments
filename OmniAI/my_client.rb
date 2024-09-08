@@ -78,11 +78,11 @@ class MyClient
     google:     /^(gemini|palm)/i,
     mistral:    /^(mistral|codestral)/i,
     localai:    /^local-/i,
-    ollama:     /llama-/i
+    ollama:     /(llama-|nomic)/i
   }
 
   MODEL_TYPES = {
-    text_to_text:   /^(gpt|davinci|curie|babbage|ada|claude|gemini|palm|command|generate|j2-|mistral|codestral)/i,
+    text_to_text:   /^(nomic|gpt|davinci|curie|babbage|ada|claude|gemini|palm|command|generate|j2-|mistral|codestral)/i,
     speech_to_text: /^whisper/i,
     text_to_speech: /^tts/i,
     text_to_image:  /^dall-e/i

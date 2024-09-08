@@ -6,8 +6,8 @@ require 'matrix'
 require 'kmeans-clusterer'
 
 # We'll use only one model for this example
-model = 'mistral-embed'
-client = MyClient.new(model)
+model = 'nomic-embed-text'
+client = MyClient.new(model, provider: :ollama)
 
 # More meaningful text samples
 texts = [
