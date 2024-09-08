@@ -1,0 +1,22 @@
+# experiments/torch/README.md
+
+source 'https://rubygems.org'
+
+# Get latest version pf LibTorch
+# see README.md
+
+# bundle config build.torch-rb --with-torch-dir=~/lib/lobtorch
+
+gem 'torch-rb'
+
+gem 'transformers-rb'
+gem 'informers'
+gem 'neighbor'
+
+gem 'boxcars'
+
+gem 'langchainrb'
+gem 'langchainrb_rails'
+
+gem 'pipelinable'
+
