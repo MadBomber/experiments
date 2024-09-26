@@ -1,4 +1,6 @@
 # scripts/lib/embedding.rb
+require 'json'
+require 'open3'
 
 class Embedding < ActiveRecord::Base
   # CAUTION: The hardcoded dimensions is based upon
@@ -13,4 +15,36 @@ class Embedding < ActiveRecord::Base
   validates :content, presence: true
   validates :data,    presence: true
   validates :values,  presence: true
+
+  def self.find_nearest_from_file(file_path)
+    content = process_file(file_path)
+    vector = vectorize(content)
+    find_nearest(vector)
+  end
+
+  private
+
+  def self.process_file(file_path)
+    pathname = Pathname.new(file_path)
+    if pathname.extname.downcase == '.json'
+      gron_output, status = Open3.capture2('gron', pathname.to_s)
+      raise "Failed to process JSON file with gron" unless status.success?
+      gron_output
+    else
+      File.read(pathname)
+    end
+  end
+
+  def self.vectorize(content)
+    # Assuming you're using the MyClient class to interact with the embedding model
+    client = MyClient.new('nomic-embed-text')
+    result = client.embed(content)
+    result.first # Assuming the result is an array of embeddings, we take the first one
+  end
+
+  def self.find_nearest(vector)
+    # Using the has_neighbors functionality to find the nearest embeddings
+    nearest = Embedding.nearest_neighbors(:values, vector, distance: :cosine)
+    nearest.map { |embedding, distance| { embedding: embedding, distance: distance } }
+  end
 end
