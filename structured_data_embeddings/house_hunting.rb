@@ -6,6 +6,7 @@ require 'date'
 require 'rumale/nearest_neighbors/k_neighbors_classifier'
 require 'rumale/clustering/k_means'
 require 'numo/narray'
+require 'find'
 
 # Convert structured data into a vector for processing
 def structured_data_to_vector(a_hash)
@@ -40,9 +41,14 @@ def structured_data_to_vector(a_hash)
   vector
 end
 
-# Load multiple JSON files
-def load_json_files(file_paths)
-  file_paths.flat_map do |file_path| 
+# Load JSON files from a directory recursively
+def load_json_files(directory)
+  json_files = []
+  Find.find(directory) do |path|
+    json_files << path if path.end_with?('.json')
+  end
+  
+  json_files.flat_map do |file_path|
     puts "Loading #{file_path} ..."
     JSON.parse(File.read(file_path))
   end
@@ -61,18 +67,16 @@ def find_similar_objects(knn, new_vector)
 end
 
 # Main execution
-if ARGV.empty?
-  puts "Usage: #{$0} <query_json_file_path> <json_file_paths...>"
+if ARGV.length != 2
+  puts "Usage: #{$0} <query_json_file_path> <json_files_directory>"
   exit 1
 end
 
-query_file_path = ARGV.shift # Get the query json file path from the command line
+query_file_path, json_files_directory = ARGV
 query_data = JSON.parse(File.read(query_file_path))
 
-json_file_paths = ARGV # Remaining arguments are json files paths
-
-# Load and process multiple JSON files
-data_entries = load_json_files(json_file_paths)
+# Load and process JSON files from the specified directory
+data_entries = load_json_files(json_files_directory)
 
 # Convert loaded data entries to vectors
 vectors = data_entries.map { |entry| structured_data_to_vector(entry) }
