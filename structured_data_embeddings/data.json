@@ -1,0 +1,13 @@
+
+{
+  "address": "123 Maple St",
+  "price": 350000,
+  "bedrooms": 3,
+  "bathrooms": 2,
+  "squareFeet": 1500,
+  "yearBuilt": 1995,
+  "garage": true,
+  "pool": false,
+  "location": "Suburban",
+  "description": "Charming single-family home with a spacious backyard."
+}

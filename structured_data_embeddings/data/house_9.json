@@ -1,0 +1,12 @@
+{
+  "address": "456 Oak Ave",
+  "price": 450000,
+  "bedrooms": 4,
+  "bathrooms": 3,
+  "squareFeet": 2200,
+  "yearBuilt": 2005,
+  "garage": true,
+  "pool": true,
+  "location": "Urban",
+  "description": "Modern home with a beautiful pool and open floor plan."
+}

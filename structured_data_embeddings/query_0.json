@@ -1,0 +1,12 @@
+{
+  "address": "987 Spruce St",
+  "price": 325000,
+  "bedrooms": 3,
+  "bathrooms": 2,
+  "squareFeet": 1600,
+  "yearBuilt": 1990,
+  "garage": false,
+  "pool": false,
+  "location": "Suburban",
+  "description": "Well-maintained home with a large garden."
+}

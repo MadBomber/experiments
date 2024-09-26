@@ -1,0 +1,13 @@
+
+{
+  "address": "789 Pine Rd",
+  "price": 275000,
+  "bedrooms": 2,
+  "bathrooms": 1,
+  "squareFeet": 900,
+  "yearBuilt": 1980,
+  "garage": false,
+  "pool": false,
+  "location": "Rural",
+  "description": "Cozy cottage perfect for first-time buyers."
+}

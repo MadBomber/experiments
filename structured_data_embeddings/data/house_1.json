@@ -1,0 +1,14 @@
+
+{
+  "address": "654 Cedar Ct",
+  "price": 400000,
+  "bedrooms": 3,
+  "bathrooms": 2,
+  "squareFeet": 1800,
+  "yearBuilt": 2000,
+  "garage": true,
+  "pool": false,
+  "location": "Urban",
+  "description": "Stylish home in a vibrant neighborhood with great amenities."
+}
+

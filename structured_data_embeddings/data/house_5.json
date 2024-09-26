@@ -1,0 +1,12 @@
+{
+  "address": "852 Maplewood Ln",
+  "price": 310000,
+  "bedrooms": 3,
+  "bathrooms": 2,
+  "squareFeet": 1400,
+  "yearBuilt": 1985,
+  "garage": true,
+  "pool": false,
+  "location": "Rural",
+  "description": "Charming home with a peaceful setting and great potential."
+}
