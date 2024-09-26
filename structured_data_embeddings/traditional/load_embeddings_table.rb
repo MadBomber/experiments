@@ -46,10 +46,8 @@ if host
     :model,
     :api_key
   ]}
-  # Client  = MyClient.new(model, host: host, ali_key: api_key)
-  # MyClient is not work with groq.
-  # Neither is this lower-level client.
-  # Should have stayed with the nomic model
+  # Ensure the host is a valid URL
+  host = "https://#{host}" unless host.start_with?('http://', 'https://')
   Client  = OmniAI::OpenAI::Client.new(
               host:     host,
               api_key:  api_key,
