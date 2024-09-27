@@ -4,7 +4,7 @@ require 'yaml'
 require 'active_record/railtie'
 
 # Load the database configuration
-db_config = YAML.load_file('config/database.yml', aliases: true)
+db_config = YAML.load_file('db/database.yml', aliases: true)
 
 # Setup ActiveRecord configurations
 ActiveRecord::Base.configurations = db_config
