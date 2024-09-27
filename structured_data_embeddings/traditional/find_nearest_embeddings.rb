@@ -36,8 +36,8 @@ begin
   nearest_embeddings.each_with_index do |result, index|
     puts "-"*64
     puts "#{index + 1}. Record ID: #{result.id}  Distance: #{result.neighbor_distance.round(4)}"
-    puts "   Content: #{result.content.to_s.truncate(100)}"
-    puts "   Data: #{result.data.to_s.truncate(100)}"
+    puts "   Content: #{result.content.to_s}" # .truncate(100)
+    puts "   Data: #{result.data.to_s}"       # .truncate(100)
     puts
   end
 rescue => e
