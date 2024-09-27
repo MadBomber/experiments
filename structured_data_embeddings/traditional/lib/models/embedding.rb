@@ -53,17 +53,13 @@ class Embedding < ActiveRecord::Base
 
   def self.find_nearest(vector)
     # Using the has_neighbors functionality to find the nearest embeddings
-    nearest = Embedding.nearest_neighbors(:values, vector, distance: :cosine)
-    
-    debug_me{[
-      :nearest
-    ]}
+    nearest = Embedding.nearest_neighbors(:values, vector, distance: "euclidean").first(3)
 
-    nearest.map do |result|
-      embedding = result.first
-      distance = result.last || calculate_cosine_distance(vector, embedding.values)
-      { embedding: embedding, distance: distance }
-    end
+    # nearest.map do |result|
+    #   embedding = result.first
+    #   distance = result.last || calculate_cosine_distance(vector, embedding.values)
+    #   { embedding: embedding, distance: distance }
+    # end
   end
 
   def self.calculate_cosine_distance(v1, v2)
