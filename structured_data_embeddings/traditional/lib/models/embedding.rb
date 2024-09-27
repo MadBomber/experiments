@@ -59,6 +59,17 @@ class Embedding < ActiveRecord::Base
       :nearest
     ]}
 
-    nearest.map { |embedding, distance| { embedding: embedding, distance: distance } }
+    nearest.map do |result|
+      embedding = result.first
+      distance = result.last || calculate_cosine_distance(vector, embedding.values)
+      { embedding: embedding, distance: distance }
+    end
+  end
+
+  def self.calculate_cosine_distance(v1, v2)
+    dot_product = v1.zip(v2).map { |a, b| a * b }.sum
+    magnitude1 = Math.sqrt(v1.map { |x| x**2 }.sum)
+    magnitude2 = Math.sqrt(v2.map { |x| x**2 }.sum)
+    1 - (dot_product / (magnitude1 * magnitude2))
   end
 end
