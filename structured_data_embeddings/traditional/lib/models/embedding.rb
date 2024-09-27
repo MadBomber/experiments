@@ -18,17 +18,18 @@ class Embedding < ActiveRecord::Base
 
   def self.find_nearest_from_file(file_path)
     content = process_file(file_path)
-    vector = vectorize(content)
+    vector  = vectorize(content)
+
     find_nearest(vector)
   end
 
-  def content
-    super.to_s
-  end
-
-  def data
-    super.to_s
-  end
+  # def content
+  #   super.to_s
+  # end
+  #
+  # def data
+  #   super.to_s
+  # end
 
   private
 
@@ -53,6 +54,11 @@ class Embedding < ActiveRecord::Base
   def self.find_nearest(vector)
     # Using the has_neighbors functionality to find the nearest embeddings
     nearest = Embedding.nearest_neighbors(:values, vector, distance: :cosine)
+    
+    debug_me{[
+      :nearest
+    ]}
+
     nearest.map { |embedding, distance| { embedding: embedding, distance: distance } }
   end
 end
