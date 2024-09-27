@@ -39,7 +39,7 @@ class Embedding < ActiveRecord::Base
     # Assuming you're using the MyClient class to interact with the embedding model
     client = MyClient.new('nomic-embed-text')
     result = client.embed(content)
-    result.first # Assuming the result is an array of embeddings, we take the first one
+    result.data['data'].first['embedding']
   end
 
   def self.find_nearest(vector)
