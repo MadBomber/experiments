@@ -1,0 +1,22 @@
+# config/database.yml
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  database: <%= ENV.fetch('DBNAME', 'sd') %> # sd short for structured data
+  username: <%= ENV.fetch('DBUSER', 'postgres') %>
+  password: <%= ENV.fetch('DBPASS', 'postgres') %> 
+  host: <%= ENV.fetch('DBHOST', 'localhost') %>
+  port: <%= ENV.fetch('DBPORT', '5432').to_i %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+
+

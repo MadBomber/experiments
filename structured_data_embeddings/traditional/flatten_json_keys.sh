@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# flatten_json_keys.sh
+# brew install gron
 
 # Check if a directory is provided as an argument
 if [ $# -eq 0 ]; then

@@ -1,0 +1,25 @@
+# Gemfile
+# Desc: This file is used by bundler to
+#       install those Ruby gems that are
+#       required by the Ruby programs in
+#       this directory.
+#
+# Will also need these brew installed utilities ...
+#   brew install gron
+#
+
+source "https://rubygems.org"
+
+gem "activerecord"  # Object-relational mapper framework (part of Rails).
+gem 'activesupport'
+gem 'amazing_print'     # Pretty print Ruby objects with proper indentation and colors
+gem 'matrix'
+gem "pg"            # Pg is the Ruby interface to the PostgreSQL RDBMS
+gem "debug_me"          # A tool to print the labeled value of variables.
+gem "omniai"            # A generalized framework for interacting with many AI services
+gem "omniai-anthropic"  # A generalized framework for interacting with Anthropic
+gem "omniai-google"     # A generalized framework for interacting with Google
+gem "omniai-mistral"    # A generalized framework for interacting with Mistral
+gem "omniai-openai"     # A generalized framework for interacting with OpenAI
+gem 'neighbor'          # Nearest neighbor search for Rails and Postgres
+gem 'ruby-progressbar'  # Ruby/ProgressBar is a flexible text progress bar library for Ruby.

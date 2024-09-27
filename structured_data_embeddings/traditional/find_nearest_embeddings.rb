@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/database_connection'
-require_relative '../lib/models/embedding'
 require 'optparse'
+
+require_relative 'lib/database_connection'
 
 options = {}
 OptionParser.new do |opts|
@@ -22,7 +22,7 @@ if options[:file].nil?
   exit 1
 end
 
-file_path = options[:file]
+file_path         = options[:file]
 number_of_results = options[:number] || 3
 
 begin
@@ -35,11 +35,9 @@ begin
 
   nearest_embeddings.each_with_index do |result, index|
     puts "-"*64
-    embedding = result[:embedding]
-    distance = result[:distance]
-    puts "#{index + 1}. Record ID: #{embedding.id}  Distance: #{distance.round(4)}"
-    puts "   Content: #{embedding.content.to_s.truncate(100)}"
-    puts "   Data: #{embedding.data.to_s.truncate(100)}"
+    puts "#{index + 1}. Record ID: #{result.id}  Distance: #{result.neighbor_distance.round(4)}"
+    puts "   Content: #{result.content.to_s.truncate(100)}"
+    puts "   Data: #{result.data.to_s.truncate(100)}"
     puts
   end
 rescue => e

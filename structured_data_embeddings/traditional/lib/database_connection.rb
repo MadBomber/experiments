@@ -35,5 +35,3 @@ end
 DatabaseConnection.setup
 
 DB = ActiveRecord::Base.connection
-
-debug_me{[ 'DB' ]}

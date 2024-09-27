@@ -20,16 +20,10 @@ class Embedding < ActiveRecord::Base
     content = process_file(file_path)
     vector  = vectorize(content)
 
+debug_me
+
     find_nearest(vector, number_of_results)
   end
-
-  # def content
-  #   super.to_s
-  # end
-  #
-  # def data
-  #   super.to_s
-  # end
 
   private
 
@@ -53,19 +47,13 @@ class Embedding < ActiveRecord::Base
 
   def self.find_nearest(vector, number_of_results)
     # Using the has_neighbors functionality to find the nearest embeddings
-    nearest = Embedding.nearest_neighbors(:values, vector, distance: "euclidean").first(number_of_results)
-
-    nearest.map do |result|
-      embedding = result.first
-      distance = result.last || calculate_cosine_distance(vector, embedding.values)
-      { embedding: embedding, distance: distance }
-    end
+    Embedding.nearest_neighbors(:values, vector, distance: "euclidean").first(number_of_results)
   end
 
-  def self.calculate_cosine_distance(v1, v2)
-    dot_product = v1.zip(v2).map { |a, b| a * b }.sum
-    magnitude1 = Math.sqrt(v1.map { |x| x**2 }.sum)
-    magnitude2 = Math.sqrt(v2.map { |x| x**2 }.sum)
-    1 - (dot_product / (magnitude1 * magnitude2))
-  end
+  # def self.calculate_cosine_distance(v1, v2)
+  #   dot_product = v1.zip(v2).map { |a, b| a * b }.sum
+  #   magnitude1 = Math.sqrt(v1.map { |x| x**2 }.sum)
+  #   magnitude2 = Math.sqrt(v2.map { |x| x**2 }.sum)
+  #   1 - (dot_product / (magnitude1 * magnitude2))
+  # end
 end

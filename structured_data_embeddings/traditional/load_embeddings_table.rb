@@ -40,28 +40,26 @@ model   = ENV.fetch('EMBED_MODEL', 'nomic-embed-text')
 host    = ENV.fetch('OLLAMA_HOST', nil)
 api_key = ENV.fetch('OLLAMA_API_KEY', nil)
 
-if host
-  debug_me('Going outside localhost'){[
-    :host,
-    :model,
-    :api_key
-  ]}
-  # Ensure the host is a valid URL
-  host = "https://#{host}" unless host.start_with?('http://', 'https://')
-  Client  = OmniAI::OpenAI::Client.new(
-              host:     host,
-              api_key:  api_key,
-            )
-else
+# if host
+#   debug_me('Going outside localhost'){[
+#     :host,
+#     :model,
+#     :api_key
+#   ]}
+#   # Ensure the host is a valid URL
+#   host = "https://#{host}" unless host.start_with?('http://', 'https://')
+#   Client  = OmniAI::OpenAI::Client.new(
+#               host:     host,
+#               api_key:  api_key,
+#             )
+# else
   Client  = MyClient.new(model)
-end
+# end
 
 repo_root     = Pathname.new(ENV.fetch('RR', '__dir__/..'))
 data_dir      = repo_root     + 'data'
 
 
-
-how_many  = 10
 
 def vectorize(contents)
   embeddings = Client.embed(contents)
@@ -69,14 +67,16 @@ def vectorize(contents)
   embeddings.data['data'].first['embedding']
 end
 
+chunks = data_dir.children.select{|c| '.txt' == c.extname}
+
+
 progressbar = ProgressBar.create(
   title:  'Chunks',
-  total:  how_many,
+  total:  chunks.size,
   format: '%t: [%B] %c/%C %j%% %e',
   output: STDERR
 )
 
-chunks = data_dir.children.select{|c| '.txt' == c.extname}
 
 chunks.each do |chunk|
   progressbar.increment
