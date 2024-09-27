@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'lib/database_connection'
+require_relative '../lib/database_connection'
 require 'optparse'
 
 options = {}
