@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require_relative '../lib/database_connection'
+require_relative '../lib/models/embedding'
 require 'optparse'
 
 options = {}
@@ -11,7 +12,7 @@ OptionParser.new do |opts|
     options[:file] = f
   end
 
-  opts.on("-n", "--number NUMBER", Integer, "Number of nearest embeddings to return (default: 5)") do |n|
+  opts.on("-n", "--number NUMBER", Integer, "Number of nearest embeddings to return (default: 3)") do |n|
     options[:number] = n
   end
 end.parse!
@@ -34,10 +35,11 @@ begin
 
   nearest_embeddings.each_with_index do |result, index|
     puts "-"*64
-    distance = 0.0
-    puts "#{index + 1}. Record ID: #{result.id}  Distance: #{distance.round(4)}"
-    puts "   Content: #{result.content.truncate(100)}"
-    puts "   Data: #{result.data.truncate(100)}"
+    embedding = result[:embedding]
+    distance = result[:distance]
+    puts "#{index + 1}. Record ID: #{embedding.id}  Distance: #{distance.round(4)}"
+    puts "   Content: #{embedding.content.to_s.truncate(100)}"
+    puts "   Data: #{embedding.data.to_s.truncate(100)}"
     puts
   end
 rescue => e
