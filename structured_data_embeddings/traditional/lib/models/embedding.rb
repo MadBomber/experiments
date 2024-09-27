@@ -22,6 +22,14 @@ class Embedding < ActiveRecord::Base
     find_nearest(vector)
   end
 
+  def content
+    super.to_s
+  end
+
+  def data
+    super.to_s
+  end
+
   private
 
   def self.process_file(file_path)
