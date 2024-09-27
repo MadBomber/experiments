@@ -6,8 +6,6 @@ require_relative 'lib/database_connection'
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: find_nearest_embeddings.rb [options]"
-
   opts.on("-n", "--number NUMBER", Integer, "Number of nearest embeddings to return (default: 3)") do |n|
     options[:number] = n
   end
@@ -18,20 +16,42 @@ number_of_results = options[:number] || 3
 print "What kind of a house are you interested in? "
 user_prompt = gets.chomp
 
-begin
-  nearest_embeddings = Embedding.find_nearest_from_text(user_prompt, number_of_results)
+system_user_prompt = <<~PROMPT
+  You are a real estage agent with a client.  
+  Your client has asked you to tell them abount 
+  houses which meets the client's wants.
 
-  puts "\nNearest #{number_of_results} embeddings for prompt: #{user_prompt}"
-  puts "----------------------------------------------------"
+  Specifically the client has told you 
+  "#{user_prompt}"
 
-  nearest_embeddings.each_with_index do |result, index|
-    puts "-"*64
-    puts "#{index + 1}. Record ID: #{result.id}  Distance: #{result.neighbor_distance.round(4)}"
-    puts "   Content: #{result.content.to_s}" # .truncate(100)
-    puts "   Data: #{result.data.to_s}"       # .truncate(100)
-    puts
-  end
-rescue => e
-  puts "An error occurred: #{e.message}"
-  exit 1
+  Tell the client about the following houses 
+  that are in your inventory and how they meet 
+  the client's requirements.
+
+  Your inventory includes the following houses:
+
+PROMPT
+
+inventory = ""
+
+nearest_embeddings = Embedding.find_nearest_from_text(user_prompt, number_of_results)
+
+nearest_embeddings.each_with_index do |result, index|
+  inventory << "\n\n"
+  inventory << "#{index + 1}. Record ID: #{result.id}\n"  #  Distance: #{result.neighbor_distance.round(4)}"
+  inventory << result.content
 end
+
+final_prompt = system_user_prompt + inventory
+
+prompts_dir = Pathname.new ENV.fetch('AIA_PROMPTS_DIR')
+
+final_prompt_path = prompts_dir + 'house_hunting.txt'
+final_prompt_path.write final_prompt
+
+response = `aia house_hunting --no-out_file`
+
+puts
+puts response
+
+

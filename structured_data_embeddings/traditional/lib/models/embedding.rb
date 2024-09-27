@@ -20,7 +20,12 @@ class Embedding < ActiveRecord::Base
     content = process_file(file_path)
     vector  = vectorize(content)
 
-debug_me
+    find_nearest(vector, number_of_results)
+  end
+
+
+  def self.find_nearest_from_text(content, number_of_results = 3)
+    vector  = vectorize(content)
 
     find_nearest(vector, number_of_results)
   end
