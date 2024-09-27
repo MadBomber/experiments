@@ -11,7 +11,7 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-number_of_results = options[:number] || 3
+number_of_results = options[:number] || 6
 
 print "What kind of a house are you interested in? "
 user_prompt = gets.chomp
@@ -53,5 +53,11 @@ response = `aia house_hunting --no-out_file`
 
 puts
 puts response
+puts
+puts <<~TEXT
+  To keep chating about house hunting enter this
+  command:
+    aia house_hunting --chat --no-out_file
 
+TEXT
 
