@@ -16,11 +16,11 @@ class Embedding < ActiveRecord::Base
   validates :data,    presence: true
   validates :values,  presence: true
 
-  def self.find_nearest_from_file(file_path)
+  def self.find_nearest_from_file(file_path, number_of_results = 3)
     content = process_file(file_path)
     vector  = vectorize(content)
 
-    find_nearest(vector)
+    find_nearest(vector, number_of_results)
   end
 
   # def content
@@ -51,9 +51,9 @@ class Embedding < ActiveRecord::Base
     result.data['data'].first['embedding']
   end
 
-  def self.find_nearest(vector)
+  def self.find_nearest(vector, number_of_results)
     # Using the has_neighbors functionality to find the nearest embeddings
-    nearest = Embedding.nearest_neighbors(:values, vector, distance: "euclidean").first(3)
+    nearest = Embedding.nearest_neighbors(:values, vector, distance: "euclidean").first(number_of_results)
 
     # nearest.map do |result|
     #   embedding = result.first

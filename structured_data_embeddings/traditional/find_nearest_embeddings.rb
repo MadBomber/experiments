@@ -25,16 +25,14 @@ file_path = options[:file]
 number_of_results = options[:number] || 3
 
 begin
-  nearest_embeddings = Embedding.find_nearest_from_file(file_path)
-
+  nearest_embeddings = Embedding.find_nearest_from_file(file_path, number_of_results)
 
   puts "Nearest #{number_of_results} embeddings for file: #{file_path}"
   puts "----------------------------------------------------"
   
   puts File.read(file_path)
 
-
-  nearest_embeddings.take(number_of_results).each_with_index do |result, index|
+  nearest_embeddings.each_with_index do |result, index|
     puts "-"*64
     distance = 0.0
     puts "#{index + 1}. Record ID: #{result.id}  Distance: #{distance.round(4)}"
