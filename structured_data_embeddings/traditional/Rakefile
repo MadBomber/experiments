@@ -2,6 +2,12 @@ require_relative 'lib/database_connection'
 require 'rake'
 require 'active_record/railtie'
 
+# Parse command-line options
+options = DatabaseConnection.parse_options
+
+# Setup the database connection with the parsed options
+DatabaseConnection.setup(options)
+
 # Load the database configuration
 db_config = DatabaseConnection.load_configuration
 
@@ -32,3 +38,5 @@ namespace :db do
     puts 'Database dropped'
   end
 end
+
+puts "Using #{DatabaseConnection.values_column} column for values"
