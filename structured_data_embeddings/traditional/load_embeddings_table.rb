@@ -82,7 +82,7 @@ chunks.each do |chunk|
   progressbar.increment
   data      = Pathname.new(chunk.to_s.gsub('.txt', '.json')).read
   content   = chunk.read
-  values    = vectorize(content)
+  values    = ARGV.include?('--json') ? vectorize(data) : vectorize(content)
 
 
   Embedding.create(
