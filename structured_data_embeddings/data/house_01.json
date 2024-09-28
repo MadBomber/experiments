@@ -1,0 +1,1 @@
+{"id":1,"description":"Cozy cottage in the countryside.","price":250000,"location":{"city":"Springfield","state":"IL","zip":"62704"},"features":{"bedrooms":3,"bathrooms":2,"square_feet":1500,"has_garage":true,"has_pool":false,"amenities":["fireplace","garden","patio"]},"images":["image1.jpg","image2.jpg","image3.jpg"]}

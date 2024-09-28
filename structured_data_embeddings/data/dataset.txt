@@ -1,0 +1,51 @@
+
+{"id":1,"description":"Cozy cottage in the countryside.","price":250000,"location":{"city":"Springfield","state":"IL","zip":"62704"},"features":{"bedrooms":3,"bathrooms":2,"square_feet":1500,"has_garage":true,"has_pool":false,"amenities":["fireplace","garden","patio"]},"images":["image1.jpg","image2.jpg","image3.jpg"]}
+
+{"id":2,"description":"Modern family home with a large backyard.","price":450000,"location":{"city":"Lakeview","state":"CA","zip":"90290"},"features":{"bedrooms":4,"bathrooms":3,"square_feet":2200,"has_garage":true,"has_pool":true,"amenities":["air conditioning","granite countertops","hardwood floors"]},"images":["image4.jpg","image5.jpg","image6.jpg"]}
+
+{"id":3,"description":"Charming bungalow with historic character.","price":300000,"location":{"city":"Hometown","state":"TX","zip":"75001"},"features":{"bedrooms":2,"bathrooms":1,"square_feet":1200,"has_garage":false,"has_pool":false,"amenities":["wooden floors","near park","updated kitchen"]},"images":["image7.jpg","image8.jpg"]}
+
+{"id":4,"description":"Elegant two-story home in a suburban neighborhood.","price":500000,"location":{"city":"Oakwood","state":"OH","zip":"45240"},"features":{"bedrooms":5,"bathrooms":4,"square_feet":3200,"has_garage":true,"has_pool":false,"amenities":["home office","basement","deck"]},"images":["image9.jpg","image10.jpg","image11.jpg"]}
+
+{"id":5,"description":"Luxury condo with waterfront views.","price":750000,"location":{"city":"Downtown","state":"NY","zip":"10001"},"features":{"bedrooms":2,"bathrooms":2,"square_feet":1800,"has_garage":false,"has_pool":true,"amenities":["rooftop terrace","gym","concierge service"]},"images":["image12.jpg","image13.jpg"]}
+
+{"id":6,"description":"Spacious ranch home on a large lot.","price":350000,"location":{"city":"Pleasantville","state":"NJ","zip":"08232"},"features":{"bedrooms":4,"bathrooms":2,"square_feet":2400,"has_garage":false,"has_pool":false,"amenities":["fireplace","sunroom"]},"images":["image14.jpg","image15.jpg"]}
+
+{"id":7,"description":"Renovated townhouse close to the city center.","price":400000,"location":{"city":"Metropolis","state":"IL","zip":"62960"},"features":{"bedrooms":3,"bathrooms":2,"square_feet":2000,"has_garage":true,"has_pool":false,"amenities":["modern kitchen","private patio"]},"images":["image16.jpg","image17.jpg"]}
+
+{"id":8,"description":"Cozy cabin in the mountains.","price":300000,"location":{"city":"Mountainview","state":"CO","zip":"80440"},"features":{"bedrooms":2,"bathrooms":1,"square_feet":900,"has_garage":false,"has_pool":false,"amenities":["wood-burning stove","surrounded by nature"]},"images":["image18.jpg","image19.jpg"]}
+
+{"id":9,"description":"Contemporary home with smart features.","price":560000,"location":{"city":"Urban Heights","state":"WA","zip":"98001"},"features":{"bedrooms":4,"bathrooms":3,"square_feet":2600,"has_garage":true,"has_pool":true,"amenities":["smart thermostat","solar panels"]},"images":["image20.jpg","image21.jpg"]}
+
+{"id":10,"description":"Victorian-style house with a wraparound porch.","price":485000,"location":{"city":"Oldtown","state":"MA","zip":"02111"},"features":{"bedrooms":5,"bathrooms":3,"square_feet":3000,"has_garage":true,"has_pool":false,"amenities":["fireplace","hardwood floors","large garden"]},"images":["image22.jpg","image23.jpg"]}
+
+{"id":11,"description":"Stylish apartment in a historic building.","price":420000,"location":{"city":"Art District","state":"CO","zip":"80202"},"features":{"bedrooms":2,"bathrooms":1,"square_feet":1500,"has_garage":false,"has_pool":false,"amenities":["high ceilings","exposed brick"]},"images":["image24.jpg","image25.jpg"]}
+
+{"id":12,"description":"Family-friendly home with a big backyard.","price":470000,"location":{"city":"Greenfield","state":"CA","zip":"93927"},"features":{"bedrooms":4,"bathrooms":3,"square_feet":2300,"has_garage":true,"has_pool":true,"amenities":["playroom","close to schools"]},"images":["image26.jpg","image27.jpg"]}
+
+{"id":13,"description":"Spacious loft with industrial design.","price":550000,"location":{"city":"City Center","state":"TX","zip":"73301"},"features":{"bedrooms":3,"bathrooms":2,"square_feet":2800,"has_garage":false,"has_pool":false,"amenities":["open floor plan","large windows"]},"images":["image28.jpg","image29.jpg"]}
+
+{"id":14,"description":"Charming farmhouse with modern updates.","price":395000,"location":{"city":"Lakeside","state":"MI","zip":"49116"},"features":{"bedrooms":4,"bathrooms":2,"square_feet":2500,"has_garage":true,"has_pool":false,"amenities":["wraparound porch","updated kitchen"]},"images":["image30.jpg","image31.jpg"]}
+
+{"id":15,"description":"Cozy two-bedroom cottage by the beach.","price":360000,"location":{"city":"Seaside","state":"FL","zip":"32459"},"features":{"bedrooms":2,"bathrooms":1,"square_feet":800,"has_garage":false,"has_pool":false,"amenities":["short walk to the beach","outdoor shower"]},"images":["image32.jpg","image33.jpg"]}
+
+{"id":16,"description":"Luxury estate with extensive grounds.","price":1200000,"location":{"city":"Valley View","state":"CA","zip":"92083"},"features":{"bedrooms":6,"bathrooms":5,"square_feet":5000,"has_garage":true,"has_pool":true,"amenities":["guest house","tennis court"]},"images":["image34.jpg","image35.jpg"]}
+
+{"id":17,"description":"Well-maintained duplex with rental potential.","price":480000,"location":{"city":"Edgewater","state":"NJ","zip":"07020"},"features":{"bedrooms":4,"bathrooms":3,"square_feet":2100,"has_garage":false,"has_pool":false,"amenities":["private balconies","close to public transport"]},"images":["image36.jpg","image37.jpg"]}
+
+{"id":18,"description":"Nice split-level home in a quiet neighborhood.","price":415000,"location":{"city":"Maplewood","state":"NJ","zip":"07040"},"features":{"bedrooms":3,"bathrooms":2,"square_feet":1950,"has_garage":true,"has_pool":false,"amenities":["family room","large deck"]},"images":["image38.jpg","image39.jpg"]}
+
+{"id":19,"description":"Classic ranch-style home in a family area.","price":310000,"location":{"city":"Suburbia","state":"FL","zip":"33101"},"features":{"bedrooms":3,"bathrooms":2,"square_feet":1800,"has_garage":true,"has_pool":false,"amenities":["fire pit","fenced yard"]},"images":["image40.jpg","image41.jpg"]}
+
+{"id":20,"description":"Stylish high-rise apartment with skyline views.","price":630000,"location":{"city":"Skyline","state":"IL","zip":"60601"},"features":{"bedrooms":2,"bathrooms":2,"square_feet":1500,"has_garage":false,"has_pool":true,"amenities":["rooftop pool","fitness center"]},"images":["image42.jpg","image43.jpg"]}
+
+{"id":21,"description":"Renovated historic home with modern touches.","price":490000,"location":{"city":"Heritage","state":"MA","zip":"01749"},"features":{"bedrooms":4,"bathrooms":3,"square_feet":2700,"has_garage":true,"has_pool":false,"amenities":["fireplace","modern kitchen"]},"images":["image44.jpg","image45.jpg"]}
+
+{"id":22,"description":"Quaint cottage with a large porch.","price":275000,"location":{"city":"Greentown","state":"TN","zip":"37743"},"features":{"bedrooms":2,"bathrooms":1,"square_feet":1100,"has_garage":false,"has_pool":false,"amenities":["front porch","near hiking trails"]},"images":["image46.jpg","image47.jpg"]}
+
+{"id":23,"description":"Modern villa with elegant interiors.","price":850000,"location":{"city":"Palm Beach","state":"FL","zip":"33480"},"features":{"bedrooms":5,"bathrooms":4,"square_feet":3800,"has_garage":true,"has_pool":true,"amenities":["spa","home theater"]},"images":["image48.jpg","image49.jpg"]}
+
+{"id":24,"description":"Charming city apartment with an artsy vibe.","price":375000,"location":{"city":"Artsville","state":"TX","zip":"78701"},"features":{"bedrooms":1,"bathrooms":1,"square_feet":750,"has_garage":false,"has_pool":false,"amenities":["close to cafes","art galleries nearby"]},"images":["image50.jpg","image51.jpg"]}
+
+{"id":25,"description":"Beautiful townhouse near the river.","price":410000,"location":{"city":"Riverview","state":"WA","zip":"98042"},"features":{"bedrooms":3,"bathrooms":2,"square_feet":2100,"has_garage":false,"has_pool":false,"amenities":["walking trails","near shopping"]},"images":["image52.jpg","image53.jpg"]}
+
