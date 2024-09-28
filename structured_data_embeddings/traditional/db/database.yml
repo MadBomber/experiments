@@ -1,7 +1,7 @@
 # config/database.yml
 
 default: &default
-  adapter: postgresql
+  adapter: 'postgresql'
   encoding: unicode
   pool: 5
   database: <%= ENV.fetch('DBNAME', 'sd') %> # sd short for structured data
@@ -12,11 +12,14 @@ default: &default
 
 development:
   <<: *default
+  database: <%= ENV.fetch('DBNAME', 'sd') %>_development 
 
 test:
   <<: *default
+  database: <%= ENV.fetch('DBNAME', 'sd') %>_test 
 
 production:
   <<: *default
+  database: <%= ENV.fetch('DBNAME', 'sd') %>_production 
 
 
