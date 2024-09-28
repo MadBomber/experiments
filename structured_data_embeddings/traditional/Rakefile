@@ -1,27 +1,26 @@
-require 'active_record'
+require_relative 'lib/database_connection'
 require 'rake'
-require 'yaml'
 require 'active_record/railtie'
 
 # Load the database configuration
-db_config = YAML.load_file('db/database.yml', aliases: true)
+# db_config = YAML.load_file('db/database.yml', aliases: true)
 
 # Setup ActiveRecord configurations
-ActiveRecord::Base.configurations = db_config
-ActiveRecord::Base.establish_connection(db_config['development'])
+# ActiveRecord::Base.configurations = db_config
+# ActiveRecord::Base.establish_connection(db_config['development'])
 
 # Load the rake tasks for db:create and db:migrate
 namespace :db do
   desc 'Create the database'
   task :create do
-    ActiveRecord::Base.establish_connection(db_config['development'])
+    # ActiveRecord::Base.establish_connection(db_config['development'])
     ActiveRecord::Tasks::DatabaseTasks.create_current
     puts 'Database created'
   end
 
   desc 'Run database migrations'
   task :migrate do
-    ActiveRecord::Base.establish_connection(db_config['development'])
+    # ActiveRecord::Base.establish_connection(db_config['development'])
     ActiveRecord::Migrator.migrations_paths = ['db/migrate']
     ActiveRecord::MigrationContext.new(ActiveRecord::Migrator.migrations_paths).migrate
     puts 'Migrations run'
@@ -29,7 +28,7 @@ namespace :db do
 
   desc 'Drop the database'
   task :drop do
-    ActiveRecord::Base.establish_connection(db_config['development'])
+    # ActiveRecord::Base.establish_connection(db_config['development'])
     ActiveRecord::Tasks::DatabaseTasks.drop_current
     puts 'Database dropped'
   end
