@@ -28,9 +28,18 @@
 #
 
 require 'ruby-progressbar'
+require 'optparse'
 
 require_relative 'lib/database_connection'
 require_relative 'lib/my_client'
+
+# Parse command line options
+options = {from: 'text'}
+OptionParser.new do |opts|
+  opts.on('--from TYPE', ['text', 'json'], "Source type (text or json)") do |v|
+    options[:from] = v
+  end
+end.parse!
 
 # llama3.1
 model   = ENV.fetch('EMBED_MODEL', 'nomic-embed-text')
@@ -82,8 +91,7 @@ chunks.each do |chunk|
   progressbar.increment
   data      = Pathname.new(chunk.to_s.gsub('.txt', '.json')).read
   content   = chunk.read
-  values    = ARGV.include?('--json') ? vectorize(data) : vectorize(content)
-
+  values    = options[:from] == 'json' ? vectorize(data) : vectorize(content)
 
   Embedding.create(
     data:     data,
