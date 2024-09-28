@@ -42,7 +42,7 @@ nearest_embeddings = Embedding.find_nearest_from_text(user_prompt, number_of_res
 nearest_embeddings.each_with_index do |result, index|
   inventory << "\n\n"
   inventory << "#{index + 1}. Record ID: #{result.id}\n"  #  Distance: #{result.neighbor_distance.round(4)}"
-  inventory << ('json' == options[:from] ? result.data : result.content)
+  inventory << ('json' == options[:from] ? result.data.to_s : result.content)
 end
 
 final_prompt = system_user_prompt + inventory

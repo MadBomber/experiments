@@ -15,6 +15,7 @@ require 'json'
 require 'pathname'
 require 'date'
 require 'open3'
+require 'json'
 
 require_relative 'my_client'
 require_relative 'models'

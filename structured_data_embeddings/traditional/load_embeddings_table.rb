@@ -27,6 +27,10 @@
 #           must change.
 #
 
+# brew install gron
+json_normalizer_pgm = 'gron'
+
+
 require 'ruby-progressbar'
 require 'optparse'
 
@@ -49,21 +53,8 @@ model   = ENV.fetch('EMBED_MODEL', 'nomic-embed-text')
 host    = ENV.fetch('OLLAMA_HOST', nil)
 api_key = ENV.fetch('OLLAMA_API_KEY', nil)
 
-# if host
-#   debug_me('Going outside localhost'){[
-#     :host,
-#     :model,
-#     :api_key
-#   ]}
-#   # Ensure the host is a valid URL
-#   host = "https://#{host}" unless host.start_with?('http://', 'https://')
-#   Client  = OmniAI::OpenAI::Client.new(
-#               host:     host,
-#               api_key:  api_key,
-#             )
-# else
-  Client  = MyClient.new(model)
-# end
+
+Client  = MyClient.new(model)
 
 repo_root     = Pathname.new(ENV.fetch('RR', '__dir__/..'))
 data_dir      = repo_root     + 'data'
@@ -76,8 +67,7 @@ def vectorize(contents)
   embeddings.data['data'].first['embedding']
 end
 
-chunks = data_dir.children.select{|c| '.txt' == c.extname}
-
+chunks = data_dir.children.select{|c| '.json' == c.extname}
 
 progressbar = ProgressBar.create(
   title:  'Chunks',
@@ -89,9 +79,10 @@ progressbar = ProgressBar.create(
 
 chunks.each do |chunk|
   progressbar.increment
-  data      = Pathname.new(chunk.to_s.gsub('.txt', '.json')).read
-  content   = chunk.read
-  values    = 'json' == options[:from] ? vectorize(data) : vectorize(content)
+  raw_json  = chunk.read            # raw json is just a string
+  data      = JSON.parse(raw_json)  # turn into Hash; let AR manage serialization
+  content   = `#{json_normalizer_pgm} #{chunk}`
+  values    = 'json' == options[:from] ? vectorize(raw_json) : vectorize(content)
 
   Embedding.create(
     data:     data,
