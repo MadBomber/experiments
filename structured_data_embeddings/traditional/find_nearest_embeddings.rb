@@ -9,6 +9,9 @@ OptionParser.new do |opts|
   opts.on("-n", "--number NUMBER", Integer, "Number of nearest embeddings to return (default: 3)") do |n|
     options[:number] = n
   end
+  opts.on('--from TYPE', ['text', 'json'], "Source type (text or json)") do |v|
+    options[:from] = v
+  end
 end.parse!
 
 number_of_results = options[:number] || 6
@@ -39,7 +42,7 @@ nearest_embeddings = Embedding.find_nearest_from_text(user_prompt, number_of_res
 nearest_embeddings.each_with_index do |result, index|
   inventory << "\n\n"
   inventory << "#{index + 1}. Record ID: #{result.id}\n"  #  Distance: #{result.neighbor_distance.round(4)}"
-  inventory << result.content
+  inventory << ('json' == options[:from] ? result.data : result.content)
 end
 
 final_prompt = system_user_prompt + inventory

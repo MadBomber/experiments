@@ -91,7 +91,7 @@ chunks.each do |chunk|
   progressbar.increment
   data      = Pathname.new(chunk.to_s.gsub('.txt', '.json')).read
   content   = chunk.read
-  values    = options[:from] == 'json' ? vectorize(data) : vectorize(content)
+  values    = 'json' == options[:from] ? vectorize(data) : vectorize(content)
 
   Embedding.create(
     data:     data,
