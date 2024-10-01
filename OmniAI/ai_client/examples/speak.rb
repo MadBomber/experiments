@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# experiments/OmniAI/examples/speak.rb
+# experiments/OmniAI/ai_client/examples/speak.rb
 
 $player = "afplay" # For MacOS
 
@@ -18,7 +18,7 @@ models = [
 clients = []
 
 models.each do |model|
-  clients << MyClient.new(model)
+  clients << AiClient.new(model)
 end
 
 title "Default Configuration Text-to-Speech"

@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# experiments/OmniAI/examples/transcribe.rb
+# experiments/OmniAI/ai_client/examples/transcribe.rb
 
 require_relative 'common'
 
@@ -14,7 +14,7 @@ models = [
 clients = []
 
 models.each do |model|
-  clients << MyClient.new(model)
+  clients << AiClient.new(model)
 end
 
 title "Default Configuration Speech-to-Text"

@@ -2,7 +2,7 @@
 #
 # Stuff common to all the examples
 
-require_relative '../my_client'
+require_relative '../ai_client'
 
 require 'amazing_print'
 

@@ -101,12 +101,11 @@ class AiClient
     @logger   = options[:logger]    || config.logger
     @timeout  = options[:timeout]   || config.timeout
     @base_url = options[:base_url]  || provider_config[:base_url]
-
     @options  = options.merge(provider_config)
     @client   = create_client
 
-    @last_response = nil
-    @return_raw = config.return_raw
+    @last_response  = nil
+    @return_raw     = config.return_raw
   end
 
   def raw?
@@ -234,6 +233,8 @@ class AiClient
     unless valid_providers.include?(provider)
       raise ArgumentError, "Unsupported provider: #{provider}"
     end
+
+    provider
   end
 
   def create_client

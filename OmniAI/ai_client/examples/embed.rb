@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# experiments/OmniAI/examples/embed.rb
+# experiments/OmniAI/ai_client/examples/embed.rb
 
 require_relative 'common'
 require 'matrix'
@@ -7,7 +7,7 @@ require 'kmeans-clusterer'
 
 # We'll use only one model for this example
 model = 'nomic-embed-text'
-client = MyClient.new(model, provider: :ollama)
+client = AiClient.new(model, provider: :ollama)
 
 # More meaningful text samples
 texts = [
