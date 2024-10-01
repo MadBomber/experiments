@@ -1,4 +1,4 @@
-# omniai-ollama.rb
+# ai_client/omniai-ollama.rb
 # frozen_string_literal: true
 
 require 'omniai'

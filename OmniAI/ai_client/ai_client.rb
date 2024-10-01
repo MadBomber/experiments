@@ -1,4 +1,4 @@
-# experiments/OmniAI/my_client.rb
+# experiments/OmniAI/ai_client/ai_client.rb
 # WIP:  a generic client to access LLM providers
 #       kinda like the SaaS "open router"
 #
@@ -21,13 +21,13 @@ require 'logger'
 
 # Usage example:
 # Configure general settings
-#   MyClient.configure do |config|
-#     config.logger = Logger.new('my_client.log')
+#   AiClient.configure do |config|
+#     config.logger = Logger.new('ai_client.log')
 #     config.return_raw = true
 #   end
 #
 # Configure provider-specific settings
-#   MyClient.configure do |config|
+#   AiClient.configure do |config|
 #     config.configure_provider(:openai) do
 #       {
 #         organization: 'org-123',
@@ -38,13 +38,13 @@ require 'logger'
 #
 #
 # Add middlewares
-#   MyClient.use(RetryMiddleware.new(max_retries: 5, base_delay: 2, max_delay: 30))
-#   MyClient.use(LoggingMiddleware.new(MyClient.configuration.logger))
+#   AiClient.use(RetryMiddleware.new(max_retries: 5, base_delay: 2, max_delay: 30))
+#   AiClient.use(LoggingMiddleware.new(AiClient.configuration.logger))
 #
 # Create a generic client instance using only model name
-#   client = MyClient.new('gpt-3.5-turbo')
+#   client = AiClient.new('gpt-3.5-turbo')
 
-class MyClient
+class AiClient
   class Configuration
     attr_accessor :logger, :timeout, :return_raw
 
@@ -92,7 +92,7 @@ class MyClient
 
   def initialize(model, **options)
     @model      = model
-    @provider   = options[:provider] || determine_provider(model)
+    @provider   = validate_provider(options[:provider]) || determine_provider(model)
     @model_type = determine_model_type(model)
 
     config          = self.class.configuration
@@ -227,8 +227,17 @@ class MyClient
   ##############################################
   private
 
+  def validate_provider(provider)
+    return nil if provider.nil?
+
+    valid_providers = PROVIDER_PATTERNS.keys
+    unless valid_providers.include?(provider)
+      raise ArgumentError, "Unsupported provider: #{provider}"
+    end
+  end
+
   def create_client
-    api_key = fetch_api_key
+    api_key = fetch_api_key  # Fetching the API key should only happen for valid providers
     client_options = {
       api_key:  api_key,
       logger:   @logger,
@@ -254,6 +263,7 @@ class MyClient
       raise ArgumentError, "Unsupported provider: #{@provider}"
     end
   end
+
 
   def fetch_api_key
     env_var_name = "#{@provider.upcase}_API_KEY"
@@ -283,7 +293,7 @@ end
 ## Middleware Class Examples ##
 ###############################
 
-# MyClient.use(
+# AiClient.use(
 #   RetryMiddleware.new(
 #     max_retries:  5,
 #     base_delay:   2,
@@ -317,14 +327,14 @@ class RetryMiddleware
 end
 
 # logger = Logger.new(STDOUT)
-# MyClient.use(
+# AiClient.use(
 #   LoggingMiddleware.new(logger)
 # )
 #
-# Or, if you want to use the same logger as the MyClient:
-# MyClient.use(
+# Or, if you want to use the same logger as the AiClient:
+# AiClient.use(
 #   LoggingMiddleware.new(
-#     MyClient.configuration.logger
+#     AiClient.configuration.logger
 #   )
 # )
 
