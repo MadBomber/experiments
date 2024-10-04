@@ -1,0 +1,7 @@
+source "https://rubygems.org"
+
+gem 'raix'                    # Ruby AI eXtensions
+gem 'open_router'             # Ruby library for OpenRouter API.
+
+gem 'amazing_print'           # Pretty print Ruby objects with proper indentation and colors
+gem 'debug_me'                # A tool to print the labeled value of variables.
