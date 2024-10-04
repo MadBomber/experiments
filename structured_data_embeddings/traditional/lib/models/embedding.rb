@@ -1,4 +1,6 @@
 # scripts/lib/embedding.rb
+
+require 'ai_client'
 require 'json'
 require 'open3'
 
@@ -44,8 +46,8 @@ class Embedding < ActiveRecord::Base
   end
 
   def self.vectorize(content)
-    # Assuming you're using the MyClient class to interact with the embedding model
-    client = MyClient.new('nomic-embed-text')
+    client = AiClient.new('nomic-embed-text')
+
     result = client.embed(content)
     result.data['data'].first['embedding']
   end

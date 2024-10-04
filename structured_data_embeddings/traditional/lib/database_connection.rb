@@ -1,23 +1,24 @@
 # lib/database_connection.rb
 
-require 'amazing_print'
-require 'debug_me'
+require 'ai_client'  # A generic AI Client for many providers
+
+require 'amazing_print'  # Pretty print Ruby objects with proper indentation and colors
+require 'debug_me'       # A tool to print the labeled value of variables.
 include DebugMe
 
-require 'pg'
-require 'neighbor'
+require 'pg'             # Pg is the Ruby interface to the PostgreSQL RDBMS
+require 'neighbor'       # Nearest neighbor search for Rails and Postgres
 require 'active_record'
 require 'active_model'
 require 'active_support'
-require 'yaml'
-require 'erb'
-require 'json'
-require 'pathname'
-require 'date'
-require 'open3'
-require 'json'
+require 'yaml'           # STDLIB
+require 'erb'            # STDLIB
+require 'json'           # STDLIB
+require 'pathname'       # STDLIB
+require 'date'           # STDLIB
+require 'open3'          # STDLIB
+require 'json'           # STDLIB
 
-require_relative 'my_client'
 require_relative 'models'
 
 class DatabaseConnection

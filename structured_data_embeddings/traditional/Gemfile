@@ -10,6 +10,8 @@
 
 source "https://rubygems.org"
 
+gem 'ai_client'
+
 gem "activerecord"  # Object-relational mapper framework (part of Rails).
 gem 'activesupport'
 gem 'amazing_print'     # Pretty print Ruby objects with proper indentation and colors

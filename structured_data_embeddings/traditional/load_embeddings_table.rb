@@ -30,12 +30,13 @@
 # brew install gron
 json_normalizer_pgm = 'gron'
 
+require 'ai_client'
 
 require 'ruby-progressbar'
 require 'optparse'
 
 require_relative 'lib/database_connection'
-require_relative 'lib/my_client'
+
 
 # Parse command line options
 options = {from: 'text'}
@@ -54,7 +55,7 @@ host    = ENV.fetch('OLLAMA_HOST', nil)
 api_key = ENV.fetch('OLLAMA_API_KEY', nil)
 
 
-Client  = MyClient.new(model)
+Client  = AiClient.new(model)
 
 repo_root     = Pathname.new(ENV.fetch('RR', '__dir__/..'))
 data_dir      = repo_root     + 'data'
