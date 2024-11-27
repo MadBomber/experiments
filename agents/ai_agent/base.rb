@@ -11,17 +11,19 @@ class AiAgent::Base
   attr_accessor :registry_client, :message_client
 
   def initialize(
-      capabilities:,    # TODO: make a ?constant? in the sub-class
       registry_client:  RegistryClient.new, 
       message_client:   MessageClient.new,
-      logger: Logger.new($stdout)
+      logger:           Logger.new($stdout)
     )
     @name             = self.class.name
     @capabilities     = capabilities
     @id               = nil
     @registry_client  = registry_client
     @message_client   = message_client
+
     @logger           = logger
+
+    configure_clients
   end
 
   def run
@@ -32,7 +34,7 @@ class AiAgent::Base
 
 
   def register
-    @id = registry_client.register(name: @name, capabilities: @capabilities)
+    @id = registry_client.register(name: @name, capabilities: capabilities)
     logger.info "Registered Agent #{@name} with ID: #{@id}"
   rescue StandardError => e
     logger.error "Error during registration: #{e.message}"
@@ -59,13 +61,23 @@ class AiAgent::Base
   end
 
 
+  def configure_clients
+    @registry_client.logger = logger
+    @message_client.logger  = logger
+  end
+
   def receive_request(event_id:, response_uuid:)
-    raise NotImplementedError, "#{self.class} must implement #receive_request"
+    raise NotImplementedError, "#{self.class} must implement a #{__method__} method."
   end
 
 
   def receive_response(event_id:, response_uuid:)
-    raise NotImplementedError, "#{self.class} must implement #receive_response"
+    raise NotImplementedError, "#{self.class} must implement a #{__method__} method."
+  end
+
+
+  def capabilities
+    raise NotImplementedError, "#{self.class} must implement a #{__method__} method."
   end
 end
 

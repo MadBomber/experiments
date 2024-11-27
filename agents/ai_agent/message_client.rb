@@ -2,6 +2,7 @@
 
 require 'bunny'
 require 'json'
+require 'json_schema'
 
 class AiAgent::MessageClient
   QUEUE_TTL = 60_000 # 60 seconds TTL
