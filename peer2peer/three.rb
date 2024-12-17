@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # three.rb
 
 require_relative 'common_config'

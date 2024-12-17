@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # one.rb
 
 require_relative 'common_config'

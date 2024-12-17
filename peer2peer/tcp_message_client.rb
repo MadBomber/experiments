@@ -37,7 +37,7 @@ class Agent99::TcpMessageClient
     target = message.dig(:header, :to_uuid)
     return unless target
 
-    agent_info = agents(target)
+    agent_info = agents[target]
     return unless agent_info
 
     socket = connect_to_agent(agent_info[:ip], agent_info[:port])
