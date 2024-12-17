@@ -1,0 +1,33 @@
+Displaying the detailed help message for all subcommands
+Subcommands: version, config, test
+
+
+Subcommand: version ...
+ == Sorry: Detailed help is not available.
+
+Subcommand: config ...
+ == Sorry: Detailed help is not available.
+
+Subcommand: test ...
+== Base Global Header ==
+++ TEST header only no footer ++
+Command:
+  bin_cli.rb
+
+Usage:
+  bin_cli.rb | bin_cli.rb SUBCOMMAND
+
+Description:
+  Generate tests
+
+Subcommands:
+  version                           # Print version
+
+Options:
+  --[no-]debug, -d, --debug         # Print debug information, default: false
+  --[no-]verbose, -v, --verbose     # Print verbose information, default: false
+  --[no-]xyzzy, -x, --xyzzy         # Magic, default: false
+  --[no-]gen-z, -z, -Z              # Allow Gen Z to use these commands, default: false
+  --framework=VALUE                 # : (minitest/rspec), default: "minitest"
+  --help, -h                        # Print this help
+== Base Global Footer ==

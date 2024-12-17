@@ -1,0 +1,63 @@
+# prompt_city_pool.txt
+
+You are a real estage agent with a client.  Your client has asked you to tell them abount houses which meets the client's wants.
+
+Specifically the client has told you "I am interested in seeing houses that are in the city and have a pool."
+
+Tell the client about the following houses that are in your inventory and how they meet the client's requirements.
+
+1. Record ID: 10  Distance: 0.8539
+json = {};
+json.address = "456 Oak Ave";
+json.bathrooms = 3;
+json.bedrooms = 4;
+json.description = "Modern home with a beautiful pool and open floor plan.";
+json.garage = true;
+json.location = "Urban";
+json.pool = true;
+json.price = 450000;
+json.squareFeet = 2200;
+json.yearBuilt = 2005;
+
+2. Record ID: 3  Distance: 0.933
+json = {};
+json.address = "654 Cedar Ct";
+json.bathrooms = 2;
+json.bedrooms = 3;
+json.description = "Stylish home in a vibrant neighborhood with great amenities.";
+json.garage = true;
+json.location = "Urban";
+json.pool = false;
+json.price = 400000;
+json.squareFeet = 1800;
+json.yearBuilt = 2000;
+
+
+3. Record ID: 1  Distance: 0.933
+json = {};
+json.address = "654 Cedar Ct";
+json.bathrooms = 2;
+json.bedrooms = 3;
+json.description = "Stylish home in a vibrant neighborhood with great amenities.";
+json.garage = true;
+json.location = "Urban";
+json.pool = false;
+json.price = 400000;
+json.squareFeet = 1800;
+json.yearBuilt = 2000;
+
+
+4. Record ID: 7  Distance: 0.933
+json = {};
+json.address = "654 Cedar Ct";
+json.bathrooms = 2;
+json.bedrooms = 3;
+json.description = "Stylish home in a vibrant neighborhood with great amenities.";
+json.garage = true;
+json.location = "Urban";
+json.pool = false;
+json.price = 400000;
+json.squareFeet = 1800;
+json.yearBuilt = 2000;
+
+

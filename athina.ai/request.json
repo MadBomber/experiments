@@ -1,0 +1,51 @@
+{
+    // required fields
+    "language_model_id": "gpt-4",
+    "prompt": [
+        {
+            "role": "system",
+            "content": "Answer the following question using the information provided.\n ### INFORMATION ### Neil Armstrong landed on the moon in 1969.\n ### QUERY ###"
+        },
+        {
+            "role": "user",
+            "content": "Which spaceship was first to land on the moon?"
+        }
+    ],
+    "response": "The Apollo 11 was the first spaceship to land on the moon.",
+
+    // RAG fields (optional / required for evaluation)
+    "user_query": "Which spaceship was first to land on the moon?",
+    "context": {
+        "information": ["Neil Armstrong landed on the moon in 1969."]
+    },
+
+    // usage tracking fields (optional / required for analytics)
+    "prompt_tokens": 22,
+    "completion_tokens": 9,
+    "total_tokens": 31,
+    "cost": 0.002,
+    "response_time": 150,
+
+    // segmentation fields (optional / recommended)
+    "prompt_slug": "qa_chatbot_response",
+    "environment": "development",
+    "customer_id": "xyz-123",
+    "customer_user_id": "user-456", // end user id
+    "session_id": "session-789",
+
+    // ground truth (optional)
+    "expected_response": "The Apollo 11 was the first spaceship to land on the moon.",
+
+    // tool use (optional)
+    "tools": [],
+    "tool_calls": null,
+    "functions": [],
+    "function_call_response": null,
+
+    // custom metadata (optional)
+    "external_reference_id": "ref-101112",  // your reference id
+    "custom_attributes": {
+        "company": "OpenAI",
+        "links": ["https://openai.com"]
+    }
+}
