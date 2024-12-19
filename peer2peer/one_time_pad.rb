@@ -6,62 +6,48 @@ require 'debug_me'
 include DebugMe
 
 class OneTimePad
-  attr_reader :result
+  MAX_ROWS = 2048
+
+  attr_accessor :pad, :secret
 
   def initialize(
-      dt:,            # required
-      message:,       # required
-      action:   :code # or :decode
+      secret: nil,
+      otp:    nil
     )
 
-    @otp = generate_otp(dt:, max_rows: message.size)
+    @secret = secret
 
-    @result = {
-      dt:,
-      message: process_message(message:, action:),
-    }
+    if otp
+      @pad = otp
+    end
   end
 
   # Generates a random seed based on provided UTC time
   #
   # @return [Integer] A random seed value
-  def kaos(dt)
-    utc = dt.utc
+  def kaos
+    utc = secret.nil? ? Time.now.utc : secret
     utc.year + utc.month + utc.day +
     utc.hour + utc.min   + utc.sec +
     utc.usec
   end
 
-  # Generates a @otp of shuffled ASCII codes
+  # Generates a @pad of shuffled ASCII codes
   #
   # @param max_rows [Integer] The maximum number of rows
   # @return [Array<Array<Integer>>] A 2D array of shuffled
   #   ASCII codes
-  def generate_otp(dt:, max_rows:)
-    srand(kaos(dt)) # seed the random generator
+  def generate_otp
+    srand(kaos) # seed the random generator
     ascii_codes = (32..126).to_a
     row_size    = ascii_codes.size
-    Array.new(max_rows) { ascii_codes.shuffle }
+    @pad = Array.new(MAX_ROWS) { ascii_codes.shuffle }
   end
 
 
-  # Processes the message based on the action
+  # Encodes a message using the provided @pad
   #
-  # @param message [String, Array<Integer>] The message to process
-  # @param action [Symbol] The action to perform (:code or :decode)
-  # @return [Array<Integer>, String] The processed message
-  def process_message(message:, action:)
-    case action
-    when :code
-      code(message:)
-    when :decode
-      decode(message:)
-    end
-  end
-
-  # Encodes a message using the provided @otp
-  #
-  # @param @otp [Array<Array<Integer>>] The encoding @otp
+  # @param @pad [Array<Array<Integer>>] The encoding @pad
   # @param message [String] The message to encode
   # @return [Array<Integer>] The encoded message as an array
   #   of integers
@@ -72,13 +58,13 @@ class OneTimePad
                                   replace: '_')
 
     ascii_string.bytes.map.with_index do |byte, i|
-      row       = @otp[i % @otp.size]
+      row       = @pad[i % @pad.size]
       char_code = byte.clamp(32, 126)
       row[char_code - 32]
-    end
+    end.map(&:chr).join
   end
 
-  # Decodes a message using the provided @otp
+  # Decodes a message using the provided @oad
   #
   # @param @otp [Array<Array<Integer>>] The decoding @otp
   # @param coded_message [Array<Integer>, String] The encoded
@@ -87,7 +73,7 @@ class OneTimePad
   def decode(message:)
     encoded = message.is_a?(String) ? message.bytes : message
     encoded.map.with_index do |code, i|
-      row        = @otp[i % @otp.size]
+      row        = @pad[i % @pad.size]
       char_index = row.index(code)
       if char_index.nil?
         '_'
@@ -117,17 +103,19 @@ if __FILE__ == $PROGRAM_NAME
     The British are comming!
   MESSAGE
 
-  now = Time.now
-
-  otp = OneTimePad.new(dt: now, message: original_message, action: :code)
+  otp         = OneTimePad.new
+  otp.secret  = Time.now
+  my_code     = otp.generate_otp
+  secret      = otp.code(message: original_message)
 
   puts
-  puts otp.result[:message].map{|o| o.chr}.join
-
+  puts secret
   puts "="*65
-
-  otp = OneTimePad.new(dt: now, message: otp.result[:message], action: :decode)
-
-  puts otp.result[:message]
+  puts otp.decode(message: secret)
+  puts "="*65
+  puts "== Different Instance with otp passed in ..."
+  puts
+  another = OneTimePad.new(otp: my_code)
+  puts another.decode(message: secret)
   puts
 end
