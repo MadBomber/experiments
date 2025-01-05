@@ -1,29 +1,24 @@
 #!/usr/bin/env ruby 
-# example_1.rb
+# example_openai.rb
 
 require 'raix'
 
 require 'debug_me'
 include DebugMe
 
-Raix.configuration.openrouter_client = OpenRouter::Client.new
-
-OpenRouter.configure do |config|
-  config.access_token = ENV.fetch("OPEN_ROUTER_API_KEY")
-  # TODO: assume you configure which model/provider to use here
-end
-
+Raix.configuration.openai_client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
 
 # This is Example 1 from the raix README file
 
 class MeaningOfLife
   include Raix::ChatCompletion
+  model = "gpt-4o-mini"
 end
 
 ai = MeaningOfLife.new
 ai.transcript << { user: "What is the meaning of life?" }
 
-response = ai.chat_completion
+response = ai.chat_completion(openai: 'gpt-4o')
 
 debug_me{[
   :ai,
