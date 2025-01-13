@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 # experiments/openai/text_to_speech.rb
 
+require 'debug_me'
+include DebugMe
+
 require 'openai'
 require 'tempfile'
 
