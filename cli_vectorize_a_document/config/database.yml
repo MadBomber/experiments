@@ -1,0 +1,24 @@
+# config/database.yml
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: postgres # Change this to your PostgreSQL username
+  password: postgres # Change this to your PostgreSQL password
+  host: localhost
+  port: 5432
+
+development:
+  <<: *default
+  database: dv_development
+
+# test:
+#   <<: *default
+#   database: dv_test
+#
+# production:
+#   <<: *default
+#   database: dv_production
+#   url: <%= ENV['DATABASE_URL'] 
+
