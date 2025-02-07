@@ -1,5 +1,5 @@
 # lib/aicommit_rb/style_guide.rb
-module AicommitRb
+module Aicommit
   class StyleGuide
     def self.load(dir)
       style_guide_path = File.join(dir, 'COMMITS.md')

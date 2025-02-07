@@ -5,7 +5,7 @@ require 'ai_client'
 require 'debug_me'
 include DebugMe
 
-module AicommitRb
+module Aicommit
   class CommitMessageGenerator
     def initialize(api_key:, model: 'default', max_tokens: 1000)
       # debug_me{[

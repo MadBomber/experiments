@@ -1,13 +1,20 @@
-#!/usr/bin/env ruby
-# aicommit-rb.rb
+# lib/aicommit.rb
+
 #
 # TODO:   gh repo view --json isPrivate -q '.isPrivate'
 #
 
 require 'optparse'
-require './git_diff'
-require './commit_message_generator'
-require './style_guide'
+
+require_relative 'aicommit/version'
+require_relative 'aicommit/git_diff'
+require_relative 'aicommit/commit_message_generator'
+require_relative 'aicommit/style_guide'
+
+module Aicommit
+  class Error < StandardError; end
+
+  def self.run
 
 options = {
   amend: false,
@@ -96,5 +103,7 @@ generator = AicommitRb::CommitMessageGenerator.new(api_key: options[:openai_key]
 # Generate the commit message, considering the context and other options
 commit_message = generator.generate(diff, style_guide)
 
-puts commit_message unless options[:dry]
+commit_message unless options[:dry]
 
+  end
+end

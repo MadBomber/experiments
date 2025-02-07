@@ -1,6 +1,6 @@
 # git_diff.rb
 
-module AicommitRb
+module Aicommit
   class GitDiff
     def initialize(dir:, commit_hash: nil, amend: false)
       @dir = dir
