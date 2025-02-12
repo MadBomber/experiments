@@ -26,7 +26,11 @@ data.each do |entry|
   temp[house] << { name => friends }
 end
 
+# Remember "temp" is a Hash with a String Key and a Value that
+# is an Array of Hashes.
+
 # Transform Again and Load
+#             (String) Key    Value (Array or Hashes)
 output  = temp.map do |house, dudes_with_friends|
   dude  = dudes_with_friends
             .sort_by { |h|  # sorting Hash objects **ascending**
