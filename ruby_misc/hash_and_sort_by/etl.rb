@@ -49,4 +49,47 @@ output  = temp.map do |house, dudes_with_friends|
   { house => dude } # we're mapping, so this entry replaces the original
 end
 
+puts "Human answer ..."
 puts output
+
+
+##################################################
+# Robot wrote this code ...
+
+class String    # Human had to add this
+  def present?
+    !self&.empty?
+  end
+end
+
+# Parse the JSON data
+characters = JSON.parse(File.read('etl.json'))
+
+# Initialize a hash to hold the friends count for each house
+house_friends = Hash.new { |hash, key| hash[key] = [] }
+
+# Count friends for each character by their house
+characters.each do |character|
+  if character['house'].present?
+    friends_count = character['friends'].size
+    house_friends[character['house']] << { name: character['name'], friends_count: friends_count }
+  end
+end
+
+# Find the character with the most friends in each house
+result = house_friends.transform_values do |characters_in_house|
+  characters_in_house.max_by do |char|
+    [char[:friends_count], -char[:name].downcase]
+  end[:name]
+end
+
+puts "\nRobot answer ..."
+
+# Output the result
+puts "Character with the most friends in each house:"
+result.each do |house, character_name|
+  puts "#{house}: #{character_name}"
+end
+
+
+
