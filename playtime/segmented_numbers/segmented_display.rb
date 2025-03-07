@@ -2,8 +2,7 @@
 
 require 'amazing_print'
 
-# parse and generate 3x3 segmented display of digits
-#
+# Parse and generate 3x3 segmented display of digits
 class SegmentedDisplay
   SEGMENTS = {
     " _ | ||_|" => "0",  #  _
@@ -51,28 +50,28 @@ class SegmentedDisplay
         mutated_segment[i] = mutated_segment[i] == ' ' ? '|' : ' '
         if SEGMENTS.key?(mutated_segment)
           mutant = SEGMENTS[mutated_segment].to_i
-          MUTATIONS[digit.to_i] << mutant unless MUTATIONS[digit.to_i].include?(mutant)
+          MUTATIONS[digit.to_i] << mutant unless
+            MUTATIONS[digit.to_i].include?(mutant)
         end
 
         mutated_segment = segment.dup
-        # Add an underscore or remove either a pipe or an underscore
-        # This may result in duplicate digits
+        # Add an underscore or remove either a pipe or an
+        # underscore. This may result in duplicate digits
         mutated_segment[i] = mutated_segment[i] == ' ' ? '_' : ' '
         if SEGMENTS.key?(mutated_segment)
           mutant = SEGMENTS[mutated_segment].to_i
-          MUTATIONS[digit.to_i] << mutant unless MUTATIONS[digit.to_i].include?(mutant)
+          MUTATIONS[digit.to_i] << mutant unless
+            MUTATIONS[digit.to_i].include?(mutant)
         end
       end
     end
 
-    ap MUTATIONS.transform_values(&:uniq)
+    MUTATIONS.transform_values(&:uniq)
   end
 
-
   def self.parse(input)
-    lines   = input.split("\n").reject(&:empty?)
-    digits  = []
-    result  = ""
+    lines  = input.split("\n").reject(&:empty?)
+    digits = []
 
     num_of_digits = lines[0].size / 3
 
@@ -84,13 +83,7 @@ class SegmentedDisplay
       digits << (SEGMENTS[segment] || "?")
     end
 
-    result = digits.join
-
-    if !result.include?("?") && result.length == 9 && valid_checksum?(result)
-      result
-    else
-      "Invalid"
-    end
+    digits.join
   end
 
   def self.convert(input)
@@ -106,31 +99,6 @@ class SegmentedDisplay
 
     lines.join("\n")
   end
-
-  # Validate the checksum of a 9-digit number
-  # Formula: (d1+(2*d2)+(3*d3)+...+(9*d9)) mod 11 = 0
-  # where d1 is the least significant digit and d9 is
-  # the most significant digit
-  def self.valid_checksum?(number)
-    return false unless number.match?(/^\d{9}$/)
-
-    sum = number.reverse.chars.map.with_index do |digit, index|
-      digit.to_i * (index + 1)
-    end.sum
-
-    (sum % 11).zero?
-  end
 end
 
-# Example usage:
-input = <<~DIGITS
-  _  _     _  _  _  _  _
- | || |  | _| _||_||_ |_
- |_||_|  | _|  |  ||_| _|
-DIGITS
-
-puts SegmentedDisplay.parse(input)  # Output: "012345678" or "Invalid"
-
-puts SegmentedDisplay.convert("567890123")
-puts SegmentedDisplay.convert(1234567890)
 SegmentedDisplay.mutate
