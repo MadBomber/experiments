@@ -85,6 +85,14 @@ class VenusFund
   end
 end
 
+
+puts "================"
+puts "== Venus Fund =="
+puts "== VanHoozer  =="
+puts "================"
+puts
+
+
 # Simulation
 fund = VenusFund.new(0)
 

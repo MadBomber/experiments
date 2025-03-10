@@ -1,0 +1,26 @@
+
+2017: Initial Investment
+Starting Capital: $300,000.00
+
+2018: BTC Purchase
+Fund Value after BTC Purchase: $297,000.00
+
+2019: New Investors and Asset Purchases
+Total Fund Value: $439,960.00
+Investor Return:  $550,000.00
+GP Profit:        $0.00
+Annual Return:    -100%
+
+2020: Withdrawals
+Investor 1 Withdrawal: $599,439.99
+Investor 2 Withdrawal (50%): $299,720.00
+Total Fund Value: $2,098,040.00
+Investor Return:  $1,595,678.00
+GP Profit:        $502,362.00
+Annual Return:    444.95%
+
+2021: Final Results
+Total Fund Value: $7,190,222.71
+Investor Return:  $5,559,729.63
+GP Profit:        $1,630,493.07
+Annual Return:    350.61%

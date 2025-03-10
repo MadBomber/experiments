@@ -1,0 +1,18 @@
+#!/bin/bash
+
+ruby saturn_fund_specialized.rb > results_saturn_fund.txt
+ruby venus_fund_specialized_v5.rb > results_venus_fund.txt
+
+echo "#########################################"
+echo "## Simulation Results"
+echo
+echo
+cat results_saturn_fund.txt
+
+echo
+echo
+echo
+cat results_venus_fund.txt
+
+echo
+echo

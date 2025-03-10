@@ -1,0 +1,45 @@
+
+2017: Initial Investment
+Starting Capital: $300,000.00
+EOY 2017: Interest at 5.0% was $15,000.00 bringing Cash Account Total to $315,000.00
+EOY Assets:
+
+2018: BTC Purchase
+Fund Value after BTC Purchase: $312,000.00
+EOY 2018: Interest at 5.0% was $3,250.00 bringing Cash Account Total to $68,250.00
+EOY Assets:
+BTC $247,000.00 quantity 19 units at $13000)
+
+2019: New Investors and Asset Purchases
+Fund Value after BTC crash: $334,750.00
+Total Fund Value: $405,010.00
+Investor Return:  $405,010.00
+GP Profit:        $0.00
+Annual Return:    -19.0%
+EOY 2019: Interest at 5.0% was $912.50 bringing Cash Account Total to $19,162.50
+EOY Assets:
+BTC $136,800.00 quantity 19 units at $7200)
+ETH $150,000.00 quantity 1000 units at $150)
+TSLA $99,960.00 quantity 1666 units at $60)
+
+2020: Withdrawals
+Fund Value before withdrawals: $2,466,362.50
+Investor 1 Withdrawal: $493,272.50
+Investor 2 Withdrawal (50%): $246,636.25
+Fund Value after withdrawals: $1,726,453.75
+Total Fund Value: $1,726,453.75
+Investor Return:  $1,300,373.89
+GP Profit:        $426,079.85
+Annual Return:    508.96%
+EOY 2020: Interest at 5.0% was ($2.91) bringing Cash Account Total to ($6.11)
+EOY Assets:
+BTC $292,786.04 quantity 10.096070597826088 units at $29000)
+ETH $387,901.65 quantity 531.3721367276888 units at $730)
+TSLA $619,686.18 quantity 885.2659797883296 units at $700)
+
+2021: Final Results
+Total Fund Value: $3,467,522.01
+Investor Return:  $2,848,586.55
+GP Profit:        $618,935.46
+Annual Return:    166.66%
+GP Accumulated Profit: $1,045,015.32

@@ -1,0 +1,119 @@
+=================
+== Vensus Fund ==
+== VanHoozer   ==
+=================
+
+Venus Fund initialized for 2017.
+Hurdle Rate: 0.1, Target Return: 0.27
+GP Profit Share (Above Hurdle): 0.2, GP Profit Share (Above Target): 0.3
+Liquidation Strategy: proportional
+Adjust Investor Capital: false
+--------------------
+2017: Investor Larry added with capital $100,000.00. Cash: $100,000.00
+2017: Investor Curly added with capital $100,000.00. Cash: $200,000.00
+2017: Investor Moe added with capital $100,000.00. Cash: $300,000.00
+2017: ----- End of Year Summary -----
+2017: Cash: $300,000.00
+2017: Total Asset Value: $0.00
+2017: Investor Larry capital: $100,000.00
+2017: Investor Curly capital: $100,000.00
+2017: Investor Moe capital: $100,000.00
+2017: GP Accumulated Profit: $0.00
+2017: Initial Capital: $300,000.00, Current Value: $300,000.00, Total Return: $0.00, Return Percentage: 0.0%
+2017: ----- End of Year -----
+
+2018: Purchased 19 BTC at $13,000.00 for $247,000.00. Remaining cash: $53,000.00
+2018: Performing waterfall calculation...
+2018: Hurdle Amount $30,000.00
+2018: Did not reach hurdle. No GP profit this year.
+2018: Paid GP $0.00 from cash. Remaining cash: $53,000.00
+2018: ----- End of Year Summary -----
+2018: Cash: $53,000.00
+2018: Total Asset Value: $247,000.00
+2018: BTC: Quantity: 19.0, Purchase Price: $13,000.00, Current Price: $13,000.00
+2018: Investor Larry capital: $100,000.00
+2018: Investor Curly capital: $100,000.00
+2018: Investor Moe capital: $100,000.00
+2018: GP Accumulated Profit: $0.00
+2018: Initial Capital: $300,000.00, Current Value: $300,000.00, Total Return: $0.00, Return Percentage: 0.0%
+2018: ----- End of Year -----
+
+2019: Investor Abbott added with capital $100,000.00. Cash: $153,000.00
+2019: Investor Costello added with capital $100,000.00. Cash: $253,000.00
+2019: Purchased 1000 ETH at $150.00 for $150,000.00. Remaining cash: $103,000.00
+2019: Purchased 1666 TSLA at $60.00 for $99,960.00. Remaining cash: $3,040.00
+2019: Updated price of BTC to $7,200.00
+2019: ----- End of Year Summary -----
+2019: Cash: $3,040.00
+2019: Total Asset Value: $386,760.00
+2019: BTC: Quantity: 19.0, Purchase Price: $13,000.00, Current Price: $7,200.00
+2019: ETH: Quantity: 1000.0, Purchase Price: $150.00, Current Price: $150.00
+2019: TSLA: Quantity: 1666.0, Purchase Price: $60.00, Current Price: $60.00
+2019: Investor Larry capital: $100,000.00
+2019: Investor Curly capital: $100,000.00
+2019: Investor Moe capital: $100,000.00
+2019: Investor Abbott capital: $100,000.00
+2019: Investor Costello capital: $100,000.00
+2019: GP Accumulated Profit: $0.00
+2019: Initial Capital: $500,000.00, Current Value: $389,800.00, Total Return: ($110,200.00), Return Percentage: -22.0%
+2019: ----- End of Year -----
+
+2020: Updated price of BTC to $29,000.00
+2020: Updated price of ETH to $730.00
+2020: Updated price of TSLA to $700.00
+2020: Investor Larry requests withdrawal of 100.0% (Value: $490,048.00, Withdrawal Amount: $490,048.00)
+2020: Investor Larry withdrew $3,040.00 from cash. Remaining cash: $0.00 Liquidating assets for the remaining amount of $487,008.00.
+Units to Sell 3.7811180124223607
+2020: Selling 3.7811180124223607 units of BTC for $109,652.42
+Units to Sell 154.1989120790093
+2020: Selling 154.1989120790093 units of ETH for $112,565.20
+Units to Sell 180.26346823127514
+2020: Selling 180.26346823127514 units of TSLA for $126,184.42
+2020: Investor Larry capital set to $0.00 (full withdrawal)
+2020: After Liquidation Cash is $348,402.05
+2020: Investor Curly requests withdrawal of 50.0% (Value: $611,800.00, Withdrawal Amount: $305,900.00)
+2020: Investor Curly capital reduced by 50% to $50,000.00
+2020: Investor Curly withdrew $305,900.00 from cash. Remaining cash: $42,502.05
+2020: Performing waterfall calculation...
+2020: Hurdle Amount $35,000.00
+2020: Target Return Achieved! GP Profit share set to 30.0% for amounts above target.
+2020: GP Profit: $520,940.00
+2020: Insufficient cash to pay GP profit of $520,940.00. GP profit is accrued.
+2020: ----- End of Year Summary -----
+2020: Cash: $42,502.05
+2020: Total Asset Value: $2,098,797.94
+2020: BTC: Quantity: 15.218881987577639, Purchase Price: $13,000.00, Current Price: $29,000.00
+2020: ETH: Quantity: 845.8010879209908, Purchase Price: $150.00, Current Price: $730.00
+2020: TSLA: Quantity: 1485.736531768725, Purchase Price: $60.00, Current Price: $700.00
+2020: Investor Larry capital: $0.00
+2020: Investor Curly capital: $50,000.00
+2020: Investor Moe capital: $100,000.00
+2020: Investor Abbott capital: $100,000.00
+2020: Investor Costello capital: $100,000.00
+2020: GP Accumulated Profit: $520,940.00
+2020: Initial Capital: $350,000.00, Current Value: $2,141,300.00, Total Return: $1,791,300.00, Return Percentage: 511.8%
+2020: ----- End of Year -----
+
+2021: Updated price of BTC to $47,000.00
+2021: Updated price of ETH to $3,800.00
+2021: Updated price of TSLA to $1,100.00
+2021: Performing waterfall calculation...
+2021: Hurdle Amount $35,000.00
+2021: Target Return Achieved! GP Profit share set to 30.0% for amounts above target.
+2021: GP Profit: $1,560,393.14
+2021: Insufficient cash to pay GP profit of $1,560,393.14. GP profit is accrued.
+2021: ----- End of Year Summary -----
+2021: Cash: $42,502.05
+2021: Total Asset Value: $5,563,641.77
+2021: BTC: Quantity: 15.218881987577639, Purchase Price: $13,000.00, Current Price: $47,000.00
+2021: ETH: Quantity: 845.8010879209908, Purchase Price: $150.00, Current Price: $3,800.00
+2021: TSLA: Quantity: 1485.736531768725, Purchase Price: $60.00, Current Price: $1,100.00
+2021: Investor Larry capital: $0.00
+2021: Investor Curly capital: $50,000.00
+2021: Investor Moe capital: $100,000.00
+2021: Investor Abbott capital: $100,000.00
+2021: Investor Costello capital: $100,000.00
+2021: GP Accumulated Profit: $2,081,333.14
+2021: Initial Capital: $350,000.00, Current Value: $5,606,143.82, Total Return: $5,256,143.82, Return Percentage: 1501.8%
+2021: ----- End of Year -----
+

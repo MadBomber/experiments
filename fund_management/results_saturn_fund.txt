@@ -1,0 +1,28 @@
+=================
+== Saturn Fund ==
+== VanHoozer   ==
+=================
+
+Base Case Results:
+{
+        :future_value => "$404,555,773.57",
+      :nominal_profit => "$304,555,773.57",
+    :risk_free_profit => "$159,374,246.01",
+         :real_profit => "$145,181,527.56"
+}
+
+MOIC Scenarios:
+{
+    :bear_case => "2.4x",
+    :bull_case => "6.7x",
+    :base_case => "4.0x"
+}
+
+Waterfall Distribution:
+{
+    :investors_phase_1 => "$180,000,000.00",
+           :gp_phase_2 => "$18,000,000.00",
+    :investors_phase_2 => "$90,000,000.00",
+           :gp_phase_3 => "$63,600,000.00",
+    :investors_phase_3 => "$148,400,000.00"
+}
