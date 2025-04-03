@@ -67,7 +67,9 @@ def start_conversation(prompt:, clients: clients, names: names, loops: 10)
 
   prompt = <<~PROMPT
     summarize the work that the team did on the following project.
-    After your summary show the final solution.
+    After your summary show the final solution and examples of how it
+    can be used in practice.
+
     Here is the record of the team's work:
 
     #{context}
@@ -91,6 +93,19 @@ prompt = <<~PROMPT
   nodes that are available.
 
 PROMPT
+
+prompt = <<~PROMPT
+  Memory nodes are sequences of strings.
+
+  Hierarchical nodes are sequences of strings that have a relationship
+  with each other.  For example an article can have chapters and chapters can have paragraphs and paragraphs can have sentences.  Another example in Ruby source code is that a module can have classes and a class can have methods.
+
+  Another example in a chat session with an LLM a prompt will have a response and both the prompt and the response can be treated like artices with paragraphs and sentences.
+
+  Review the following ruby module and make suggestions for improvements:
+PROMPT
+
+prompt << "\n" + File.read('..//hierarchial_temporial_memory/htm.md')
 
 start_conversation(prompt: prompt, loops: 10, clients: clients, names: names)
 

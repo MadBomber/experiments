@@ -1,3 +1,7 @@
+# breaking news
+# The just program has a stable module and import system.
+# my justpre pre-processor is no longer needed.
+
 # justprep
 A pre-processor experiment for the "just" command line utility.
 https://github.com/casey/just
