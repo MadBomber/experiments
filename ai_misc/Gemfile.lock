@@ -383,6 +383,10 @@ GEM
       faraday (~> 2.9)
       faraday-typhoeus (~> 1.1)
     modelcontextprotocol (0.1.0)
+    monkeyspaw (0.0.3)
+      puma (~> 6.6)
+      rack (~> 3.1)
+      sublayer (~> 0.2.8)
     multi_json (1.15.0)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
@@ -484,6 +488,8 @@ GEM
       date
       stringio
     public_suffix (6.0.1)
+    puma (6.6.0)
+      nio4r (~> 2.0)
     pycall (1.5.2)
     racc (1.8.1)
     rack (3.1.12)
@@ -698,6 +704,7 @@ DEPENDENCIES
   minitest
   mistral-ai
   modelcontextprotocol
+  monkeyspaw
   nano-bots
   neighbor
   ollama-ai

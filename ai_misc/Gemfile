@@ -71,3 +71,6 @@ gem 'sqlite-vec'            # A vector search SQLite extension.
 gem 'sublayer'              # A model-agnostic Ruby GenerativeAI DSL and Framework
 gem 'tiktoken_ruby'         # Ruby wrapper for Tiktoken
 gem 'weaviate-ruby'         # Ruby wrapper for the Weaviate.io API
+
+# Interesting applications of AI in Ruby
+gem 'monkeyspaw'            # A prompt-driven web framework for Ruby - be careful what you wish for
