@@ -30,13 +30,10 @@ gem 'fast-mcp'              # A Ruby implementation of the Model Context Protoco
 gem 'gemini-ai'             # Interact with Google's Gemini AI.
 gem 'gen-ai'                # Generative AI toolset for Ruby.
 gem 'groq'                  # Client library for Groq API for fast LLM inference.
-# gem 'honyaku'               # Translate your Rails application using OpenAI
 gem 'hugging-face'          # Ruby client for Hugging Face API
 gem 'ima'                   # ima is the ai agenic framework for super monkeys
 gem 'informers'             # Fast transformer inference for Ruby
-# gem 'instructor-rb'         # Structured extraction in Ruby, powered by llms.
 gem 'intelligence'          # A Ruby gem for seamlessly and uniformly interacting with large languge and vision model (LLM) API's served by numerous services, including those of OpenAI, Anthropic, Google and others.
-# gem 'irb-ai'                # IRB commands powered by AI.
 gem 'langchainrb'           # Build LLM-backed Ruby applications with Ruby's Langchain.rb
 gem 'langchainrb_rails'     # Rails wrapper for langchainrb gem
 gem 'llm_orchestrator'      # A lightweight ruby framework for orchestrating operations via LLM APIs
@@ -64,7 +61,6 @@ gem 'raix-rails'            # Ruby AI eXtensions for Rails
 gem 'regent'                # Library for building AI Agents in Ruby
 gem 'rspec-llama'           # A versatile testing framework for different AI model configurations.
 gem 'ruby-openai'           # A Ruby gem for the OpenAI GPT-3 API
-# gem 'ruby-openai-swarm'     # A Ruby implementation of OpenAI function calling swarm
 gem 'ruby_llm'              # Beautiful Ruby interface to modern AI
 gem 'simple_rag'            # Simple Rag is a lightweight library that transforms any Ruby project into a simple RAG application.
 gem 'sqlite-vec'            # A vector search SQLite extension.
@@ -74,3 +70,12 @@ gem 'weaviate-ruby'         # Ruby wrapper for the Weaviate.io API
 
 # Interesting applications of AI in Ruby
 gem 'monkeyspaw'            # A prompt-driven web framework for Ruby - be careful what you wish for
+
+###################################################
+## Not working w/ Ruby 3.4.2 and/or Rails 8.0.2 ...
+
+# gem 'instructor-rb'         # Structured extraction in Ruby, powered by llms.
+# gem 'honyaku'               # Translate your Rails application using OpenAI
+# gem 'ruby-openai-swarm'     # A Ruby implementation of OpenAI function calling swarm
+# gem 'irb-ai'                # IRB commands powered by AI.
+# gem 'raif'                  # (Ruby AI Framework) is a Rails engine that helps you add AI-powered features to your Rails apps, such as tasks, conversations, and agents.
