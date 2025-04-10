@@ -39,6 +39,7 @@ gem 'langchainrb_rails'     # Rails wrapper for langchainrb gem
 gem 'llm_orchestrator'      # A lightweight ruby framework for orchestrating operations via LLM APIs
 gem 'mcp-rb'                # A lightweight Ruby framework for implementing MCP (Model Context Protocol) servers
 gem 'minds_sdk'             # Minds Ruby SDK provides an interface to interact with the Minds AI system API. It allows you to create and manage "minds" (artificial intelligences), create chat completions, and manage data sources.
+gem 'mistral'               # A Ruby client for the Mistral AI platform
 gem 'mistral-ai'            # Interact with Mistral AI.
 gem 'modelcontextprotocol'  # Wrap Thor command-line apps in model view context protocol
 gem 'nano-bots'             # Ruby Implementation of Nano Bots: small, AI-powered bots for OpenAI ChatGPT, Ollama, Mistral AI, Anthropic Claude, Cohere Command, Maritaca AI MariTalk, and Google Gemini.
