@@ -1,0 +1,7 @@
+# examples/fast_mcp_server/Gemfile
+
+source 'https://rubygems.org'
+
+gem 'fast-mcp', '~> 0.1.0'  # MCP server implementation
+gem 'sinatra', '~> 3.0'     # Web framework (used by fast-mcp for HTTP transport)
+gem 'json', '~> 2.6'        # JSON parsing and generation
