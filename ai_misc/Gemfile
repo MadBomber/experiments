@@ -16,10 +16,9 @@ gem 'actionmcp'             # Provides essential tooling for building Model Cont
 gem 'activeagent'           # Rails AI Agents Framework
 gem 'ai-engine'             # The fastest way to get AI Assistants into your Rails app!
 gem 'ai_client'             # A generic AI Client for many providers
-gem 'aia'                   # AI Assistant
+# gem 'aia'                   # AI Assistant
 gem 'aicommit'              # Use your own spell against you.
 gem 'aigcm'                 # AI-powered git commit message generator
-gem 'anthropic'             # Anthropic API + Ruby! 🤖🌌
 gem 'baran'                 # Text Splitter for Large Language Model Datasets
 gem 'boxcars'               # Boxcars is a gem that enables you to create new systems with AI composability. Inspired by python langchain.
 gem 'clag'                  # Generate command line commands in your terminal using an LLM
@@ -61,7 +60,9 @@ gem 'raix'                  # Ruby AI eXtensions
 gem 'raix-rails'            # Ruby AI eXtensions for Rails
 gem 'regent'                # Library for building AI Agents in Ruby
 gem 'rspec-llama'           # A versatile testing framework for different AI model configurations.
+gem 'ruby-anthropic'        # Anthropic API + Ruby! 🤖🌌
 gem 'ruby-openai'           # A Ruby gem for the OpenAI GPT-3 API
+gem 'ruby-mcp-client'
 gem 'ruby_llm'              # Beautiful Ruby interface to modern AI
 gem 'simple_rag'            # Simple Rag is a lightweight library that transforms any Ruby project into a simple RAG application.
 gem 'sqlite-vec'            # A vector search SQLite extension.
