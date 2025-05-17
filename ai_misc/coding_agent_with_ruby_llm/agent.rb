@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 # experiments/ai_misc/coding_agent_with_ruby_llm/agent.rb
+# See: https://github.com/radanskoric/coding_agent
+# and: https://radanskoric.com/articles/coding-agent-in-ruby
 
 require 'require_all'
 require 'debug_me'
@@ -44,40 +46,42 @@ end
 class Agent
   def initialize
     @chat = RubyLLM.chat
-    # @chat.with_tools(Tools::ReadFile, Tools::ListFiles, Tools::EditFile, Tools::RunShellCommand)
 
+    # Get an Array of fully qualified class names for tools
+    # that have been required from the tools_dir
+    #
     subclasses = ObjectSpace.each_object(Class).select do |klass|
       klass < RubyLLM::Tool
     end
 
-    @chat.with_tools(*subclasses)
-
-
-    class_names = subclasses.map(&:name)
-
-    function_names  = class_names.map(&:to_function_name)
-    klass_names     = function_names.map(&:to_camelcase)
-
-    debug_me{[
-      :subclasses,
-      :class_names,
-      :function_names,
-      :klass_names
-    ]}
-
-
+    # Array of partial filenames for the subclasses that have been
+    # loaded.
+    #
     allowed_tools = %w[ run_shell_command list_files ]
 
-    filtered_functions = function_names.select do |function_name|
-      allowed_tools.any? { |tool| function_name.include?(tool) }
+    filtered_subclasses = subclasses.select do |subclass|
+      allowed_tools.any? do |tool|
+        subclass.name.to_function_name.include?(tool)
+      end
     end
 
     debug_me{[
       :allowed_tools,
-      :filtered_functions
+      :filtered_subclasses
     ]}
 
+    # What this shows is that its possible to have a CLI option
+    # that identifies a tools directory and all of the Ruby files
+    # under that directory can be loaded (eg required)
+    # ... and then you can use the --allowed_tools option to
+    # specify parts of the filenames for only the tools that you
+    # want to use.
+    # ... OR you can use the --rq (--require) option to require
+    # each tool file one at a time.
+    # ... AND maybe aia needs a --reject_tools option to reject
+    # specific set of tool names while using the tools_dir to load everything.
 
+    @chat.with_tools(*filtered_subclasses)
   end
 
   def run
