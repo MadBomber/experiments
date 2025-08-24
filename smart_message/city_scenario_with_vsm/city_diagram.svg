@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .service-box { fill: #f0f8ff; stroke: #4169e1; stroke-width: 2; }
+    .message-arrow { stroke: #2e8b57; stroke-width: 2; marker-end: url(#arrowhead); }
+    .emergency-arrow { stroke: #dc143c; stroke-width: 3; marker-end: url(#arrowhead); }
+    .health-arrow { stroke: #1e90ff; stroke-width: 2; marker-end: url(#arrowhead); }
+    .response-arrow { stroke: #ff8c00; stroke-width: 2; marker-end: url(#arrowhead); }
+    .service-text { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
+    .message-text { font-family: Arial, sans-serif; font-size: 12px; fill: #333; }
+    .title-text { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; text-anchor: middle; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 12px; }
+  </style>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="600" y="30" class="title-text">SmartMessage City Demo - Service Communication</text>
+  
+  <!-- Services -->
+  
+  <!-- Health Department (Central Hub) -->
+  <rect x="500" y="60" width="200" height="80" class="service-box" rx="10"/>
+  <text x="600" y="85" class="service-text">Health Department</text>
+  <text x="600" y="105" class="message-text">Broadcasts HealthCheck every 5s</text>
+  <text x="600" y="120" class="message-text">Displays HealthStatus with colors</text>
+  
+  <!-- Police Department -->
+  <rect x="100" y="200" width="180" height="80" class="service-box" rx="10"/>
+  <text x="190" y="225" class="service-text">Police Department</text>
+  <text x="190" y="245" class="message-text">Responds to health checks</text>
+  <text x="190" y="260" class="message-text">Dispatches cars to bank alarms</text>
+  
+  <!-- Fire Department -->
+  <rect x="920" y="200" width="180" height="80" class="service-box" rx="10"/>
+  <text x="1010" y="225" class="service-text">Fire Department</text>
+  <text x="1010" y="245" class="message-text">Responds to health checks</text>
+  <text x="1010" y="260" class="message-text">Dispatches engines to fires</text>
+  
+  <!-- Local Bank -->
+  <rect x="300" y="400" width="180" height="80" class="service-box" rx="10"/>
+  <text x="390" y="425" class="service-text">Local Bank</text>
+  <text x="390" y="445" class="message-text">Responds to health checks</text>
+  <text x="390" y="460" class="message-text">Triggers silent alarms</text>
+  
+  <!-- Houses -->
+  <rect x="720" y="400" width="180" height="80" class="service-box" rx="10"/>
+  <text x="810" y="425" class="service-text">Houses</text>
+  <text x="810" y="445" class="message-text">Respond to health checks</text>
+  <text x="810" y="460" class="message-text">Occasionally catch fire</text>
+  
+  <!-- Health Check Broadcasts (Blue arrows) -->
+  <path d="M 580 140 L 220 200" class="health-arrow"/>
+  <text x="350" y="165" class="message-text">HealthCheck</text>
+  
+  <path d="M 620 140 L 990 200" class="health-arrow"/>
+  <text x="750" y="165" class="message-text">HealthCheck</text>
+  
+  <path d="M 570 140 L 420 400" class="health-arrow"/>
+  <text x="450" y="270" class="message-text">HealthCheck</text>
+  
+  <path d="M 630 140 L 780 400" class="health-arrow"/>
+  <text x="750" y="270" class="message-text">HealthCheck</text>
+  
+  <!-- Health Status Responses (Orange arrows) -->
+  <path d="M 220 200 L 580 140" class="response-arrow"/>
+  <text x="350" y="185" class="message-text">HealthStatus</text>
+  
+  <path d="M 990 200 L 620 140" class="response-arrow"/>
+  <text x="750" y="185" class="message-text">HealthStatus</text>
+  
+  <path d="M 420 400 L 570 140" class="response-arrow"/>
+  <text x="470" y="290" class="message-text">HealthStatus</text>
+  
+  <path d="M 780 400 L 630 140" class="response-arrow"/>
+  <text x="730" y="290" class="message-text">HealthStatus</text>
+  
+  <!-- Emergency Communications (Red arrows) -->
+  
+  <!-- Bank Silent Alarm -->
+  <path d="M 360 400 L 220 280" class="emergency-arrow"/>
+  <text x="250" y="340" class="message-text">SilentAlarm</text>
+  
+  <!-- Police Dispatch Response -->
+  <path d="M 220 280 L 360 400" class="emergency-arrow"/>
+  <text x="250" y="360" class="message-text">PoliceDispatch</text>
+  
+  <!-- House Fire Emergency -->
+  <path d="M 840 400 L 980 280" class="emergency-arrow"/>
+  <text x="950" y="340" class="message-text">FireEmergency</text>
+  
+  <!-- Fire Dispatch Response -->
+  <path d="M 980 280 L 840 400" class="emergency-arrow"/>
+  <text x="950" y="360" class="message-text">FireDispatch</text>
+  
+  <!-- Emergency Resolution (Green arrows) -->
+  <path d="M 300 440 L 500 140" class="message-arrow"/>
+  <text x="350" y="320" class="message-text">EmergencyResolved</text>
+  
+  <path d="M 900 440 L 700 140" class="message-arrow"/>
+  <text x="850" y="320" class="message-text">EmergencyResolved</text>
+  
+  <!-- Legend -->
+  <rect x="50" y="600" width="400" height="150" fill="#f9f9f9" stroke="#ccc" stroke-width="1" rx="5"/>
+  <text x="60" y="620" class="legend-text" font-weight="bold">Message Types:</text>
+  
+  <line x1="60" y1="635" x2="90" y2="635" class="health-arrow"/>
+  <text x="100" y="640" class="legend-text">HealthCheck - Broadcast every 5 seconds</text>
+  
+  <line x1="60" y1="655" x2="90" y2="655" class="response-arrow"/>
+  <text x="100" y="660" class="legend-text">HealthStatus - Response with status (healthy/warning/critical/failed)</text>
+  
+  <line x1="60" y1="675" x2="90" y2="675" class="emergency-arrow"/>
+  <text x="100" y="680" class="legend-text">Emergency Messages - SilentAlarm, FireEmergency, Dispatch responses</text>
+  
+  <line x1="60" y1="695" x2="90" y2="695" class="message-arrow"/>
+  <text x="100" y="700" class="legend-text">EmergencyResolved - Services report when emergency is handled</text>
+  
+  <text x="60" y="725" class="legend-text" font-weight="bold">Status Colors (health_department output):</text>
+  <text x="60" y="740" class="legend-text">• Green: healthy • Yellow: warning • Orange: critical • Red: failed</text>
+</svg>

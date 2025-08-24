@@ -1,0 +1,14 @@
+# Logfile created on 2025-08-24 16:13:14 -0500 by logger.rb/v1.7.0
+[2025-08-24 16:13:14.900] ERROR -- citizen.rb:193 : Error making 911 call: Messages::Emergency911Message#emergency_type: Emergency type must be: fire, medical, crime, accident, hazmat, rescue, other
+[2025-08-24 16:13:41.935] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::Emergency911Message via RedisTransport
+[2025-08-24 16:13:41.935] INFO  -- citizen.rb:188 : 911 call placed: fire at 321 Elm Drive - House is on fire! Smoke everywhere!
+[2025-08-24 16:14:05.945] ERROR -- messaging.rb:65 : [SmartMessage] Error in message publishing: SmartMessage::Errors::ValidationError - Messages::Emergency911Message#emergency_type: Emergency type must be: fire, medical, crime, accident, hazmat, rescue, other
+[2025-08-24 16:14:05.946] ERROR -- citizen.rb:193 : Error making 911 call: Messages::Emergency911Message#emergency_type: Emergency type must be: fire, medical, crime, accident, hazmat, rescue, other
+[2025-08-24 16:14:27.952] ERROR -- messaging.rb:65 : [SmartMessage] Error in message publishing: SmartMessage::Errors::ValidationError - Messages::Emergency911Message#emergency_type: Emergency type must be: fire, medical, crime, accident, hazmat, rescue, other
+[2025-08-24 16:14:27.952] ERROR -- citizen.rb:193 : Error making 911 call: Messages::Emergency911Message#emergency_type: Emergency type must be: fire, medical, crime, accident, hazmat, rescue, other
+[2025-08-24 16:14:47.961] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::Emergency911Message via RedisTransport
+[2025-08-24 16:14:47.961] INFO  -- citizen.rb:188 : 911 call placed: fire at 987 Cedar Court - House is on fire! Smoke everywhere!
+[2025-08-24 16:15:06.968] ERROR -- messaging.rb:65 : [SmartMessage] Error in message publishing: SmartMessage::Errors::ValidationError - Messages::Emergency911Message#emergency_type: Emergency type must be: fire, medical, crime, accident, hazmat, rescue, other
+[2025-08-24 16:15:06.968] ERROR -- citizen.rb:193 : Error making 911 call: Messages::Emergency911Message#emergency_type: Emergency type must be: fire, medical, crime, accident, hazmat, rescue, other
+[2025-08-24 16:15:28.978] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::Emergency911Message via RedisTransport
+[2025-08-24 16:15:28.978] INFO  -- citizen.rb:188 : 911 call placed: hazmat at 456 Oak Avenue - Chemical spill from overturned truck! Strong fumes!

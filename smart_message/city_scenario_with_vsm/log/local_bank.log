@@ -1,0 +1,100 @@
+# Logfile created on 2025-08-24 16:13:11 -0500 by logger.rb/v1.7.0
+[2025-08-24 16:13:11.945] INFO  -- local_bank.rb:52 : first-national-bank open for business at 123 Main Street
+[2025-08-24 16:13:11.945] INFO  -- subscription.rb:131 : [SmartMessage] Subscribed: Messages::HealthCheckMessage with block/proc handler
+[2025-08-24 16:13:11.946] INFO  -- local_bank.rb:122 : Normal operation: ATM refilled
+[2025-08-24 16:13:11.965] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:11.991] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:11.991] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:13:16.974] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:16.978] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:16.978] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:13:21.984] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:21.987] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:21.987] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:13:26.992] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:26.994] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:26.994] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:13:32.002] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:32.007] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:32.007] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:13:34.956] INFO  -- local_bank.rb:122 : Normal operation: Vault inspection completed
+[2025-08-24 16:13:37.008] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:37.012] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:37.012] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:13:42.015] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:42.016] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:42.016] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:13:47.022] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:47.026] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:47.026] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:13:52.029] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:52.033] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:52.033] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:13:57.037] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:13:57.041] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:57.041] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:14:00.960] INFO  -- local_bank.rb:122 : Normal operation: Security patrol completed
+[2025-08-24 16:14:02.044] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:02.047] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:02.047] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:14:07.052] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:07.054] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:07.054] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:14:12.058] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:12.059] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:12.060] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:14:17.069] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:17.079] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:17.080] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:14:22.071] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:22.074] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:22.074] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:14:27.078] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:27.084] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:27.084] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:14:30.965] INFO  -- local_bank.rb:122 : Normal operation: System backup completed
+[2025-08-24 16:14:32.087] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:32.090] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:32.090] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:14:37.092] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:37.095] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:37.095] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:14:42.101] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:42.105] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:42.105] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:14:47.108] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:47.112] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:47.112] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:14:51.968] INFO  -- local_bank.rb:122 : Normal operation: Security patrol completed
+[2025-08-24 16:14:52.113] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:52.115] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:52.115] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:14:57.122] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:57.125] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:57.125] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:15:02.131] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:02.136] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:02.136] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems operational, security level: normal)
+[2025-08-24 16:15:03.975] ERROR -- base.rb:123 : [SmartMessage] Error in message initialization: ArgumentError - The property 'from' From entity ID is required for message routing and replies
+[2025-08-24 16:15:03.975] ERROR -- local_bank.rb:165 : Error triggering silent alarm: The property 'from' From entity ID is required for message routing and replies
+[2025-08-24 16:15:07.138] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:07.140] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:07.141] INFO  -- health_monitor.rb:73 : Sent health status: critical (Security breach detected, lockdown protocols active)
+[2025-08-24 16:15:12.147] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:12.152] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:12.152] INFO  -- health_monitor.rb:73 : Sent health status: critical (Security breach detected, lockdown protocols active)
+[2025-08-24 16:15:17.152] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:17.156] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:17.157] INFO  -- health_monitor.rb:73 : Sent health status: critical (Security breach detected, lockdown protocols active)
+[2025-08-24 16:15:22.155] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:22.158] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:22.159] INFO  -- health_monitor.rb:73 : Sent health status: critical (Security breach detected, lockdown protocols active)
+[2025-08-24 16:15:27.163] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:27.169] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:27.169] INFO  -- health_monitor.rb:73 : Sent health status: critical (Security breach detected, lockdown protocols active)
+[2025-08-24 16:15:32.170] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:32.174] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:32.174] INFO  -- health_monitor.rb:73 : Sent health status: critical (Security breach detected, lockdown protocols active)
+[2025-08-24 16:15:37.180] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:37.188] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:37.188] INFO  -- health_monitor.rb:73 : Sent health status: critical (Security breach detected, lockdown protocols active)

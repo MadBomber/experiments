@@ -1,0 +1,30 @@
+# Logfile created on 2025-08-24 16:13:12 -0500 by logger.rb/v1.7.0
+[2025-08-24 16:13:12.417] INFO  -- city_council.rb:557 : Discovered 3 existing departments: fire_department, health_department, police_department
+[2025-08-24 16:13:12.421] INFO  -- subscription.rb:131 : [SmartMessage] Subscribed: Messages::HealthCheckMessage with block/proc handler
+[2025-08-24 16:13:12.421] INFO  -- city_council.rb:562 : Setting up VSM capsule for CityCouncil
+[2025-08-24 16:13:12.439] INFO  -- city_council.rb:100 : AI model initialized for CityCouncil
+[2025-08-24 16:13:12.439] INFO  -- city_council.rb:580 : VSM capsule setup completed successfully
+[2025-08-24 16:13:12.439] INFO  -- city_council.rb:584 : Setting up SmartMessage subscriptions for CityCouncil
+[2025-08-24 16:13:12.439] INFO  -- city_council.rb:588 : Subscribing to ServiceRequestMessage
+[2025-08-24 16:13:12.439] INFO  -- subscription.rb:131 : [SmartMessage] Subscribed: Messages::ServiceRequestMessage with block/proc handler
+[2025-08-24 16:13:12.439] INFO  -- city_council.rb:598 : Subscribing to HealthCheckMessage
+[2025-08-24 16:13:12.439] INFO  -- subscription.rb:131 : [SmartMessage] Subscribed: Messages::HealthCheckMessage with block/proc handler
+[2025-08-24 16:13:12.439] INFO  -- city_council.rb:606 : SmartMessage subscriptions setup completed
+[2025-08-24 16:13:12.439] INFO  -- city_council.rb:549 : CityCouncil initialized with 3 existing departments
+[2025-08-24 16:13:12.439] INFO  -- city_council.rb:665 : Starting CityCouncil governance operations
+[2025-08-24 16:13:12.439] INFO  -- city_council.rb:673 : CityCouncil governance started successfully
+[2025-08-24 16:13:12.439] INFO  -- city_council.rb:676 : Starting VSM capsule runtime
+[2025-08-24 16:13:16.974] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:16.985] INFO  -- city_council.rb:727 : Received health check from health-department
+[2025-08-24 16:13:16.987] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:16.987] INFO  -- city_council.rb:747 : Responded to health check from health-department: healthy (3 departments, 4.6s uptime)
+[2025-08-24 16:13:21.984] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:21.985] INFO  -- city_council.rb:727 : Received health check from health-department
+[2025-08-24 16:13:21.987] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:21.987] INFO  -- city_council.rb:747 : Responded to health check from health-department: healthy (3 departments, 9.6s uptime)
+[2025-08-24 16:13:26.992] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:26.992] INFO  -- city_council.rb:727 : Received health check from health-department
+[2025-08-24 16:13:26.994] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:26.994] INFO  -- city_council.rb:747 : Responded to health check from health-department: healthy (3 departments, 14.6s uptime)
+[2025-08-24 16:13:27.431] FATAL -- health_monitor.rb:55 : ⚠️  WARNING: No health checks received for over 15 seconds!
+[2025-08-24 16:13:27.431] FATAL -- health_monitor.rb:56 : CityCouncil shutting down - no health checks received

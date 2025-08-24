@@ -1,0 +1,101 @@
+# Logfile created on 2025-08-24 16:13:11 -0500 by logger.rb/v1.7.0
+[2025-08-24 16:13:11.940] INFO  -- fire_department.rb:60 : Fire Department ready for service with engines: Engine-1, Engine-2, Engine-3, Ladder-1, Rescue-1
+[2025-08-24 16:13:11.940] INFO  -- subscription.rb:131 : [SmartMessage] Subscribed: Messages::HealthCheckMessage with block/proc handler
+[2025-08-24 16:13:11.965] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:11.991] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:11.991] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:13:16.976] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:16.979] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:16.979] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:13:21.985] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:21.987] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:21.988] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:13:26.992] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:26.994] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:26.994] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:13:32.007] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:32.009] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:32.009] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:13:37.012] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:37.015] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:37.015] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:13:41.935] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::Emergency911Message (762 bytes)
+[2025-08-24 16:13:42.015] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:42.016] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:42.016] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:13:47.026] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:47.028] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:47.028] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:13:52.030] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:52.034] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:52.034] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:13:57.040] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:13:57.042] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:57.042] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:14:02.046] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:02.048] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:02.048] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:14:07.052] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:07.055] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:07.055] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:14:12.059] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:12.062] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:12.062] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:14:17.077] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:17.081] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:17.081] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:14:22.072] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:22.075] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:22.075] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:14:27.078] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:27.080] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:27.080] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:14:32.089] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:32.091] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:32.092] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:14:37.095] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:37.097] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:37.097] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:14:42.103] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:42.105] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:42.105] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:14:47.112] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:47.113] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:47.113] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:14:47.961] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::Emergency911Message (764 bytes)
+[2025-08-24 16:14:52.113] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:52.116] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:52.117] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:14:57.123] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:57.126] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:57.126] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:15:02.136] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:02.140] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:02.140] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:15:07.138] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:07.142] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:07.142] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:15:12.152] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:12.158] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:12.158] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:15:17.154] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:17.161] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:17.161] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:15:22.158] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:22.160] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:22.160] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:15:27.166] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:27.167] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:27.167] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 0 active fires)
+[2025-08-24 16:15:28.978] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::Emergency911Message (791 bytes)
+[2025-08-24 16:15:29.423] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::Emergency911Message (814 bytes)
+[2025-08-24 16:15:29.424] WARN  -- fire_department.rb:191 : 911 Emergency: hazmat at 456 Oak Avenue - Chemical spill from overturned truck! Strong fumes!
+[2025-08-24 16:15:29.425] WARN  -- fire_department.rb:309 : HAZMAT incident HAZ-161529 - Engine-1, Engine-2, Engine-3 dispatched
+[2025-08-24 16:15:32.169] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:32.171] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:32.172] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 1 active fires)
+[2025-08-24 16:15:37.181] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:37.182] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:37.183] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All engines available, 1 active fires)
+[2025-08-24 16:15:45.143] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::EmergencyResolvedMessage via RedisTransport
+[2025-08-24 16:15:45.144] INFO  -- fire_department.rb:409 : Fire HAZ-161529 extinguished: Total loss, area secured after 0.3 minutes

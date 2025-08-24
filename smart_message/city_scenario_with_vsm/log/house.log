@@ -1,0 +1,190 @@
+# Logfile created on 2025-08-24 16:13:12 -0500 by logger.rb/v1.7.0
+[2025-08-24 16:13:12.115] INFO  -- house.rb:55 : House monitoring started: 2 occupants, status: safe
+[2025-08-24 16:13:12.115] INFO  -- subscription.rb:131 : [SmartMessage] Subscribed: Messages::HealthCheckMessage with block/proc handler
+[2025-08-24 16:13:12.116] INFO  -- house.rb:135 : Normal activity: Security system armed
+[2025-08-24 16:13:12.122] INFO  -- house.rb:55 : House monitoring started: 1 occupants, status: safe
+[2025-08-24 16:13:12.122] INFO  -- subscription.rb:131 : [SmartMessage] Subscribed: Messages::HealthCheckMessage with block/proc handler
+[2025-08-24 16:13:12.122] INFO  -- house.rb:135 : Normal activity: Security system armed
+[2025-08-24 16:13:16.975] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:16.976] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:17.007] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:17.007] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:13:17.007] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:17.008] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:13:21.985] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:21.985] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:21.991] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:21.991] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:21.991] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:13:21.991] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:13:26.992] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:26.992] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:27.000] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:27.000] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:13:27.000] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:27.000] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:13:32.002] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:32.007] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:32.008] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:32.008] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:13:32.009] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:32.010] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:13:37.008] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:37.012] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:37.012] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:37.012] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:13:37.014] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:37.015] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:13:42.015] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:42.015] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:42.016] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:42.016] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:42.016] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:13:42.016] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:13:45.133] INFO  -- house.rb:135 : Normal activity: Door/window sensor check
+[2025-08-24 16:13:47.022] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:47.025] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:47.026] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:47.026] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:13:47.028] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:47.028] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:13:52.029] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:52.030] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (288 bytes)
+[2025-08-24 16:13:52.033] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:52.033] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:13:52.034] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:52.034] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:13:54.127] INFO  -- house.rb:135 : Normal activity: Motion detected - normal activity
+[2025-08-24 16:13:57.038] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:13:57.040] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:13:57.041] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:57.042] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:13:57.043] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:13:57.043] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:14:02.045] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:02.046] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:02.048] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:02.048] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:02.048] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:14:02.048] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:14:07.052] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:07.052] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:07.054] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:07.054] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:14:07.055] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:07.055] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:14:12.059] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:12.059] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:12.059] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:12.060] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:14:12.060] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:12.060] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:14:12.132] INFO  -- house.rb:135 : Normal activity: Door/window sensor check
+[2025-08-24 16:14:17.069] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:17.074] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:17.079] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:17.079] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:14:17.080] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:17.080] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:14:22.072] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:22.072] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:22.074] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:22.075] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:14:22.075] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:22.075] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:14:27.078] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:27.078] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:27.080] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:27.080] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:14:27.080] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:27.080] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:14:30.139] INFO  -- house.rb:135 : Normal activity: All systems operational
+[2025-08-24 16:14:32.087] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:32.089] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:32.090] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:32.090] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:14:32.091] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:32.092] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:14:35.138] INFO  -- house.rb:135 : Normal activity: Security system armed
+[2025-08-24 16:14:37.092] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:37.095] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:37.095] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:37.095] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:14:37.096] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:37.096] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:14:42.102] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:42.103] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:42.105] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:42.105] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:14:42.105] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:42.105] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:14:47.110] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:47.112] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:47.117] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:47.118] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:14:47.118] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:47.118] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:14:52.113] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:52.113] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:52.116] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:52.116] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:52.116] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:14:52.116] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:14:57.123] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:57.123] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:14:57.125] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:57.125] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:14:57.125] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:14:57.125] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:15:02.131] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:02.136] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:02.136] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:02.136] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:15:02.139] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:02.139] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:15:06.142] INFO  -- house.rb:135 : Normal activity: Smoke detector test completed
+[2025-08-24 16:15:07.138] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:07.138] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:07.140] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:07.140] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:15:07.140] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:07.140] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:15:12.147] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:12.148] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:12.152] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:12.152] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:15:12.152] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:12.153] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:15:17.154] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:17.154] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:17.156] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:17.156] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:17.156] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:15:17.156] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:15:20.143] INFO  -- house.rb:135 : Normal activity: Smoke detector test completed
+[2025-08-24 16:15:22.155] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:22.157] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:22.158] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:22.158] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:15:22.159] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:22.159] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:15:26.148] INFO  -- house.rb:135 : Normal activity: Security system armed
+[2025-08-24 16:15:27.165] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:27.166] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:27.168] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:27.168] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:15:27.168] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:27.169] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:15:32.169] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:32.169] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:32.171] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:32.171] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:15:32.171] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:32.171] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:15:37.180] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:37.181] INFO  -- base.rb:168 : [SmartMessage] Received: Messages::HealthCheckMessage (289 bytes)
+[2025-08-24 16:15:37.182] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:37.183] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 2 occupants safe)
+[2025-08-24 16:15:37.183] INFO  -- messaging.rb:60 : [SmartMessage] Published: Messages::HealthStatusMessage via RedisTransport
+[2025-08-24 16:15:37.183] INFO  -- health_monitor.rb:73 : Sent health status: healthy (All systems normal, 1 occupants safe)
+[2025-08-24 16:15:43.147] INFO  -- house.rb:135 : Normal activity: Motion detected - normal activity

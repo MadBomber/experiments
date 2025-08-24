@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/dewayne/sandbox/git_repos/madbomber/experiments/smart_message/**)",
+      "Bash(ruby:*)",
+      "Read(//Users/dewayne/sandbox/git_repos/madbomber/smart_message/**)",
+      "Bash(./test_water_request.rb)",
+      "Bash(chmod:*)",
+      "Bash(grep:*)",
+      "Read(//Users/dewayne/sandbox/git_repos/madbomber/experiments/**)"
+    ],
+    "deny": [],
+    "ask": [],
+    "additionalDirectories": [
+      "/Users/dewayne/sandbox/git_repos/madbomber/experiments/smart_message/lib",
+      "/Users/dewayne/sandbox/git_repos/madbomber/experiments/smart_message"
+    ]
+  }
+}
