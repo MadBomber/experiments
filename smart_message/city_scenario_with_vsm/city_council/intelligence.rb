@@ -19,7 +19,7 @@ module CityCouncil
   class Intelligence < VSM::Intelligence
     include Common::Logger
 
-    def initialize(council)
+    def initialize(council:, **)
       @council = council
       @service_name = 'city_council-intelligence'
       @analysis_cache = {}

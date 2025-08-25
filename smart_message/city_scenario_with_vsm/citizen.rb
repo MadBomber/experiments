@@ -5,12 +5,15 @@ require_relative 'smart_message/lib/smart_message'
 require_relative 'messages/emergency_911_message'
 
 require_relative 'common/logger'
+require_relative 'common/status_line'
 
 class Citizen
   include Common::Logger
+  include Common::StatusLine
 
   def initialize
     @service_name = 'citizen'
+    @call_count = 0
     @names = ['John Smith', 'Mary Johnson', 'Robert Williams', 'Patricia Brown', 'Michael Davis']
     @locations = [
       '123 Main Street',
@@ -21,6 +24,80 @@ class Citizen
       '987 Cedar Court',
       '147 Birch Way',
       '258 Spruce Boulevard'
+    ]
+
+    # New scenarios for non-existent departments
+    @non_existent_department_scenarios = [
+      # Water Department
+      { type: 'water_emergency', severity: 'critical',
+        description: 'Major water main break! Entire street is flooded!',
+        department: 'water_department' },
+      { type: 'water_emergency', severity: 'high',
+        description: 'No water pressure in entire neighborhood!',
+        department: 'water_department' },
+      { type: 'water_emergency', severity: 'high',
+        description: 'Sewage backup in multiple homes!',
+        department: 'water_department' },
+        
+      # Animal Control
+      { type: 'animal_emergency', severity: 'high',
+        description: 'Rabid raccoon attacking people!',
+        department: 'animal_control' },
+      { type: 'animal_emergency', severity: 'critical',
+        description: 'Bear wandering through downtown!',
+        department: 'animal_control' },
+      { type: 'animal_emergency', severity: 'medium',
+        description: 'Pack of aggressive stray dogs in schoolyard!',
+        department: 'animal_control' },
+        
+      # Public Works
+      { type: 'infrastructure_emergency', severity: 'critical',
+        description: 'Bridge showing signs of collapse!',
+        department: 'public_works' },
+      { type: 'infrastructure_emergency', severity: 'high',
+        description: 'Massive sinkhole opened up on Main Street!',
+        department: 'public_works' },
+      { type: 'infrastructure_emergency', severity: 'high',
+        description: 'Street lights out in entire district!',
+        department: 'public_works' },
+        
+      # Transportation Department  
+      { type: 'transportation_emergency', severity: 'critical',
+        description: 'Bus crashed into building downtown!',
+        department: 'transportation_department' },
+      { type: 'transportation_emergency', severity: 'high',
+        description: 'Subway tunnel flooded, passengers trapped!',
+        department: 'transportation_department' },
+      { type: 'transportation_emergency', severity: 'high',
+        description: 'Major traffic signal failure causing gridlock!',
+        department: 'transportation_department' },
+        
+      # Environmental Services
+      { type: 'environmental_emergency', severity: 'critical',
+        description: 'Toxic waste spill near river!',
+        department: 'environmental_services' },
+      { type: 'environmental_emergency', severity: 'high',
+        description: 'Illegal chemical dumping discovered!',
+        department: 'environmental_services' },
+      { type: 'environmental_emergency', severity: 'high',
+        description: 'Hazardous air quality alert - smoke from unknown source!',
+        department: 'environmental_services' },
+        
+      # Parks Department
+      { type: 'parks_emergency', severity: 'high',
+        description: 'Massive tree fell on playground during school hours!',
+        department: 'parks_department' },
+      { type: 'parks_emergency', severity: 'medium',
+        description: 'Vandalism and destruction at city park!',
+        department: 'parks_department' },
+        
+      # Sanitation Department
+      { type: 'sanitation_emergency', severity: 'high',
+        description: 'Garbage piling up for weeks, health hazard!',
+        department: 'sanitation_department' },
+      { type: 'sanitation_emergency', severity: 'critical',
+        description: 'Biohazard waste dumped in residential area!',
+        department: 'sanitation_department' }
     ]
 
     @emergency_scenarios = [
@@ -152,8 +229,15 @@ class Citizen
   #   logger.info("Citizen 911 caller started")
   # end
 
-  def make_emergency_call
-    scenario = @emergency_scenarios.sample
+  def make_emergency_call(force_non_existent: false)
+    # 40% chance to call non-existent department, or always if forced
+    use_non_existent = force_non_existent || (rand(100) < 40)
+    
+    scenario = if use_non_existent && !@non_existent_department_scenarios.empty?
+      @non_existent_department_scenarios.sample
+    else
+      @emergency_scenarios.sample
+    end
     caller_name = @names.sample
     location = @locations.sample
     phone = "555-#{rand(1000..9999)}"
@@ -162,6 +246,9 @@ class Citizen
     puts "   Caller: #{caller_name}"
     puts "   Location: #{location}"
     puts "   Emergency: #{scenario[:type]} - #{scenario[:description]}"
+    if scenario[:department]
+      puts "   🎯 Requesting: #{scenario[:department].upcase} (MAY NOT EXIST)"
+    end
 
     call = Messages::Emergency911Message.new(
       caller_name: caller_name,
@@ -170,6 +257,7 @@ class Citizen
       emergency_type: scenario[:type],
       description: scenario[:description],
       severity: scenario[:severity],
+      requested_department: scenario[:department],
       injuries_reported: scenario[:injuries],
       number_of_victims: scenario[:victims],
       fire_involved: scenario[:fire],
@@ -196,9 +284,12 @@ class Citizen
 
   def run_interactive
     puts "👤 Citizen 911 Emergency Caller"
-    puts "   Press Enter to make a random 911 call"
-    puts "   Type 'auto' for automatic calls every 15-30 seconds"
+    puts "   Press Enter to make a random 911 call (40% chance non-existent dept)"
+    puts "   Type 'force' to force a non-existent department call"
+    puts "   Type 'auto' for automatic calls every 10-20 seconds"
     puts "   Type 'quit' to exit\n\n"
+    
+    status_line("Ready to make 911 calls")
 
     loop do
       print "Action (enter/auto/quit): "
@@ -206,32 +297,54 @@ class Citizen
 
       case input
       when '', nil
+        @call_count += 1
         make_emergency_call
+        status_line("Made call ##{@call_count}")
+      when 'force', 'f'
+        @call_count += 1
+        puts "\n🎯 Forcing call to NON-EXISTENT department..."
+        make_emergency_call(force_non_existent: true)
+        status_line("Made call ##{@call_count} (forced non-existent)")
       when 'auto'
         run_automatic
         break
       when 'quit', 'q', 'exit'
+        restore_terminal if respond_to?(:restore_terminal)
         puts "👤 Citizen exiting..."
         break
       else
-        puts "Unknown command. Press Enter for call, 'auto' for automatic, 'quit' to exit"
+        puts "Unknown command. Press Enter for call, 'force' for non-existent dept, 'auto' for automatic, 'quit' to exit"
       end
     end
   end
 
   def run_automatic
-    puts "\n👤 Starting automatic 911 calls (every 15-30 seconds)"
+    puts "\n👤 Starting automatic 911 calls (every 10-20 seconds)"
+    puts "   40% of calls will request non-existent departments"
     puts "   Press Ctrl+C to stop\n\n"
 
     Signal.trap('INT') do
+      restore_terminal if respond_to?(:restore_terminal)
       puts "\n👤 Stopping automatic calls..."
       exit(0)
     end
+    
+    status_line("Auto mode: making calls every 10-20 seconds")
 
+    call_count = 0
     loop do
-      make_emergency_call
-      wait_time = rand(15..30)
+      call_count += 1
+      # Every 3rd call, definitely call a non-existent department
+      force_non_existent = (call_count % 3 == 0)
+      
+      if force_non_existent
+        puts "\n🎯 Making call to NON-EXISTENT department..."
+      end
+      
+      make_emergency_call(force_non_existent: force_non_existent)
+      wait_time = rand(10..20)  # Faster calls
       puts "   ⏰ Next call in #{wait_time} seconds...\n"
+      status_line("Call ##{call_count} made, next in #{wait_time}s")
       sleep(wait_time)
     end
   end

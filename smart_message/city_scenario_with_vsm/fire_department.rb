@@ -12,10 +12,12 @@ require_relative 'messages/emergency_911_message'
 
 require_relative 'common/health_monitor'
 require_relative 'common/logger'
+require_relative 'common/status_line'
 
 class FireDepartment
   include Common::HealthMonitor
   include Common::Logger
+  include Common::StatusLine
 
   def initialize
     @service_name = 'fire_department'
@@ -58,11 +60,13 @@ class FireDepartment
     puts "   Responding to health checks, fire emergencies, and 911 medical/rescue calls"
     puts "   Press Ctrl+C to stop\n\n"
     logger.info("Fire Department ready for service with engines: #{@available_engines.join(', ')}")
+    status_line("Ready - #{@available_engines.size} engines available")
   end
 
   def setup_signal_handlers
     %w[INT TERM].each do |signal|
       Signal.trap(signal) do
+        restore_terminal if respond_to?(:restore_terminal)
         puts "\n🚒 Fire Department out of service..."
         logger.info("Fire Department out of service")
         exit(0)
@@ -74,6 +78,7 @@ class FireDepartment
   def start_service
     loop do
       check_fire_resolutions
+      update_status_line
       sleep(3)
     end
   rescue => e
@@ -86,6 +91,14 @@ class FireDepartment
 
   def service_emoji
     "🚒"
+  end
+
+  def update_status_line
+    if @active_fires.empty?
+      status_line("Ready - #{@available_engines.size} engines available")
+    else
+      status_line("Active: #{@active_fires.size} emergencies, #{@available_engines.size} engines free")
+    end
   end
 
   def get_status_details
@@ -166,6 +179,7 @@ class FireDepartment
     puts "🚒 Dispatched #{assigned_engines.size} engines to #{emergency.house_address}"
     puts "   Fire type: #{emergency.fire_type} (#{emergency.severity})"
     puts "   Available engines: #{@available_engines.size}"
+    status_line("FIRE: #{emergency.severity} - #{assigned_engines.size} engines dispatched")
     logger.info("Dispatched engines #{assigned_engines.join(', ')} to #{emergency.house_address} (#{dispatch_id})")
   rescue => e
     puts "🚒 Error handling fire emergency: #{e.message}"
@@ -241,6 +255,7 @@ class FireDepartment
     puts "🚒 Dispatched #{assigned_engines.join(', ')} to medical emergency"
     puts "   Injuries: #{call.number_of_victims || 'Unknown'} victims"
     puts "   Severity: #{call.severity&.upcase || 'UNKNOWN'}"
+    status_line("MEDICAL: #{assigned_engines.size} units dispatched")
     logger.info("Dispatched #{assigned_engines.join(', ')} to medical #{incident_id}")
   end
 
@@ -278,6 +293,7 @@ class FireDepartment
 
     puts "🚒 Dispatched #{assigned_engines.join(', ')} to rescue operation"
     puts "   People trapped: #{call.number_of_victims || 'Unknown'}"
+    status_line("RESCUE: #{assigned_engines.size} units dispatched")
     logger.info("Dispatched #{assigned_engines.join(', ')} to rescue #{incident_id}")
   end
 

@@ -9,10 +9,12 @@ require_relative 'messages/police_dispatch_message'
 
 require_relative 'common/health_monitor'
 require_relative 'common/logger'
+require_relative 'common/status_line'
 
 class LocalBank
   include Common::HealthMonitor
   include Common::Logger
+  include Common::StatusLine
 
   def initialize
     @service_name = 'first-national-bank'

@@ -15,8 +15,8 @@ module Messages
     transport SmartMessage::Transport::RedisTransport.new
     serializer SmartMessage::Serializer::Json.new
 
-    VALID_FIRE_TYPES = %w[fire kitchen electrical basement garage wildfire]
-    VALID_SEVERITY = %w[small medium large out_of_control]
+    VALID_FIRE_TYPES = %w[fire kitchen electrical basement garage wildfire vehicle chemical general grease]
+    VALID_SEVERITY = %w[small medium large out_of_control critical high low]
     VALID_OCCUPANTS_STATUS = %w[safe evacuated trapped rescued]
     VALID_SPREAD_RISK = %w[low medium high]
 

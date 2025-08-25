@@ -5,12 +5,14 @@ require 'ruby_llm'
 require 'json'
 
 require_relative 'common/logger'
+require_relative 'common/status_line'
 
 # Dynamically require all message files in the messages directory
 Dir[File.join(__dir__, 'messages', '*.rb')].each { |file| require file }
 
 class Visitor
   include Common::Logger
+  include Common::StatusLine
 
   def initialize
     @service_name = 'visitor'

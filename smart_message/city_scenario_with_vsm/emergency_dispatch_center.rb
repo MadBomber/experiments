@@ -10,6 +10,7 @@ require_relative 'messages/department_announcement_message'
 
 require_relative 'common/health_monitor'
 require_relative 'common/logger'
+require_relative 'common/status_line'
 
 require 'ruby_llm'
 require 'json'
@@ -17,6 +18,7 @@ require 'json'
 class EmergencyDispatchCenter
   include Common::HealthMonitor
   include Common::Logger
+  include Common::StatusLine
 
   def initialize
     @service_name = 'emergency-dispatch-center'
@@ -320,6 +322,12 @@ class EmergencyDispatchCenter
   def fallback_determine_departments(call)
     departments = []
     
+    # Check for specifically requested department first
+    if call.requested_department && !call.requested_department.empty?
+      departments << call.requested_department
+      return departments
+    end
+    
     # Basic emergency categorization
     case call.emergency_type&.downcase
     when 'fire', 'rescue'
@@ -328,7 +336,19 @@ class EmergencyDispatchCenter
       departments << 'police_department'
     when 'medical'
       departments << 'fire_department' # EMS typically handled by fire
-    when 'infrastructure'
+    when 'water_emergency'
+      departments << 'water_department'
+    when 'animal_emergency'
+      departments << 'animal_control'
+    when 'transportation_emergency'
+      departments << 'transportation_department'
+    when 'environmental_emergency'
+      departments << 'environmental_services'
+    when 'parks_emergency'
+      departments << 'parks_department'
+    when 'sanitation_emergency'
+      departments << 'sanitation_department'
+    when 'infrastructure', 'infrastructure_emergency'
       # Analyze description for specific infrastructure type
       desc = call.description&.downcase || ''
       if desc.match?(/water|sewer|pipe|hydrant/)
@@ -410,8 +430,8 @@ class EmergencyDispatchCenter
   def route_to_department(call, department, call_id)
     case department
     when 'fire_department'
-      # Convert to FireEmergencyMessage for fire department
-      if call.fire_involved || call.emergency_type == 'fire'
+      # Only convert to FireEmergencyMessage for actual fire emergencies
+      if call.emergency_type == 'fire'
         fire_msg = Messages::FireEmergencyMessage.new(
           house_address: call.caller_location,
           fire_type: determine_fire_type(call),
@@ -426,13 +446,16 @@ class EmergencyDispatchCenter
         fire_msg.publish
         logger.info("Routed call #{call_id} to Fire Department as fire emergency")
       else
-        # For rescue/medical, forward the 911 call directly
-        forward_call = call.dup
-        forward_call.call_id         = call_id
+        # For medical, rescue, accidents with fire, hazmat - forward the 911 call directly
+        forward_call = Messages::Emergency911Message.new(**call.to_h.merge(
+                                                           call_id: call_id,
+                                                           from: '911-dispatch',
+                                                           to: 'fire_department'
+                                                         ))
         forward_call._sm_header.from = '911-dispatch'
         forward_call._sm_header.to   = 'fire_department'
         forward_call.publish
-        logger.info("Forwarded call #{call_id} to Fire Department for rescue/medical")
+        logger.info("Forwarded call #{call_id} to Fire Department for #{call.emergency_type}")
       end
 
     when 'police_department'

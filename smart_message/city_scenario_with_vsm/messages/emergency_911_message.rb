@@ -12,7 +12,10 @@ module Messages
     transport  SmartMessage::Transport::RedisTransport.new
     serializer SmartMessage::Serializer::Json.new
 
-    VALID_EMERGENCY_TYPES = %w[fire medical crime accident hazmat rescue other]
+    VALID_EMERGENCY_TYPES = %w[fire medical crime accident hazmat rescue 
+                              water_emergency animal_emergency infrastructure_emergency 
+                              transportation_emergency environmental_emergency 
+                              parks_emergency sanitation_emergency other]
     VALID_SEVERITY = %w[critical high medium low]
 
     # Caller information
@@ -67,6 +70,9 @@ module Messages
 
     property :dispatch_to,
              description: 'Which departments to dispatch to (array of department names)'
+
+    property :requested_department,
+             description: 'Specific department requested by caller (may not exist)'
 
     property :priority,
              description: 'Dispatch priority level (1-5, 1 being highest)'

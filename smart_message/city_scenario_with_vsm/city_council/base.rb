@@ -2,11 +2,15 @@
 # city_council/base.rb
 #
 
+require 'async'
+require_relative '../common/status_line'
+
 # Main CityCouncil Class
 module CityCouncil
   class Base
-    include Common::HealthMonitor
+    # include Common::HealthMonitor
     include Common::Logger
+    include Common::StatusLine
 
     attr_reader :capsule, :existing_departments
 
@@ -18,7 +22,7 @@ module CityCouncil
       @department_processes = {} # Track launched department PIDs
 
       setup_signal_handlers
-      setup_health_monitor
+      # setup_health_monitor
       setup_vsm_capsule
       setup_messaging
 
@@ -37,6 +41,9 @@ module CityCouncil
     def setup_vsm_capsule
       logger.info("Setting up VSM capsule for CityCouncil")
 
+      # Capture reference to CityCouncil instance before entering DSL block
+      council_instance = self
+
       @capsule = VSM::DSL.define(:city_council) do
         identity klass: VSM::Identity,
                  args: {
@@ -46,11 +53,14 @@ module CityCouncil
 
         governance klass: CityCouncil::Governance
         coordination klass: VSM::Coordination
-        intelligence klass: CityCouncil::Intelligence, args: { council: self }
-        operations klass: CityCouncil::Operations, args: { council: self }
+        intelligence klass: CityCouncil::Intelligence, args: { council: council_instance }
+        operations klass: CityCouncil::Operations, args: { council: council_instance }
       end
 
       logger.info("VSM capsule setup completed successfully")
+      
+      # Set up VSM bus subscriptions after capsule is ready
+      setup_vsm_subscriptions
     end
 
     def setup_messaging
@@ -82,6 +92,7 @@ module CityCouncil
     def setup_signal_handlers
       %w[INT TERM].each do |signal|
         Signal.trap(signal) do
+          restore_terminal if respond_to?(:restore_terminal)
           puts "\n🏛️ CityCouncil shutting down..."
           logger.info("CityCouncil shutting down")
           cleanup_department_processes
@@ -110,17 +121,46 @@ module CityCouncil
       logger.info("Received service request from #{message._sm_header.from}")
       logger.debug("Service request details: #{message.inspect}")
 
-      # Forward to VSM Intelligence for processing
+      # Process the service request with VSM Intelligence
       payload = message.details[:description] || message.description || message.inspect
-      logger.info("Forwarding service request to VSM Intelligence: #{payload}")
+      logger.info("Processing service request with VSM Intelligence: #{payload}")
+      
+      status_line("Processing request from #{message._sm_header.from}")
 
-      @capsule.bus.emit VSM::Message.new(
+      # Create VSM message and process with Intelligence
+      vsm_message = VSM::Message.new(
         kind: :service_request,
         payload: payload,
-        meta: { msg_id: message._sm_header.uuid },
+        meta: { msg_id: message._sm_header.uuid }
       )
 
-      logger.debug("Service request forwarded to VSM bus")
+      # Process with Intelligence component
+      intelligence_result = @capsule.roles[:intelligence].handle(vsm_message, bus: @capsule.bus)
+      logger.debug("VSM Intelligence processing result: #{intelligence_result}")
+      
+      status_line("Governing #{@existing_departments.size} departments")
+    end
+
+    # Set up VSM bus message subscriptions
+    def setup_vsm_subscriptions
+      logger.info("Setting up VSM bus subscriptions for CityCouncil")
+      # Subscribe to create_service messages and forward to Operations
+      @capsule.bus.subscribe do |vsm_message|
+        logger.debug("VSM Bus: Received message - kind=#{vsm_message.kind}")
+        case vsm_message.kind
+        when :create_service
+          # Forward to Operations component
+          logger.info("VSM Bus: Forwarding create_service message to Operations component")
+          logger.debug("VSM Bus: create_service payload: #{vsm_message.payload}")
+          operations_result = @capsule.roles[:operations].handle(vsm_message, bus: @capsule.bus)
+          logger.debug("VSM Bus: Operations processing result: #{operations_result}")
+        when :assistant
+          # Log assistant responses
+          logger.info("VSM Bus: Assistant response: #{vsm_message.payload}")
+        else
+          logger.debug("VSM Bus: Unhandled message kind: #{vsm_message.kind}")
+        end
+      end
     end
 
     def register_new_department(department_name, process_id = nil)
@@ -142,15 +182,16 @@ module CityCouncil
       @existing_departments.each { |dept| puts "   - #{dept}" }
       puts "🔧 Ready to create new departments as needed"
       puts "👂 Listening for service requests..."
+      
+      status_line("Governing #{@existing_departments.size} departments")
 
       logger.info("CityCouncil governance started successfully")
 
-      # Start VSM runtime
-      logger.info("Starting VSM capsule runtime")
-      @capsule.run
+      # Start main monitoring loop
+      logger.info("Starting CityCouncil main monitoring loop")
+      logger.info("VSM components available for direct processing")
 
       # Main loop
-      logger.info("Entering main governance monitoring loop")
       loop do
         monitor_city_operations
         sleep(10)
@@ -174,16 +215,19 @@ module CityCouncil
         new_depts = current_departments - @existing_departments
         logger.info("New departments detected during monitoring: #{new_depts.join(", ")}")
         @existing_departments = current_departments
+        status_line("Governing #{@existing_departments.size} departments (new: #{new_depts.first})")
       elsif current_departments.size < @existing_departments.size
         removed_depts = @existing_departments - current_departments
         logger.warn("Departments removed/missing: #{removed_depts.join(", ")}")
         @existing_departments = current_departments
+        status_line("Governing #{@existing_departments.size} departments")
       end
 
       old_status = @status
       @status = determine_health_status
       if old_status != @status
         logger.info("CityCouncil health status changed from #{old_status} to #{@status}")
+        status_line("#{@status.upcase} - #{@existing_departments.size} departments")
       end
     end
 

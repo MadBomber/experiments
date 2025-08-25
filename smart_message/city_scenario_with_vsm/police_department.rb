@@ -11,10 +11,12 @@ require_relative 'messages/emergency_911_message'
 
 require_relative 'common/health_monitor'
 require_relative 'common/logger'
+require_relative 'common/status_line'
 
 class PoliceDepartment
   include Common::HealthMonitor
   include Common::Logger
+  include Common::StatusLine
 
   def initialize
     @service_name = 'police_department'
@@ -49,11 +51,13 @@ class PoliceDepartment
     puts "   Responding to health checks, silent alarms, and 911 calls"
     puts "   Press Ctrl+C to stop\n\n"
     logger.info("Police Department operational with units: #{@available_units.join(', ')}")
+    status_line("Ready - #{@available_units.size} units available")
   end
 
   def setup_signal_handlers
     %w[INT TERM].each do |signal|
       Signal.trap(signal) do
+        restore_terminal if respond_to?(:restore_terminal)
         puts "\n🚔 Police Department signing off..."
         logger.info("Police Department signing off")
         exit(0)
@@ -65,6 +69,7 @@ class PoliceDepartment
   def start_service
     loop do
       check_incident_resolutions
+      update_status_line
       sleep(2)
     end
   rescue => e
@@ -77,6 +82,14 @@ class PoliceDepartment
 
   def service_emoji
     "🚔"
+  end
+
+  def update_status_line
+    if @active_incidents.empty?
+      status_line("Ready - #{@available_units.size} units available")
+    else
+      status_line("Active: #{@active_incidents.size} incidents, #{@available_units.size} units free")
+    end
   end
 
   def get_status_details
@@ -143,6 +156,7 @@ class PoliceDepartment
     puts "🚔 Dispatched #{assigned_units.size} units to #{alarm.location}"
     puts "   Available units: #{@available_units.size}"
     logger.info("Dispatched units #{assigned_units.join(', ')} to #{alarm.location} (#{dispatch_id})")
+    status_line("ALARM: #{alarm.alarm_type} - #{assigned_units.size} units dispatched")
   rescue => e
     puts "🚔 Error handling silent alarm: #{e.message}"
     logger.error("Error handling silent alarm: #{e.message}")
@@ -209,6 +223,7 @@ class PoliceDepartment
     puts "   Vehicles involved: #{call.vehicles_involved || 'Unknown'}"
     puts "   Injuries: #{call.injuries_reported ? 'Yes' : 'No'}"
     logger.info("Dispatched #{assigned_units.join(', ')} to accident #{incident_id}")
+    status_line("ACCIDENT: #{assigned_units.size} units dispatched")
   end
 
   def handle_crime_call(call)
@@ -237,6 +252,7 @@ class PoliceDepartment
     puts "   Weapons involved: #{call.weapons_involved ? 'YES' : 'No'}"
     puts "   Suspects on scene: #{call.suspects_on_scene ? 'YES' : 'Unknown'}"
     logger.info("Dispatched #{assigned_units.join(', ')} to crime #{incident_id}")
+    status_line("CRIME: #{assigned_units.size} units dispatched")
   end
 
   def handle_general_911_call(call)

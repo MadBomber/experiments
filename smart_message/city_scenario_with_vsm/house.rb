@@ -7,10 +7,12 @@ require_relative 'messages/fire_dispatch_message'
 
 require_relative 'common/health_monitor'
 require_relative 'common/logger'
+require_relative 'common/status_line'
 
 class House
   include Common::HealthMonitor
   include Common::Logger
+  include Common::StatusLine
 
   def initialize(address = nil)
     @address = address || generate_random_address

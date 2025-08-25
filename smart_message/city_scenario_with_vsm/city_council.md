@@ -175,16 +175,70 @@ end
 
 ### Completed Components
 
-#### 1. **CityCouncil Program** (`city_council.rb`)
-- ✅ Full VSM integration with Intelligence, Governance, Coordination, Operations, and Identity
-- ✅ AI-powered service analysis using RubyLLM
-- ✅ Code generation for new departments following existing patterns
-- ✅ Dynamic department discovery and registration
+#### 1. **CityCouncil System** - **NEW VSM-Compliant Modular Architecture**
+
+**🏗️ Modular File Structure:**
+```
+city_council.rb                    # Entry point and module namespace (55 lines)
+city_council/
+  ├── base.rb                      # Main VSM coordinator (240 lines)
+  ├── intelligence.rb              # VSM Intelligence subsystem (364 lines)
+  ├── governance.rb                # VSM Governance subsystem (24 lines)
+  ├── operations.rb                # VSM Operations subsystem (363 lines)
+  └── cli_port.rb                  # External CLI interface (64 lines)
+```
+
+**✅ VSM Architecture Compliance:**
+- **🧠 Intelligence** (`CityCouncil::Intelligence`) - Environmental scanning, AI analysis, decision making
+  - Service request analysis using AI + heuristics
+  - Service gap identification 
+  - Analysis result caching with confidence scoring
+  - Environmental scanning capabilities
+- **⚙️ Operations** (`CityCouncil::Operations`) - Department creation, process management, execution
+  - Template-based department generation
+  - Process launching and monitoring
+  - YAML configuration generation
+  - Department lifecycle management
+- **🏛️ Governance** (`CityCouncil::Governance`) - Policy validation and enforcement
+  - Service specification validation
+  - Naming convention enforcement
+  - Duplicate service prevention
+- **🎯 Coordination** (`CityCouncil::Base`) - Main viable system coordinator
+  - VSM capsule orchestration
+  - SmartMessage integration
+  - Health monitoring and process cleanup
+  - Department discovery and registration
+- **🖥️ CLI Port** (`CityCouncil::CLIPort`) - External interface for testing
+
+**✅ Centralized Logging Architecture:**
+- **Shared Logger Instance**: All components use `Common::Logger` which provides the same `SmartMessage::Logger.default` instance
+- **Single Configuration**: First component to call `setup_logger` configures the global SmartMessage logger
+- **Consistent Output**: All CityCouncil components log to the same destination with consistent formatting
+- **No Duplication**: Each class includes `Common::Logger` but all receive the same underlying logger instance
+
+**✅ VSM Message Flow:**
+1. **Intelligence** analyzes service requests → emits `:create_service` messages
+2. **Operations** receives `:create_service` → executes department creation and process management  
+3. **Governance** validates policies throughout the process
+4. **Base** coordinates all subsystems and handles external SmartMessage integration
+
+**✅ Template-Based Generation:**
+- **Generic Template**: `generic_template.rb` with full VSM architecture
+- **YAML Configuration**: Dynamic configuration generation per department
+- **Process Management**: Automatic spawning and monitoring of department processes
+- **Announcement System**: Real-time status updates via `DepartmentAnnouncementMessage`
+
+**✅ Key Features:**
+- ✅ Full VSM compliance with proper subsystem separation
+- ✅ AI-powered service analysis using RubyLLM (Intelligence)
+- ✅ Template-based department creation (Operations)
+- ✅ Dynamic department discovery and registration (Base)
 - ✅ CLI interface for testing (`ruby city_council.rb --cli`)
-- ✅ Automatic generation of message classes for new departments
-- ✅ **Automatic Department Launching**: Spawns new departments as separate processes
-- ✅ **Department Announcements**: Publishes creation/launch status to all services
-- ✅ **Process Management**: Tracks department PIDs and cleanup on shutdown
+- ✅ **Automatic Department Launching**: Spawns departments as separate processes (Operations)
+- ✅ **Department Announcements**: Publishes creation/launch status to all services (Operations)
+- ✅ **Process Management**: Tracks department PIDs and cleanup on shutdown (Base)
+- ✅ **Centralized Logging**: Single shared logger instance across all components
+- ✅ **Modular Design**: Easy to modify individual VSM subsystems independently
 
 #### 2. **Emergency Dispatch Integration** (`emergency_dispatch_center.rb`)
 **Why These Changes Were Made:**

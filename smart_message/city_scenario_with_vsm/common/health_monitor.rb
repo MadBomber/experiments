@@ -18,7 +18,7 @@ require_relative '../messages/health_status_message'
 
 module Common
   module HealthMonitor
-    FAIL_SAFE = 15 # seconds
+    FAIL_SAFE = 60 # seconds - allow time for department creation
 
     def setup_health_monitor
       @health_timer_mutex = Mutex.new

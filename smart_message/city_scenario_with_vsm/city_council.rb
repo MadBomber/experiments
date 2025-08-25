@@ -5,6 +5,9 @@
 # This program acts as the governing body that can dynamically create and persist
 # new city service departments as they are requested.
 
+# Suppress Ruby 3.4.5 socket errors from DNS resolution threads
+Thread.report_on_exception = false
+
 require_relative 'smart_message/lib/smart_message'
 require_relative 'vsm/lib/vsm'
 require 'ruby_llm'
