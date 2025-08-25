@@ -24,6 +24,13 @@ module CityCouncil
       @service_name = 'city_council-operations'
       @active_operations = {}
       @department_templates = {}
+      @department_health = {} # Track health of launched departments
+      @health_check_interval = 30 # Check health every 30 seconds
+      @last_health_check = Time.now
+      logger.info("Operations: Initialized with service_name: #{@service_name}")
+      
+      # Start monitoring thread
+      start_department_monitoring
     end
 
     def handle(message, bus:, **)
@@ -42,6 +49,9 @@ module CityCouncil
       logger.info("Operations: Starting creation of city service: #{spec[:name]}")
       logger.debug("Service specification: #{spec}")
 
+      puts "🏛️ ⚙️ Operations: Starting creation of new city service: #{spec[:name]}"
+      puts "🏛️ 📝 Service description: #{spec[:description]}"
+
       operation_id = SecureRandom.uuid
       @active_operations[operation_id] = {
         spec: spec,
@@ -52,6 +62,7 @@ module CityCouncil
       begin
         # Create department from generic template
         logger.info("Operations: Creating department from generic template: #{spec[:name]}")
+        puts "🏛️ 🏗️ Operations: Creating department from template..."
         result = create_department_from_template(spec)
         
         if result
@@ -62,40 +73,55 @@ module CityCouncil
           logger.info("Operations: Department file: #{department_file}")
           logger.info("Operations: Configuration file: #{config_file}")
           
+          puts "🏛️ ✅ Operations: Department files created successfully"
+          puts "🏛️ 📁 Department file: #{department_file}"
+          puts "🏛️ ⚙️ Config file: #{config_file}"
+          
           @active_operations[operation_id][:status] = 'launching'
           
           # Announce department creation
           logger.info("Operations: Publishing department creation announcement")
-          announce_department_created(spec, department_file)
+          puts "🏛️ 📢 Operations: Announcing department creation..."
+          announce_department_created(spec, result[:department_file])
 
-          # Launch the new department
-          logger.info("Operations: Launching department process: #{department_file}")
-          department_pid = launch_department(department_file)
+          # Launch the new department using the actual created filename
+          actual_department_file = result[:department_file] # This is the basename of the actual file created
+          logger.info("Operations: Launching department process: #{actual_department_file}")
+          puts "🏛️ 🚀 Operations: Launching department process: #{actual_department_file}"
+          department_pid = launch_department(actual_department_file)
 
           if department_pid
             # Announce successful launch
             logger.info("Operations: Department launch successful, publishing launch announcement")
-            announce_department_launched(spec, department_file, department_pid)
-            logger.info("Operations: Successfully launched #{department_file} with PID #{department_pid}")
+            puts "🏛️ 🎉 Operations: Department launched successfully with PID #{department_pid}"
+            announce_department_launched(spec, actual_department_file, department_pid)
+            logger.info("Operations: Successfully launched #{actual_department_file} with PID #{department_pid}")
+            
+            # Register department for health monitoring
+            register_department_for_monitoring(spec[:name], department_pid, actual_department_file)
             
             @active_operations[operation_id][:status] = 'completed'
             @active_operations[operation_id][:pid] = department_pid
           else
-            logger.error("Operations: Department launch failed for #{department_file}")
-            announce_department_failed(spec, department_file, "Failed to launch process")
+            logger.error("Operations: Department launch failed for #{actual_department_file}")
+            puts "🏛️ ❌ Operations: Department launch failed for #{actual_department_file}"
+            announce_department_failed(spec, actual_department_file, "Failed to launch process")
             logger.error("Operations: Failed to launch #{department_file}")
             @active_operations[operation_id][:status] = 'failed'
           end
 
           # Register the new service
           logger.info("Operations: Registering new department with CityCouncil")
+          puts "🏛️ 📋 Operations: Registering new department with CityCouncil"
           @council.register_new_department(spec[:name], department_pid)
 
           logger.info("Operations: City service creation completed: #{spec[:name]}")
+          puts "🏛️ 🏁 Operations: City service creation completed: #{spec[:name]}"
           @active_operations[operation_id][:completed_at] = Time.now
           true
         else
           logger.error("Operations: Failed to create department from template")
+          puts "🏛️ ❌ Operations: Failed to create department from template"
           announce_department_failed(spec, "#{spec[:name]}_department.rb", "Template creation failed")
           @active_operations[operation_id][:status] = 'failed'
           false
@@ -113,29 +139,43 @@ module CityCouncil
     def create_department_from_template(spec)
       logger.info("Operations: 📝 Creating #{spec[:name]} from generic template")
       
+      puts "🏛️ 📝 Creating #{spec[:name]} from generic template..."
+      
+      # Ensure the department name ends with _department (but don't duplicate it)
+      dept_name = spec[:name].end_with?('_department') ? spec[:name] : "#{spec[:name]}_department"
+      
       template_path = File.join(__dir__, '..', 'generic_template.rb')
-      department_file = File.join(__dir__, '..', "#{spec[:name]}_department.rb")
-      config_file = File.join(__dir__, '..', "#{spec[:name]}_department.yml")
+      department_file = File.join(__dir__, '..', "#{dept_name}.rb")
+      config_file = File.join(__dir__, '..', "#{dept_name}.yml")
+      
+      puts "🏛️ 📁 Template path: #{template_path}"
+      puts "🏛️ 🎯 Target department: #{department_file}"
+      puts "🏛️ ⚙️ Target config: #{config_file}"
       
       # Check if template exists
       unless File.exist?(template_path)
         logger.error("Operations: ❌ Generic template not found: #{template_path}")
+        puts "🏛️ ❌ Generic template not found: #{template_path}"
         return nil
       end
       
       logger.info("Operations: 📁 Copying template: #{template_path} → #{department_file}")
+      puts "🏛️ 📋 Copying template to department file..."
       FileUtils.cp(template_path, department_file)
       
       # Generate YAML configuration
       logger.info("Operations: ⚙️ Generating configuration: #{config_file}")
-      config = generate_department_config(spec)
+      puts "🏛️ ⚙️ Generating YAML configuration..."
+      config = generate_department_config(spec.merge(name: dept_name))
       File.write(config_file, config.to_yaml)
       
       # Make executable
+      puts "🏛️ 🔐 Making department file executable..."
       FileUtils.chmod(0755, department_file)
       
       logger.info("Operations: ✅ Department #{spec[:name]} created successfully using template approach")
       logger.info("Operations: 📋 Template uses common/logger mixin for consistent logging")
+      puts "🏛️ ✅ Department #{spec[:name]} created successfully from template"
       
       {
         department_file: File.basename(department_file),
@@ -147,8 +187,8 @@ module CityCouncil
     def generate_department_config(spec)
       {
         'department' => {
-          'name' => "#{spec[:name]}_department",
-          'display_name' => spec[:display_name] || spec[:name].split('_').map(&:capitalize).join(' '),
+          'name' => spec[:name],
+          'display_name' => spec[:display_name] || spec[:name].gsub('_department', '').split('_').map(&:capitalize).join(' '),
           'description' => spec[:description],
           'invariants' => [
             "serve citizens efficiently",
@@ -269,42 +309,52 @@ module CityCouncil
 
     def launch_department(department_file)
       logger.info("Operations: Attempting to launch department: #{department_file}")
+      puts "🏛️ 🚀 Attempting to launch department: #{department_file}"
 
       begin
         # Launch the department as a separate process
         command = "ruby #{department_file}"
         logger.debug("Operations: Executing command: #{command}")
+        puts "🏛️ 💻 Executing command: #{command}"
         pid = spawn(command, chdir: File.join(__dir__, '..'))
         logger.debug("Operations: Process spawned with PID: #{pid}")
+        puts "🏛️ 🆔 Process spawned with PID: #{pid}"
 
         Process.detach(pid) # Detach so we don't wait for it
         logger.debug("Operations: Process detached from parent")
+        puts "🏛️ 🔗 Process detached from parent"
 
         # Give it a moment to start up
         logger.debug("Operations: Waiting 2 seconds for process to initialize")
+        puts "🏛️ ⏱️ Waiting 2 seconds for process to initialize..."
         sleep(2)
 
         # Check if process is still running
         begin
           Process.kill(0, pid) # Send signal 0 to check if process exists
           logger.info("Operations: Department #{department_file} launched successfully with PID #{pid}")
+          puts "🏛️ ✅ Department #{department_file} launched successfully with PID #{pid}"
           return pid
         rescue Errno::ESRCH
           logger.error("Operations: Department #{department_file} failed to start properly - process not found")
+          puts "🏛️ ❌ Department #{department_file} failed to start properly - process not found"
           return nil
         end
       rescue => e
         logger.error("Operations: Failed to launch #{department_file}: #{e.message}")
         logger.error("Operations: Launch exception backtrace: #{e.backtrace.join("\n")}")
+        puts "🏛️ ❌ Failed to launch #{department_file}: #{e.message}"
         return nil
       end
     end
 
     def announce_department_created(spec, department_file)
-      logger.info("Operations: Creating department creation announcement for: #{spec[:name]}_department")
+      dept_name = spec[:name].end_with?('_department') ? spec[:name] : "#{spec[:name]}_department"
+      logger.info("Operations: Creating department creation announcement for: #{dept_name}")
+      logger.info("Operations: Current @service_name value: #{@service_name.inspect}")
 
       announcement = Messages::DepartmentAnnouncementMessage.new(
-        department_name: "#{spec[:name]}_department",
+        department_name: dept_name,
         department_file: department_file,
         status: 'created',
         description: spec[:description],
@@ -312,18 +362,27 @@ module CityCouncil
         message_types: spec[:message_types] || [],
         reason: "Generated due to emergency service request"
       )
-      announcement._sm_header.from = @service_name
-
+      announcement.from(@service_name)  # Use the proper method to set from field
+      
+      logger.debug("Operations: Service name: #{@service_name}")
+      logger.debug("Operations: Announcement from field: #{announcement._sm_header.from}")
       logger.debug("Operations: Publishing department creation announcement: #{announcement.inspect}")
-      announcement.publish
-      logger.info("Operations: Successfully announced department creation: #{spec[:name]}_department")
+      
+      begin
+        announcement.publish
+      rescue => e
+        logger.error("Operations: Failed to publish announcement: #{e.message}")
+        logger.error("Operations: Announcement details: #{announcement.inspect}")
+      end
+      logger.info("Operations: Successfully announced department creation: #{dept_name}")
     end
 
     def announce_department_launched(spec, department_file, pid)
-      logger.info("Operations: Creating department launch announcement for: #{spec[:name]}_department (PID: #{pid})")
+      dept_name = spec[:name].end_with?('_department') ? spec[:name] : "#{spec[:name]}_department"
+      logger.info("Operations: Creating department launch announcement for: #{dept_name} (PID: #{pid})")
 
       announcement = Messages::DepartmentAnnouncementMessage.new(
-        department_name: "#{spec[:name]}_department",
+        department_name: dept_name,
         department_file: department_file,
         status: 'launched',
         description: spec[:description],
@@ -332,17 +391,27 @@ module CityCouncil
         process_id: pid,
         reason: "Generated due to emergency service request"
       )
-      announcement._sm_header.from = @service_name
+      announcement.from(@service_name)  # Use the proper method to set from field
 
       logger.debug("Operations: Publishing department launch announcement: #{announcement.inspect}")
-      announcement.publish
-      logger.info("Operations: Successfully announced department launch: #{spec[:name]}_department (PID: #{pid})")
+      
+      begin
+        announcement.publish
+      rescue => e
+        logger.error("Operations: Failed to publish launch announcement: #{e.message}")
+        logger.error("Operations: Announcement details: #{announcement.inspect}")
+      end
+      logger.info("Operations: Successfully announced department launch: #{dept_name} (PID: #{pid})")
 
-      puts "🏛️ NEW DEPARTMENT LAUNCHED: #{spec[:name]}_department (PID: #{pid})"
+      puts "🏛️ NEW DEPARTMENT LAUNCHED: #{dept_name} (PID: #{pid})"
     end
 
     def announce_department_failed(spec, department_file, error_msg)
-      dept_name = spec ? "#{spec[:name]}_department" : "unknown"
+      if spec
+        dept_name = spec[:name].end_with?('_department') ? spec[:name] : "#{spec[:name]}_department"
+      else
+        dept_name = "unknown"
+      end
       logger.error("Operations: Creating department failure announcement for: #{dept_name}")
       logger.error("Operations: Failure reason: #{error_msg}")
 
@@ -353,11 +422,194 @@ module CityCouncil
         description: error_msg,
         reason: "Generation or launch failed"
       )
-      announcement._sm_header.from = @service_name
+      announcement.from(@service_name)  # Use the proper method to set from field
 
       logger.debug("Operations: Publishing department failure announcement: #{announcement.inspect}")
-      announcement.publish
+      
+      begin
+        announcement.publish
+      rescue => e
+        logger.error("Operations: Failed to publish failure announcement: #{e.message}")
+        logger.error("Operations: Announcement details: #{announcement.inspect}")
+      end
       logger.error("Operations: Successfully announced department failure: #{department_file} - #{error_msg}")
+    end
+
+    # Department Health Monitoring
+    def start_department_monitoring
+      logger.info("Operations: Starting department health monitoring thread")
+      
+      Thread.new do
+        loop do
+          begin
+            sleep(10) # Check every 10 seconds
+            monitor_department_health if Time.now - @last_health_check >= @health_check_interval
+          rescue => e
+            logger.error("Operations: Error in monitoring thread: #{e.message}")
+            sleep(30) # Wait before retrying on error
+          end
+        end
+      end
+    end
+
+    def monitor_department_health
+      logger.debug("Operations: Performing health check on #{@department_health.size} departments")
+      @last_health_check = Time.now
+      
+      @department_health.each do |dept_name, health_info|
+        check_department_process_health(dept_name, health_info)
+        send_health_check_to_department(dept_name, health_info) if health_info[:process_healthy]
+      end
+      
+      cleanup_dead_departments
+    end
+
+    def check_department_process_health(dept_name, health_info)
+      pid = health_info[:pid]
+      
+      begin
+        # Check if process is still running
+        Process.kill(0, pid)
+        
+        # Process exists, update health info
+        unless health_info[:process_healthy]
+          logger.info("Operations: Department #{dept_name} process recovered (PID: #{pid})")
+          health_info[:process_healthy] = true
+          health_info[:process_failures] = 0
+        end
+        
+        health_info[:last_process_check] = Time.now
+        
+      rescue Errno::ESRCH
+        # Process not found
+        logger.warn("Operations: Department #{dept_name} process died (PID: #{pid})")
+        health_info[:process_healthy] = false
+        health_info[:process_failures] += 1
+        health_info[:last_failure] = Time.now
+        
+        # Try to restart if failures are below threshold
+        if health_info[:process_failures] <= 3
+          logger.info("Operations: Attempting to restart #{dept_name} (failure #{health_info[:process_failures]}/3)")
+          restart_department(dept_name, health_info)
+        else
+          logger.error("Operations: Department #{dept_name} has failed too many times, marking as permanently failed")
+          health_info[:status] = 'permanently_failed'
+        end
+        
+      rescue => e
+        logger.error("Operations: Error checking process health for #{dept_name}: #{e.message}")
+      end
+    end
+
+    def send_health_check_to_department(dept_name, health_info)
+      return unless health_info[:process_healthy]
+      
+      begin
+        # Create and send health check message
+        if defined?(Messages::HealthCheckMessage)
+          health_check = Messages::HealthCheckMessage.new
+          health_check.from(@service_name)
+          health_check._sm_header.to = dept_name
+          
+          # Set up response timeout
+          health_info[:last_health_request] = Time.now
+          health_info[:awaiting_response] = true
+          
+          logger.debug("Operations: Sending health check to #{dept_name}")
+          health_check.publish
+          
+          # Schedule response timeout check
+          Thread.new do
+            sleep(10) # 10 second timeout for health response
+            if health_info[:awaiting_response] && (Time.now - health_info[:last_health_request]) > 10
+              logger.warn("Operations: Department #{dept_name} failed to respond to health check")
+              health_info[:health_check_failures] += 1
+              health_info[:awaiting_response] = false
+              health_info[:responsive] = false
+            end
+          end
+        end
+      rescue => e
+        logger.error("Operations: Failed to send health check to #{dept_name}: #{e.message}")
+      end
+    end
+
+    def restart_department(dept_name, health_info)
+      logger.info("Operations: Restarting department #{dept_name}")
+      
+      begin
+        # Try to launch the department again
+        new_pid = launch_department(health_info[:department_file])
+        
+        if new_pid
+          logger.info("Operations: Successfully restarted #{dept_name} with new PID #{new_pid}")
+          health_info[:pid] = new_pid
+          health_info[:process_healthy] = true
+          health_info[:last_restart] = Time.now
+          health_info[:restart_count] += 1
+          
+          # Register the new PID with council
+          @council.update_department_pid(dept_name, new_pid)
+          
+          # Announce the restart
+          puts "🏛️ ♻️ DEPARTMENT RESTARTED: #{dept_name} (new PID: #{new_pid})"
+        else
+          logger.error("Operations: Failed to restart #{dept_name}")
+          health_info[:process_failures] += 1
+        end
+      rescue => e
+        logger.error("Operations: Error restarting #{dept_name}: #{e.message}")
+        health_info[:process_failures] += 1
+      end
+    end
+
+    def cleanup_dead_departments
+      @department_health.reject! do |dept_name, health_info|
+        if health_info[:status] == 'permanently_failed'
+          logger.info("Operations: Removing permanently failed department #{dept_name} from monitoring")
+          true
+        else
+          false
+        end
+      end
+    end
+
+    def register_department_for_monitoring(dept_name, pid, department_file)
+      logger.info("Operations: Registering #{dept_name} for health monitoring (PID: #{pid})")
+      
+      @department_health[dept_name] = {
+        pid: pid,
+        department_file: department_file,
+        process_healthy: true,
+        responsive: true,
+        process_failures: 0,
+        health_check_failures: 0,
+        restart_count: 0,
+        status: 'running',
+        created_at: Time.now,
+        last_process_check: Time.now,
+        last_health_request: nil,
+        last_failure: nil,
+        last_restart: nil,
+        awaiting_response: false
+      }
+      
+      puts "🏛️ 📊 Monitoring started for #{dept_name} (PID: #{pid})"
+    end
+
+    def handle_health_response(dept_name, response)
+      health_info = @department_health[dept_name]
+      return unless health_info && health_info[:awaiting_response]
+      
+      logger.debug("Operations: Received health response from #{dept_name}")
+      health_info[:awaiting_response] = false
+      health_info[:responsive] = true
+      health_info[:health_check_failures] = 0
+      health_info[:last_health_response] = Time.now
+    end
+
+    def get_department_health_status
+      @department_health
     end
 
     # Operations monitoring and management

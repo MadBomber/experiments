@@ -30,26 +30,41 @@ module CityCouncil
       return false unless message.kind == :user || message.kind == :service_request
 
       logger.info("Intelligence: Received message: kind=#{message.kind}, payload=#{message.payload}")
+      puts "🏛️ 🧠 Intelligence: Received #{message.kind} message"
+      puts "🏛️ 📝 Content: #{message.payload.to_s.slice(0, 100)}#{message.payload.to_s.length > 100 ? '...' : ''}"
 
       # Check if this is a request for a new service
-      if needs_new_service?(message.payload)
+      needs_service = needs_new_service?(message.payload)
+      puts "🏛️ 🔍 Intelligence: Service needed analysis result: #{needs_service}"
+      
+      if needs_service
         logger.info("Intelligence: Analyzing request for new service: #{message.payload}")
+        puts "🏛️ 🎯 Intelligence: Starting service analysis..."
 
         # Extract service requirements using intelligence analysis
         service_spec = analyze_service_request(message.payload)
+        puts "🏛️ 📋 Intelligence: Service spec generated: #{service_spec ? service_spec[:name] : 'FAILED'}"
 
         if service_spec
           logger.info("Intelligence: Service specification generated: #{service_spec}")
 
           if !service_exists?(service_spec[:name])
             logger.info("Intelligence: Department #{service_spec[:name]} does not exist, recommending creation")
+            puts "🏛️ ✨ Intelligence: Department #{service_spec[:name]} doesn't exist - emitting create_service"
 
             # Forward to Operations subsystem for actual creation
-            bus.emit VSM::Message.new(
+            create_service_msg = VSM::Message.new(
               kind: :create_service,
               payload: { spec: service_spec },
               meta: message.meta
             )
+            puts "🏛️ 📤 Intelligence: About to emit create_service message: #{create_service_msg.kind}"
+            puts "🏛️ 📄 Service spec: #{service_spec[:name]} - #{service_spec[:description]}"
+            puts "🏛️ 🚌 Bus subscribers: #{bus.instance_variable_get(:@subs).size}"
+            puts "🏛️ 🚌 Bus object ID: #{bus.object_id}"
+            bus.emit create_service_msg
+            puts "🏛️ ✅ Intelligence: create_service message emitted to VSM bus"
+            sleep(0.1) # Give async fiber a moment to process
 
             # Respond with analysis result
             bus.emit VSM::Message.new(
@@ -59,6 +74,7 @@ module CityCouncil
             )
           else
             logger.info("Intelligence: Department #{service_spec[:name]} already exists")
+            puts "🏛️ ✅ Intelligence: Department #{service_spec[:name]} already exists"
             bus.emit VSM::Message.new(
               kind: :assistant,
               payload: "Department #{service_spec[:name]} already exists",
@@ -67,6 +83,7 @@ module CityCouncil
           end
         else
           logger.warn("Intelligence: Failed to analyze service request: #{message.payload}")
+          puts "🏛️ ❌ Intelligence: Failed to analyze service request"
           bus.emit VSM::Message.new(
             kind: :assistant,
             payload: "Could not understand service request - insufficient information for analysis",
@@ -76,6 +93,7 @@ module CityCouncil
         true
       else
         logger.debug("Intelligence: Message does not require new service: #{message.payload}")
+        puts "🏛️ ❓ Intelligence: Message does not require new service"
         false
       end
     end
@@ -96,18 +114,23 @@ module CityCouncil
     # Analyze service request using AI and fallback heuristics
     def analyze_service_request(request)
       logger.info("Intelligence: Analyzing service request: #{request}")
+      puts "🏛️ 🧮 Intelligence: Starting analysis of service request..."
       
       # Check cache first
       cache_key = Digest::SHA256.hexdigest(request.to_s)
       if @analysis_cache[cache_key]
         logger.debug("Intelligence: Using cached analysis")
+        puts "🏛️ 💾 Intelligence: Using cached analysis result"
         return @analysis_cache[cache_key]
       end
 
+      puts "🏛️ 🤖 Intelligence: AI available: #{@ai_available}"
       unless @ai_available
         logger.info("Intelligence: AI not available, using heuristic analysis")
+        puts "🏛️ 🧮 Intelligence: AI not available, falling back to heuristic analysis"
         result = heuristic_analysis(request)
         @analysis_cache[cache_key] = result if result
+        puts "🏛️ 📊 Intelligence: Heuristic analysis result: #{result ? result[:name] : 'FAILED'}"
         return result
       end
 
@@ -144,8 +167,13 @@ module CityCouncil
       emergency_keywords = ['emergency', 'urgent', 'critical', 'immediate']
       
       text = payload.to_s.downcase
+      puts "🏛️ 🔍 Intelligence: Analyzing text: '#{text.slice(0, 80)}#{text.length > 80 ? '...' : ''}'"
+      
       has_service_keywords = service_keywords.any? { |word| text.include?(word) }
       has_emergency_keywords = emergency_keywords.any? { |word| text.include?(word) }
+      
+      puts "🏛️ 🔍 Service keywords found: #{has_service_keywords} (#{service_keywords.select { |word| text.include?(word) }.join(', ')})"
+      puts "🏛️ 🔍 Emergency keywords found: #{has_emergency_keywords} (#{emergency_keywords.select { |word| text.include?(word) }.join(', ')})"
       
       # Weight emergency requests higher
       score = 0
@@ -153,7 +181,11 @@ module CityCouncil
       score += 3 if has_emergency_keywords
       score += 1 if text.length > 50  # Longer requests likely more detailed
       
+      puts "🏛️ 🔍 Scoring: service_keywords(+2)=#{has_service_keywords ? 2 : 0}, emergency_keywords(+3)=#{has_emergency_keywords ? 3 : 0}, length(+1)=#{text.length > 50 ? 1 : 0}"
+      puts "🏛️ 🔍 Total score: #{score}, threshold: 2"
+      
       result = score >= 2
+      puts "🏛️ 🔍 Final result: #{result}"
       logger.debug("Intelligence: Service need analysis - score: #{score}, result: #{result}")
       result
     end
@@ -282,10 +314,12 @@ module CityCouncil
 
     def heuristic_analysis(request)
       logger.info("Intelligence: Using heuristic analysis for request: #{request}")
+      puts "🏛️ 🧮 Intelligence: Running heuristic analysis on: '#{request.to_s.slice(0, 80)}#{request.to_s.length > 80 ? '...' : ''}'"
 
       # Simple keyword-based analysis
       words = request.downcase.split
       logger.debug("Intelligence: Request keywords: #{words.join(', ')}")
+      puts "🏛️ 🔍 Keywords extracted: #{words.join(', ')}"
 
       department_patterns = {
         'traffic' => {
@@ -327,22 +361,43 @@ module CityCouncil
           name: 'building_inspection',
           description: 'Inspects buildings for safety and code compliance',
           emergency_response: false
+        },
+        'public' => {
+          name: 'public_works',
+          description: 'Manages public infrastructure, roads, and facilities maintenance',
+          emergency_response: true
+        },
+        'works' => {
+          name: 'public_works',
+          description: 'Manages public infrastructure, roads, and facilities maintenance',
+          emergency_response: true
+        },
+        'environmental' => {
+          name: 'environmental_services',
+          description: 'Handles environmental protection and hazardous material cleanup',
+          emergency_response: true
         }
       }
 
       # Find best match
       best_match = nil
       best_score = 0
+      matched_keyword = nil
       
+      puts "🏛️ 🎯 Matching against department patterns..."
       department_patterns.each do |keyword, pattern|
         score = words.count { |word| word.include?(keyword) }
+        puts "🏛️ 🔍 Checking '#{keyword}' pattern: score=#{score} (matches: #{words.select { |word| word.include?(keyword) }.join(', ')})"
         if score > best_score
           best_score = score
           best_match = pattern
+          matched_keyword = keyword
         end
       end
+      
+      puts "🏛️ 🎯 Best match: '#{matched_keyword}' with score #{best_score}"
 
-      if best_match
+      if best_match && best_score > 0
         result = {
           name: best_match[:name],
           description: best_match[:description],
@@ -354,9 +409,11 @@ module CityCouncil
           analysis_method: 'heuristic'
         }
         
+        puts "🏛️ ✅ Intelligence: Heuristic analysis successful: #{result[:name]}"
         logger.info("Intelligence: Heuristic analysis result: #{result}")
         result
       else
+        puts "🏛️ ❌ Intelligence: Heuristic analysis found no matching patterns"
         logger.warn("Intelligence: Heuristic analysis could not identify department type")
         nil
       end

@@ -86,6 +86,16 @@ module CityCouncil
         logger.warn("HealthCheckMessage not available for subscription")
       end
 
+      # Subscribe to health status responses from departments
+      if defined?(Messages::HealthStatusMessage)
+        logger.info("Subscribing to HealthStatusMessage responses")
+        Messages::HealthStatusMessage.subscribe(to: @service_name) do |message|
+          handle_department_health_response(message)
+        end
+      else
+        logger.warn("HealthStatusMessage not available for subscription")
+      end
+
       logger.info("SmartMessage subscriptions setup completed")
     end
 
@@ -121,9 +131,14 @@ module CityCouncil
       logger.info("Received service request from #{message._sm_header.from}")
       logger.debug("Service request details: #{message.inspect}")
 
+      puts "🏛️ 📨 CityCouncil: Received service request from #{message._sm_header.from}"
+
       # Process the service request with VSM Intelligence
       payload = message.details[:description] || message.description || message.inspect
       logger.info("Processing service request with VSM Intelligence: #{payload}")
+      
+      puts "🏛️ 🧠 CityCouncil: Processing request with VSM Intelligence..."
+      puts "🏛️ 📋 Request content: #{payload.to_s.slice(0, 100)}#{payload.to_s.length > 100 ? '...' : ''}"
       
       status_line("Processing request from #{message._sm_header.from}")
 
@@ -135,8 +150,10 @@ module CityCouncil
       )
 
       # Process with Intelligence component
+      puts "🏛️ 🎯 CityCouncil: Forwarding to Intelligence component..."
       intelligence_result = @capsule.roles[:intelligence].handle(vsm_message, bus: @capsule.bus)
       logger.debug("VSM Intelligence processing result: #{intelligence_result}")
+      puts "🏛️ ✅ CityCouncil: Intelligence processing #{intelligence_result ? 'completed' : 'failed'}"
       
       status_line("Governing #{@existing_departments.size} departments")
     end
@@ -144,21 +161,29 @@ module CityCouncil
     # Set up VSM bus message subscriptions
     def setup_vsm_subscriptions
       logger.info("Setting up VSM bus subscriptions for CityCouncil")
+      puts "🏛️ 🚌 CityCouncil: Setting up VSM bus subscriptions..."
+      puts "🏛️ 🚌 Bus object ID: #{@capsule.bus.object_id}"
       # Subscribe to create_service messages and forward to Operations
       @capsule.bus.subscribe do |vsm_message|
         logger.debug("VSM Bus: Received message - kind=#{vsm_message.kind}")
+        puts "🏛️ 🚌 VSM Bus: Received #{vsm_message.kind} message"
         case vsm_message.kind
         when :create_service
           # Forward to Operations component
           logger.info("VSM Bus: Forwarding create_service message to Operations component")
           logger.debug("VSM Bus: create_service payload: #{vsm_message.payload}")
+          puts "🏛️ 🏗️ CityCouncil: VSM Bus routing create_service to Operations..."
+          puts "🏛️ 📄 Service spec: #{vsm_message.payload[:spec][:name] rescue 'unknown'}"
           operations_result = @capsule.roles[:operations].handle(vsm_message, bus: @capsule.bus)
           logger.debug("VSM Bus: Operations processing result: #{operations_result}")
+          puts "🏛️ 🔧 CityCouncil: Operations #{operations_result ? 'succeeded' : 'failed'} in handling create_service"
         when :assistant
           # Log assistant responses
           logger.info("VSM Bus: Assistant response: #{vsm_message.payload}")
+          puts "🏛️ 🤖 CityCouncil: VSM Assistant response: #{vsm_message.payload.to_s.slice(0, 80)}#{vsm_message.payload.to_s.length > 80 ? '...' : ''}"
         else
           logger.debug("VSM Bus: Unhandled message kind: #{vsm_message.kind}")
+          puts "🏛️ ❓ CityCouncil: Unhandled VSM message kind: #{vsm_message.kind}"
         end
       end
     end
@@ -172,6 +197,18 @@ module CityCouncil
       end
 
       logger.info("Registered new department: #{dept_full_name}#{process_id ? " (PID: #{process_id})" : ""}")
+    end
+
+    def update_department_pid(department_name, new_pid)
+      dept_full_name = "#{department_name}_department"
+      if @department_processes[dept_full_name]
+        old_pid = @department_processes[dept_full_name]
+        @department_processes[dept_full_name] = new_pid
+        logger.info("Updated #{dept_full_name} PID: #{old_pid} → #{new_pid}")
+      else
+        @department_processes[dept_full_name] = new_pid
+        logger.info("Added new PID for #{dept_full_name}: #{new_pid}")
+      end
     end
 
     def start_governance
@@ -223,12 +260,59 @@ module CityCouncil
         status_line("Governing #{@existing_departments.size} departments")
       end
 
+      # Check department health status
+      health_status = get_department_health_summary
+      if health_status[:unhealthy_count] > 0 || health_status[:warning_count] > 0
+        health_msg = []
+        health_msg << "#{health_status[:unhealthy_count]} unhealthy" if health_status[:unhealthy_count] > 0
+        health_msg << "#{health_status[:warning_count]} warning" if health_status[:warning_count] > 0
+        
+        logger.warn("CityCouncil: Department health issues - #{health_msg.join(', ')}")
+        status_line("#{@existing_departments.size} departments (#{health_msg.join(', ')})")
+      elsif health_status[:monitored_count] > 0
+        logger.debug("CityCouncil: All #{health_status[:healthy_count]} monitored departments healthy")
+      end
+
       old_status = @status
       @status = determine_health_status
       if old_status != @status
         logger.info("CityCouncil health status changed from #{old_status} to #{@status}")
         status_line("#{@status.upcase} - #{@existing_departments.size} departments")
       end
+    end
+
+    def get_department_health_summary
+      return { healthy_count: 0, unhealthy_count: 0, monitored_count: 0 } unless @capsule&.roles&.[](:operations)
+      
+      health_status = @capsule.roles[:operations].get_department_health_status
+      healthy_count = 0
+      unhealthy_count = 0
+      warning_count = 0
+      
+      health_status.each do |dept_name, health_info|
+        case health_info[:status]
+        when 'running'
+          if health_info[:process_healthy] && health_info[:responsive]
+            healthy_count += 1
+          elsif health_info[:process_healthy] || health_info[:responsive]
+            warning_count += 1
+          else
+            unhealthy_count += 1
+          end
+        when 'permanently_failed'
+          unhealthy_count += 1
+        else
+          warning_count += 1
+        end
+      end
+      
+      {
+        healthy_count: healthy_count,
+        unhealthy_count: unhealthy_count,
+        warning_count: warning_count,
+        monitored_count: health_status.size,
+        details: health_status
+      }
     end
 
     def determine_health_status
@@ -258,6 +342,7 @@ module CityCouncil
 
       if defined?(Messages::HealthStatusMessage)
         uptime = Time.now - @start_time
+        health_summary = get_department_health_summary
         status_msg = Messages::HealthStatusMessage.new(
           service_name: @service_name,
           check_id: message._sm_header.uuid,
@@ -267,6 +352,7 @@ module CityCouncil
             departments_count: @existing_departments.size,
             departments: @existing_departments,
             department_processes: @department_processes.size,
+            health_summary: health_summary,
             ready: true,
           },
         )
@@ -277,6 +363,19 @@ module CityCouncil
         logger.info("Responded to health check from #{message._sm_header.from}: #{@status} (#{@existing_departments.size} departments, #{uptime.round(1)}s uptime)")
       else
         logger.warn("HealthStatusMessage not available - cannot respond to health check")
+      end
+    end
+
+    def handle_department_health_response(message)
+      logger.debug("Received health status response from #{message._sm_header.from}")
+      
+      # Forward to Operations component for processing
+      if @capsule&.roles&.[](:operations)
+        dept_name = message.service_name || message._sm_header.from
+        @capsule.roles[:operations].handle_health_response(dept_name, message)
+        logger.debug("Forwarded health response from #{dept_name} to Operations")
+      else
+        logger.warn("Operations component not available to handle health response")
       end
     end
   end

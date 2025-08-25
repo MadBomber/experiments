@@ -14,7 +14,7 @@ require 'fileutils'
 class GenericDepartmentIdentity < VSM::Identity
   include Common::Logger
 
-  def initialize(config)
+  def initialize(config:)
     @config = config
     @service_name = config['department']['name']
 
@@ -39,7 +39,7 @@ end
 class GenericDepartmentGovernance < VSM::Governance
   include Common::Logger
 
-  def initialize(config)
+  def initialize(config:)
     @config = config
     @service_name = config['department']['name']
 
@@ -70,7 +70,7 @@ end
 class GenericDepartmentIntelligence < VSM::Intelligence
   include Common::Logger
 
-  def initialize(config)
+  def initialize(config:)
     @config = config
     @service_name = config['department']['name']
     @statistics = Hash.new(0)
@@ -80,7 +80,7 @@ class GenericDepartmentIntelligence < VSM::Intelligence
     # Setup AI if configured
     setup_ai if @config['ai_analysis'] && @config['ai_analysis']['enabled']
 
-    super()
+    super(driver: nil)
     logger.info("✅ Intelligence system ready")
   end
 
@@ -170,7 +170,7 @@ end
 class GenericDepartmentOperations < VSM::Operations
   include Common::Logger
 
-  def initialize(config)
+  def initialize(config:)
     @config = config
     @service_name = config['department']['name']
     @capabilities = config['capabilities'] || []
@@ -321,8 +321,8 @@ class GenericTemplate
 
     # Use logger mixin consistently with other city services
     setup_logger(
-      service_name: @service_name,
-      log_level: @config['logging']['level'] || 'info'
+      name: @service_name,
+      level: (@config['logging']['level'] || 'info')
     )
 
     logger.info("🚀 Starting #{@config['department']['display_name']}")
@@ -362,11 +362,14 @@ class GenericTemplate
   def initialize_vsm_capsule
     logger.info("🏗️ Initializing VSM capsule")
 
+    # Capture config in local variable for use in DSL block
+    config = @config
+
     @capsule = VSM::DSL.define(@service_name.to_sym) do
-      identity klass: GenericDepartmentIdentity, args: [@config]
-      governance klass: GenericDepartmentGovernance, args: [@config]
-      intelligence klass: GenericDepartmentIntelligence, args: [@config]
-      operations klass: GenericDepartmentOperations, args: [@config]
+      identity klass: GenericDepartmentIdentity, args: { config: config }
+      governance klass: GenericDepartmentGovernance, args: { config: config }
+      intelligence klass: GenericDepartmentIntelligence, args: { config: config }
+      operations klass: GenericDepartmentOperations, args: { config: config }
       coordination klass: VSM::Coordination
     end
 

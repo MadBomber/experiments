@@ -35,15 +35,20 @@ end
 if __FILE__ == $0
   puts "🏛️ Starting CityCouncil..."
 
-  council = CityCouncil::Base.new
+  Async do
+    puts "🏛️ 🔄 CityCouncil starting in Async context..."
+    
+    council = CityCouncil::Base.new
 
-  # Start with CLI if in interactive mode
-  if ARGV.include?('--cli')
-    puts "💬 Starting CLI interface..."
-    port = CityCouncil::CLIPort.new(capsule: council.capsule)
-    Thread.new { port.loop }
-    council.logger.info("CLI interface started in separate thread")
+    # Start with CLI if in interactive mode
+    if ARGV.include?('--cli')
+      puts "💬 Starting CLI interface..."
+      port = CityCouncil::CLIPort.new(capsule: council.capsule)
+      Thread.new { port.loop }
+      council.logger.info("CLI interface started in separate thread")
+    end
+
+    puts "🏛️ 🚀 CityCouncil ready - VSM running in async context"
+    council.start_governance
   end
-
-  council.start_governance
 end
