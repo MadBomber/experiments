@@ -1,0 +1,60 @@
+---
+department:
+  name: parking_management_department
+  display_name: Parking Management
+  description: Handles management and maintenance of city parking facilities, including
+    enforcement, permits, and parking lot operations.
+  invariants:
+  - serve citizens efficiently
+  - respond to emergencies promptly
+  - maintain operational readiness
+capabilities:
+- Monitor and enforce parking regulations in parking lots and on-street parking
+- Handle parking lot maintenance and repair
+- Issue parking permits and manage parking allocation
+- Coordinate with transportation and traffic management departments for parking policies
+message_types:
+  subscribes_to:
+  - health_check_message
+  publishes:
+  - parking incident report
+  - maintenance request
+  - parking violation notice
+routing_rules:
+  emergency_911_message:
+  - condition: message contains relevant keywords
+    keywords:
+    - handles
+    - management
+    - maintenance
+    - city
+    - parking
+    priority: high
+  health_check_message:
+  - condition: always
+    priority: normal
+message_actions:
+  emergency_911_message: handle_emergency
+  health_check_message: respond_health_check
+  parking incident report: handle_parking incident report
+  maintenance request: handle_maintenance request
+  parking violation notice: handle_parking violation notice
+action_configs:
+  handle_emergency:
+    response_template: "\U0001F6A8 PARKING_MANAGEMENT_DEPARTMENT: Responding to {{emergency_type}}
+      at {{location}}"
+    additional_actions:
+    - log_emergency
+    - notify_dispatch
+    publish_response: true
+  respond_health_check:
+    response_template: "\U0001F497 parking_management_department is operational"
+    publish_response: true
+ai_analysis:
+  enabled: false
+  context: You are the parking_management_department department. Handle handles management
+    and maintenance of city parking facilities, including enforcement, permits, and
+    parking lot operations..
+logging:
+  level: info
+  statistics_interval: 300

@@ -7,7 +7,11 @@
 require 'redis'
 require 'json'
 
+require_relative 'common/status_line'
+
 class RedisMonitor
+  include Common::StatusLine
+
   def initialize
     @redis = Redis.new
     puts "🔍 SmartMessage Redis Monitor"

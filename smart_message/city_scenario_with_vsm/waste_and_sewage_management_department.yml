@@ -2,33 +2,33 @@
 department:
   name: waste_and_sewage_management_department
   display_name: Waste And Sewage Management
-  description: Responsible for managing the collection, treatment, and disposal of
-    sewage and wastewater to protect public health and the environment.
+  description: Responsible for managing and maintaining sewage and waste water systems,
+    including sewage backup issues, repairs, and infrastructure.
   invariants:
   - serve citizens efficiently
   - respond to emergencies promptly
   - maintain operational readiness
 capabilities:
+- Monitor and repair sewage and wastewater infrastructure
 - Respond to sewage backups and overflows in residential and commercial areas
-- Identify and repair causes of sewage system failures
-- Coordinate emergency sanitation and cleanup efforts
-- Ensure sewage system compliance and maintenance
+- Coordinate with public health and environmental agencies to prevent health hazards
+- Maintain sewage treatment facilities and pipelines
 message_types:
   subscribes_to:
   - health_check_message
   publishes:
-  - sewage_backup_alert
-  - wastewater_discharge
-  - maintenance_request
+  - sewage backup report
+  - wastewater system failure
+  - overflow emergency
 routing_rules:
   emergency_911_message:
   - condition: message contains relevant keywords
     keywords:
     - responsible
     - managing
-    - collection
-    - treatment
-    - disposal
+    - maintaining
+    - sewage
+    - waste
     priority: high
   health_check_message:
   - condition: always
@@ -36,9 +36,9 @@ routing_rules:
 message_actions:
   emergency_911_message: handle_emergency
   health_check_message: respond_health_check
-  sewage_backup_alert: handle_sewage_backup_alert
-  wastewater_discharge: handle_wastewater_discharge
-  maintenance_request: handle_maintenance_request
+  sewage backup report: handle_sewage backup report
+  wastewater system failure: handle_wastewater system failure
+  overflow emergency: handle_overflow emergency
 action_configs:
   handle_emergency:
     response_template: "\U0001F6A8 WASTE_AND_SEWAGE_MANAGEMENT_DEPARTMENT: Responding
@@ -53,8 +53,8 @@ action_configs:
 ai_analysis:
   enabled: false
   context: You are the waste_and_sewage_management_department department. Handle responsible
-    for managing the collection, treatment, and disposal of sewage and wastewater
-    to protect public health and the environment..
+    for managing and maintaining sewage and waste water systems, including sewage
+    backup issues, repairs, and infrastructure..
 logging:
   level: info
   statistics_interval: 300

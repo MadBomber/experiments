@@ -31,11 +31,11 @@ module Common
 
     def initialize_status_line
       return unless $stdout.tty?
-      
+
       begin
         @terminal_rows, @terminal_columns = get_terminal_size
         @program_name = File.basename($0, ".*")
-        
+
         if @terminal_rows && @terminal_columns
           # Set up scrolling region (leave bottom line for status)
           print "\033[1;#{@terminal_rows - 1}r"
@@ -62,8 +62,26 @@ module Common
         print "\033[#{@terminal_rows};1H"
         # Clear the line
         print "\033[K"
-        # Print the text padded to the width of the terminal
-        print "#{@program_name}: #{text}".ljust(@terminal_columns - 1)
+
+        # Build the full status line
+        full_text  = "#{@program_name}: "
+        full_text += "#{@status_line_prefix}: " if @status_line_prefix
+        full_text += "#{text}"
+
+        # Truncate from the right if too long, but preserve the program name
+        if full_text.length >= @terminal_columns
+          max_text_length = @terminal_columns - @program_name.length - 3 # -3 for ": "
+          if max_text_length > 10 # Ensure we have reasonable space for status
+            truncated_text = text[0...max_text_length - 1] + "…"
+            full_text = "#{@program_name}: #{truncated_text}"
+          else
+            # Terminal too narrow, just show program name
+            full_text = @program_name[0...@terminal_columns - 1]
+          end
+        end
+
+        # Print the text, padding to terminal width
+        print full_text.ljust(@terminal_columns - 1)
         # Restore cursor position
         print "\033[u"
         $stdout.flush

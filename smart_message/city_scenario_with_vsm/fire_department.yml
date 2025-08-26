@@ -2,34 +2,32 @@
 department:
   name: fire_department
   display_name: Fire
-  description: Responsible for emergency rescue operations involving human safety,
-    including extrication and rescue of individuals in dangerous situations such as
-    being trapped in storm drains.
+  description: Provides emergency response services for fires, rescues, and medical
+    emergencies.
   invariants:
   - serve citizens efficiently
   - respond to emergencies promptly
   - maintain operational readiness
 capabilities:
-- Perform rescue operations for individuals trapped in hazardous environments
-- Respond to urban rescue emergencies like storm drain entrapments
-- Coordinate with other emergency agencies for rescue missions
+- Respond to medical emergencies involving injuries or accidents
+- Provide first aid and rescue services
+- Coordinate with paramedics and other emergency services
 message_types:
   subscribes_to:
   - health_check_message
   - emergency_911_message
   publishes:
-  - rescue_request
-  - emergency_alert
-  - rescue_operation_update
+  - EmergencyMedicalResponse
+  - RescueRequest
 routing_rules:
   emergency_911_message:
   - condition: message contains relevant keywords
     keywords:
-    - responsible
+    - provides
     - emergency
-    - rescue
-    - operations
-    - involving
+    - response
+    - services
+    - fires
     priority: high
   health_check_message:
   - condition: always
@@ -37,9 +35,8 @@ routing_rules:
 message_actions:
   emergency_911_message: handle_emergency
   health_check_message: respond_health_check
-  rescue_request: handle_rescue_request
-  emergency_alert: handle_emergency_alert
-  rescue_operation_update: handle_rescue_operation_update
+  EmergencyMedicalResponse: handle_EmergencyMedicalResponse
+  RescueRequest: handle_RescueRequest
 action_configs:
   handle_emergency:
     response_template: "\U0001F6A8 FIRE_DEPARTMENT: Responding to {{emergency_type}}
@@ -53,9 +50,8 @@ action_configs:
     publish_response: true
 ai_analysis:
   enabled: false
-  context: You are the fire_department department. Handle responsible for emergency
-    rescue operations involving human safety, including extrication and rescue of
-    individuals in dangerous situations such as being trapped in storm drains..
+  context: You are the fire_department department. Handle provides emergency response
+    services for fires, rescues, and medical emergencies..
 logging:
   level: info
   statistics_interval: 300
