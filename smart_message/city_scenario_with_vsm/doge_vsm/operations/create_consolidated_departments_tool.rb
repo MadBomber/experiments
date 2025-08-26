@@ -42,7 +42,13 @@ module DogeVSM
         consolidations_data = args[:consolidations] || args["consolidations"]
         
         if consolidations_data.nil? || consolidations_data.empty?
-          return { error: "No consolidation data provided" }
+          return { 
+            error: "No consolidation data provided", 
+            total_consolidations: 0,
+            successful_consolidations: 0,
+            consolidations: [],
+            errors: ["No consolidation data provided"]
+          }
         end
 
         results = []
@@ -181,14 +187,35 @@ module DogeVSM
       end
 
       def merge_departments(new_dept_name, old_departments, reason, enhanced_capabilities = [])
+        # Generate the department name for the YAML (snake_case)
+        dept_name = generate_department_name(new_dept_name)
+        
         merged = {
-          'display_name' => new_dept_name,
-          'description' => generate_merged_description(old_departments, reason),
-          'keywords' => [],
+          'department' => {
+            'name' => dept_name,
+            'display_name' => new_dept_name,
+            'description' => generate_merged_description(old_departments, reason),
+            'invariants' => [
+              'serve citizens efficiently',
+              'respond to emergencies promptly', 
+              'maintain operational readiness'
+            ]
+          },
           'capabilities' => [],
           'message_types' => {
             'subscribes_to' => [],
             'publishes' => []
+          },
+          'routing_rules' => {},
+          'message_actions' => {},
+          'action_configs' => {},
+          'ai_analysis' => {
+            'enabled' => false,
+            'context' => "You are the #{dept_name} department. Handle #{generate_merged_description(old_departments, reason).downcase}."
+          },
+          'logging' => {
+            'level' => 'info',
+            'statistics_interval' => 300
           },
           'consolidation_info' => {
             'merged_from' => old_departments.map { |d| d[:name] },
@@ -197,14 +224,9 @@ module DogeVSM
           }
         }
 
-        # Merge all capabilities and keywords
+        # Merge all capabilities 
         old_departments.each do |dept|
           config = dept[:config] || {}
-          
-          # Merge keywords
-          if config['keywords']
-            merged['keywords'].concat(config['keywords'])
-          end
           
           # Merge capabilities
           if config['capabilities']
@@ -220,6 +242,21 @@ module DogeVSM
               merged['message_types']['publishes'].concat(config['message_types']['publishes'])
             end
           end
+
+          # Merge routing rules
+          if config['routing_rules']
+            merged['routing_rules'].merge!(config['routing_rules'])
+          end
+
+          # Merge message actions
+          if config['message_actions']
+            merged['message_actions'].merge!(config['message_actions'])
+          end
+
+          # Merge action configs
+          if config['action_configs']
+            merged['action_configs'].merge!(config['action_configs'])
+          end
         end
 
         # Add enhanced capabilities from consolidation analysis
@@ -228,12 +265,21 @@ module DogeVSM
         end
 
         # Remove duplicates and sort
-        merged['keywords'] = merged['keywords'].uniq.sort
         merged['capabilities'] = merged['capabilities'].uniq.sort
         merged['message_types']['subscribes_to'] = merged['message_types']['subscribes_to'].uniq.sort
         merged['message_types']['publishes'] = merged['message_types']['publishes'].uniq.sort
 
         merged
+      end
+
+      def generate_department_name(display_name)
+        # Convert display name to snake_case for the department name
+        display_name.downcase
+                    .gsub(/[^a-z0-9\s&]/, '') # Remove special characters except & and spaces
+                    .gsub(/\s*&\s*/, '_and_') # Convert "word & word" to "word_and_word"
+                    .gsub(/\s+/, '_') # Convert spaces to underscores
+                    .gsub(/_+/, '_') # Collapse multiple underscores
+                    .gsub(/^_|_$/, '') # Remove leading/trailing underscores
       end
 
       def generate_merged_description(old_departments, reason)
