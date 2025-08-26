@@ -10,14 +10,14 @@ module DogeVSM
         properties: {
           combinations: { 
             type: 'array', 
-            description: 'Array of department combination objects identified by AI analysis',
+            description: 'Array of department combination objects',
             items: {
               type: 'object',
               properties: {
-                dept1: { type: 'object', description: 'First department to consolidate' },
-                dept2: { type: 'object', description: 'Second department to consolidate' },
-                score: { type: 'number', description: 'Similarity/consolidation score (0.0-1.0)' },
-                reasons: { type: 'array', items: { type: 'string' }, description: 'Reasons for consolidation' }
+                dept1: { type: 'object' },
+                dept2: { type: 'object' },
+                score: { type: 'number' },
+                reasons: { type: 'array', items: { type: 'string' } }
               }
             }
           }
@@ -43,12 +43,6 @@ module DogeVSM
 
         combinations.each do |combo|
           recommendation = build_recommendation(combo)
-          if recommendation[:error]
-            # Log error but continue processing other combinations
-            puts "ERROR in build_recommendation: #{recommendation[:error]}"
-            puts "Combo keys: #{recommendation[:combo_keys]}"
-            next
-          end
           recommendations << recommendation
         end
 
@@ -62,40 +56,20 @@ module DogeVSM
       private
 
       def build_recommendation(combo)
-        dept1 = combo[:dept1] || combo["dept1"]
-        dept2 = combo[:dept2] || combo["dept2"]
-        score = combo[:score] || combo["score"] || 0.0
-        reasons = combo[:reasons] || combo["reasons"] || []
+        dept1 = combo[:dept1]
+        dept2 = combo[:dept2]
+        score = combo[:score]
+        reasons = combo[:reasons]
 
-        # Validate that we have valid department objects
-        if dept1.nil? || dept2.nil?
-          return {
-            error: "Invalid department data - missing dept1 or dept2",
-            combo_keys: combo.keys,
-            dept1_present: !dept1.nil?,
-            dept2_present: !dept2.nil?
-          }
-        end
-
-        # Ensure departments have required fields with defaults
-        dept1_caps = dept1[:capabilities] || dept1["capabilities"] || []
-        dept2_caps = dept2[:capabilities] || dept2["capabilities"] || []
-        
         combined_name = generate_combined_name(dept1, dept2)
-        all_capabilities = (dept1_caps + dept2_caps).uniq
-        duplicates_eliminated = dept1_caps.length + dept2_caps.length - all_capabilities.length
+        all_capabilities = (dept1[:capabilities] + dept2[:capabilities]).uniq
+        duplicates_eliminated = dept1[:capabilities].length + dept2[:capabilities].length - all_capabilities.length
 
         {
           similarity_score: (score * 100).round(1),
           departments: [
-            { 
-              name: dept1[:display_name] || dept1["display_name"] || "Unknown Department", 
-              file: dept1[:file] || dept1["file"] || "unknown.yml" 
-            },
-            { 
-              name: dept2[:display_name] || dept2["display_name"] || "Unknown Department", 
-              file: dept2[:file] || dept2["file"] || "unknown.yml" 
-            }
+            { name: dept1[:display_name], file: dept1[:file] },
+            { name: dept2[:display_name], file: dept2[:file] }
           ],
           proposed_name: combined_name,
           rationale: reasons,
@@ -112,10 +86,7 @@ module DogeVSM
             'Streamline citizen service delivery'
           ],
           implementation: {
-            files_to_merge: [
-              dept1[:file] || dept1["file"] || "unknown1.yml", 
-              dept2[:file] || dept2["file"] || "unknown2.yml"
-            ],
+            files_to_merge: [dept1[:file], dept2[:file]],
             new_config_file: "#{combined_name.downcase.gsub(' ', '_')}.yml",
             estimated_savings: calculate_estimated_savings(dept1, dept2)
           }
@@ -123,11 +94,8 @@ module DogeVSM
       end
 
       def generate_combined_name(dept1, dept2)
-        name1 = dept1[:display_name] || dept1["display_name"] || "Unknown"
-        name2 = dept2[:display_name] || dept2["display_name"] || "Unknown"
-        
-        name1_words = name1.downcase.split
-        name2_words = name2.downcase.split
+        name1_words = dept1[:display_name].downcase.split
+        name2_words = dept2[:display_name].downcase.split
 
         # Look for common infrastructure themes
         if (name1_words + name2_words).any? { |word| word.match?(/water|waste|sewer|utility/) }
@@ -149,14 +117,8 @@ module DogeVSM
       def calculate_estimated_savings(dept1, dept2)
         # Simple heuristic based on capability overlap
         base_cost = 100_000  # Assumed annual cost per department
-        
-        dept1_caps = dept1[:capabilities] || dept1["capabilities"] || []
-        dept2_caps = dept2[:capabilities] || dept2["capabilities"] || []
-        
-        return { estimated_annual_savings: 0, methodology: 'No capability data available' } if dept1_caps.empty? || dept2_caps.empty?
-        
-        overlap_ratio = (dept1_caps & dept2_caps).length.to_f /
-                       [dept1_caps.length, dept2_caps.length].max
+        overlap_ratio = (dept1[:capabilities] & dept2[:capabilities]).length.to_f /
+                       [dept1[:capabilities].length, dept2[:capabilities].length].max
 
         savings = (base_cost * overlap_ratio * 0.6).round
 

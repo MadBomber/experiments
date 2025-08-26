@@ -1,0 +1,35 @@
+---
+display_name: Water & Utilities Management
+description: Consolidated department combining Water Management, Water Supply And
+  Utilities. Both are involved in water infrastructure management and emergency response.
+keywords: []
+capabilities:
+- Conduct inspections of water infrastructure for integrity
+- Coordinate emergency repairs and water flow management
+- Coordinate emergency repairs with utility providers
+- Coordinated repairs and long-term maintenance plans
+- Ensure long-term maintenance and integrity of water infrastructure
+- Identify and repair issues causing loss of water pressure
+- Integrated water supply and emergency response management
+- Mitigate street flooding caused by water infrastructure failures
+- Monitor water distribution systems for failures
+- Respond to and repair major water main breaks
+- Unified approach to water pressure and flooding issues
+message_types:
+  subscribes_to:
+  - emergency_911_message
+  - health_check_message
+  publishes:
+  - emergency_response
+  - flooding_alert
+  - repair_request
+  - utility_service_failure
+  - water_main_break
+  - water_pressure_loss
+  - water_supply_disruption
+consolidation_info:
+  merged_from:
+  - Water Management
+  - Water Supply And Utilities
+  reason: Both are involved in water infrastructure management and emergency response.
+  created_at: '2025-08-26T16:25:44-05:00'

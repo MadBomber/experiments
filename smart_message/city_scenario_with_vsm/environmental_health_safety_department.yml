@@ -1,0 +1,36 @@
+---
+display_name: Environmental Health & Safety
+description: Consolidated department combining Environmental Protection Agency, Environmental
+  Services. Both departments handle environmental hazards and enforce environmental
+  regulations.
+keywords: []
+capabilities:
+- Coordinate with emergency response agencies for containment and mitigation
+- Enforce environmental regulations and coordinate with law enforcement
+- Enforce environmental standards and regulations
+- Enhanced coordination with emergency response agencies
+- Integrated environmental hazard monitoring and cleanup operations
+- Investigate reports of illegal chemical dumping
+- Investigate sources of hazardous air quality, including unknown smoke origins
+- Monitor air pollution levels and issue health advisories
+- Monitor and assess environmental contamination
+- Respond to environmental hazards and conduct cleanup operations
+- Streamlined enforcement of environmental regulations
+message_types:
+  subscribes_to:
+  - emergency_911_message
+  - health_check_message
+  publishes:
+  - air_quality_alert
+  - environmental_hazard_alert
+  - environmental_hazard_response
+  - hazardous_material_disposal_alert
+  - hazardous_smoke_report
+  - illegal_chemical_dump_report
+consolidation_info:
+  merged_from:
+  - Environmental Protection Agency
+  - Environmental Services
+  reason: Both departments handle environmental hazards and enforce environmental
+    regulations.
+  created_at: '2025-08-26T16:25:44-05:00'

@@ -18,7 +18,11 @@
       "Bash(echo:*)",
       "Bash(VSM_DEBUG_STREAM=1 timeout 30s ruby doge_vsm.rb)",
       "Bash(curl:*)",
-      "Bash(VSM_DEBUG_STREAM=1 timeout 15s ruby doge_vsm.rb)"
+      "Bash(VSM_DEBUG_STREAM=1 timeout 15s ruby doge_vsm.rb)",
+      "Bash(./doge_vsm.rb:*)",
+      "Read(//Users/dewayne/sandbox/git_repos/madbomber/vsm/**)",
+      "Bash(VSM_DEBUG_STREAM=1 timeout 90s ./doge_vsm.rb)",
+      "Bash(VSM_DEBUG_STREAM=1 timeout 120s ./doge_vsm.rb)"
     ],
     "deny": [],
     "ask": [],
