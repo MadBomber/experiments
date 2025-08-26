@@ -100,3 +100,4 @@ See `room_for_improvement.md` for identified patterns that could be extracted in
 - SmartMessage library (`../../lib/smart_message`)
 - VSM library (Vector Symbolic Memory for AI agents)
 - The goal of this experiment is to create a CityCouncil class in the file city_council.rb which will dynamically create and persis new ruby program to handle missing city services requested in this city scenario
+- never leave a user wondering what is going on with the program always give some kind of periodic update to the user.

@@ -12,7 +12,11 @@
       "Bash(sed:*)",
       "Bash(timeout:*)",
       "Read(//Users/dewayne/sandbox/git_repos/madbomber/smart_message/**)",
-      "Bash(./show_fire_department_changes.sh:*)"
+      "Bash(./show_fire_department_changes.sh:*)",
+      "Bash(gem list)",
+      "Bash(LLM_PROVIDER=ollama LLM_MODEL=llama3.2:1b VSM_DEBUG_STREAM=1 timeout 30s ruby doge_vsm.rb)",
+      "Bash(echo:*)",
+      "Bash(VSM_DEBUG_STREAM=1 timeout 30s ruby doge_vsm.rb)"
     ],
     "deny": [],
     "ask": [],
