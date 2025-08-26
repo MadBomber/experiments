@@ -1,12 +1,13 @@
-Add Department of Government Efficiency Analysis Script
+Refactor doge_vsm logic to handle completion patterns and response formats
 
-Introduced a new Ruby script to analyze the efficiency of government
-departments by identifying similarities between them. The script loads
-department configurations from YAML files, extracts keywords, and
-computes similarity scores based on capabilities and keywords. If
-departments exceed a specified similarity threshold, potential
-combinations are suggested for review. This tool is intended to help
-streamline departments by identifying overlap and opportunities for
-collaboration.
+Improves the logic in the doge_vsm module to detect completion messages 
+in assistant responses using defined patterns. This helps streamline 
+the analysis workflow by allowing the system to recognize when 
+completion indicators appear in messages.
 
-No related issues or tickets referenced.
+Additionally, the handling of similarity calculation and 
+recommendation generation responses has been updated to support 
+both hash and direct array formats, ensuring better robustness 
+and usability.
+
+No issue references available for this change.

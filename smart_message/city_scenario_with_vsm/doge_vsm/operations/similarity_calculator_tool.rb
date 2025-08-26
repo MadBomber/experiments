@@ -28,21 +28,22 @@ module DogeVSM
       })
 
       def run(args)
-        # Handle both direct array and wrapped format from LoadDepartmentsTool
-        # Handle both symbol and string keys from different AI models
-        departments_data = args[:departments] || args["departments"]
-        
-        if departments_data.is_a?(Hash) && departments_data[:departments]
-          departments = departments_data[:departments]
-        elsif departments_data.is_a?(Array)
-          departments = departments_data
-        else
-          return { error: "Invalid departments data format: #{departments_data.class}" }
-        end
+        begin
+          # Handle both direct array and wrapped format from LoadDepartmentsTool
+          # Handle both symbol and string keys from different AI models
+          departments_data = args[:departments] || args["departments"]
+          
+          if departments_data.is_a?(Hash) && departments_data[:departments]
+            departments = departments_data[:departments]
+          elsif departments_data.is_a?(Array)
+            departments = departments_data
+          else
+            return { error: "Invalid departments data format: #{departments_data.class}" }
+          end
 
-        return { error: "No departments provided" } if departments.nil? || departments.empty?
-        
-        threshold = args[:threshold] || 0.10  # Lowered threshold from 0.15 to 0.10 to find more combinations
+          return { error: "No departments provided" } if departments.nil? || departments.empty?
+          
+          threshold = args[:threshold] || 0.05  # Lowered threshold to 5% to find meaningful combinations
         combinations = []
 
         departments.each_with_index do |dept1, i|
@@ -62,13 +63,16 @@ module DogeVSM
           end
         end
 
-        sorted_combinations = combinations.sort_by { |combo| -combo[:score] }
-        
-        {
-          threshold: threshold,
-          combinations_found: combinations.length,
-          combinations: sorted_combinations
-        }
+          sorted_combinations = combinations.sort_by { |combo| -combo[:score] }
+          
+          {
+            threshold: threshold,
+            combinations_found: combinations.length,
+            combinations: sorted_combinations
+          }
+        rescue => e
+          { error: "Similarity calculation error: #{e.class}: #{e.message}" }
+        end
       end
 
       private
@@ -76,20 +80,30 @@ module DogeVSM
       def calculate_department_similarity(dept1, dept2)
         scores = []
 
+        # Handle both symbol and string keys
+        keywords1 = dept1[:keywords] || dept1["keywords"] || []
+        keywords2 = dept2[:keywords] || dept2["keywords"] || []
+        capabilities1 = dept1[:capabilities] || dept1["capabilities"] || []
+        capabilities2 = dept2[:capabilities] || dept2["capabilities"] || []
+        description1 = dept1[:description] || dept1["description"] || ""
+        description2 = dept2[:description] || dept2["description"] || ""
+        message_types1 = dept1[:message_types] || dept1["message_types"] || {}
+        message_types2 = dept2[:message_types] || dept2["message_types"] || {}
+
         # Keyword overlap (40% weight)
-        keyword_similarity = calculate_keyword_similarity(dept1[:keywords], dept2[:keywords])
+        keyword_similarity = calculate_keyword_similarity(keywords1, keywords2)
         scores << keyword_similarity * 0.4
 
         # Capability overlap (30% weight)
-        capability_similarity = calculate_capability_similarity(dept1[:capabilities], dept2[:capabilities])
+        capability_similarity = calculate_capability_similarity(capabilities1, capabilities2)
         scores << capability_similarity * 0.3
 
         # Description similarity (20% weight)
-        description_similarity = calculate_description_similarity(dept1[:description], dept2[:description])
+        description_similarity = calculate_description_similarity(description1, description2)
         scores << description_similarity * 0.2
 
         # Message type overlap (10% weight)
-        message_similarity = calculate_message_type_similarity(dept1[:message_types], dept2[:message_types])
+        message_similarity = calculate_message_type_similarity(message_types1, message_types2)
         scores << message_similarity * 0.1
 
         scores.sum

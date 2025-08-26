@@ -2,7 +2,7 @@
 
 module DogeVSM
   class Intelligence < VSM::Intelligence
-    def initialize(provider: :openai, model: 'gpt-4o-mini')
+    def initialize(provider: :openai, model: 'gpt-4o')
       # Create the appropriate driver based on provider
       driver = case provider
       when :openai
@@ -20,7 +20,7 @@ module DogeVSM
       else
         raise ArgumentError, "Unsupported provider: #{provider}. Supported providers: :openai, :ollama"
       end
-      
+
       super(driver: driver, system_prompt: build_system_prompt)
     end
 

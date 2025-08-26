@@ -16,7 +16,9 @@
       "Bash(gem list)",
       "Bash(LLM_PROVIDER=ollama LLM_MODEL=llama3.2:1b VSM_DEBUG_STREAM=1 timeout 30s ruby doge_vsm.rb)",
       "Bash(echo:*)",
-      "Bash(VSM_DEBUG_STREAM=1 timeout 30s ruby doge_vsm.rb)"
+      "Bash(VSM_DEBUG_STREAM=1 timeout 30s ruby doge_vsm.rb)",
+      "Bash(curl:*)",
+      "Bash(VSM_DEBUG_STREAM=1 timeout 15s ruby doge_vsm.rb)"
     ],
     "deny": [],
     "ask": [],
