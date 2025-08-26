@@ -1,0 +1,172 @@
+---
+# Generic Department Configuration Template
+# This file serves as a comprehensive example for creating new city department YAML configurations
+# Copy this file and modify the values to create a new department service
+
+# Top-level department configuration block
+department:
+  # REQUIRED: Internal system identifier - must be unique, lowercase, underscore-separated
+  # This becomes the class name and file name for the generated Ruby service
+  name: example_department
+  
+  # REQUIRED: Human-readable display name shown in logs and UI
+  # Use proper capitalization and spacing
+  display_name: Example Department
+  
+  # REQUIRED: Brief description of the department's purpose and responsibilities
+  # This helps the AI understand when to route messages to this department
+  description: Handles sample operations and demonstrates the department configuration structure for new city services.
+  
+  # REQUIRED: Core operating principles that all departments must follow
+  # These are standard across all city departments
+  invariants:
+  - serve citizens efficiently        # Always prioritize citizen needs
+  - respond to emergencies promptly   # Emergency response is critical
+  - maintain operational readiness    # Stay prepared for service requests
+
+# REQUIRED: List of specific functions this department can perform
+# Each capability should be a clear, actionable statement
+# These help determine when to route emergency calls to this department
+capabilities:
+- Handle routine service requests and citizen inquiries
+- Coordinate with other departments for complex issues
+- Maintain department records and operational logs
+- Respond to emergency situations within department expertise
+- Provide status updates and health monitoring information
+
+# REQUIRED: Message routing and communication configuration
+message_types:
+  # Messages this department will listen for and respond to
+  subscribes_to:
+  - health_check_message      # Universal health monitoring (all departments subscribe)
+  - emergency_911_message     # Emergency dispatch routing (departments that handle emergencies)
+  # Add additional message types this department should monitor:
+  # - citizen_service_request
+  # - inter_department_coordination
+  
+  # Messages this department can send to other services
+  publishes:
+  - example_service_complete      # Completion notification
+  - example_status_update         # Progress updates
+  - example_escalation_request    # When help is needed from other departments
+  # Add department-specific message types this service will broadcast
+
+# REQUIRED: Rules for determining when messages should be routed to this department
+routing_rules:
+  # How to handle emergency 911 calls
+  emergency_911_message:
+  - condition: message contains relevant keywords  # Logic for message filtering
+    keywords:                                     # Keywords that indicate this department should respond
+    - example          # Replace with department-specific terms
+    - sample           # Words from description/capabilities that identify relevant calls
+    - demonstration    # Add more keywords that relate to your department's function
+    - service          # Common terms citizens might use when calling
+    - request          # Include both technical and layman terms
+    priority: high     # Emergency messages always get high priority
+  
+  # How to respond to system health checks
+  health_check_message:
+  - condition: always    # All departments must respond to health checks
+    priority: normal     # Standard priority for routine monitoring
+
+# REQUIRED: Mapping of message types to handler methods
+# Each message type needs a corresponding action method
+message_actions:
+  emergency_911_message: handle_emergency                    # Primary emergency response handler
+  health_check_message: respond_health_check                 # Health status reporter
+  example_service_complete: handle_example_service_complete  # Handle completion notifications
+  example_status_update: handle_example_status_update        # Process status updates
+  example_escalation_request: handle_example_escalation_request  # Manage escalation requests
+  # Add handlers for all message types listed in subscribes_to and publishes sections
+
+# REQUIRED: Configuration for each action method
+action_configs:
+  # Emergency response configuration
+  handle_emergency:
+    # Template for response messages - use {{variable}} for dynamic content
+    # Available variables: emergency_type, location, caller_id, timestamp, message_content
+    response_template: "🚨 EXAMPLE_DEPARTMENT: Responding to {{emergency_type}} at {{location}}"
+    
+    # Additional actions to perform when handling emergencies
+    additional_actions:
+    - log_emergency      # Record the emergency in department logs
+    - notify_dispatch    # Inform dispatch center of response status
+    - assign_resources   # Allocate department resources to the emergency
+    
+    # Whether to broadcast the response to other services
+    publish_response: true
+  
+  # Health check response configuration
+  respond_health_check:
+    # Health status message template
+    response_template: "💗 example_department is operational"
+    publish_response: true
+  
+  # Department-specific action configurations
+  handle_example_service_complete:
+    response_template: "✅ EXAMPLE_DEPARTMENT: Service request completed successfully"
+    additional_actions:
+    - update_service_records
+    - notify_citizen
+    publish_response: true
+  
+  handle_example_status_update:
+    response_template: "📊 EXAMPLE_DEPARTMENT: Status update received and processed"
+    additional_actions:
+    - log_status_change
+    publish_response: false  # Internal processing, no broadcast needed
+  
+  handle_example_escalation_request:
+    response_template: "⚠️ EXAMPLE_DEPARTMENT: Escalating to {{target_department}}"
+    additional_actions:
+    - identify_appropriate_department
+    - transfer_case_information
+    - notify_supervisor
+    publish_response: true
+
+# OPTIONAL: AI analysis and decision-making configuration
+ai_analysis:
+  enabled: true  # Set to false to disable AI processing for this department
+  # Context provided to AI for understanding department role and responsibilities
+  context: >
+    You are the example_department. Your role is to handle sample operations 
+    and demonstrate the department configuration structure for new city services. 
+    Always prioritize citizen safety and efficient service delivery. When processing 
+    emergency calls, assess the situation quickly and determine if your department 
+    has the appropriate resources and expertise to respond effectively. If not, 
+    escalate to the appropriate department immediately.
+
+# REQUIRED: Logging and monitoring configuration
+logging:
+  level: info                    # Logging verbosity: debug, info, warn, error
+  statistics_interval: 300       # How often (in seconds) to log performance statistics
+
+# OPTIONAL: Resource management configuration
+# resources:
+#   max_active_incidents: 5      # Maximum simultaneous incidents to handle
+#   response_time_target: 300    # Target response time in seconds
+#   staff_on_duty: 10           # Number of available personnel
+#   equipment_available: true    # Whether specialized equipment is operational
+
+# OPTIONAL: Integration with other city services
+# integrations:
+#   required_services:           # Services that must be running for this department to operate
+#   - emergency_dispatch_center
+#   - health_department
+#   
+#   optional_services:           # Services that enhance but don't block this department
+#   - city_council
+#   - public_information_office
+
+# OPTIONAL: Department-specific settings
+# custom_settings:
+#   business_hours:              # Operating hours for non-emergency services
+#     start: "08:00"
+#     end: "17:00"
+#     timezone: "local"
+#   
+#   emergency_contacts:          # Key personnel or external contacts
+#   - role: "Department Head"
+#     contact: "ext-1001"
+#   - role: "Emergency Coordinator"
+#     contact: "ext-1002"
