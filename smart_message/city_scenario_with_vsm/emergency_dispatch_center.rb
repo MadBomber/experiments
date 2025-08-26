@@ -54,10 +54,21 @@ class EmergencyDispatchCenter
   end
 
   def discover_departments
-    # Discover available departments by looking at *_department.rb files
-    Dir.glob('*_department.rb').map do |file|
-      File.basename(file, '.rb')
+    # Discover available departments by looking at *_department.yml config files
+    # Note: With the new architecture, departments are defined by YAML configs
+    # and run via: ruby generic_department.rb <department_name>
+    yaml_deps = Dir.glob('*_department.yml').map do |file|
+      File.basename(file, '.yml')
     end
+    
+    # Also include legacy Ruby file departments for backward compatibility
+    rb_deps = Dir.glob('*_department.rb').select do |file|
+      !file.include?('generic_department.rb') # Exclude the template
+    end.map do |file|
+      File.basename(file, '.rb')  
+    end
+    
+    (yaml_deps + rb_deps).uniq
   end
 
 

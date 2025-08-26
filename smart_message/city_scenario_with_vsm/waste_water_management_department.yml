@@ -1,0 +1,60 @@
+---
+department:
+  name: waste_water_management_department
+  display_name: Waste Water Management
+  description: Handles the maintenance, repair, and management of sewage and wastewater
+    systems to prevent backups and ensure sanitation.
+  invariants:
+  - serve citizens efficiently
+  - respond to emergencies promptly
+  - maintain operational readiness
+capabilities:
+- Respond to and resolve sewage backups in homes and infrastructure
+- Inspect and maintain sewage and wastewater systems
+- Coordinate emergency repairs for sewage blockages
+- Monitor sewage system integrity and prevent overflow incidents
+message_types:
+  subscribes_to:
+  - health_check_message
+  publishes:
+  - sewage_backup_report
+  - wastewater_system_failure
+  - sewage_overflow_alert
+routing_rules:
+  emergency_911_message:
+  - condition: message contains relevant keywords
+    keywords:
+    - handles
+    - maintenance
+    - repair
+    - management
+    - sewage
+    priority: high
+  health_check_message:
+  - condition: always
+    priority: normal
+message_actions:
+  emergency_911_message: handle_emergency
+  health_check_message: respond_health_check
+  sewage_backup_report: handle_sewage_backup_report
+  wastewater_system_failure: handle_wastewater_system_failure
+  sewage_overflow_alert: handle_sewage_overflow_alert
+action_configs:
+  handle_emergency:
+    response_template: "\U0001F6A8 WASTE_WATER_MANAGEMENT_DEPARTMENT: Responding to
+      {{emergency_type}} at {{location}}"
+    additional_actions:
+    - log_emergency
+    - notify_dispatch
+    publish_response: true
+  respond_health_check:
+    response_template: "\U0001F497 waste_water_management_department is operational"
+    publish_response: true
+ai_analysis:
+  enabled: false
+  context: You are the waste_water_management_department department. Handle handles
+    the maintenance, repair, and management of sewage and wastewater systems to prevent
+    backups and ensure sanitation..
+logging:
+  level: info
+  statistics_interval: 300

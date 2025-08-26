@@ -39,8 +39,40 @@ class AnonymousTipLine
       @screen_height = TTY::Screen.height
     end
     
+    # Setup graceful shutdown handling
+    setup_signal_handlers
+    
     logger.info("Anonymous Tip Line session started - Session ID: #{@tip_session_id}")
     logger.info("Discovered #{@available_messages.length} available message types")
+  end
+
+  def setup_signal_handlers
+    # Handle Ctrl+C (SIGINT) gracefully
+    Signal.trap('INT') do
+      puts "\n\n📞 Received interrupt signal..."
+      graceful_shutdown
+    end
+    
+    # Handle SIGTERM gracefully
+    Signal.trap('TERM') do
+      puts "\n📞 Received termination signal..."
+      graceful_shutdown
+    end
+  end
+  
+  def graceful_shutdown
+    logger.info("Tip cancelled by user (Interrupt) - Session: #{@tip_session_id}")
+    
+    if TTY_AVAILABLE && defined?(@cursor)
+      print @cursor.show
+      print @cursor.move_to(0, TTY::Screen.height)
+    end
+    
+    puts "\n👋 Anonymous Tip Line session ended."
+    puts "   Session ID: #{@tip_session_id}"
+    puts "   Thank you for keeping your community safe! 🏘️"
+    
+    exit(0)
   end
 
   def run
@@ -79,7 +111,7 @@ class AnonymousTipLine
         show_notification("🛡️  Tip cancelled. Your anonymity is protected.", :yellow)
         logger.info("Tip cancelled by user (Interrupt) - Session: #{@tip_session_id}")
       rescue => e
-        show_notification("❌ Error processing tip: #{e.message}", :red)
+        # Only log the error, don't show notification to avoid duplicates
         logger.error("Error processing tip for session #{@tip_session_id}: #{e.class.name} - #{e.message}")
         logger.debug("Error backtrace: #{e.backtrace.join("\n")}")
       end
@@ -138,7 +170,10 @@ class AnonymousTipLine
   def show_notification(message, color = :cyan)
     return unless TTY_AVAILABLE
     
-    box_width = [message.length + 6, 50].max
+    # Calculate width more conservatively
+    safe_width = [@screen_width - 8, 80].min
+    box_width = [message.length + 6, safe_width].max
+    
     box = TTY::Box.frame(
       width: box_width,
       height: 3,
@@ -153,7 +188,7 @@ class AnonymousTipLine
     ) { message }
     
     puts box
-    sleep 2
+    sleep 1.5  # Slightly shorter pause
   end
 
   def display_welcome_tui
@@ -163,7 +198,7 @@ class AnonymousTipLine
     subtitle = "Emergency Dispatch Center"
     
     main_box = TTY::Box.frame(
-      width: [@screen_width - 4, 80].min,
+      width: [@screen_width - 8, 70].min,
       align: :center,
       padding: [1, 2],
       style: {
@@ -175,14 +210,14 @@ class AnonymousTipLine
       }
     ) do
       [
-        title.center(70),
-        subtitle.center(70),
+        title.center(64),
+        subtitle.center(64),
         "",
-        "🔒 Report suspicious activity, crimes, emergencies anonymously",
-        "🛡️  Your identity is protected - no personal info required",
-        "📞 All tips forwarded directly to Emergency Dispatch",
+        "🔒 Report suspicious activity anonymously",
+        "🛡️  Your identity is protected",
+        "📞 Tips forwarded to Emergency Dispatch",
         "",
-        "Session ID: #{@tip_session_id}".center(70)
+        "Session ID: #{@tip_session_id}".center(64)
       ].join("\n")
     end
     
@@ -190,7 +225,12 @@ class AnonymousTipLine
     puts
     
     # Press any key to continue
-    @prompt.keypress("Press any key to continue...", keys: [:return, :space, :escape, :enter])
+    begin
+      @prompt.keypress("Press any key to continue...", keys: [:return, :space, :escape, :enter])
+    rescue TTY::Reader::InputInterrupt
+      # Handle Ctrl+C gracefully during keypress
+      graceful_shutdown
+    end
   end
 
   def display_goodbye_tui
@@ -199,7 +239,7 @@ class AnonymousTipLine
     clear_screen
     
     goodbye_box = TTY::Box.frame(
-      width: [@screen_width - 4, 70].min,
+      width: [@screen_width - 8, 54].min,
       height: 8,
       align: :center,
       padding: [1, 2],
@@ -212,12 +252,12 @@ class AnonymousTipLine
       }
     ) do
       [
-        "🙏 THANK YOU FOR HELPING KEEP",
-        "   OUR COMMUNITY SAFE",
+        "🙏 THANK YOU FOR HELPING",
+        "   KEEP OUR COMMUNITY SAFE",
         "",
-        "Your tip session: #{@tip_session_id}",
+        "Session: #{@tip_session_id}",
         "",
-        "Stay safe and stay vigilant! 👮‍♀️🚒"
+        "Stay safe! 👮‍♀️🚒"
       ].join("\n")
     end
     
@@ -266,14 +306,19 @@ class AnonymousTipLine
     
     logger.debug("Displaying TUI message type selection menu - Session: #{@tip_session_id}")
     
-    selection = @prompt.select(
-      "🚨 What type of tip would you like to report?",
-      choices,
-      per_page: 10,
-      cycle: true,
-      show_help: :always,
-      help: "(Use ↑/↓ arrow keys, Enter to select, q to quit)"
-    )
+    begin
+      selection = @prompt.select(
+        "🚨 What type of tip would you like to report?",
+        choices,
+        per_page: 10,
+        cycle: true,
+        show_help: :always,
+        help: "(Use ↑/↓ arrow keys, Enter to select, q to quit)"
+      )
+    rescue TTY::Reader::InputInterrupt
+      # Handle Ctrl+C gracefully during selection
+      graceful_shutdown
+    end
     
     if selection
       logger.info("User selected message type: #{selection.name} - Session: #{@tip_session_id}")
@@ -393,7 +438,8 @@ class AnonymousTipLine
       logger.debug("Prompting for property: #{property_name} - Session: #{@tip_session_id}")
       value = prompt_for_property_tui(message_class, property_name)
       
-      if value && !value.to_s.empty?
+      # Only set property if we have a meaningful value
+      if value && !value.to_s.strip.empty?
         properties[property_name] = value
         # Log property value but sanitize sensitive info
         safe_value = sanitize_for_logging(property_name, value)
@@ -405,7 +451,7 @@ class AnonymousTipLine
     
     # Add anonymous tip metadata
     properties[:from] = 'Anonymous Tip Line'
-    properties[:to] = 'Emergency Dispatch Center'
+    properties[:to] = '911'  # Match the emergency dispatch center subscription
     properties[:call_id] = @tip_session_id if properties.has_key?(:call_id)
     
     logger.info("Anonymous tip metadata added - Session: #{@tip_session_id}")
@@ -418,8 +464,9 @@ class AnonymousTipLine
   rescue => e
     logger.error("Error building message for session #{@tip_session_id}: #{e.class.name} - #{e.message}")
     logger.debug("Build message error backtrace: #{e.backtrace.join("\n")}")
+    # Show single error notification here
     show_notification("❌ Error building message: #{e.message}", :red)
-    raise
+    nil  # Return nil instead of raising to prevent duplicate error handling
   end
 
   def build_message_interactively(message_class)
@@ -452,7 +499,7 @@ class AnonymousTipLine
     
     # Add anonymous tip metadata
     properties[:from] = 'Anonymous Tip Line'
-    properties[:to] = 'Emergency Dispatch Center'
+    properties[:to] = '911'  # Match the emergency dispatch center subscription
     properties[:call_id] = @tip_session_id if properties.has_key?(:call_id)
     
     logger.info("Anonymous tip metadata added - Session: #{@tip_session_id}")
@@ -488,7 +535,12 @@ class AnonymousTipLine
     if %w[injuries_reported fire_involved weapons_involved suspects_on_scene].include?(property_name.to_s)
       # Boolean yes/no questions
       question_text = required ? "#{prompt_text}: #{description}" : "#{prompt_text}: #{description} (optional)"
-      return @prompt.yes?(question_text)
+      begin
+        return @prompt.yes?(question_text)
+      rescue TTY::Reader::InputInterrupt
+        # Handle Ctrl+C gracefully during yes/no prompt
+        graceful_shutdown
+      end
     elsif validate && validate.is_a?(Proc) && property_config[:validation_message]
       # Selection from valid options
       options = property_config[:validation_message].split(', ')
@@ -496,23 +548,35 @@ class AnonymousTipLine
       choices << { name: "Skip (leave empty)", value: nil } unless required
       
       select_text = required ? "#{prompt_text}:" : "#{prompt_text} (optional):"
-      return @prompt.select(
-        select_text,
-        choices,
-        help: description,
-        cycle: true
-      )
+      begin
+        return @prompt.select(
+          select_text,
+          choices,
+          help: description,
+          cycle: true
+        )
+      rescue TTY::Reader::InputInterrupt
+        # Handle Ctrl+C gracefully during selection
+        graceful_shutdown
+      end
     else
       # Text input
       loop do
+        # Include description in the prompt text instead of using q.help
         ask_text = required ? "#{prompt_text}:" : "#{prompt_text} (optional):"
-        input = @prompt.ask(ask_text) do |q|
-          q.required required
-          q.default(default.is_a?(Proc) ? default.call : default) if default
-          q.modify :strip
-          if description && description != property_name.to_s.humanize
-            q.help description
+        if description && description != property_name.to_s.humanize
+          ask_text = "#{ask_text}\n  #{description.colorize(:blue)}"
+        end
+        
+        begin
+          input = @prompt.ask(ask_text) do |q|
+            q.required required
+            q.default(default.is_a?(Proc) ? default.call : default) if default
+            q.modify :strip
           end
+        rescue TTY::Reader::InputInterrupt
+          # Handle Ctrl+C gracefully during text input
+          graceful_shutdown
         end
         
         # Validate input if validator present
@@ -588,74 +652,129 @@ class AnonymousTipLine
   end
 
   def get_property_config(message_class, property_name)
-    # Try to extract property configuration from the message class
-    # This is a simplified version - the real implementation would
-    # need to inspect the class definition more thoroughly
     config = {}
     
-    # Check if class has property descriptions
-    if message_class.respond_to?(:property_descriptions)
-      descriptions = message_class.property_descriptions
-      config[:description] = descriptions[property_name] if descriptions && descriptions[property_name]
+    # Try to get property configuration from SmartMessage class definition
+    begin
+      # Check if the message class has property requirements defined
+      if message_class.respond_to?(:properties) && message_class.properties.include?(property_name)
+        # Try to access the property definition through Hashie::Dash
+        if message_class.respond_to?(:property_defaults)
+          property_defaults = message_class.property_defaults
+          if property_defaults && property_defaults[property_name]
+            config[:default] = property_defaults[property_name]
+          end
+        end
+        
+        # Check required properties through Hashie::Dash
+        if message_class.respond_to?(:required_properties)
+          required_props = message_class.required_properties
+          config[:required] = required_props.include?(property_name)
+        end
+      end
+      
+      # Check if class has property descriptions
+      if message_class.respond_to?(:property_descriptions)
+        descriptions = message_class.property_descriptions
+        config[:description] = descriptions[property_name] if descriptions && descriptions[property_name]
+      end
+    rescue => e
+      logger.debug("Error extracting property config for #{property_name}: #{e.message}")
     end
     
-    # For demo purposes, add some known configurations for Emergency911Message
+    # Fallback configurations for known message types and properties
+    case message_class.name
+    when /Emergency911Message/
+      case property_name.to_s
+      when 'caller_location'
+        config[:required] = true
+        config[:description] = 'Location where incident is occurring (address or landmark)'
+      when 'emergency_type'
+        config[:required] = true
+        config[:validate] = ->(v) { %w[fire medical crime accident hazmat rescue water_emergency animal_emergency infrastructure_emergency transportation_emergency environmental_emergency parks_emergency sanitation_emergency other].include?(v) }
+        config[:validation_message] = 'fire, medical, crime, accident, hazmat, rescue, water_emergency, animal_emergency, infrastructure_emergency, transportation_emergency, environmental_emergency, parks_emergency, sanitation_emergency, other'
+      when 'description'
+        config[:required] = true
+        config[:description] = 'Detailed description of what you observed'
+      end
+      
+    when /SilentAlarmMessage/
+      case property_name.to_s
+      when 'bank_name'
+        config[:required] = true
+        config[:description] = "Official name of the bank triggering the alarm (e.g., 'First National Bank')"
+      when 'location'
+        config[:required] = true
+        config[:description] = 'Physical address of the bank location where alarm was triggered'
+      when 'alarm_type'
+        config[:required] = true
+        config[:validate] = ->(v) { %w[robbery vault_breach suspicious_activity].include?(v) }
+        config[:validation_message] = 'robbery, vault_breach, suspicious_activity'
+        config[:description] = 'Type of security incident detected. Valid values: robbery, vault_breach, suspicious_activity'
+      when 'timestamp'
+        config[:required] = true
+        config[:description] = 'Exact time when the alarm was triggered (YYYY-MM-DD HH:MM:SS format)'
+      when 'severity'
+        config[:required] = true
+        config[:validate] = ->(v) { %w[low medium high critical].include?(v) }
+        config[:validation_message] = 'low, medium, high, critical'
+        config[:description] = 'Urgency level of the security threat. Valid values: low, medium, high, critical'
+      when 'details'
+        config[:description] = 'Additional descriptive information about the security incident and current situation'
+      end
+    end
+    
+    # Common property configurations
     case property_name.to_s
-    when 'caller_location'
-      config[:required] = true
-      config[:description] = 'Location where incident is occurring (address or landmark)'
-    when 'emergency_type'
-      config[:required] = true
-      config[:validate] = ->(v) { %w[fire medical crime accident hazmat rescue water_emergency animal_emergency infrastructure_emergency transportation_emergency environmental_emergency parks_emergency sanitation_emergency other].include?(v) }
-      config[:validation_message] = 'fire, medical, crime, accident, hazmat, rescue, water_emergency, animal_emergency, infrastructure_emergency, transportation_emergency, environmental_emergency, parks_emergency, sanitation_emergency, other'
-    when 'description'
-      config[:required] = true
-      config[:description] = 'Detailed description of what you observed'
     when 'severity'
-      config[:validate] = ->(v) { %w[critical high medium low].include?(v) }
-      config[:validation_message] = 'critical, high, medium, low'
-    when 'injuries_reported'
-      config[:description] = 'Are there any injuries? (true/false or yes/no)'
-    when 'fire_involved'
-      config[:description] = 'Is fire involved? (true/false or yes/no)'
-    when 'weapons_involved'
-      config[:description] = 'Are weapons involved? (true/false or yes/no)'
-    when 'suspects_on_scene'
-      config[:description] = 'Are suspects still at the location? (true/false or yes/no)'
-    when 'call_received_at'
-      config[:default] = -> { Time.now.iso8601 }
+      config[:validate] ||= ->(v) { %w[critical high medium low].include?(v) }
+      config[:validation_message] ||= 'critical, high, medium, low'
+    when 'injuries_reported', 'fire_involved', 'weapons_involved', 'suspects_on_scene'
+      # Boolean fields - no special config needed
+    when 'call_received_at', 'timestamp'
+      config[:default] ||= -> { Time.now.iso8601 }
     end
     
     config
   end
 
   def convert_input(input, property_name)
+    # Handle nil or empty input
+    return nil if input.nil? || input.to_s.strip.empty?
+    
     # Convert boolean-like inputs
     if %w[injuries_reported fire_involved weapons_involved suspects_on_scene].include?(property_name.to_s)
-      return true if %w[true yes y 1].include?(input.downcase)
-      return false if %w[false no n 0].include?(input.downcase)
+      return true if %w[true yes y 1].include?(input.to_s.downcase)
+      return false if %w[false no n 0].include?(input.to_s.downcase)
     end
     
     # Convert numeric inputs
     if property_name.to_s.include?('number') || property_name.to_s.include?('count')
-      return input.to_i if input.match?(/^\d+$/)
+      input_str = input.to_s
+      return input_str.to_i if input_str.match?(/^\d+$/)
     end
     
     input
   end
 
   def validate_value(value, validator)
+    # Handle nil values gracefully
+    return false if value.nil? && validator.is_a?(Proc)
+    return true if value.nil? && !validator.is_a?(Proc)  # Allow nil for non-proc validators
+    
     case validator
     when Proc
       validator.call(value)
     when Regexp
+      # Ensure we have a string to match against
       validator.match?(value.to_s)
     when Array
       validator.include?(value)
     else
       true
     end
-  rescue
+  rescue => e
+    logger.debug("Validation error: #{e.message}") if respond_to?(:logger)
     false
   end
 
@@ -675,8 +794,9 @@ class AnonymousTipLine
     end
     
     # Display summary in a box
+    safe_width = [@screen_width - 8, 70].min
     summary_box = TTY::Box.frame(
-      width: [@screen_width - 4, 80].min,
+      width: safe_width,
       align: :left,
       padding: [1, 2],
       style: {
@@ -693,9 +813,13 @@ class AnonymousTipLine
     puts
     
     # Confirmation prompt
-    confirmed = @prompt.yes?("🚨 Submit this anonymous tip to Emergency Dispatch?") do |q|
-      q.default false
-      q.help_color :dim
+    begin
+      confirmed = @prompt.yes?("🚨 Submit this anonymous tip to Emergency Dispatch?") do |q|
+        q.default false
+      end
+    rescue TTY::Reader::InputInterrupt
+      # Handle Ctrl+C gracefully during confirmation
+      graceful_shutdown
     end
     
     logger.debug("User TUI confirmation response: #{confirmed} - Session: #{@tip_session_id}")
@@ -718,12 +842,12 @@ class AnonymousTipLine
         spinner.success("✅ Success!")
         logger.info("Anonymous tip published successfully - Session: #{@tip_session_id}")
         
-        # Success message
+        # Success message with shorter, properly sized text
         success_box = TTY::Box.frame(
-          width: [@screen_width - 4, 70].min,
-          height: 6,
+          width: [@screen_width - 8, 60].min,
+          height: 7,
           align: :center,
-          padding: [1, 1],
+          padding: [1, 2],
           style: {
             fg: :bright_green,
             border: {
@@ -733,16 +857,22 @@ class AnonymousTipLine
           }
         ) do
           [
-            "🎉 ANONYMOUS TIP SUBMITTED SUCCESSFULLY! 🎉",
+            "🎉 TIP SUBMITTED SUCCESSFULLY! 🎉",
             "",
-            "Your tip has been forwarded to Emergency Dispatch",
-            "Tip Reference: #{@tip_session_id}"
+            "Forwarded to Emergency Dispatch",
+            "",
+            "Tip ID: #{@tip_session_id}"
           ].join("\n")
         end
         
         puts success_box
         
-        @prompt.keypress("\nPress any key to continue...", keys: [:return, :space, :escape, :enter])
+        begin
+          @prompt.keypress("\nPress any key to continue...", keys: [:return, :space, :escape, :enter])
+        rescue TTY::Reader::InputInterrupt
+          # Handle Ctrl+C gracefully during keypress
+          graceful_shutdown
+        end
         
       rescue => e
         spinner.error("❌ Failed!")
@@ -814,8 +944,13 @@ class AnonymousTipLine
   def continue_tui?
     return false unless TTY_AVAILABLE
     
-    will_continue = @prompt.yes?("🔄 Submit another anonymous tip?") do |q|
-      q.default false
+    begin
+      will_continue = @prompt.yes?("🔄 Submit another anonymous tip?") do |q|
+        q.default false
+      end
+    rescue TTY::Reader::InputInterrupt
+      # Handle Ctrl+C gracefully during continue prompt
+      graceful_shutdown
     end
     
     logger.debug("User TUI continue response: #{will_continue} - Session: #{@tip_session_id}")

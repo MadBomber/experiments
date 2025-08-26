@@ -14,11 +14,12 @@ class Visitor
   include Common::Logger
   include Common::StatusLine
 
-  def initialize
-    @service_name = 'visitor'
+  def initialize(home_town = nil)
+    @home_town = home_town || generate_random_home_town
+    @service_name = "visitor-#{@home_town.gsub(/\s+/, '-').downcase}"
 
     setup_ai
-    logger.info("Visitor initialized - AI-powered message generation system ready")
+    logger.info("Visitor from #{@home_town} initialized - AI-powered message generation system ready")
   end
 
 
@@ -197,6 +198,7 @@ class Visitor
 
   def run_continuous(interval_seconds = 15)
     puts "👁️  Smart Visitor - AI-Powered Observation Reporting System"
+    puts "   Visitor from: #{@home_town}"
     puts "   Continuously observing the city and reporting incidents"
     puts "   Generating new observations every #{interval_seconds} seconds"
     puts "   Press Ctrl+C to stop\n\n"
@@ -246,6 +248,16 @@ class Visitor
   end
 
   private
+
+  def generate_random_home_town
+    home_towns = [
+      'Chicago', 'Denver', 'Seattle', 'Boston', 'Atlanta',
+      'Phoenix', 'Detroit', 'Portland', 'Nashville', 'Miami',
+      'Austin', 'San Diego', 'Cleveland', 'Pittsburgh', 'Tampa',
+      'Kansas City', 'New Orleans', 'Salt Lake City', 'Memphis', 'Tucson'
+    ]
+    home_towns.sample
+  end
 
   def parse_validation_error(error_message)
     # Parse validation errors like:
@@ -512,8 +524,8 @@ class Visitor
       property_values = generate_fallback_values(message_class, validation_errors)
     end
 
-    # Ensure 'from' is set to 'visitor'
-    property_values['from'] = 'visitor'
+    # Ensure 'from' is set to visitor with home town
+    property_values['from'] = @service_name
 
     # Create message instance using keyword arguments
     begin
@@ -526,7 +538,7 @@ class Visitor
       logger.error("Failed to create message instance: #{e.message}")
       # Try with fallback values
       fallback_values = generate_fallback_values(message_class)
-      fallback_values['from'] = 'visitor'
+      fallback_values['from'] = @service_name
       fallback_kwargs = fallback_values.transform_keys(&:to_sym)
       message_instance = message_class.new(**fallback_kwargs)
       logger.info("Created message instance with fallback values")
@@ -552,7 +564,7 @@ class Visitor
         'weapons_involved' => true,
         'suspects_on_scene' => true,
         'timestamp' => Time.now.iso8601,
-        'from' => 'visitor',
+        'from' => @service_name,
         'to' => '911'
       }
     when /SilentAlarmMessage/
@@ -563,7 +575,7 @@ class Visitor
         'timestamp' => Time.now.strftime('%Y-%m-%d %H:%M:%S'),
         'severity' => 'high',
         'details' => 'Visitor reported armed robbery in progress',
-        'from' => 'visitor'
+        'from' => @service_name
       }
     when /PoliceDispatchMessage/
       {
@@ -574,13 +586,13 @@ class Visitor
         'priority' => 'emergency',
         'estimated_arrival' => '3 minutes',
         'timestamp' => Time.now.strftime('%Y-%m-%d %H:%M:%S'),
-        'from' => 'visitor'
+        'from' => @service_name
       }
     else
       {
         'timestamp' => Time.now.strftime('%Y-%m-%d %H:%M:%S'),
         'details' => 'Visitor reported robbery incident',
-        'from' => 'visitor'
+        'from' => @service_name
       }
     end
   end
@@ -604,12 +616,15 @@ end
 # Main execution
 if __FILE__ == $0
   begin
-    visitor = Visitor.new
+    # Allow specifying home town as command line argument
+    home_town = ARGV[0] unless ARGV[0] == '--once' || ARGV[0] == '-o' || ARGV[0]&.match?(/^\d+$/)
+    visitor = Visitor.new(home_town)
 
     # Check for command-line arguments
-    if ARGV[0] == '--once' || ARGV[0] == '-o'
+    if ARGV.include?('--once') || ARGV.include?('-o')
       # Single observation mode
       puts "🎯 Smart Visitor - Single Observation Mode"
+      puts "   From: #{visitor.instance_variable_get(:@home_town)}"
       scenario = visitor.generate_observation_scenario
       puts "   Observing: #{scenario[:description]}"
 
@@ -622,7 +637,9 @@ if __FILE__ == $0
       end
     else
       # Continuous mode (default)
-      interval = ARGV[0]&.to_i || 15
+      # If first arg is a number and not a city name, use it as interval
+      interval_arg = ARGV.find { |arg| arg.match?(/^\d+$/) }
+      interval = interval_arg&.to_i || 15
       visitor.run_continuous(interval)
     end
   rescue => e

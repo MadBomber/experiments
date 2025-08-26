@@ -1,0 +1,61 @@
+---
+department:
+  name: transportation_management_department
+  display_name: Transportation Management
+  description: Handles the operation, safety, and incident response related to public
+    transportation vehicles and infrastructure.
+  invariants:
+  - serve citizens efficiently
+  - respond to emergencies promptly
+  - maintain operational readiness
+capabilities:
+- Respond to and investigate transportation accidents involving buses or other vehicles
+- Coordinate with emergency services to ensure safety and clear debris
+- Assess structural damage caused by transportation-related incidents
+- Coordinate repairs and safety inspections for transportation infrastructure
+message_types:
+  subscribes_to:
+  - health_check_message
+  - emergency_911_message
+  publishes:
+  - transportation_accident_report
+  - bus_involved_in_collision
+  - downtown_incident_alert
+routing_rules:
+  emergency_911_message:
+  - condition: message contains relevant keywords
+    keywords:
+    - handles
+    - operation
+    - safety
+    - incident
+    - response
+    priority: high
+  health_check_message:
+  - condition: always
+    priority: normal
+message_actions:
+  emergency_911_message: handle_emergency
+  health_check_message: respond_health_check
+  transportation_accident_report: handle_transportation_accident_report
+  bus_involved_in_collision: handle_bus_involved_in_collision
+  downtown_incident_alert: handle_downtown_incident_alert
+action_configs:
+  handle_emergency:
+    response_template: "\U0001F6A8 TRANSPORTATION_MANAGEMENT_DEPARTMENT: Responding
+      to {{emergency_type}} at {{location}}"
+    additional_actions:
+    - log_emergency
+    - notify_dispatch
+    publish_response: true
+  respond_health_check:
+    response_template: "\U0001F497 transportation_management_department is operational"
+    publish_response: true
+ai_analysis:
+  enabled: false
+  context: You are the transportation_management_department department. Handle handles
+    the operation, safety, and incident response related to public transportation
+    vehicles and infrastructure..
+logging:
+  level: info
+  statistics_interval: 300

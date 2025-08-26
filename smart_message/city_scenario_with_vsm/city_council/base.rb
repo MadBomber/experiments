@@ -31,10 +31,25 @@ module CityCouncil
 
     def discover_departments
       logger.debug("Discovering existing departments in current directory")
-      departments = Dir.glob("*_department.rb").map do |file|
+
+      # Discover Ruby-based departments
+      ruby_departments = Dir.glob("*_department.rb").map do |file|
         File.basename(file, ".rb")
       end
-      logger.info("Discovered #{departments.size} existing departments: #{departments.join(", ")}")
+
+      # Discover YAML-configured departments
+      yaml_departments = Dir.glob("*_department.yml").map do |file|
+        File.basename(file, ".yml")
+      end
+
+      # Combine both types
+      departments = (ruby_departments + yaml_departments).sort.uniq
+
+      logger.info("Discovered #{departments.size} existing departments:")
+      logger.info("  Ruby-based: #{ruby_departments.size} (#{ruby_departments.join(", ")})")
+      logger.info("  YAML-configured: #{yaml_departments.size} (#{yaml_departments.join(", ")})")
+      logger.info("  Total unique: #{departments.join(", ")}")
+
       departments
     end
 
@@ -58,7 +73,7 @@ module CityCouncil
       end
 
       logger.info("VSM capsule setup completed successfully")
-      
+
       # Set up VSM bus subscriptions after capsule is ready
       setup_vsm_subscriptions
     end
@@ -88,6 +103,8 @@ module CityCouncil
 
       # Subscribe to health status responses from departments
       if defined?(Messages::HealthStatusMessage)
+        Messages::HealthStatusMessage.from(@service_name)
+
         logger.info("Subscribing to HealthStatusMessage responses")
         Messages::HealthStatusMessage.subscribe(to: @service_name) do |message|
           handle_department_health_response(message)
@@ -136,10 +153,10 @@ module CityCouncil
       # Process the service request with VSM Intelligence
       payload = message.details[:description] || message.description || message.inspect
       logger.info("Processing service request with VSM Intelligence: #{payload}")
-      
+
       puts "🏛️ 🧠 CityCouncil: Processing request with VSM Intelligence..."
       puts "🏛️ 📋 Request content: #{payload.to_s.slice(0, 100)}#{payload.to_s.length > 100 ? '...' : ''}"
-      
+
       status_line("Processing request from #{message._sm_header.from}")
 
       # Create VSM message and process with Intelligence
@@ -154,7 +171,7 @@ module CityCouncil
       intelligence_result = @capsule.roles[:intelligence].handle(vsm_message, bus: @capsule.bus)
       logger.debug("VSM Intelligence processing result: #{intelligence_result}")
       puts "🏛️ ✅ CityCouncil: Intelligence processing #{intelligence_result ? 'completed' : 'failed'}"
-      
+
       status_line("Governing #{@existing_departments.size} departments")
     end
 
@@ -219,7 +236,7 @@ module CityCouncil
       @existing_departments.each { |dept| puts "   - #{dept}" }
       puts "🔧 Ready to create new departments as needed"
       puts "👂 Listening for service requests..."
-      
+
       status_line("Governing #{@existing_departments.size} departments")
 
       logger.info("CityCouncil governance started successfully")
@@ -266,7 +283,7 @@ module CityCouncil
         health_msg = []
         health_msg << "#{health_status[:unhealthy_count]} unhealthy" if health_status[:unhealthy_count] > 0
         health_msg << "#{health_status[:warning_count]} warning" if health_status[:warning_count] > 0
-        
+
         logger.warn("CityCouncil: Department health issues - #{health_msg.join(', ')}")
         status_line("#{@existing_departments.size} departments (#{health_msg.join(', ')})")
       elsif health_status[:monitored_count] > 0
@@ -283,12 +300,12 @@ module CityCouncil
 
     def get_department_health_summary
       return { healthy_count: 0, unhealthy_count: 0, monitored_count: 0 } unless @capsule&.roles&.[](:operations)
-      
+
       health_status = @capsule.roles[:operations].get_department_health_status
       healthy_count = 0
       unhealthy_count = 0
       warning_count = 0
-      
+
       health_status.each do |dept_name, health_info|
         case health_info[:status]
         when 'running'
@@ -305,7 +322,7 @@ module CityCouncil
           warning_count += 1
         end
       end
-      
+
       {
         healthy_count: healthy_count,
         unhealthy_count: unhealthy_count,
@@ -368,7 +385,7 @@ module CityCouncil
 
     def handle_department_health_response(message)
       logger.debug("Received health status response from #{message._sm_header.from}")
-      
+
       # Forward to Operations component for processing
       if @capsule&.roles&.[](:operations)
         dept_name = message.service_name || message._sm_header.from

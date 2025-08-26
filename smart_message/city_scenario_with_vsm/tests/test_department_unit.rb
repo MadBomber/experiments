@@ -1,19 +1,19 @@
 #!/usr/bin/env ruby
-# test_template_unit.rb - Unit test program for generic_template.rb
+# test_department_unit.rb - Unit test program for generic_department.rb
 #
-# This test program validates the functionality of the generic template
+# This test program validates the functionality of the generic department
 # by testing various components and message handling capabilities.
 
-require_relative 'generic_template'
+require_relative 'generic_department'
 require 'minitest/autorun'
 require 'minitest/spec'
 require 'timeout'
 require 'thread'
 
-class GenericTemplateTest < Minitest::Test
+class GenericDepartmentTest < Minitest::Test
   def setup
     puts "\n🧪 Setting up test environment..."
-    @config_file = 'test_template_unit.yml'
+    @config_file = 'test_department_unit.yml'
     
     # Ensure config file exists
     unless File.exist?(@config_file)
@@ -36,7 +36,7 @@ class GenericTemplateTest < Minitest::Test
     assert File.exist?(@config_file), "Config file should exist"
     assert_kind_of Hash, @config, "Config should be a hash"
     assert @config['department'], "Config should have department section"
-    assert_equal 'test_template_unit', @config['department']['name']
+    assert_equal 'test_department_unit', @config['department']['name']
     
     puts "✅ Config loading test passed"
   end
@@ -167,27 +167,27 @@ class GenericTemplateTest < Minitest::Test
 end
 
 # Interactive Test Runner
-class GenericTemplateInteractiveTest
+class GenericDepartmentInteractiveTest
   def initialize
-    @config_file = 'test_template_unit.yml'
+    @config_file = 'test_department_unit.yml'
     @config = YAML.load_file(@config_file)
     puts "🧪 Interactive Test Environment Initialized"
     puts "📋 Department: #{@config['department']['display_name']}"
   end
 
-  def run_template_startup_test
-    puts "\n🚀 INTEGRATION TEST: Template Startup"
-    puts "⚠️  This will start the actual template - press Ctrl+C to stop"
+  def run_department_startup_test
+    puts "\n🚀 INTEGRATION TEST: Department Startup"
+    puts "⚠️  This will start the actual department - press Ctrl+C to stop"
     
     begin
-      # This will run the actual template for a few seconds
+      # This will run the actual department for a few seconds
       Timeout::timeout(10) do
-        load './generic_template.rb'
+        load './generic_department.rb'
       end
     rescue Timeout::Error
-      puts "✅ Template startup test completed (timed out as expected)"
+      puts "✅ Department startup test completed (timed out as expected)"
     rescue => e
-      puts "❌ Template startup failed: #{e.message}"
+      puts "❌ Department startup failed: #{e.message}"
       puts "🔍 Error details: #{e.class.name}"
       return false
     end
@@ -260,12 +260,12 @@ if __FILE__ == $0
   # Check if we're in test mode or interactive mode
   if ARGV.include?('--interactive') || ARGV.include?('-i')
     puts "🖥️  Running in interactive mode..."
-    tester = GenericTemplateInteractiveTest.new
+    tester = GenericDepartmentInteractiveTest.new
     tester.run_all_tests
   elsif ARGV.include?('--startup-test') || ARGV.include?('-s')
     puts "🚀 Running startup test..."
-    tester = GenericTemplateInteractiveTest.new  
-    tester.run_template_startup_test
+    tester = GenericDepartmentInteractiveTest.new  
+    tester.run_department_startup_test
   else
     puts "🔬 Running unit tests..."
     # Run minitest unit tests

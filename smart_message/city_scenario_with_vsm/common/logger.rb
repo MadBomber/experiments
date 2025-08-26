@@ -7,11 +7,18 @@ module Common
       # Auto-detect program name from filename if not provided
       program_name = options.delete(:name) || File.basename($0, '.rb')
 
-      # Build options with defaults
+      # Convert level from symbol/string to Logger constant if needed
+      level = options[:level]
+      if level.is_a?(Symbol) || level.is_a?(String)
+        level = ::Logger.const_get(level.to_s.upcase)
+      end
+      level ||= ::Logger::INFO
+
+      # Build options with correct parameter names for SmartMessage::Logger::Default
       opts = {
         log_file: "log/#{program_name}.log",
-        level: ::Logger::INFO
-      }.merge(options)
+        level: level
+      }
 
       # Configure SmartMessage with the logger
       SmartMessage.configure do |config|

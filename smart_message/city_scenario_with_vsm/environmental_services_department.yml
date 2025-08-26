@@ -1,0 +1,62 @@
+---
+department:
+  name: environmental_services_department
+  display_name: Environmental Services
+  description: Responsible for managing environmental hazards, including illegal chemical
+    dumping, hazardous waste cleanup, and pollution control to protect public health
+    and ecosystems.
+  invariants:
+  - serve citizens efficiently
+  - respond to emergencies promptly
+  - maintain operational readiness
+capabilities:
+- Investigate reports of illegal chemical dumping
+- Respond to environmental hazards and conduct cleanup operations
+- Enforce environmental regulations and coordinate with law enforcement
+- Monitor and assess environmental contamination
+message_types:
+  subscribes_to:
+  - health_check_message
+  - emergency_911_message
+  publishes:
+  - illegal_chemical_dump_report
+  - hazardous_material_disposal_alert
+  - environmental_hazard_response
+routing_rules:
+  emergency_911_message:
+  - condition: message contains relevant keywords
+    keywords:
+    - responsible
+    - managing
+    - environmental
+    - hazards
+    - including
+    priority: high
+  health_check_message:
+  - condition: always
+    priority: normal
+message_actions:
+  emergency_911_message: handle_emergency
+  health_check_message: respond_health_check
+  illegal_chemical_dump_report: handle_illegal_chemical_dump_report
+  hazardous_material_disposal_alert: handle_hazardous_material_disposal_alert
+  environmental_hazard_response: handle_environmental_hazard_response
+action_configs:
+  handle_emergency:
+    response_template: "\U0001F6A8 ENVIRONMENTAL_SERVICES_DEPARTMENT: Responding to
+      {{emergency_type}} at {{location}}"
+    additional_actions:
+    - log_emergency
+    - notify_dispatch
+    publish_response: true
+  respond_health_check:
+    response_template: "\U0001F497 environmental_services_department is operational"
+    publish_response: true
+ai_analysis:
+  enabled: false
+  context: You are the environmental_services_department department. Handle responsible
+    for managing environmental hazards, including illegal chemical dumping, hazardous
+    waste cleanup, and pollution control to protect public health and ecosystems..
+logging:
+  level: info
+  statistics_interval: 300

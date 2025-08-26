@@ -1,0 +1,62 @@
+---
+department:
+  name: hazardous_materials_response_department
+  display_name: Hazardous Materials Response
+  description: Responsible for responding to incidents involving hazardous materials,
+    including toxic waste spills, to prevent environmental contamination and protect
+    public health.
+  invariants:
+  - serve citizens efficiently
+  - respond to emergencies promptly
+  - maintain operational readiness
+capabilities:
+- Assess and contain toxic waste spills
+- Coordinate cleanup and remediation efforts
+- Ensure environmental safety and compliance
+- Coordinate with environmental protection agencies and other relevant agencies
+message_types:
+  subscribes_to:
+  - health_check_message
+  publishes:
+  - hazardous_materials_spill
+  - environmental_emergency_alert
+  - containment_request
+routing_rules:
+  emergency_911_message:
+  - condition: message contains relevant keywords
+    keywords:
+    - responsible
+    - responding
+    - incidents
+    - involving
+    - hazardous
+    priority: high
+  health_check_message:
+  - condition: always
+    priority: normal
+message_actions:
+  emergency_911_message: handle_emergency
+  health_check_message: respond_health_check
+  hazardous_materials_spill: handle_hazardous_materials_spill
+  environmental_emergency_alert: handle_environmental_emergency_alert
+  containment_request: handle_containment_request
+action_configs:
+  handle_emergency:
+    response_template: "\U0001F6A8 HAZARDOUS_MATERIALS_RESPONSE_DEPARTMENT: Responding
+      to {{emergency_type}} at {{location}}"
+    additional_actions:
+    - log_emergency
+    - notify_dispatch
+    publish_response: true
+  respond_health_check:
+    response_template: "\U0001F497 hazardous_materials_response_department is operational"
+    publish_response: true
+ai_analysis:
+  enabled: false
+  context: You are the hazardous_materials_response_department department. Handle
+    responsible for responding to incidents involving hazardous materials, including
+    toxic waste spills, to prevent environmental contamination and protect public
+    health..
+logging:
+  level: info
+  statistics_interval: 300

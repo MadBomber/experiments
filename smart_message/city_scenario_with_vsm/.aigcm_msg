@@ -1,0 +1,15 @@
+Implement async support for CityCouncil with health status subscription
+
+This update introduces asynchronous capabilities for the CityCouncil module, 
+enabling it to handle CLI interactions and departmental health status 
+responses more efficiently. By leveraging the Async context, the CityCouncil 
+now starts its governance process in parallel, providing a more responsive 
+experience when handling service requests.
+
+Additionally, health status messages are now subscribed to, allowing the 
+CityCouncil to react dynamically to updates from departments, enhancing 
+communication and oversight.
+
+Referencing microservice interactions, this change aims to improve 
+system performance and interactivity while ensuring robust 
+departmental health monitoring.

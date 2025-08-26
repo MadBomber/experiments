@@ -28,7 +28,7 @@ module CityCouncil
       @health_check_interval = 30 # Check health every 30 seconds
       @last_health_check = Time.now
       logger.info("Operations: Initialized with service_name: #{@service_name}")
-      
+
       # Start monitoring thread
       start_department_monitoring
     end
@@ -64,21 +64,21 @@ module CityCouncil
         logger.info("Operations: Creating department from generic template: #{spec[:name]}")
         puts "🏛️ 🏗️ Operations: Creating department from template..."
         result = create_department_from_template(spec)
-        
+
         if result
           department_file = result[:department_file]
           config_file = result[:config_file]
-          
+
           logger.info("Operations: Template-based department created successfully")
           logger.info("Operations: Department file: #{department_file}")
           logger.info("Operations: Configuration file: #{config_file}")
-          
+
           puts "🏛️ ✅ Operations: Department files created successfully"
           puts "🏛️ 📁 Department file: #{department_file}"
           puts "🏛️ ⚙️ Config file: #{config_file}"
-          
+
           @active_operations[operation_id][:status] = 'launching'
-          
+
           # Announce department creation
           logger.info("Operations: Publishing department creation announcement")
           puts "🏛️ 📢 Operations: Announcing department creation..."
@@ -96,10 +96,10 @@ module CityCouncil
             puts "🏛️ 🎉 Operations: Department launched successfully with PID #{department_pid}"
             announce_department_launched(spec, actual_department_file, department_pid)
             logger.info("Operations: Successfully launched #{actual_department_file} with PID #{department_pid}")
-            
+
             # Register department for health monitoring
             register_department_for_monitoring(spec[:name], department_pid, actual_department_file)
-            
+
             @active_operations[operation_id][:status] = 'completed'
             @active_operations[operation_id][:pid] = department_pid
           else
@@ -138,49 +138,39 @@ module CityCouncil
 
     def create_department_from_template(spec)
       logger.info("Operations: 📝 Creating #{spec[:name]} from generic template")
-      
+
       puts "🏛️ 📝 Creating #{spec[:name]} from generic template..."
-      
+
       # Ensure the department name ends with _department (but don't duplicate it)
       dept_name = spec[:name].end_with?('_department') ? spec[:name] : "#{spec[:name]}_department"
-      
-      template_path = File.join(__dir__, '..', 'generic_template.rb')
-      department_file = File.join(__dir__, '..', "#{dept_name}.rb")
+
+      template_path = File.join(__dir__, '..', 'generic_department.rb')
       config_file = File.join(__dir__, '..', "#{dept_name}.yml")
-      
-      puts "🏛️ 📁 Template path: #{template_path}"
-      puts "🏛️ 🎯 Target department: #{department_file}"
+
+      puts "🏛️ 📁 Template program: #{template_path}"
       puts "🏛️ ⚙️ Target config: #{config_file}"
-      
+
       # Check if template exists
       unless File.exist?(template_path)
-        logger.error("Operations: ❌ Generic template not found: #{template_path}")
-        puts "🏛️ ❌ Generic template not found: #{template_path}"
+        logger.error("Operations: ❌ Generic department template not found: #{template_path}")
+        puts "🏛️ ❌ Generic department template not found: #{template_path}"
         return nil
       end
-      
-      logger.info("Operations: 📁 Copying template: #{template_path} → #{department_file}")
-      puts "🏛️ 📋 Copying template to department file..."
-      FileUtils.cp(template_path, department_file)
-      
-      # Generate YAML configuration
+
+      # Generate YAML configuration (no need to copy the template file anymore)
       logger.info("Operations: ⚙️ Generating configuration: #{config_file}")
       puts "🏛️ ⚙️ Generating YAML configuration..."
       config = generate_department_config(spec.merge(name: dept_name))
       File.write(config_file, config.to_yaml)
-      
-      # Make executable
-      puts "🏛️ 🔐 Making department file executable..."
-      FileUtils.chmod(0755, department_file)
-      
-      logger.info("Operations: ✅ Department #{spec[:name]} created successfully using template approach")
-      logger.info("Operations: 📋 Template uses common/logger mixin for consistent logging")
-      puts "🏛️ ✅ Department #{spec[:name]} created successfully from template"
-      
+
+      logger.info("Operations: ✅ Department #{spec[:name]} created successfully using config approach")
+      logger.info("Operations: 📋 Department will run via: ruby generic_department.rb #{dept_name}")
+      puts "🏛️ ✅ Department #{spec[:name]} config created - can be run with: ruby generic_department.rb #{dept_name}"
+
       {
-        department_file: File.basename(department_file),
         config_file: File.basename(config_file),
-        template_used: File.basename(template_path)
+        template_used: File.basename(template_path),
+        run_command: "ruby #{File.basename(template_path)} #{dept_name}"
       }
     end
 
@@ -192,7 +182,7 @@ module CityCouncil
           'description' => spec[:description],
           'invariants' => [
             "serve citizens efficiently",
-            "respond to emergencies promptly", 
+            "respond to emergencies promptly",
             "maintain operational readiness"
           ]
         },
@@ -217,12 +207,12 @@ module CityCouncil
 
     def determine_subscription_messages(spec)
       messages = ['health_check_message']
-      
+
       # Add emergency message if it handles emergencies
       if spec[:description] && spec[:description].downcase.include?('emergency')
         messages << 'emergency_911_message'
       end
-      
+
       # Add specific message types based on department type
       department_type = spec[:name].split('_').first
       case department_type
@@ -239,13 +229,13 @@ module CityCouncil
       when 'parks'
         messages << 'emergency_911_message'
       end
-      
+
       messages.uniq
     end
 
     def generate_routing_rules(spec)
       rules = {}
-      
+
       # Default emergency_911_message routing
       if spec[:description]
         keywords = extract_keywords_from_description(spec[:description])
@@ -255,48 +245,48 @@ module CityCouncil
           'priority' => 'high'
         }]
       end
-      
+
       # Health check routing
       rules['health_check_message'] = [{
         'condition' => 'always',
         'priority' => 'normal'
       }]
-      
+
       rules
     end
 
     def generate_message_actions(spec)
       actions = {}
-      
+
       # Map message types to actions
       actions['emergency_911_message'] = 'handle_emergency'
       actions['health_check_message'] = 'respond_health_check'
-      
+
       # Add specific actions based on message types
       (spec[:message_types] || []).each do |msg_type|
         action_name = "handle_#{msg_type.gsub('_message', '').gsub('_', '_')}"
         actions[msg_type] = action_name
       end
-      
+
       actions
     end
 
     def generate_action_configs(spec)
       configs = {}
-      
+
       # Emergency handling configuration
       configs['handle_emergency'] = {
         'response_template' => "🚨 #{spec[:name].upcase}: Responding to {{emergency_type}} at {{location}}",
         'additional_actions' => ['log_emergency', 'notify_dispatch'],
         'publish_response' => true
       }
-      
-      # Health check configuration  
+
+      # Health check configuration
       configs['respond_health_check'] = {
         'response_template' => "💗 #{spec[:name]} is operational",
         'publish_response' => true
       }
-      
+
       configs
     end
 
@@ -349,6 +339,8 @@ module CityCouncil
     end
 
     def announce_department_created(spec, department_file)
+      Messages::DepartmentAnnouncementMessage.from(@service_name)
+
       dept_name = spec[:name].end_with?('_department') ? spec[:name] : "#{spec[:name]}_department"
       logger.info("Operations: Creating department creation announcement for: #{dept_name}")
       logger.info("Operations: Current @service_name value: #{@service_name.inspect}")
@@ -363,11 +355,11 @@ module CityCouncil
         reason: "Generated due to emergency service request"
       )
       announcement.from(@service_name)  # Use the proper method to set from field
-      
+
       logger.debug("Operations: Service name: #{@service_name}")
       logger.debug("Operations: Announcement from field: #{announcement._sm_header.from}")
       logger.debug("Operations: Publishing department creation announcement: #{announcement.inspect}")
-      
+
       begin
         announcement.publish
       rescue => e
@@ -394,7 +386,7 @@ module CityCouncil
       announcement.from(@service_name)  # Use the proper method to set from field
 
       logger.debug("Operations: Publishing department launch announcement: #{announcement.inspect}")
-      
+
       begin
         announcement.publish
       rescue => e
@@ -425,7 +417,7 @@ module CityCouncil
       announcement.from(@service_name)  # Use the proper method to set from field
 
       logger.debug("Operations: Publishing department failure announcement: #{announcement.inspect}")
-      
+
       begin
         announcement.publish
       rescue => e
@@ -438,7 +430,7 @@ module CityCouncil
     # Department Health Monitoring
     def start_department_monitoring
       logger.info("Operations: Starting department health monitoring thread")
-      
+
       Thread.new do
         loop do
           begin
@@ -455,38 +447,38 @@ module CityCouncil
     def monitor_department_health
       logger.debug("Operations: Performing health check on #{@department_health.size} departments")
       @last_health_check = Time.now
-      
+
       @department_health.each do |dept_name, health_info|
         check_department_process_health(dept_name, health_info)
         send_health_check_to_department(dept_name, health_info) if health_info[:process_healthy]
       end
-      
+
       cleanup_dead_departments
     end
 
     def check_department_process_health(dept_name, health_info)
       pid = health_info[:pid]
-      
+
       begin
         # Check if process is still running
         Process.kill(0, pid)
-        
+
         # Process exists, update health info
         unless health_info[:process_healthy]
           logger.info("Operations: Department #{dept_name} process recovered (PID: #{pid})")
           health_info[:process_healthy] = true
           health_info[:process_failures] = 0
         end
-        
+
         health_info[:last_process_check] = Time.now
-        
+
       rescue Errno::ESRCH
         # Process not found
         logger.warn("Operations: Department #{dept_name} process died (PID: #{pid})")
         health_info[:process_healthy] = false
         health_info[:process_failures] += 1
         health_info[:last_failure] = Time.now
-        
+
         # Try to restart if failures are below threshold
         if health_info[:process_failures] <= 3
           logger.info("Operations: Attempting to restart #{dept_name} (failure #{health_info[:process_failures]}/3)")
@@ -495,7 +487,7 @@ module CityCouncil
           logger.error("Operations: Department #{dept_name} has failed too many times, marking as permanently failed")
           health_info[:status] = 'permanently_failed'
         end
-        
+
       rescue => e
         logger.error("Operations: Error checking process health for #{dept_name}: #{e.message}")
       end
@@ -503,21 +495,22 @@ module CityCouncil
 
     def send_health_check_to_department(dept_name, health_info)
       return unless health_info[:process_healthy]
-      
+
       begin
         # Create and send health check message
         if defined?(Messages::HealthCheckMessage)
+          Messages::HealthCheckMessage.from(@service_name)
           health_check = Messages::HealthCheckMessage.new
           health_check.from(@service_name)
           health_check._sm_header.to = dept_name
-          
+
           # Set up response timeout
           health_info[:last_health_request] = Time.now
           health_info[:awaiting_response] = true
-          
+
           logger.debug("Operations: Sending health check to #{dept_name}")
           health_check.publish
-          
+
           # Schedule response timeout check
           Thread.new do
             sleep(10) # 10 second timeout for health response
@@ -536,21 +529,21 @@ module CityCouncil
 
     def restart_department(dept_name, health_info)
       logger.info("Operations: Restarting department #{dept_name}")
-      
+
       begin
         # Try to launch the department again
         new_pid = launch_department(health_info[:department_file])
-        
+
         if new_pid
           logger.info("Operations: Successfully restarted #{dept_name} with new PID #{new_pid}")
           health_info[:pid] = new_pid
           health_info[:process_healthy] = true
           health_info[:last_restart] = Time.now
           health_info[:restart_count] += 1
-          
+
           # Register the new PID with council
           @council.update_department_pid(dept_name, new_pid)
-          
+
           # Announce the restart
           puts "🏛️ ♻️ DEPARTMENT RESTARTED: #{dept_name} (new PID: #{new_pid})"
         else
@@ -576,7 +569,7 @@ module CityCouncil
 
     def register_department_for_monitoring(dept_name, pid, department_file)
       logger.info("Operations: Registering #{dept_name} for health monitoring (PID: #{pid})")
-      
+
       @department_health[dept_name] = {
         pid: pid,
         department_file: department_file,
@@ -593,14 +586,14 @@ module CityCouncil
         last_restart: nil,
         awaiting_response: false
       }
-      
+
       puts "🏛️ 📊 Monitoring started for #{dept_name} (PID: #{pid})"
     end
 
     def handle_health_response(dept_name, response)
       health_info = @department_health[dept_name]
       return unless health_info && health_info[:awaiting_response]
-      
+
       logger.debug("Operations: Received health response from #{dept_name}")
       health_info[:awaiting_response] = false
       health_info[:responsive] = true
@@ -629,14 +622,14 @@ module CityCouncil
 
     def handle_create_service(message, bus)
       logger.info("Operations: Received create_service request: #{message.payload}")
-      
+
       spec = message.payload[:spec]
       if spec
         success = create_city_service(spec)
-        
+
         bus.emit VSM::Message.new(
           kind: :operation_result,
-          payload: { 
+          payload: {
             operation: 'create_service',
             success: success,
             service_name: spec[:name]

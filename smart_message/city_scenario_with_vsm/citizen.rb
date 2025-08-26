@@ -11,8 +11,9 @@ class Citizen
   include Common::Logger
   include Common::StatusLine
 
-  def initialize
-    @service_name = 'citizen'
+  def initialize(citizen_name = nil)
+    @citizen_name = citizen_name || generate_random_name
+    @service_name = "citizen-#{@citizen_name.downcase.gsub(' ', '_')}"
     @call_count = 0
     @names = ['John Smith', 'Mary Johnson', 'Robert Williams', 'Patricia Brown', 'Michael Davis']
     @locations = [
@@ -238,7 +239,7 @@ class Citizen
     else
       @emergency_scenarios.sample
     end
-    caller_name = @names.sample
+    caller_name = @citizen_name
     location = @locations.sample
     phone = "555-#{rand(1000..9999)}"
 
@@ -266,7 +267,7 @@ class Citizen
       vehicles_involved: scenario[:vehicles],
       suspects_on_scene: scenario[:suspects],
       timestamp: Time.now.iso8601,
-      from: "citizen-#{caller_name.downcase.gsub(' ', '_')}",
+      from: @service_name,
       to: '911'
     )
 
@@ -284,6 +285,7 @@ class Citizen
 
   def run_interactive
     puts "👤 Citizen 911 Emergency Caller"
+    puts "   Citizen: #{@citizen_name}"
     puts "   Press Enter to make a random 911 call (40% chance non-existent dept)"
     puts "   Type 'force' to force a non-existent department call"
     puts "   Type 'auto' for automatic calls every 10-20 seconds"
@@ -320,6 +322,7 @@ class Citizen
 
   def run_automatic
     puts "\n👤 Starting automatic 911 calls (every 10-20 seconds)"
+    puts "   Citizen: #{@citizen_name}"
     puts "   40% of calls will request non-existent departments"
     puts "   Press Ctrl+C to stop\n\n"
 
@@ -348,14 +351,36 @@ class Citizen
       sleep(wait_time)
     end
   end
+
+  private
+
+  def generate_random_name
+    first_names = [
+      'John', 'Mary', 'Robert', 'Patricia', 'Michael', 'Jennifer', 'William', 'Linda',
+      'David', 'Elizabeth', 'Richard', 'Barbara', 'Joseph', 'Susan', 'Thomas', 'Jessica',
+      'Christopher', 'Sarah', 'Daniel', 'Karen', 'Paul', 'Nancy', 'Mark', 'Lisa',
+      'Donald', 'Betty', 'Steven', 'Helen', 'Kenneth', 'Sandra', 'Joshua', 'Donna'
+    ]
+    
+    last_names = [
+      'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis',
+      'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas',
+      'Taylor', 'Moore', 'Jackson', 'Martin', 'Lee', 'Perez', 'Thompson', 'White',
+      'Harris', 'Sanchez', 'Clark', 'Ramirez', 'Lewis', 'Robinson', 'Walker', 'Young'
+    ]
+    
+    "#{first_names.sample} #{last_names.sample}"
+  end
 end
 
 # Run the citizen caller
 if __FILE__ == $0
-  citizen = Citizen.new
+  # Allow specifying citizen name as command line argument
+  citizen_name = ARGV[0] unless ARGV[0] == 'auto'
+  citizen = Citizen.new(citizen_name)
 
   # Check for command line argument
-  if ARGV[0] == 'auto'
+  if ARGV.include?('auto') || (ARGV.size == 2 && ARGV[1] == 'auto')
     citizen.run_automatic
   else
     citizen.run_interactive

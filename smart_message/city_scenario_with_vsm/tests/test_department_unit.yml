@@ -1,8 +1,8 @@
 ---
 department:
-  name: test_template_unit
-  display_name: Test Template Unit
-  description: Unit testing department for validating generic template functionality
+  name: test_department_unit
+  display_name: Test Department Unit
+  description: Unit testing department for validating generic department functionality
   invariants:
   - serve citizens efficiently
   - respond to emergencies promptly

@@ -1,0 +1,60 @@
+---
+department:
+  name: parks_recreation_department
+  display_name: Parks Recreation
+  description: Manages safety, maintenance, and cleanup of parks and recreational
+    areas, including playgrounds and green spaces.
+  invariants:
+  - serve citizens efficiently
+  - respond to emergencies promptly
+  - maintain operational readiness
+capabilities:
+- Respond to fallen trees or hazards in park areas
+- Inspect and clear debris or safety hazards in playgrounds
+- Coordinate removal of hazardous trees or branches
+- Maintain park safety and public use facilities
+message_types:
+  subscribes_to:
+  - health_check_message
+  - emergency_911_message
+  publishes:
+  - hazard_report
+  - fallen_tree_alert
+  - playground_safety_issue
+routing_rules:
+  emergency_911_message:
+  - condition: message contains relevant keywords
+    keywords:
+    - manages
+    - safety
+    - maintenance
+    - cleanup
+    - parks
+    priority: high
+  health_check_message:
+  - condition: always
+    priority: normal
+message_actions:
+  emergency_911_message: handle_emergency
+  health_check_message: respond_health_check
+  hazard_report: handle_hazard_report
+  fallen_tree_alert: handle_fallen_tree_alert
+  playground_safety_issue: handle_playground_safety_issue
+action_configs:
+  handle_emergency:
+    response_template: "\U0001F6A8 PARKS_RECREATION: Responding to {{emergency_type}}
+      at {{location}}"
+    additional_actions:
+    - log_emergency
+    - notify_dispatch
+    publish_response: true
+  respond_health_check:
+    response_template: "\U0001F497 parks_recreation is operational"
+    publish_response: true
+ai_analysis:
+  enabled: false
+  context: You are the parks_recreation department. Handle manages safety, maintenance,
+    and cleanup of parks and recreational areas, including playgrounds and green spaces..
+logging:
+  level: info
+  statistics_interval: 300

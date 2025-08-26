@@ -6,6 +6,7 @@
 
 require_relative 'smart_message/lib/smart_message'
 require_relative 'common/logger'
+require_relative 'common/status_line'
 require_relative 'vsm/lib/vsm'
 require 'yaml'
 require 'fileutils'
@@ -13,10 +14,12 @@ require 'fileutils'
 # VSM Identity Component for Generic Department
 class GenericDepartmentIdentity < VSM::Identity
   include Common::Logger
+  include Common::StatusLine
 
   def initialize(config:)
     @config = config
     @service_name = config['department']['name']
+    @program_name = config['department']['display_name']
 
     logger.info("🏛️ Initializing #{config['department']['display_name']} Identity")
     logger.info("📋 Department capabilities: #{config['capabilities'].join(', ')}")
@@ -38,10 +41,12 @@ end
 # VSM Governance Component for Generic Department
 class GenericDepartmentGovernance < VSM::Governance
   include Common::Logger
+  include Common::StatusLine
 
   def initialize(config:)
     @config = config
     @service_name = config['department']['name']
+    @program_name = config['department']['display_name']
 
     logger.info("⚖️ Initializing Governance system")
     super()
@@ -69,10 +74,12 @@ end
 # VSM Intelligence Component for Generic Department
 class GenericDepartmentIntelligence < VSM::Intelligence
   include Common::Logger
+  include Common::StatusLine
 
   def initialize(config:)
     @config = config
     @service_name = config['department']['name']
+    @program_name = config['department']['display_name']
     @statistics = Hash.new(0)
 
     logger.info("🧠 Initializing Intelligence system")
@@ -169,10 +176,12 @@ end
 # VSM Operations Component for Generic Department
 class GenericDepartmentOperations < VSM::Operations
   include Common::Logger
+  include Common::StatusLine
 
   def initialize(config:)
     @config = config
     @service_name = config['department']['name']
+    @program_name = config['department']['display_name']
     @capabilities = config['capabilities'] || []
     @statistics = Hash.new(0)
 
@@ -243,11 +252,17 @@ class GenericDepartmentOperations < VSM::Operations
   end
 
   def execute_configured_action(action, message_data, action_config)
+    # Clear status line
+    print "\r" + " "*80 + "\r"
+
+    puts "\n🎯 [#{Time.now.strftime('%H:%M:%S')}] Executing: #{action}"
+
     logger.info("⚙️ Executing configured action: #{action}")
 
     # Generate response if template provided
     if action_config['response_template']
       response = generate_response(action_config['response_template'], message_data)
+      puts "   📤 Response: #{response}"
       logger.info("📤 Generated response: #{response}")
 
       # Publish response if configured
@@ -268,11 +283,18 @@ class GenericDepartmentOperations < VSM::Operations
   end
 
   def execute_default_action(action, message_data)
+    # Clear status line
+    print "\r" + " "*80 + "\r"
+
+    puts "\n🔧 [#{Time.now.strftime('%H:%M:%S')}] Processing: #{action}"
+
     logger.info("🔧 Executing default action: #{action}")
 
     # Basic acknowledgment
     logger.info("📨 Received #{action} request")
     logger.debug("📋 Request data: #{message_data}")
+
+    puts "   📋 Request processed"
 
     "default_action_completed"
   end
@@ -303,6 +325,7 @@ end
 # Main Generic Template Class
 class GenericTemplate
   include Common::Logger
+  include Common::StatusLine
 
   def initialize
     # Determine config file based on program name
@@ -316,8 +339,11 @@ class GenericTemplate
 
     @config = YAML.load_file(@config_file)
     @service_name = @config['department']['name']
+    @program_name = @config['department']['display_name']
     @statistics = Hash.new(0)
     @start_time = Time.now
+    @last_activity = Time.now
+    @status_update_counter = 0
 
     # Use logger mixin consistently with other city services
     setup_logger(
@@ -325,9 +351,19 @@ class GenericTemplate
       level: (@config['logging']['level'] || 'info')
     )
 
+    puts "\n" + "="*60
+    puts "🚀 Starting #{@config['department']['display_name']}"
+    puts "="*60
+    puts "📁 Configuration: #{@config_file}"
+    puts "🏷️ Service: #{@service_name}"
+    puts "🕐 Started: #{Time.now.strftime('%Y-%m-%d %H:%M:%S')}"
+
     logger.info("🚀 Starting #{@config['department']['display_name']}")
     logger.info("📁 Configuration loaded from: #{@config_file}")
     logger.info("🏷️ Service name: #{@service_name}")
+
+    # Load required message classes dynamically
+    load_message_classes
 
     # Initialize VSM capsule
     initialize_vsm_capsule
@@ -340,6 +376,17 @@ class GenericTemplate
 
     # Setup periodic statistics logging
     setup_statistics_logging if @config['logging']['statistics_interval']
+
+    puts "\n✅ #{@config['department']['display_name']} is fully operational"
+    puts "="*60
+    puts "💡 Department capabilities:"
+    @config['capabilities'].each { |cap| puts "   ✔ #{cap}" }
+    puts "-"*60
+    puts "📡 Listening for messages... (Press Ctrl+C to stop)"
+    puts "-"*60
+
+    # Setup periodic status updates
+    setup_status_updates
 
     logger.info("✅ #{@config['department']['display_name']} is fully operational")
     logger.info("🎯 Ready to handle: #{@config['capabilities'].join(', ')}")
@@ -354,9 +401,53 @@ class GenericTemplate
   private
 
   def determine_config_file
-    # Get program name without extension
-    program_name = File.basename($0, '.rb')
-    "#{program_name}.yml"
+    # Check for command line argument first
+    if ARGV.length > 0
+      department_name = ARGV[0]
+      "#{department_name}.yml"
+    else
+      puts "You have not provided a customizing department name."
+      logger.fatal "No customizing department name provided"
+      exit(1)
+    end
+  end
+
+  def load_message_classes
+    logger.info("📦 Loading required message classes")
+
+    # Always load health messages for monitoring
+    require_message_class('health_check_message')
+    require_message_class('health_status_message')
+
+    # Load message classes based on subscriptions
+    if @config['message_types'] && @config['message_types']['subscribes_to']
+      @config['message_types']['subscribes_to'].each do |message_type|
+        require_message_class(message_type) unless message_type == 'health_check_message'
+      end
+    end
+
+    # Load message classes based on publications
+    if @config['message_types'] && @config['message_types']['publishes']
+      @config['message_types']['publishes'].each do |message_type|
+        require_message_class(message_type)
+      end
+    end
+
+    logger.info("✅ Message classes loaded successfully")
+  rescue => e
+    logger.error("❌ Failed to load message classes: #{e.message}")
+    logger.debug("🔍 Error details: #{e.backtrace.first(3).join('\n')}")
+  end
+
+  def require_message_class(message_type)
+    logger.debug("📦 Loading message class: #{message_type}")
+
+    begin
+      require_relative "messages/#{message_type}"
+      logger.debug("✅ Loaded: messages/#{message_type}")
+    rescue LoadError => e
+      logger.warn("⚠️ Could not load message class: messages/#{message_type} (#{e.message})")
+    end
   end
 
   def initialize_vsm_capsule
@@ -373,14 +464,15 @@ class GenericTemplate
       coordination klass: VSM::Coordination
     end
 
-    @capsule.start
-    logger.info("✅ VSM capsule initialized and started")
+    logger.info("✅ VSM capsule initialized and ready")
   end
 
   def setup_message_subscriptions
     return unless @config['message_types'] && @config['message_types']['subscribes_to']
 
     @config['message_types']['subscribes_to'].each do |message_type|
+      # Skip health_check_message as it's handled by setup_health_monitoring
+      next if message_type == 'health_check_message'
       setup_message_subscription(message_type)
     end
   end
@@ -396,13 +488,26 @@ class GenericTemplate
         message_class = Messages.const_get(class_name)
 
         message_class.subscribe(to: @service_name) do |message|
+          # Update last activity time
+          @last_activity = Time.now
+
+          # Clear the status line
+          print "\r" + " "*80 + "\r"
+
+          # Show message receipt
+          puts "\n📨 [#{Time.now.strftime('%H:%M:%S')}] Incoming #{message_type}"
+          puts "   From: #{message._sm_header&.from || 'unknown'}"
+
           logger.info("📨 Received #{message_type} from #{message._sm_header&.from || 'unknown'}")
           logger.debug("📝 Message details: #{message.inspect}")
 
           begin
+            print "   ⚙️ Processing..."
             handle_message(message_type, message)
             @statistics[:messages_received] += 1
+            print "\r   ✅ Message processed successfully\n"
           rescue => e
+            print "\r   ❌ Failed: #{e.message}\n"
             logger.error("🚨 Failed to handle #{message_type}: #{e.message}")
             @statistics[:message_handling_failures] += 1
           end
@@ -446,7 +551,9 @@ class GenericTemplate
       logger.info("💗 Setting up health monitoring")
 
       if defined?(Messages::HealthCheckMessage)
-        Messages::HealthCheckMessage.subscribe(to: @service_name) do |message|
+        puts "💗 Health monitoring enabled"
+
+        Messages::HealthCheckMessage.subscribe(broadcast: true) do |message|
           respond_to_health_check(message)
         end
         logger.info("✅ Health monitoring active")
@@ -455,11 +562,21 @@ class GenericTemplate
   end
 
   def respond_to_health_check(message)
-    logger.debug("💗 Received health check from #{message._sm_header&.from}")
+    # Update last activity
+    @last_activity = Time.now
+
+    # Clear status line
+    print "\r" + " "*80 + "\r"
+
+    puts "\n💗 [#{Time.now.strftime('%H:%M:%S')}] Health Check"
+    puts "   From: #{message._sm_header&.from}"
+
+    logger.info("💗 Received health check from #{message._sm_header&.from}")
 
     # Generate health status response
     if defined?(Messages::HealthStatusMessage)
       uptime = Time.now - @start_time
+      success_rate = calculate_success_rate
 
       response = Messages::HealthStatusMessage.new(
         from: @service_name,
@@ -474,8 +591,40 @@ class GenericTemplate
       )
 
       response.publish
-      logger.debug("💗 Health status sent to #{message._sm_header&.from}")
+      puts "   ✅ Status: Healthy"
+      puts "   📈 Metrics: #{@statistics[:messages_received]} msgs, #{success_rate}% success"
+      puts "   ⏱ Uptime: #{format_duration(uptime)}"
+      logger.info("💗 Health status sent to #{message._sm_header&.from}")
+    else
+      logger.warn("⚠️ Messages::HealthStatusMessage not defined, cannot respond to health check")
     end
+  end
+
+  def setup_status_updates
+    # Update status line every 5 seconds
+    @status_thread = Thread.new do
+      loop do
+        sleep(5)
+        update_status_line
+      end
+    end
+  end
+
+  def update_status_line
+    uptime = Time.now - @start_time
+    idle_time = Time.now - @last_activity
+
+    status = if idle_time < 10
+      "🟢 Active"
+    elsif idle_time < 60
+      "🟡 Idle"
+    else
+      "⚪ Waiting"
+    end
+
+    # Use ANSI escape codes to update the line
+    print "\r📊 Status: #{status} | ⏱ Uptime: #{format_duration(uptime)} | 📨 Messages: #{@statistics[:messages_received]} | ⚡ Ops: #{@statistics[:successful_operations]} | 💗 Health: OK     "
+    $stdout.flush
   end
 
   def setup_statistics_logging
@@ -487,8 +636,21 @@ class GenericTemplate
       loop do
         sleep(interval)
         log_department_statistics
+        print_terminal_statistics
       end
     end
+  end
+
+  def print_terminal_statistics
+    uptime = Time.now - @start_time
+
+    # Clear status line and print statistics
+    print "\r" + " "*80 + "\r"
+    puts "\n📊 Department Statistics Update (#{Time.now.strftime('%H:%M:%S')})"
+    puts "  ├─ Uptime: #{format_duration(uptime)}"
+    puts "  ├─ Messages: #{@statistics[:messages_received]} received"
+    puts "  ├─ Operations: #{@statistics[:successful_operations]} successful, #{@statistics[:failed_operations]} failed"
+    puts "  └─ Success Rate: #{calculate_success_rate}%"
   end
 
   def log_department_statistics
@@ -521,6 +683,9 @@ class GenericTemplate
   def setup_signal_handlers
     ['TERM', 'INT'].each do |signal|
       Signal.trap(signal) do
+        # Clear status line
+        print "\r" + " "*80 + "\r"
+        puts "\n\n📡 Received #{signal} signal, shutting down #{@config['department']['display_name']}..."
         logger.info("📡 Received #{signal} signal, initiating shutdown...")
         shutdown_gracefully
       end
@@ -541,19 +706,42 @@ class GenericTemplate
   end
 
   def shutdown_gracefully
-    logger.info("🛑 Shutting down #{@config['department']['display_name']}")
+    # Clear status line
+    print "\r" + " "*80 + "\r"
 
-    # Stop statistics thread
+    logger.info("🛑 Shutting down #{@config['department']['display_name']}")
+    puts "\n🛑 Shutting down #{@config['department']['display_name']}..."
+
+    # Stop threads
+    @status_thread&.kill
     @stats_thread&.kill
 
     # Log final statistics
     log_final_statistics
 
-    # Cleanup VSM capsule
-    @capsule&.shutdown
+    # Print final stats to terminal
+    print_final_terminal_stats
 
+    # Cleanup VSM capsule (VSM capsules don't need explicit shutdown)
+
+    puts "👋 #{@config['department']['display_name']} shutdown complete"
     logger.info("👋 #{@config['department']['display_name']} shutdown complete")
     exit(0)
+  end
+
+  def print_final_terminal_stats
+    uptime = Time.now - @start_time
+    success_rate = calculate_success_rate
+
+    puts "\n" + "="*60
+    puts "📊 Final Statistics"
+    puts "="*60
+    puts "  Total Uptime: #{format_duration(uptime)}"
+    puts "  Messages Processed: #{@statistics[:messages_received]}"
+    puts "  Successful Operations: #{@statistics[:successful_operations]}"
+    puts "  Failed Operations: #{@statistics[:failed_operations]}"
+    puts "  Success Rate: #{success_rate}%"
+    puts "="*60
   end
 
   def log_final_statistics

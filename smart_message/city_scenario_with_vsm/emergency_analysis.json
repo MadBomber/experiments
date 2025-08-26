@@ -1,0 +1,1166 @@
+{
+  "calls": [
+    {
+      "id": "911-20250825-164649-0001",
+      "type": "animal_emergency",
+      "location": "789 Pine Lane",
+      "description": "Rabid raccoon attacking people!",
+      "timestamp": "2025-08-25 16:46:49 -0500"
+    },
+    {
+      "id": "911-20250825-164707-0002",
+      "type": "water_emergency",
+      "location": "456 Oak Avenue",
+      "description": "Major water main break! Entire street is flooded!",
+      "timestamp": "2025-08-25 16:47:07 -0500"
+    },
+    {
+      "id": "911-20250825-164726-0003",
+      "type": "transportation_emergency",
+      "location": "789 Pine Lane",
+      "description": "Major traffic signal failure causing gridlock!",
+      "timestamp": "2025-08-25 16:47:26 -0500"
+    },
+    {
+      "id": "911-20250825-164743-0004",
+      "type": "rescue",
+      "location": "654 Maple Road",
+      "description": "Child stuck in storm drain!",
+      "timestamp": "2025-08-25 16:47:43 -0500"
+    },
+    {
+      "id": "911-20250825-164809-0005",
+      "type": "animal_emergency",
+      "location": "456 Oak Avenue",
+      "description": "Rabid raccoon attacking people!",
+      "timestamp": "2025-08-25 16:48:09 -0500"
+    },
+    {
+      "id": "911-20250825-164820-0006",
+      "type": "infrastructure_emergency",
+      "location": "654 Maple Road",
+      "description": "Street lights out in entire district!",
+      "timestamp": "2025-08-25 16:48:20 -0500"
+    },
+    {
+      "id": "911-20250825-164838-0007",
+      "type": "water_emergency",
+      "location": "654 Maple Road",
+      "description": "Sewage backup in multiple homes!",
+      "timestamp": "2025-08-25 16:48:38 -0500"
+    },
+    {
+      "id": "911-20250825-164848-0008",
+      "type": "water_emergency",
+      "location": "987 Cedar Court",
+      "description": "Major water main break! Entire street is flooded!",
+      "timestamp": "2025-08-25 16:48:48 -0500"
+    },
+    {
+      "id": "911-20250825-164903-0009",
+      "type": "other",
+      "location": "456 Oak Avenue",
+      "description": "Illegal dumping of construction debris in park",
+      "timestamp": "2025-08-25 16:49:03 -0500"
+    },
+    {
+      "id": "911-20250825-164923-0010",
+      "type": "environmental_emergency",
+      "location": "258 Spruce Boulevard",
+      "description": "Toxic waste spill near river!",
+      "timestamp": "2025-08-25 16:49:23 -0500"
+    },
+    {
+      "id": "911-20250825-164933-0011",
+      "type": "sanitation_emergency",
+      "location": "456 Oak Avenue",
+      "description": "Garbage piling up for weeks, health hazard!",
+      "timestamp": "2025-08-25 16:49:33 -0500"
+    },
+    {
+      "id": "911-20250825-164946-0012",
+      "type": "accident",
+      "location": "321 Elm Drive",
+      "description": "Fender bender in parking lot",
+      "timestamp": "2025-08-25 16:49:46 -0500"
+    },
+    {
+      "id": "911-20250825-165005-0013",
+      "type": "sanitation_emergency",
+      "location": "321 Elm Drive",
+      "description": "Biohazard waste dumped in residential area!",
+      "timestamp": "2025-08-25 16:50:05 -0500"
+    },
+    {
+      "id": "911-20250825-165018-0014",
+      "type": "water_emergency",
+      "location": "258 Spruce Boulevard",
+      "description": "No water pressure in entire neighborhood!",
+      "timestamp": "2025-08-25 16:50:18 -0500"
+    },
+    {
+      "id": "911-20250825-165028-0015",
+      "type": "animal_emergency",
+      "location": "654 Maple Road",
+      "description": "Bear wandering through downtown!",
+      "timestamp": "2025-08-25 16:50:28 -0500"
+    },
+    {
+      "id": "911-20250825-165041-0016",
+      "type": "infrastructure_emergency",
+      "location": "987 Cedar Court",
+      "description": "Bridge showing signs of collapse!",
+      "timestamp": "2025-08-25 16:50:41 -0500"
+    },
+    {
+      "id": "911-20250825-165059-0017",
+      "type": "infrastructure_emergency",
+      "location": "147 Birch Way",
+      "description": "Bridge showing signs of collapse!",
+      "timestamp": "2025-08-25 16:50:59 -0500"
+    },
+    {
+      "id": "911-20250825-165111-0018",
+      "type": "other",
+      "location": "258 Spruce Boulevard",
+      "description": "Large pothole opened up, cars getting damaged",
+      "timestamp": "2025-08-25 16:51:11 -0500"
+    },
+    {
+      "id": "911-20250825-165123-0019",
+      "type": "water_emergency",
+      "location": "123 Main Street",
+      "description": "No water pressure in entire neighborhood!",
+      "timestamp": "2025-08-25 16:51:23 -0500"
+    },
+    {
+      "id": "911-20250825-165137-0020",
+      "type": "animal_emergency",
+      "location": "147 Birch Way",
+      "description": "Rabid raccoon attacking people!",
+      "timestamp": "2025-08-25 16:51:37 -0500"
+    },
+    {
+      "id": "911-20250825-165153-0021",
+      "type": "water_emergency",
+      "location": "258 Spruce Boulevard",
+      "description": "Sewage backup in multiple homes!",
+      "timestamp": "2025-08-25 16:51:53 -0500"
+    },
+    {
+      "id": "911-20250825-165210-0022",
+      "type": "parks_emergency",
+      "location": "987 Cedar Court",
+      "description": "Vandalism and destruction at city park!",
+      "timestamp": "2025-08-25 16:52:10 -0500"
+    },
+    {
+      "id": "911-20250825-165226-0023",
+      "type": "animal_emergency",
+      "location": "987 Cedar Court",
+      "description": "Pack of aggressive stray dogs in schoolyard!",
+      "timestamp": "2025-08-25 16:52:26 -0500"
+    },
+    {
+      "id": "911-20250825-165237-0024",
+      "type": "accident",
+      "location": "654 Maple Road",
+      "description": "Multi-car pileup on the highway! At least 5 cars!",
+      "timestamp": "2025-08-25 16:52:37 -0500"
+    },
+    {
+      "id": "911-20250825-165256-0025",
+      "type": "medical",
+      "location": "258 Spruce Boulevard",
+      "description": "Elderly person fell down stairs, bleeding heavily",
+      "timestamp": "2025-08-25 16:52:56 -0500"
+    },
+    {
+      "id": "911-20250825-165308-0026",
+      "type": "environmental_emergency",
+      "location": "123 Main Street",
+      "description": "Hazardous air quality alert - smoke from unknown source!",
+      "timestamp": "2025-08-25 16:53:08 -0500"
+    },
+    {
+      "id": "911-20250825-165327-0027",
+      "type": "water_emergency",
+      "location": "258 Spruce Boulevard",
+      "description": "No water pressure in entire neighborhood!",
+      "timestamp": "2025-08-25 16:53:27 -0500"
+    },
+    {
+      "id": "911-20250825-165340-0028",
+      "type": "environmental_emergency",
+      "location": "987 Cedar Court",
+      "description": "Toxic waste spill near river!",
+      "timestamp": "2025-08-25 16:53:40 -0500"
+    },
+    {
+      "id": "911-20250825-165356-0029",
+      "type": "transportation_emergency",
+      "location": "321 Elm Drive",
+      "description": "Major traffic signal failure causing gridlock!",
+      "timestamp": "2025-08-25 16:53:56 -0500"
+    },
+    {
+      "id": "911-20250825-165407-0030",
+      "type": "medical",
+      "location": "123 Main Street",
+      "description": "Heart attack! Person unconscious!",
+      "timestamp": "2025-08-25 16:54:07 -0500"
+    },
+    {
+      "id": "911-20250825-165417-0031",
+      "type": "other",
+      "location": "123 Main Street",
+      "description": "Large tree branch fallen across walking trail",
+      "timestamp": "2025-08-25 16:54:17 -0500"
+    },
+    {
+      "id": "911-20250825-165428-0032",
+      "type": "infrastructure_emergency",
+      "location": "321 Elm Drive",
+      "description": "Massive sinkhole opened up on Main Street!",
+      "timestamp": "2025-08-25 16:54:28 -0500"
+    },
+    {
+      "id": "911-20250825-165447-0033",
+      "type": "rescue",
+      "location": "987 Cedar Court",
+      "description": "Person trapped in collapsed building!",
+      "timestamp": "2025-08-25 16:54:47 -0500"
+    },
+    {
+      "id": "911-20250825-165502-0034",
+      "type": "accident",
+      "location": "147 Birch Way",
+      "description": "Two car collision at the intersection",
+      "timestamp": "2025-08-25 16:55:02 -0500"
+    },
+    {
+      "id": "911-20250825-165514-0035",
+      "type": "animal_emergency",
+      "location": "123 Main Street",
+      "description": "Pack of aggressive stray dogs in schoolyard!",
+      "timestamp": "2025-08-25 16:55:14 -0500"
+    },
+    {
+      "id": "911-20250825-165531-0036",
+      "type": "rescue",
+      "location": "147 Birch Way",
+      "description": "Child stuck in storm drain!",
+      "timestamp": "2025-08-25 16:55:31 -0500"
+    },
+    {
+      "id": "911-20250825-165548-0037",
+      "type": "transportation_emergency",
+      "location": "987 Cedar Court",
+      "description": "Subway tunnel flooded, passengers trapped!",
+      "timestamp": "2025-08-25 16:55:48 -0500"
+    },
+    {
+      "id": "911-20250825-165601-0038",
+      "type": "infrastructure_emergency",
+      "location": "123 Main Street",
+      "description": "Street lights out in entire district!",
+      "timestamp": "2025-08-25 16:56:01 -0500"
+    },
+    {
+      "id": "911-20250825-165619-0039",
+      "type": "other",
+      "location": "123 Main Street",
+      "description": "Dead deer on the highway causing traffic backup",
+      "timestamp": "2025-08-25 16:56:19 -0500"
+    },
+    {
+      "id": "911-20250825-165630-0040",
+      "type": "environmental_emergency",
+      "location": "321 Elm Drive",
+      "description": "Illegal chemical dumping discovered!",
+      "timestamp": "2025-08-25 16:56:30 -0500"
+    },
+    {
+      "id": "911-20250825-165640-0041",
+      "type": "infrastructure_emergency",
+      "location": "321 Elm Drive",
+      "description": "Street lights out in entire district!",
+      "timestamp": "2025-08-25 16:56:40 -0500"
+    },
+    {
+      "id": "911-20250825-165650-0042",
+      "type": "environmental_emergency",
+      "location": "123 Main Street",
+      "description": "Illegal chemical dumping discovered!",
+      "timestamp": "2025-08-25 16:56:50 -0500"
+    },
+    {
+      "id": "911-20250825-165709-0043",
+      "type": "rescue",
+      "location": "258 Spruce Boulevard",
+      "description": "Person trapped in collapsed building!",
+      "timestamp": "2025-08-25 16:57:09 -0500"
+    },
+    {
+      "id": "911-20250825-165719-0044",
+      "type": "sanitation_emergency",
+      "location": "654 Maple Road",
+      "description": "Garbage piling up for weeks, health hazard!",
+      "timestamp": "2025-08-25 16:57:19 -0500"
+    },
+    {
+      "id": "911-20250825-165732-0045",
+      "type": "transportation_emergency",
+      "location": "258 Spruce Boulevard",
+      "description": "Major traffic signal failure causing gridlock!",
+      "timestamp": "2025-08-25 16:57:32 -0500"
+    },
+    {
+      "id": "911-20250825-165752-0046",
+      "type": "sanitation_emergency",
+      "location": "654 Maple Road",
+      "description": "Garbage piling up for weeks, health hazard!",
+      "timestamp": "2025-08-25 16:57:52 -0500"
+    },
+    {
+      "id": "911-20250825-165810-0047",
+      "type": "parks_emergency",
+      "location": "789 Pine Lane",
+      "description": "Massive tree fell on playground during school hours!",
+      "timestamp": "2025-08-25 16:58:10 -0500"
+    },
+    {
+      "id": "911-20250825-165830-0048",
+      "type": "other",
+      "location": "987 Cedar Court",
+      "description": "Playground equipment broken, children could get hurt",
+      "timestamp": "2025-08-25 16:58:30 -0500"
+    },
+    {
+      "id": "911-20250825-165842-0049",
+      "type": "other",
+      "location": "147 Birch Way",
+      "description": "Building facade crumbling, bricks falling on sidewalk",
+      "timestamp": "2025-08-25 16:58:42 -0500"
+    },
+    {
+      "id": "911-20250825-165859-0050",
+      "type": "animal_emergency",
+      "location": "987 Cedar Court",
+      "description": "Rabid raccoon attacking people!",
+      "timestamp": "2025-08-25 16:58:59 -0500"
+    },
+    {
+      "id": "911-20250825-165918-0051",
+      "type": "infrastructure_emergency",
+      "location": "123 Main Street",
+      "description": "Massive sinkhole opened up on Main Street!",
+      "timestamp": "2025-08-25 16:59:18 -0500"
+    },
+    {
+      "id": "911-20250825-165935-0052",
+      "type": "medical",
+      "location": "258 Spruce Boulevard",
+      "description": "Heart attack! Person unconscious!",
+      "timestamp": "2025-08-25 16:59:35 -0500"
+    },
+    {
+      "id": "911-20250825-165954-0053",
+      "type": "sanitation_emergency",
+      "location": "321 Elm Drive",
+      "description": "Garbage piling up for weeks, health hazard!",
+      "timestamp": "2025-08-25 16:59:54 -0500"
+    },
+    {
+      "id": "911-20250825-170008-0054",
+      "type": "rescue",
+      "location": "123 Main Street",
+      "description": "Child stuck in storm drain!",
+      "timestamp": "2025-08-25 17:00:08 -0500"
+    },
+    {
+      "id": "911-20250825-170026-0055",
+      "type": "crime",
+      "location": "123 Main Street",
+      "description": "Break-in in progress! I can see them in my neighbor's house!",
+      "timestamp": "2025-08-25 17:00:26 -0500"
+    },
+    {
+      "id": "911-20250825-170036-0056",
+      "type": "transportation_emergency",
+      "location": "321 Elm Drive",
+      "description": "Major traffic signal failure causing gridlock!",
+      "timestamp": "2025-08-25 17:00:36 -0500"
+    },
+    {
+      "id": "911-20250825-170047-0057",
+      "type": "environmental_emergency",
+      "location": "258 Spruce Boulevard",
+      "description": "Toxic waste spill near river!",
+      "timestamp": "2025-08-25 17:00:47 -0500"
+    },
+    {
+      "id": "911-20250825-170058-0058",
+      "type": "accident",
+      "location": "654 Maple Road",
+      "description": "Fender bender in parking lot",
+      "timestamp": "2025-08-25 17:00:58 -0500"
+    },
+    {
+      "id": "911-20250825-170108-0059",
+      "type": "infrastructure_emergency",
+      "location": "123 Main Street",
+      "description": "Massive sinkhole opened up on Main Street!",
+      "timestamp": "2025-08-25 17:01:08 -0500"
+    },
+    {
+      "id": "911-20250825-170140-0060",
+      "type": "sanitation_emergency",
+      "location": "456 Oak Avenue",
+      "description": "Garbage piling up for weeks, health hazard!",
+      "timestamp": "2025-08-25 17:01:40 -0500"
+    },
+    {
+      "id": "911-20250825-170151-0061",
+      "type": "environmental_emergency",
+      "location": "147 Birch Way",
+      "description": "Hazardous air quality alert - smoke from unknown source!",
+      "timestamp": "2025-08-25 17:01:51 -0500"
+    },
+    {
+      "id": "911-20250825-170217-0062",
+      "type": "water_emergency",
+      "location": "147 Birch Way",
+      "description": "Sewage backup in multiple homes!",
+      "timestamp": "2025-08-25 17:02:17 -0500"
+    },
+    {
+      "id": "911-20250825-170231-0063",
+      "type": "sanitation_emergency",
+      "location": "258 Spruce Boulevard",
+      "description": "Garbage piling up for weeks, health hazard!",
+      "timestamp": "2025-08-25 17:02:31 -0500"
+    },
+    {
+      "id": "911-20250825-170249-0064",
+      "type": "water_emergency",
+      "location": "321 Elm Drive",
+      "description": "Sewage backup in multiple homes!",
+      "timestamp": "2025-08-25 17:02:49 -0500"
+    },
+    {
+      "id": "911-20250825-170259-0065",
+      "type": "other",
+      "location": "123 Main Street",
+      "description": "Power lines down across the road",
+      "timestamp": "2025-08-25 17:02:59 -0500"
+    },
+    {
+      "id": "911-20250825-170314-0066",
+      "type": "water_emergency",
+      "location": "147 Birch Way",
+      "description": "Sewage backup in multiple homes!",
+      "timestamp": "2025-08-25 17:03:14 -0500"
+    },
+    {
+      "id": "911-20250825-170331-0067",
+      "type": "infrastructure_emergency",
+      "location": "258 Spruce Boulevard",
+      "description": "Street lights out in entire district!",
+      "timestamp": "2025-08-25 17:03:31 -0500"
+    },
+    {
+      "id": "911-20250825-170341-0068",
+      "type": "other",
+      "location": "654 Maple Road",
+      "description": "Suspicious person looking into car windows",
+      "timestamp": "2025-08-25 17:03:41 -0500"
+    },
+    {
+      "id": "911-20250825-170351-0069",
+      "type": "environmental_emergency",
+      "location": "258 Spruce Boulevard",
+      "description": "Hazardous air quality alert - smoke from unknown source!",
+      "timestamp": "2025-08-25 17:03:51 -0500"
+    },
+    {
+      "id": "911-20250825-170411-0070",
+      "type": "water_emergency",
+      "location": "321 Elm Drive",
+      "description": "Major water main break! Entire street is flooded!",
+      "timestamp": "2025-08-25 17:04:11 -0500"
+    },
+    {
+      "id": "911-20250825-170426-0071",
+      "type": "sanitation_emergency",
+      "location": "123 Main Street",
+      "description": "Garbage piling up for weeks, health hazard!",
+      "timestamp": "2025-08-25 17:04:26 -0500"
+    },
+    {
+      "id": "911-20250825-170444-0072",
+      "type": "animal_emergency",
+      "location": "654 Maple Road",
+      "description": "Bear wandering through downtown!",
+      "timestamp": "2025-08-25 17:04:44 -0500"
+    },
+    {
+      "id": "911-20250825-170503-0073",
+      "type": "environmental_emergency",
+      "location": "258 Spruce Boulevard",
+      "description": "Hazardous air quality alert - smoke from unknown source!",
+      "timestamp": "2025-08-25 17:05:03 -0500"
+    },
+    {
+      "id": "911-20250825-170519-0074",
+      "type": "rescue",
+      "location": "456 Oak Avenue",
+      "description": "Person trapped in collapsed building!",
+      "timestamp": "2025-08-25 17:05:19 -0500"
+    },
+    {
+      "id": "911-20250825-170534-0075",
+      "type": "infrastructure_emergency",
+      "location": "123 Main Street",
+      "description": "Bridge showing signs of collapse!",
+      "timestamp": "2025-08-25 17:05:34 -0500"
+    },
+    {
+      "id": "911-20250825-170554-0076",
+      "type": "transportation_emergency",
+      "location": "987 Cedar Court",
+      "description": "Subway tunnel flooded, passengers trapped!",
+      "timestamp": "2025-08-25 17:05:54 -0500"
+    },
+    {
+      "id": "911-20250825-170609-0077",
+      "type": "water_emergency",
+      "location": "258 Spruce Boulevard",
+      "description": "No water pressure in entire neighborhood!",
+      "timestamp": "2025-08-25 17:06:09 -0500"
+    },
+    {
+      "id": "911-20250825-170619-0078",
+      "type": "animal_emergency",
+      "location": "321 Elm Drive",
+      "description": "Rabid raccoon attacking people!",
+      "timestamp": "2025-08-25 17:06:19 -0500"
+    },
+    {
+      "id": "911-20250825-170638-0079",
+      "type": "water_emergency",
+      "location": "456 Oak Avenue",
+      "description": "Sewage backup in multiple homes!",
+      "timestamp": "2025-08-25 17:06:38 -0500"
+    },
+    {
+      "id": "911-20250825-170651-0080",
+      "type": "other",
+      "location": "456 Oak Avenue",
+      "description": "Swarm of bees has taken over playground equipment",
+      "timestamp": "2025-08-25 17:06:51 -0500"
+    },
+    {
+      "id": "911-20250825-170708-0081",
+      "type": "animal_emergency",
+      "location": "123 Main Street",
+      "description": "Rabid raccoon attacking people!",
+      "timestamp": "2025-08-25 17:07:08 -0500"
+    },
+    {
+      "id": "911-20250825-170726-0082",
+      "type": "fire",
+      "location": "258 Spruce Boulevard",
+      "description": "House is on fire! Smoke everywhere!",
+      "timestamp": "2025-08-25 17:07:26 -0500"
+    },
+    {
+      "id": "911-20250825-170739-0083",
+      "type": "infrastructure_emergency",
+      "location": "789 Pine Lane",
+      "description": "Bridge showing signs of collapse!",
+      "timestamp": "2025-08-25 17:07:39 -0500"
+    },
+    {
+      "id": "911-20250825-170753-0084",
+      "type": "water_emergency",
+      "location": "123 Main Street",
+      "description": "Major water main break! Entire street is flooded!",
+      "timestamp": "2025-08-25 17:07:53 -0500"
+    },
+    {
+      "id": "911-20250825-170818-0085",
+      "type": "fire",
+      "location": "321 Elm Drive",
+      "description": "House is on fire! Smoke everywhere!",
+      "timestamp": "2025-08-25 17:08:18 -0500"
+    },
+    {
+      "id": "911-20250825-170835-0086",
+      "type": "transportation_emergency",
+      "location": "123 Main Street",
+      "description": "Subway tunnel flooded, passengers trapped!",
+      "timestamp": "2025-08-25 17:08:35 -0500"
+    },
+    {
+      "id": "911-20250825-170847-0087",
+      "type": "environmental_emergency",
+      "location": "321 Elm Drive",
+      "description": "Illegal chemical dumping discovered!",
+      "timestamp": "2025-08-25 17:08:47 -0500"
+    },
+    {
+      "id": "911-20250825-170859-0088",
+      "type": "hazmat",
+      "location": "147 Birch Way",
+      "description": "Chemical spill from overturned truck! Strong fumes!",
+      "timestamp": "2025-08-25 17:08:59 -0500"
+    },
+    {
+      "id": "911-20250825-170919-0089",
+      "type": "environmental_emergency",
+      "location": "654 Maple Road",
+      "description": "Toxic waste spill near river!",
+      "timestamp": "2025-08-25 17:09:19 -0500"
+    },
+    {
+      "id": "911-20250825-170934-0090",
+      "type": "sanitation_emergency",
+      "location": "987 Cedar Court",
+      "description": "Garbage piling up for weeks, health hazard!",
+      "timestamp": "2025-08-25 17:09:34 -0500"
+    },
+    {
+      "id": "911-20250825-170953-0091",
+      "type": "animal_emergency",
+      "location": "789 Pine Lane",
+      "description": "Rabid raccoon attacking people!",
+      "timestamp": "2025-08-25 17:09:53 -0500"
+    },
+    {
+      "id": "911-20250825-171007-0092",
+      "type": "transportation_emergency",
+      "location": "654 Maple Road",
+      "description": "Bus crashed into building downtown!",
+      "timestamp": "2025-08-25 17:10:07 -0500"
+    },
+    {
+      "id": "911-20250825-171017-0093",
+      "type": "environmental_emergency",
+      "location": "123 Main Street",
+      "description": "Hazardous air quality alert - smoke from unknown source!",
+      "timestamp": "2025-08-25 17:10:17 -0500"
+    },
+    {
+      "id": "911-20250825-171027-0094",
+      "type": "crime",
+      "location": "987 Cedar Court",
+      "description": "Break-in in progress! I can see them in my neighbor's house!",
+      "timestamp": "2025-08-25 17:10:27 -0500"
+    }
+  ],
+  "dispatches": [
+    {
+      "call_id": "911-20250825-164946-0012",
+      "department": "Police Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165028-0015",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165210-0022",
+      "department": "Police Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165226-0023",
+      "department": "Police Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165237-0024",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165237-0024",
+      "department": "Police Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165256-0025",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165407-0030",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165447-0033",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165447-0033",
+      "department": "Police Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165502-0034",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165502-0034",
+      "department": "Police Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165514-0035",
+      "department": "Police Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165548-0037",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165709-0043",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165709-0043",
+      "department": "Police Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-165935-0052",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-170026-0055",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-170058-0058",
+      "department": "Police Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-170058-0058",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-170444-0072",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-170519-0074",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-170519-0074",
+      "department": "Police Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-170554-0076",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-170726-0082",
+      "department": "Police Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-170835-0086",
+      "department": "Fire Department",
+      "type": "forwarded"
+    },
+    {
+      "call_id": "911-20250825-171007-0092",
+      "department": "Fire Department",
+      "type": "forwarded"
+    }
+  ],
+  "resolutions": [
+    {
+      "call_id": "911-20250825-164707-0002",
+      "duration_seconds": 99
+    },
+    {
+      "call_id": "911-20250825-164649-0001",
+      "duration_seconds": 142
+    },
+    {
+      "call_id": "911-20250825-164743-0004",
+      "duration_seconds": 115
+    },
+    {
+      "call_id": "911-20250825-164726-0003",
+      "duration_seconds": 139
+    },
+    {
+      "call_id": "911-20250825-164820-0006",
+      "duration_seconds": 114
+    },
+    {
+      "call_id": "911-20250825-164809-0005",
+      "duration_seconds": 128
+    },
+    {
+      "call_id": "911-20250825-164838-0007",
+      "duration_seconds": 108
+    },
+    {
+      "call_id": "911-20250825-164848-0008",
+      "duration_seconds": 103
+    },
+    {
+      "call_id": "911-20250825-164903-0009",
+      "duration_seconds": 97
+    },
+    {
+      "call_id": "911-20250825-164923-0010",
+      "duration_seconds": 84
+    },
+    {
+      "call_id": "911-20250825-164946-0012",
+      "duration_seconds": 119
+    },
+    {
+      "call_id": "911-20250825-164933-0011",
+      "duration_seconds": 139
+    },
+    {
+      "call_id": "911-20250825-165041-0016",
+      "duration_seconds": 82
+    },
+    {
+      "call_id": "911-20250825-165018-0014",
+      "duration_seconds": 136
+    },
+    {
+      "call_id": "911-20250825-165005-0013",
+      "duration_seconds": 150
+    },
+    {
+      "call_id": "911-20250825-165028-0015",
+      "duration_seconds": 130
+    },
+    {
+      "call_id": "911-20250825-165059-0017",
+      "duration_seconds": 111
+    },
+    {
+      "call_id": "911-20250825-165123-0019",
+      "duration_seconds": 94
+    },
+    {
+      "call_id": "911-20250825-165137-0020",
+      "duration_seconds": 83
+    },
+    {
+      "call_id": "911-20250825-165153-0021",
+      "duration_seconds": 83
+    },
+    {
+      "call_id": "911-20250825-165111-0018",
+      "duration_seconds": 126
+    },
+    {
+      "call_id": "911-20250825-165210-0022",
+      "duration_seconds": 75
+    },
+    {
+      "call_id": "911-20250825-165226-0023",
+      "duration_seconds": 87
+    },
+    {
+      "call_id": "911-20250825-165256-0025",
+      "duration_seconds": 72
+    },
+    {
+      "call_id": "911-20250825-165308-0026",
+      "duration_seconds": 73
+    },
+    {
+      "call_id": "911-20250825-165237-0024",
+      "duration_seconds": 130
+    },
+    {
+      "call_id": "911-20250825-165356-0029",
+      "duration_seconds": 87
+    },
+    {
+      "call_id": "911-20250825-165327-0027",
+      "duration_seconds": 129
+    },
+    {
+      "call_id": "911-20250825-165340-0028",
+      "duration_seconds": 127
+    },
+    {
+      "call_id": "911-20250825-165428-0032",
+      "duration_seconds": 91
+    },
+    {
+      "call_id": "911-20250825-165407-0030",
+      "duration_seconds": 113
+    },
+    {
+      "call_id": "911-20250825-165417-0031",
+      "duration_seconds": 113
+    },
+    {
+      "call_id": "911-20250825-165514-0035",
+      "duration_seconds": 83
+    },
+    {
+      "call_id": "911-20250825-165531-0036",
+      "duration_seconds": 71
+    },
+    {
+      "call_id": "911-20250825-165601-0038",
+      "duration_seconds": 65
+    },
+    {
+      "call_id": "911-20250825-165548-0037",
+      "duration_seconds": 86
+    },
+    {
+      "call_id": "911-20250825-165447-0033",
+      "duration_seconds": 172
+    },
+    {
+      "call_id": "911-20250825-165502-0034",
+      "duration_seconds": 164
+    },
+    {
+      "call_id": "911-20250825-165640-0041",
+      "duration_seconds": 75
+    },
+    {
+      "call_id": "911-20250825-165630-0040",
+      "duration_seconds": 104
+    },
+    {
+      "call_id": "911-20250825-165650-0042",
+      "duration_seconds": 99
+    },
+    {
+      "call_id": "911-20250825-165619-0039",
+      "duration_seconds": 165
+    },
+    {
+      "call_id": "911-20250825-165752-0046",
+      "duration_seconds": 74
+    },
+    {
+      "call_id": "911-20250825-165709-0043",
+      "duration_seconds": 126
+    },
+    {
+      "call_id": "911-20250825-165719-0044",
+      "duration_seconds": 155
+    },
+    {
+      "call_id": "911-20250825-165732-0045",
+      "duration_seconds": 149
+    },
+    {
+      "call_id": "911-20250825-165810-0047",
+      "duration_seconds": 146
+    },
+    {
+      "call_id": "911-20250825-165830-0048",
+      "duration_seconds": 148
+    },
+    {
+      "call_id": "911-20250825-165842-0049",
+      "duration_seconds": 144
+    },
+    {
+      "call_id": "911-20250825-165859-0050",
+      "duration_seconds": 162
+    },
+    {
+      "call_id": "911-20250825-165935-0052",
+      "duration_seconds": 138
+    },
+    {
+      "call_id": "911-20250825-165918-0051",
+      "duration_seconds": 158
+    },
+    {
+      "call_id": "911-20250825-170036-0056",
+      "duration_seconds": 84
+    },
+    {
+      "call_id": "911-20250825-170008-0054",
+      "duration_seconds": 115
+    },
+    {
+      "call_id": "911-20250825-165954-0053",
+      "duration_seconds": 135
+    },
+    {
+      "call_id": "911-20250825-170108-0059",
+      "duration_seconds": 111
+    },
+    {
+      "call_id": "911-20250825-170151-0061",
+      "duration_seconds": 75
+    },
+    {
+      "call_id": "911-20250825-170058-0058",
+      "duration_seconds": 129
+    },
+    {
+      "call_id": "911-20250825-170026-0055",
+      "duration_seconds": 166
+    },
+    {
+      "call_id": "911-20250825-170047-0057",
+      "duration_seconds": 166
+    },
+    {
+      "call_id": "911-20250825-170231-0063",
+      "duration_seconds": 64
+    },
+    {
+      "call_id": "911-20250825-170140-0060",
+      "duration_seconds": 139
+    },
+    {
+      "call_id": "911-20250825-170217-0062",
+      "duration_seconds": 121
+    },
+    {
+      "call_id": "911-20250825-170314-0066",
+      "duration_seconds": 68
+    },
+    {
+      "call_id": "911-20250825-170259-0065",
+      "duration_seconds": 87
+    },
+    {
+      "call_id": "911-20250825-170249-0064",
+      "duration_seconds": 130
+    },
+    {
+      "call_id": "911-20250825-170331-0067",
+      "duration_seconds": 103
+    },
+    {
+      "call_id": "911-20250825-170341-0068",
+      "duration_seconds": 103
+    },
+    {
+      "call_id": "911-20250825-170351-0069",
+      "duration_seconds": 118
+    },
+    {
+      "call_id": "911-20250825-170411-0070",
+      "duration_seconds": 105
+    },
+    {
+      "call_id": "911-20250825-170426-0071",
+      "duration_seconds": 106
+    },
+    {
+      "call_id": "911-20250825-170503-0073",
+      "duration_seconds": 80
+    },
+    {
+      "call_id": "911-20250825-170534-0075",
+      "duration_seconds": 78
+    },
+    {
+      "call_id": "911-20250825-170519-0074",
+      "duration_seconds": 129
+    },
+    {
+      "call_id": "911-20250825-170619-0078",
+      "duration_seconds": 70
+    },
+    {
+      "call_id": "911-20250825-170444-0072",
+      "duration_seconds": 174
+    },
+    {
+      "call_id": "911-20250825-170609-0077",
+      "duration_seconds": 96
+    },
+    {
+      "call_id": "911-20250825-170638-0079",
+      "duration_seconds": 107
+    },
+    {
+      "call_id": "911-20250825-170726-0082",
+      "duration_seconds": 71
+    },
+    {
+      "call_id": "911-20250825-170554-0076",
+      "duration_seconds": 170
+    },
+    {
+      "call_id": "911-20250825-170739-0083",
+      "duration_seconds": 85
+    },
+    {
+      "call_id": "911-20250825-170651-0080",
+      "duration_seconds": 145
+    },
+    {
+      "call_id": "911-20250825-170835-0086",
+      "duration_seconds": 73
+    },
+    {
+      "call_id": "911-20250825-170753-0084",
+      "duration_seconds": 120
+    },
+    {
+      "call_id": "911-20250825-170708-0081",
+      "duration_seconds": 168
+    }
+  ],
+  "departments_used": {
+    "animal_control_department": 13,
+    "health_department": 12,
+    "water_management_department": 2,
+    "public_works_department": 38,
+    "transportation_department": 8,
+    "traffic_management_department": 4,
+    "city_engineering_department": 15,
+    "waste_and_sewage_management_department": 6,
+    "utilities_department": 8,
+    "building_inspection_department": 2,
+    "environmental_protection_agency_department": 14,
+    "hazardous_materials_response_department": 13,
+    "sanitation_department": 8,
+    "police_department": 14,
+    "water_supply_and_utilities_department": 4,
+    "fire_department": 18,
+    "parks_and_recreation_department": 5,
+    "security_services_department": 1
+  },
+  "missing_departments": [
+    "traffic_management_department",
+    "security_services_department"
+  ],
+  "timestamp": "2025-08-25T17:11:33-05:00"
+}

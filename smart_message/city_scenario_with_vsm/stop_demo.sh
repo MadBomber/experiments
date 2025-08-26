@@ -2,6 +2,9 @@
 
 # SmartMessage City Demo Shutdown Script for iTerm2
 # Stops all city services and closes the iTerm2 demo window
+# Dynamically handles all departments discovered in start_demo.sh
+
+DEMO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "Stopping SmartMessage City Demo..."
 
@@ -10,6 +13,18 @@ if ! pgrep -x "iTerm" > /dev/null; then
     echo "iTerm2 is not running."
     # Still continue to check for orphaned processes
 fi
+
+# Discover the same departments as start_demo.sh
+echo "Discovering running city departments..."
+YAML_DEPARTMENTS=($(ls *_department.yml 2>/dev/null | sed 's/.yml$//' | sort))
+RUBY_DEPARTMENTS=($(ls *_department.rb 2>/dev/null | grep -v "generic_department.rb" | sed 's/.rb$//' | sort))
+
+# Filter out test departments
+YAML_DEPARTMENTS=($(printf '%s\n' "${YAML_DEPARTMENTS[@]}" | grep -v "test_"))
+RUBY_DEPARTMENTS=($(printf '%s\n' "${RUBY_DEPARTMENTS[@]}" | grep -v "test_"))
+
+echo "Found ${#YAML_DEPARTMENTS[@]} YAML departments and ${#RUBY_DEPARTMENTS[@]} Ruby departments to stop."
+echo "Will also stop all running houses, citizens, visitors, and support services..."
 
 # Function to find and close demo window
 echo "Looking for SmartMessage city demo window in iTerm2..."
@@ -25,8 +40,21 @@ tell application "iTerm2"
                 set end of tabNames to (name of current session of theTab)
             end repeat
             
-            -- Check if this window has our city demo tabs
-            if "Health Department" is in tabNames or "Police Department" is in tabNames or "Fire Department" is in tabNames or "Local Bank" is in tabNames or "City Council" is in tabNames or "911 Dispatch" is in tabNames then
+            -- Check if this window has our city demo tabs (look for common indicators)
+            set cityKeywords to {"Department", "City Council", "Local Bank", "House", "Emergency", "Redis", "Citizen"}
+            set foundKeywords to 0
+            
+            repeat with keyword in cityKeywords
+                repeat with tabName in tabNames
+                    if tabName contains keyword then
+                        set foundKeywords to foundKeywords + 1
+                        exit repeat
+                    end if
+                end repeat
+            end repeat
+            
+            -- If we found multiple city-related tabs, this is likely our demo window
+            if foundKeywords >= 3 then
                 set windowFound to true
                 
                 -- Send Ctrl+C to stop programs and exit shells
@@ -60,26 +88,58 @@ fi
 # Clean up any remaining city service processes
 echo "Checking for remaining city service processes..."
 
-# Include all demo programs in the cleanup
-ORPHANS=$(pgrep -f "(health_department|police_department|fire_department|local_bank|house|city_council|emergency_dispatch_center|citizen|redis_monitor|redis_stats)\.rb")
+# Build dynamic process patterns for all departments
+PROCESS_PATTERNS=()
+for dept in "${YAML_DEPARTMENTS[@]}" "${RUBY_DEPARTMENTS[@]}"; do
+    PROCESS_PATTERNS+=("$dept")
+done
+
+# Add core city service programs
+CORE_PROGRAMS=("local_bank" "house" "city_council" "emergency_dispatch_center" "citizen" "visitor" "redis_monitor" "redis_stats" "generic_department" "tip_line")
+PROCESS_PATTERNS+=("${CORE_PROGRAMS[@]}")
+
+# Create regex pattern for pgrep
+PATTERN=$(IFS="|"; echo "${PROCESS_PATTERNS[*]}")
+ORPHANS=$(pgrep -f "($PATTERN)\.rb")
 
 if [ -n "$ORPHANS" ]; then
-    echo "Found orphaned city service processes. Cleaning up..."
+    PROCESS_COUNT=$(echo "$ORPHANS" | wc -w)
+    echo "Found $PROCESS_COUNT orphaned city service processes. Cleaning up..."
     echo "$ORPHANS" | while read pid; do
-        echo "  Stopping process $pid..."
-        kill -TERM "$pid" 2>/dev/null || true
+        if [ -n "$pid" ]; then
+            PROCESS_NAME=$(ps -p "$pid" -o command= 2>/dev/null | head -1)
+            # Extract the program name and parameters for better display
+            PROGRAM_NAME=$(echo "$PROCESS_NAME" | sed -n 's/.*ruby \([^ ]*\).*/\1/p' | xargs basename 2>/dev/null || echo "unknown")
+            PROGRAM_ARGS=$(echo "$PROCESS_NAME" | sed -n 's/.*ruby [^ ]* \(.*\)/\1/p' || echo "")
+            if [ -n "$PROGRAM_ARGS" ]; then
+                echo "  Stopping $PROGRAM_NAME ($PROGRAM_ARGS) - PID $pid"
+            else
+                echo "  Stopping $PROGRAM_NAME - PID $pid"
+            fi
+            kill -TERM "$pid" 2>/dev/null || true
+        fi
     done
     
     # Wait a moment for graceful termination
-    sleep 1
+    sleep 2
     
     # Force kill any remaining processes
-    REMAINING=$(pgrep -f "(health_department|police_department|fire_department|local_bank|house|city_council|emergency_dispatch_center|citizen|redis_monitor|redis_stats)\.rb")
+    REMAINING=$(pgrep -f "($PATTERN)\.rb")
     if [ -n "$REMAINING" ]; then
-        echo "Force killing remaining processes..."
+        REMAINING_COUNT=$(echo "$REMAINING" | wc -w)
+        echo "Force killing $REMAINING_COUNT remaining processes..."
         echo "$REMAINING" | while read pid; do
-            echo "  Force killing process $pid..."
-            kill -KILL "$pid" 2>/dev/null || true
+            if [ -n "$pid" ]; then
+                PROCESS_NAME=$(ps -p "$pid" -o command= 2>/dev/null | head -1)
+                PROGRAM_NAME=$(echo "$PROCESS_NAME" | sed -n 's/.*ruby \([^ ]*\).*/\1/p' | xargs basename 2>/dev/null || echo "unknown")
+                PROGRAM_ARGS=$(echo "$PROCESS_NAME" | sed -n 's/.*ruby [^ ]* \(.*\)/\1/p' || echo "")
+                if [ -n "$PROGRAM_ARGS" ]; then
+                    echo "  Force killing $PROGRAM_NAME ($PROGRAM_ARGS) - PID $pid"
+                else
+                    echo "  Force killing $PROGRAM_NAME - PID $pid"
+                fi
+                kill -KILL "$pid" 2>/dev/null || true
+            fi
         done
     fi
     
@@ -102,5 +162,6 @@ echo "✅ Redis channels cleaned up."
 echo ""
 echo "🛑 SmartMessage city demo has been stopped."
 echo "   All emergency services are offline."
+echo "   All 4 houses, 5 citizens, and 6 visitors have been stopped."
 echo ""
 echo "💡 To start the city demo again, run: ./start_demo.sh"
