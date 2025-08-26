@@ -8,13 +8,37 @@ module DogeVSM
       tool_schema({
         type: 'object',
         properties: {
-          combinations: { type: 'array', description: 'Array of department combination objects' }
+          combinations: { 
+            type: 'array', 
+            description: 'Array of department combination objects',
+            items: {
+              type: 'object',
+              properties: {
+                dept1: { type: 'object' },
+                dept2: { type: 'object' },
+                score: { type: 'number' },
+                reasons: { type: 'array', items: { type: 'string' } }
+              }
+            }
+          }
         },
         required: ['combinations']
       })
 
       def run(args)
-        combinations = args[:combinations]
+        # Handle both direct array and wrapped format from SimilarityCalculatorTool
+        # Handle both symbol and string keys from different AI models  
+        combinations_data = args[:combinations] || args["combinations"]
+        if combinations_data.is_a?(Hash) && combinations_data[:combinations]
+          combinations = combinations_data[:combinations]
+        elsif combinations_data.is_a?(Array)
+          combinations = combinations_data
+        else
+          return { error: "Invalid combinations data format: #{combinations_data.class}" }
+        end
+
+        return { error: "No combinations provided" } if combinations.nil? || combinations.empty?
+        
         recommendations = []
 
         combinations.each do |combo|

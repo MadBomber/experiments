@@ -8,15 +8,41 @@ module DogeVSM
       tool_schema({
         type: 'object',
         properties: {
-          departments: { type: 'array', description: 'Array of department objects' },
+          departments: { 
+            type: 'array', 
+            description: 'Array of department objects',
+            items: {
+              type: 'object',
+              properties: {
+                name: { type: 'string' },
+                description: { type: 'string' },
+                keywords: { type: 'array', items: { type: 'string' } },
+                capabilities: { type: 'array', items: { type: 'string' } },
+                message_types: { type: 'object' }
+              }
+            }
+          },
           threshold: { type: 'number', description: 'Minimum similarity threshold (default: 0.15)' }
         },
         required: ['departments']
       })
 
       def run(args)
-        departments = args[:departments]
-        threshold = args[:threshold] || 0.15
+        # Handle both direct array and wrapped format from LoadDepartmentsTool
+        # Handle both symbol and string keys from different AI models
+        departments_data = args[:departments] || args["departments"]
+        
+        if departments_data.is_a?(Hash) && departments_data[:departments]
+          departments = departments_data[:departments]
+        elsif departments_data.is_a?(Array)
+          departments = departments_data
+        else
+          return { error: "Invalid departments data format: #{departments_data.class}" }
+        end
+
+        return { error: "No departments provided" } if departments.nil? || departments.empty?
+        
+        threshold = args[:threshold] || 0.10  # Lowered threshold from 0.15 to 0.10 to find more combinations
         combinations = []
 
         departments.each_with_index do |dept1, i|
@@ -36,10 +62,12 @@ module DogeVSM
           end
         end
 
+        sorted_combinations = combinations.sort_by { |combo| -combo[:score] }
+        
         {
           threshold: threshold,
           combinations_found: combinations.length,
-          combinations: combinations.sort_by { |combo| -combo[:score] }
+          combinations: sorted_combinations
         }
       end
 
