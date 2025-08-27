@@ -21,7 +21,7 @@ graph TB
     subgraph "DOGE VSM System"
         CLI[CLI Interface<br/>doge_vsm.rb] --> Base[Base Controller<br/>doge_vsm/base.rb]
         Base --> VSM[VSM Capsule Builder]
-        
+
         subgraph "VSM Architecture"
             Identity[Identity System<br/>Core Purpose & Invariants]
             Intelligence[Intelligence System<br/>AI Analysis Engine]
@@ -29,13 +29,13 @@ graph TB
             Governance[Governance System<br/>Quality Control]
             Coordination[Coordination System<br/>Workflow Management]
         end
-        
+
         VSM --> Identity
         VSM --> Intelligence
         VSM --> Operations
         VSM --> Governance
         VSM --> Coordination
-        
+
         subgraph "Operations Tools"
             LoadTool[LoadDepartmentsTool<br/>YAML Parser]
             RecTool[RecommendationGeneratorTool<br/>Analysis Engine]
@@ -43,29 +43,29 @@ graph TB
             ValidTool[TemplateValidationTool<br/>Structure Validator]
             GenTool[DepartmentTemplateGeneratorTool<br/>Template Generator]
         end
-        
+
         Operations --> LoadTool
         Operations --> RecTool
         Operations --> ConsTool
         Operations --> ValidTool
         Operations --> GenTool
     end
-    
+
     subgraph "External Systems"
         YAML[Department YAML Files<br/>*_department.yml]
         LLM[AI Provider<br/>OpenAI/Ollama/etc]
         Files[Output Files<br/>.doged archives<br/>Consolidated YAMLs]
     end
-    
+
     LoadTool --> YAML
     Intelligence --> LLM
     ConsTool --> Files
-    
+
     subgraph "Configuration Files"
         Template[generic_department_sample.yml<br/>Department Structure Template]
-        ConsolidationTemplate[consolidated_department_sample.yml<br/>AI Format Specification]
+        ConsolidationTemplate[doge_vsm_analysis_sample.yml<br/>AI Format Specification]
     end
-    
+
     Intelligence --> ConsolidationTemplate
     ValidTool --> Template
     GenTool --> Template
@@ -79,44 +79,44 @@ flowchart TD
     Init --> Session[Generate Session ID]
     Session --> Request[Create Analysis Request]
     Request --> EmitMsg[Emit User Message to VSM Bus]
-    
+
     EmitMsg --> Intelligence{Intelligence System<br/>Processes Request}
     Intelligence --> LoadDepts[Call: load_departments]
-    
+
     LoadDepts --> ParseYAML[Parse YAML Files<br/>Extract Metadata]
     ParseYAML --> ExtractKeywords[Extract Keywords<br/>& Capabilities]
     ExtractKeywords --> ValidateStructure[Validate Against Template]
     ValidateStructure --> DeptData[Department Data<br/>Collection]
-    
+
     DeptData --> AIAnalysis[AI Analyzes<br/>Similarities & Overlaps]
     AIAnalysis --> GenRecs[Call: generate_recommendations]
-    
+
     GenRecs --> ScoreSimilarity[Calculate Similarity Scores]
     ScoreSimilarity --> EstimateSavings[Estimate Cost Savings]
     EstimateSavings --> CreateRecs[Generate Recommendations]
     CreateRecs --> RecData[Recommendations Data]
-    
+
     RecData --> CreateCons[Call: create_consolidated_departments]
     CreateCons --> ValidateFormat{Validate Input Format<br/>Against Sample}
     ValidateFormat -->|Valid| ProcessCons[Process Consolidations]
     ValidateFormat -->|Invalid| Error[Return Error]
-    
+
     ProcessCons --> FindFiles[Find Department Files<br/>by snake_case names]
     FindFiles --> MergeDepts[Merge Department<br/>Configurations]
     MergeDepts --> GenerateYAML[Generate Consolidated<br/>YAML Files]
     GenerateYAML --> ArchiveOld[Archive Original Files<br/>with .doged suffix]
     ArchiveOld --> Success[Return Success Result]
-    
+
     Success --> DisplayResults[Display Results<br/>to User]
     Error --> DisplayResults
     DisplayResults --> End([End])
-    
+
     subgraph "Governance Layer"
         PolicyCheck[Policy Validation]
         QualityControl[Quality Control]
         NameSanitization[Name Sanitization]
     end
-    
+
     RecData --> PolicyCheck
     PolicyCheck --> QualityControl
     QualityControl --> NameSanitization
@@ -131,19 +131,19 @@ flowchart TD
     CLIInit --> LogSetup[Setup Logging & Status Line]
     LogSetup --> Banner[Display Startup Banner]
     Banner --> AsyncStart[Start Async Context]
-    
+
     AsyncStart --> BuildCapsule[Build VSM Capsule<br/>with Provider/Model]
     BuildCapsule --> StartVSM[Start VSM Task]
     StartVSM --> GenSession[Generate Session UUID]
     GenSession --> CreateReq[Create Analysis Request]
-    
+
     CreateReq --> EmitToVSM[Emit Message to VSM Bus]
     EmitToVSM --> SetupHandlers[Setup Message Handlers]
     SetupHandlers --> StartMonitoring[Start Completion Detection]
-    
+
     subgraph "VSM Message Processing Loop"
         BusMsg[VSM Bus Message] --> RouteMsg{Route by Message Kind}
-        
+
         RouteMsg -->|:user| Intelligence[Intelligence System<br/>Process User Request]
         RouteMsg -->|:tool_call| ToolCall[Handle Tool Call<br/>Update Status]
         RouteMsg -->|:tool_result| ToolResult[Handle Tool Result<br/>Process Data]
@@ -151,42 +151,42 @@ flowchart TD
         RouteMsg -->|:assistant_delta| Delta[Handle Streaming Delta<br/>Display Progress]
         RouteMsg -->|:policy| Policy[Handle Policy Alert<br/>Display Warning]
         RouteMsg -->|:audit| Audit[Handle Audit Event<br/>Log Activity]
-        
+
         Intelligence --> CallTool[Call Operations Tool]
         CallTool --> ToolExec[Tool Execution]
         ToolExec --> ToolResult
-        
+
         ToolResult --> CheckTool{Which Tool?}
         CheckTool -->|load_departments| HandleLoad[Display Department Count]
         CheckTool -->|generate_recommendations| HandleRecs[Display Recommendations<br/>Summary]
         CheckTool -->|create_consolidated_departments| HandleCons[Display Consolidation<br/>Results]
-        
+
         HandleLoad --> NextTool[Continue to Next Tool]
         HandleRecs --> NextTool
         HandleCons --> SetComplete[Set Processing Complete]
         NextTool --> Intelligence
-        
+
         Assistant --> CheckComplete{Check Completion<br/>Patterns}
         CheckComplete -->|Complete| SetComplete
         CheckComplete -->|Continue| BusMsg
-        
+
         Delta --> BusMsg
         Policy --> BusMsg
         Audit --> BusMsg
     end
-    
+
     StartMonitoring --> BusMsg
     SetComplete --> DisplayFinal[Display Final Results]
     DisplayFinal --> Cleanup[Cleanup & Exit]
     Cleanup --> End([Program End])
-    
+
     subgraph "Timeout Detection"
         TimeoutCheck[Check Activity Timeout<br/>Every 5 seconds]
         TimeoutCheck -->|Timeout| ForceComplete[Force Completion]
         TimeoutCheck -->|Active| TimeoutCheck
         ForceComplete --> DisplayFinal
     end
-    
+
     StartMonitoring --> TimeoutCheck
 ```
 
@@ -197,46 +197,46 @@ flowchart TD
     AIRequest[AI Receives Analysis Request] --> ParsePrompt[Parse System Prompt<br/>with Format Examples]
     ParsePrompt --> LoadSample[Load consolidated_department_sample.yml<br/>for Format Specification]
     LoadSample --> Step1[Step 1: Call load_departments]
-    
+
     Step1 --> LoadTool[LoadDepartmentsTool.run]
     LoadTool --> GlobFiles[Glob Pattern: *_department.yml]
     GlobFiles --> SkipTemplate[Skip template files]
     SkipTemplate --> ParseEach[Parse Each YAML File]
-    
+
     ParseEach --> ExtractMeta[Extract Metadata:<br/>• name, display_name<br/>• description, invariants<br/>• capabilities, message_types<br/>• routing_rules, keywords]
     ExtractMeta --> ValidateOpt{Validation Enabled?}
     ValidateOpt -->|Yes| ValidateTemplate[Validate Against Template]
     ValidateOpt -->|No| ReturnData[Return Department Collection]
     ValidateTemplate --> ReturnData
-    
+
     ReturnData --> Step2[Step 2: AI Analyzes Data<br/>Identify Similarities]
     Step2 --> FindOverlaps[Find Capability Overlaps<br/>Keyword Matches<br/>Functional Similarities]
     FindOverlaps --> Step3[Step 3: Call generate_recommendations]
-    
+
     Step3 --> RecTool[RecommendationGeneratorTool.run]
     RecTool --> ProcessCombos[Process Department Combinations]
     ProcessCombos --> CalcScores[Calculate Similarity Scores<br/>• Capability overlap<br/>• Keyword matches<br/>• Infrastructure sharing]
     CalcScores --> EstimateCost[Estimate Cost Savings<br/>• Staff reduction<br/>• Facility consolidation<br/>• Process efficiency]
     EstimateCost --> GenRecords[Generate Recommendation Records]
     GenRecords --> ReturnRecs[Return Recommendations]
-    
+
     ReturnRecs --> Step4[Step 4: AI Formats for<br/>create_consolidated_departments]
     Step4 --> FormatData[Format Data According to<br/>consolidated_department_sample.yml]
     FormatData --> ConsTool[CreateConsolidatedDepartmentsTool.run]
-    
+
     ConsTool --> ValidateInput{Validate Input Format}
     ValidateInput -->|Invalid| ReturnError[Return Format Error]
     ValidateInput -->|Valid| ProcessEach[Process Each Consolidation]
-    
+
     ProcessEach --> FindDeptFiles[Find Department Files<br/>by snake_case names]
     FindDeptFiles --> LoadDepts[Load Department Configs]
     LoadDepts --> MergeConfigs[Merge Configurations<br/>• Combine capabilities<br/>• Merge message types<br/>• Add enhanced features]
-    
+
     MergeConfigs --> GenYAML[Generate New YAML<br/>Following Template Structure]
     GenYAML --> WriteFile[Write Consolidated File]
     WriteFile --> ArchiveOrig[Archive Original Files<br/>Add .doged suffix]
     ArchiveOrig --> ReturnSuccess[Return Success Result]
-    
+
     ReturnError --> Complete[Workflow Complete]
     ReturnSuccess --> Complete
 ```
@@ -247,21 +247,21 @@ flowchart TD
 graph TB
     subgraph "VSM Message Bus"
         Bus[VSM Bus<br/>Central Message Router]
-        
+
         subgraph "Publishers"
             User[User Interface<br/>Analysis Requests]
             Intel[Intelligence System<br/>AI Responses & Tool Calls]
             Tools[Operation Tools<br/>Results & Status]
             Gov[Governance System<br/>Policy & Quality Alerts]
         end
-        
+
         subgraph "Subscribers"
             BaseHandler[Base Controller<br/>Message Handler]
             CoordHandler[Coordination System<br/>Workflow Handler]
             GovHandler[Governance System<br/>Policy Validator]
             IntelHandler[Intelligence System<br/>Context Handler]
         end
-        
+
         subgraph "Message Types"
             UserMsg[:user<br/>Analysis Requests]
             ToolCallMsg[:tool_call<br/>Tool Invocations]
@@ -272,7 +272,7 @@ graph TB
             AuditMsg[:audit<br/>Audit Events]
         end
     end
-    
+
     User --> UserMsg
     Intel --> ToolCallMsg
     Intel --> AssistantMsg
@@ -280,7 +280,7 @@ graph TB
     Tools --> ToolResultMsg
     Gov --> PolicyMsg
     Gov --> AuditMsg
-    
+
     UserMsg --> Bus
     ToolCallMsg --> Bus
     ToolResultMsg --> Bus
@@ -288,12 +288,12 @@ graph TB
     DeltaMsg --> Bus
     PolicyMsg --> Bus
     AuditMsg --> Bus
-    
+
     Bus --> BaseHandler
     Bus --> CoordHandler
     Bus --> GovHandler
     Bus --> IntelHandler
-    
+
     BaseHandler --> StatusUpdate[Status Line Updates]
     BaseHandler --> ResultDisplay[Result Display]
     CoordHandler --> WorkflowMgmt[Workflow Management]
@@ -311,10 +311,10 @@ graph TB
         Template[generic_department_sample.yml<br/>Structure Template]
         ConsolidationSample[consolidated_department_sample.yml<br/>AI Format Specification]
     end
-    
+
     subgraph "DOGE VSM System"
         Main[doge_vsm.rb<br/>Main Entry Point]
-        
+
         subgraph "Core Components"
             Base[base.rb<br/>Controller & UI]
             Identity[identity.rb<br/>Purpose & Invariants]
@@ -323,7 +323,7 @@ graph TB
             Coordination[coordination.rb<br/>Workflow Management]
             Operations[operations.rb<br/>Tool Registry]
         end
-        
+
         subgraph "Operations Tools"
             LoadTool[load_departments_tool.rb<br/>YAML Parser]
             RecTool[recommendation_generator_tool.rb<br/>Analysis Engine]
@@ -332,18 +332,18 @@ graph TB
             GenTool[department_template_generator_tool.rb<br/>Template Generator]
         end
     end
-    
+
     subgraph "Output Files"
         ConsolidatedYAMLs[Consolidated Department Files<br/>*_management_department.yml]
         ArchivedFiles[Archived Original Files<br/>*.doged]
         LogFiles[Log Files<br/>log/doge_vsm.log]
     end
-    
+
     YAMLs --> LoadTool
     Template --> ValidTool
     Template --> GenTool
     ConsolidationSample --> Intelligence
-    
+
     Main --> Base
     Base --> Intelligence
     Base --> Operations
@@ -352,7 +352,7 @@ graph TB
     Operations --> ConsTool
     Operations --> ValidTool
     Operations --> GenTool
-    
+
     ConsTool --> ConsolidatedYAMLs
     ConsTool --> ArchivedFiles
     Base --> LogFiles
@@ -462,7 +462,7 @@ graph TB
 
 ### 4. Comprehensive Tool Suite
 - **LoadDepartmentsTool**: Parses and validates YAML configurations
-- **RecommendationGeneratorTool**: Generates analysis and cost estimates  
+- **RecommendationGeneratorTool**: Generates analysis and cost estimates
 - **CreateConsolidatedDepartmentsTool**: Creates merged department files
 - **TemplateValidationTool**: Validates configuration compliance
 - **DepartmentTemplateGeneratorTool**: Generates new department templates
@@ -495,7 +495,7 @@ VSM_DEBUG_STREAM=1 ruby doge_vsm.rb
 The system generates several types of output:
 
 1. **Consolidated Departments**: New YAML files combining multiple departments
-2. **Archived Originals**: Original files renamed with `.doged` suffix  
+2. **Archived Originals**: Original files renamed with `.doged` suffix
 3. **Logs**: Detailed execution logs in `log/doge_vsm.log`
 4. **Status Updates**: Real-time progress via terminal status line
 

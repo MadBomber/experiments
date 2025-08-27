@@ -32,7 +32,7 @@ module DogeVSM
       consolidations_format_example = if File.exist?(sample_file_path)
         File.read(sample_file_path)
       else
-        "# consolidated_department_sample.yml not found - using basic format"
+        "# doge_vsm_analysis_sample.yml not found - using basic format"
       end
 
       <<~PROMPT
