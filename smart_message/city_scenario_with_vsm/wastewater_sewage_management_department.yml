@@ -1,25 +1,29 @@
 ---
 department:
-  name: water_and_utilities_management
-  display_name: Water & Utilities Management
-  description: Consolidated department combining Waste Water Management, Waste And
-    Sewage Management. Overlap in sewage and wastewater management responsibilities
+  name: wastewater_and_sewage_management
+  display_name: Wastewater & Sewage Management
+  description: Consolidated department combining waste_water_management_department,
+    waste_and_sewage_management_department. Overlap in waste water system maintenance
+    and emergency response. Both departments focus on dealing with sewage backups,
+    infrastructure integrity, and coordination with health agencies.
   invariants:
   - serve citizens efficiently
   - respond to emergencies promptly
   - maintain operational readiness
 capabilities:
+- Consolidated wastewater infrastructure maintenance and monitoring
 - Coordinate emergency repairs for sewage blockages
 - Coordinate with public health and environmental agencies to prevent health hazards
-- Enhanced health hazard prevention measures
-- Improved coordination with public health agencies
+- Enhanced system integrity checks to prevent environmental hazards
+- Improved response to sewage overflows with cross-trained emergency teams
 - Inspect and maintain sewage and wastewater systems
 - Maintain sewage treatment facilities and pipelines
 - Monitor and repair sewage and wastewater infrastructure
 - Monitor sewage system integrity and prevent overflow incidents
 - Respond to and resolve sewage backups in homes and infrastructure
 - Respond to sewage backups and overflows in residential and commercial areas
-- Streamlined logistics for sewage and wastewater repairs
+- Streamlined sewage treatment and management processes
+- Unified coordination with public health for sanitation issues
 message_types:
   subscribes_to:
   - health_check_message
@@ -65,15 +69,19 @@ action_configs:
     publish_response: true
 ai_analysis:
   enabled: false
-  context: You are the water_and_utilities_management department. Handle consolidated
-    department combining waste water management, waste and sewage management. overlap
-    in sewage and wastewater management responsibilities.
+  context: You are the wastewater_and_sewage_management department. Handle consolidated
+    department combining waste_water_management_department, waste_and_sewage_management_department.
+    overlap in waste water system maintenance and emergency response. both departments
+    focus on dealing with sewage backups, infrastructure integrity, and coordination
+    with health agencies..
 logging:
   level: info
   statistics_interval: 300
 consolidation_info:
   merged_from:
-  - Waste Water Management
-  - Waste And Sewage Management
-  reason: Overlap in sewage and wastewater management responsibilities
-  created_at: '2025-08-26T16:41:35-05:00'
+  - waste_water_management_department
+  - waste_and_sewage_management_department
+  reason: Overlap in waste water system maintenance and emergency response. Both departments
+    focus on dealing with sewage backups, infrastructure integrity, and coordination
+    with health agencies.
+  created_at: '2025-08-26T19:05:58-05:00'

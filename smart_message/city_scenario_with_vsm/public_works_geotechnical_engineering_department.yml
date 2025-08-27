@@ -1,0 +1,87 @@
+---
+department:
+  name: public_works_and_geotechnical_engineering
+  display_name: Public Works & Geotechnical Engineering
+  description: Consolidated department combining geotechnical_engineering_department,
+    public_works_department. Both departments are involved in addressing ground stability
+    and sinkhole issues. Significant overlap in coordinating emergency repairs and
+    stabilization efforts.
+  invariants:
+  - serve citizens efficiently
+  - respond to emergencies promptly
+  - maintain operational readiness
+capabilities:
+- Assess ground stability and soil conditions
+- Coordinate emergency repairs related to ground failures
+- Coordinate with geotechnical engineers for emergency stabilization
+- Coordinated public communication for infrastructure safety
+- Cross-functional teams for emergency stabilization of public infrastructure
+- Deploy repair and stabilization measures
+- Enhanced data sharing with geotechnical and public works expertise
+- Improved response times for sinkhole and subsidence incidents
+- Inspect and assess the stability of sinkholes
+- Integrated ground stability monitoring and repair response
+- Investigate and respond to sinkholes and ground subsidence
+- Provide technical guidance on subsurface hazards
+- Secure the area and initiate traffic control measures
+message_types:
+  subscribes_to:
+  - emergency_911_message
+  - health_check_message
+  publishes:
+  - emergency_response
+  - geotechnical_inspection_request
+  - ground_stability_alert
+  - repair_request
+  - sinkhole_alert
+  - sinkhole_report
+routing_rules:
+  emergency_911_message:
+  - condition: message contains relevant keywords
+    keywords:
+    - responsible
+    - maintenance
+    - repair
+    - safety
+    - city
+    priority: high
+  health_check_message:
+  - condition: always
+    priority: normal
+message_actions:
+  emergency_911_message: handle_emergency
+  health_check_message: respond_health_check
+  sinkhole_report: handle_sinkhole_report
+  geotechnical_inspection_request: handle_geotechnical_inspection_request
+  ground_stability_alert: handle_ground_stability_alert
+  sinkhole_alert: handle_sinkhole_alert
+  emergency_response: handle_emergency_response
+  repair_request: handle_repair_request
+action_configs:
+  handle_emergency:
+    response_template: "\U0001F6A8 PUBLIC_WORKS_DEPARTMENT: Responding to {{emergency_type}}
+      at {{location}}"
+    additional_actions:
+    - log_emergency
+    - notify_dispatch
+    publish_response: true
+  respond_health_check:
+    response_template: "\U0001F497 public_works_department is operational"
+    publish_response: true
+ai_analysis:
+  enabled: false
+  context: You are the public_works_and_geotechnical_engineering department. Handle
+    consolidated department combining geotechnical_engineering_department, public_works_department.
+    both departments are involved in addressing ground stability and sinkhole issues.
+    significant overlap in coordinating emergency repairs and stabilization efforts..
+logging:
+  level: info
+  statistics_interval: 300
+consolidation_info:
+  merged_from:
+  - geotechnical_engineering_department
+  - public_works_department
+  reason: Both departments are involved in addressing ground stability and sinkhole
+    issues. Significant overlap in coordinating emergency repairs and stabilization
+    efforts.
+  created_at: '2025-08-26T19:05:58-05:00'

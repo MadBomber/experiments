@@ -1,13 +1,8 @@
-Refactor doge_vsm logic to handle completion patterns and response formats
+Add status_line_prefix to citizen, house, and visitor classes
 
-Improves the logic in the doge_vsm module to detect completion messages 
-in assistant responses using defined patterns. This helps streamline 
-the analysis workflow by allowing the system to recognize when 
-completion indicators appear in messages.
-
-Additionally, the handling of similarity calculation and 
-recommendation generation responses has been updated to support 
-both hash and direct array formats, ensuring better robustness 
-and usability.
-
-No issue references available for this change.
+This commit introduces a new attribute, `@status_line_prefix`, to the 
+Citizen, House, and Visitor classes to enhance status messaging. The 
+prefix is derived from the citizen's name, house address, and visitor's 
+home town, respectively. This change improves clarity in messaging outputs 
+by providing relevant contextual information for each class instance and 
+will aid in debugging and logging processes.

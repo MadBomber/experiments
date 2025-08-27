@@ -22,7 +22,10 @@
       "Bash(./doge_vsm.rb:*)",
       "Read(//Users/dewayne/sandbox/git_repos/madbomber/vsm/**)",
       "Bash(VSM_DEBUG_STREAM=1 timeout 90s ./doge_vsm.rb)",
-      "Bash(VSM_DEBUG_STREAM=1 timeout 120s ./doge_vsm.rb)"
+      "Bash(VSM_DEBUG_STREAM=1 timeout 120s ./doge_vsm.rb)",
+      "Bash(mmdc:*)",
+      "Bash(VSM_DEBUG_STREAM=1 timeout 60s ruby doge_vsm.rb)",
+      "Bash(VSM_DEBUG_STREAM=1 timeout 90s ruby doge_vsm.rb)"
     ],
     "deny": [],
     "ask": [],
