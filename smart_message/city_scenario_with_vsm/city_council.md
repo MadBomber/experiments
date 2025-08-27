@@ -1,464 +1,633 @@
-# CityCouncil - Dynamic City Service Generation
+# CityCouncil Documentation
 
-## Overview
-The CityCouncil class experiment aims to create a self-extending city simulation that can dynamically generate and persist new Ruby programs to handle missing city services as they are requested.
+## Dynamic City Service Generation System
 
-## How VSM Can Be Used in CityCouncil for Dynamic City Service Creation
+The CityCouncil program acts as the governing body for the city simulation, capable of dynamically creating and persisting new city service departments as they are requested. It uses the Vector Symbolic Memory (VSM) architecture integrated with SmartMessage for inter-service communication and AI-powered decision making.
 
-Based on analysis of the VSM library, here's how it could be integrated into a CityCouncil class to dynamically create and persist new city service programs:
+## Purpose and Goals
 
-### VSM Architecture Overview
+### Why CityCouncil Exists
+1. **Dynamic Service Creation**: Automatically generates new city departments when emergency services are needed but don't exist
+2. **Service Governance**: Monitors and manages the health of all city departments
+3. **Intelligent Response**: Uses AI to understand service requests and determine appropriate department specifications
+4. **Self-Healing Architecture**: Automatically restarts failed departments and maintains service availability
 
-VSM (Viable Systems Model) provides a **capsule-based architecture** with five core systems:
-1. **Operations** - Executes tools/skills (the actual work)
-2. **Coordination** - Manages message flow and scheduling
-3. **Intelligence** - Makes planning/decisions (can integrate LLMs)
-4. **Governance** - Enforces policies and safety rules
-5. **Identity** - Defines purpose and invariants
+### What It Does
+- Discovers and catalogs existing city departments (both Ruby and YAML-based)
+- Listens for service requests via SmartMessage
+- Analyzes requests using AI to determine if new services are needed
+- Generates department configurations and launches new services
+- Monitors department health and automatically restarts failed services
+- Provides a unified governance layer for all city services
 
-### CityCouncil Integration Approach
+### How It Works
+- VSM architecture provides five subsystems: Identity, Intelligence, Operations, Governance, and Coordination
+- SmartMessage enables publish/subscribe communication between services
+- AI (via RubyLLM) analyzes requests and generates department specifications
+- Generic department template allows configuration-driven service creation
+- Health monitoring ensures service reliability through automatic recovery
 
-The CityCouncil class would leverage VSM to:
+## System Architecture
 
-#### 1. **Dynamic Service Creation as Tool Capsules**
-Each city service (Police, Fire, Health, etc.) can be modeled as a VSM ToolCapsule that:
-- Has its own message handling logic via `run(args)`
-- Declares its capabilities through JSON Schema
-- Can be dynamically instantiated and added to Operations
-
-#### 2. **AI-Powered Service Generation**
-The CityCouncil's Intelligence component would:
-- Use LLM integration (via RubyLLM) to understand requests for missing services
-- Generate Ruby code for new service classes based on patterns from existing services
-- Create appropriate message types for inter-service communication
-
-#### 3. **Service Template System**
-```ruby
-class CityServiceTemplate < VSM::ToolCapsule
-  # Base template for all city services
-  tool_schema({ 
-    type: "object",
-    properties: {
-      message_type: { type: "string" },
-      payload: { type: "object" }
-    }
-  })
-  
-  def run(args)
-    # Default message handling
-  end
-end
-```
-
-#### 4. **Dynamic Code Generation Flow**
-```ruby
-class CityCouncilIntelligence < VSM::Intelligence
-  def handle(message, bus:, **)
-    if message.payload.include?("need") || message.payload.include?("missing")
-      # 1. Analyze request using LLM
-      # 2. Generate service specification
-      # 3. Create Ruby code from templates
-      # 4. Persist to file system
-      # 5. Load and register new service
-      generate_city_service(message)
+```mermaid
+graph TB
+    subgraph "CityCouncil System"
+        Main[city_council.rb<br/>Main Entry Point] --> Base[Base Controller<br/>city_council/base.rb]
+        
+        subgraph "VSM Architecture"
+            Identity[Identity<br/>Purpose and Invariants]
+            Intelligence[Intelligence<br/>AI Analysis and Decision Making]
+            Operations[Operations<br/>Service Creation and Management]
+            Governance[Governance<br/>Policy and Quality Control]
+            Coordination[Coordination<br/>Workflow Management]
+        end
+        
+        Base --> VSMCapsule[VSM Capsule Builder]
+        VSMCapsule --> Identity
+        VSMCapsule --> Intelligence
+        VSMCapsule --> Operations
+        VSMCapsule --> Governance
+        VSMCapsule --> Coordination
     end
-  end
-  
-  def generate_city_service(request)
-    # Use LLM to understand service requirements
-    # Generate Ruby class based on existing patterns
-    # Write to city_services/ directory
-    # Dynamically load and register with VSM
-  end
-end
+    
+    subgraph "External Components"
+        SM[SmartMessage Bus<br/>Redis Pub/Sub]
+        AI[AI Provider<br/>OpenAI/Ollama]
+        Template[generic_department.rb<br/>Department Template]
+        YAML[Department YAML Configs<br/>*_department.yml]
+        Processes[Department Processes<br/>Running Services]
+    end
+    
+    subgraph "Optional Components"
+        CLI[CLI Port<br/>Interactive Interface]
+    end
+    
+    Main -->|--cli flag| CLI
+    Intelligence --> AI
+    Operations --> Template
+    Operations --> YAML
+    Operations --> Processes
+    Base --> SM
+    
+    subgraph "Message Types"
+        ServiceRequest[ServiceRequestMessage]
+        HealthCheck[HealthCheckMessage]
+        HealthStatus[HealthStatusMessage]
+        DeptAnnounce[DepartmentAnnouncementMessage]
+    end
+    
+    SM --> ServiceRequest
+    SM --> HealthCheck
+    SM --> HealthStatus
+    SM --> DeptAnnounce
 ```
 
-#### 5. **Persistence Strategy**
-- New departments saved as `*_department.rb` files in the current directory
-- Department names must follow the pattern: `{service}_department.rb`
-- Message definitions saved in `messages/` directory following existing patterns
-- Each department file must set `@service_name` to match its filename (without .rb)
+## Data Flow Diagram
 
-#### 6. **VSM Capsule Structure for CityCouncil**
+```mermaid
+flowchart TD
+    Start([CityCouncil Starts]) --> Init[Initialize Base Controller]
+    Init --> Discover[Discover Existing Departments]
+    Discover --> SetupVSM[Setup VSM Capsule]
+    SetupVSM --> SetupMsg[Setup SmartMessage Subscriptions]
+    SetupMsg --> StartGov[Start Governance Loop]
+    
+    subgraph "Service Request Flow"
+        ServiceReq[Service Request Received] --> HandleReq[Handle Service Request]
+        HandleReq --> ExtractPayload[Extract Request Payload]
+        ExtractPayload --> ForwardIntel[Forward to Intelligence]
+        
+        ForwardIntel --> CheckNeed{Needs New Service?}
+        CheckNeed -->|No| IgnoreReq[Ignore Request]
+        CheckNeed -->|Yes| AnalyzeReq[Analyze Service Requirements]
+        
+        AnalyzeReq --> GenSpec[Generate Service Specification]
+        GenSpec --> CheckExists{Service Exists?}
+        CheckExists -->|Yes| ReportExists[Report Service Exists]
+        CheckExists -->|No| EmitCreate[Emit create_service Message]
+        
+        EmitCreate --> RouteOps[Route to Operations]
+        RouteOps --> CreateService[Create City Service]
+        
+        CreateService --> GenConfig[Generate YAML Config]
+        GenConfig --> WriteFiles[Write Configuration Files]
+        WriteFiles --> LaunchDept[Launch Department Process]
+        LaunchDept --> CheckPID{Process Started?}
+        
+        CheckPID -->|Yes| RegisterDept[Register Department]
+        CheckPID -->|No| AnnounceFailure[Announce Failure]
+        
+        RegisterDept --> AnnounceCreated[Announce Department Created]
+        AnnounceCreated --> MonitorHealth[Add to Health Monitoring]
+    end
+    
+    subgraph "Health Monitoring Flow"
+        StartMon[Start Monitoring Thread] --> MonLoop[Monitoring Loop]
+        MonLoop --> CheckInterval{Time for Check?}
+        CheckInterval -->|No| Sleep1[Sleep 10s]
+        CheckInterval -->|Yes| CheckProcs[Check Process Health]
+        
+        CheckProcs --> ForEachDept[For Each Department]
+        ForEachDept --> CheckPID2{Process Alive?}
+        CheckPID2 -->|Yes| SendHealth[Send Health Check]
+        CheckPID2 -->|No| IncFailure[Increment Failures]
+        
+        SendHealth --> WaitResponse[Wait for Response]
+        WaitResponse --> GotResponse{Response Received?}
+        GotResponse -->|Yes| MarkHealthy[Mark as Healthy]
+        GotResponse -->|No| MarkUnresponsive[Mark Unresponsive]
+        
+        IncFailure --> CheckThreshold{Failures > 3?}
+        CheckThreshold -->|No| RestartDept[Restart Department]
+        CheckThreshold -->|Yes| MarkFailed[Mark Permanently Failed]
+        
+        RestartDept --> UpdatePID[Update Process ID]
+        UpdatePID --> ForEachDept
+        MarkFailed --> CleanupDead[Remove from Monitoring]
+        CleanupDead --> ForEachDept
+        MarkHealthy --> ForEachDept
+        MarkUnresponsive --> ForEachDept
+        
+        ForEachDept --> Sleep1
+        Sleep1 --> MonLoop
+    end
+    
+    StartGov --> ServiceReq
+    StartGov --> StartMon
+```
+
+## Control Flow Diagram
+
+```mermaid
+flowchart TD
+    Entry([Program Start]) --> CheckCLI{CLI Mode?}
+    CheckCLI -->|Yes| StartCLI[Start CLI Thread]
+    CheckCLI -->|No| AsyncContext[Enter Async Context]
+    StartCLI --> AsyncContext
+    
+    AsyncContext --> CreateBase[Create Base Instance]
+    CreateBase --> InitLogger[Initialize Logger]
+    InitLogger --> SetSignals[Setup Signal Handlers]
+    SetSignals --> DiscoverDepts[Discover Departments]
+    
+    DiscoverDepts --> BuildVSM[Build VSM Capsule]
+    BuildVSM --> CreateIdentity[Create Identity<br/>• city_council<br/>• Must serve citizens<br/>• Create needed services<br/>• Maintain operations]
+    CreateIdentity --> CreateGov[Create Governance]
+    CreateGov --> CreateCoord[Create Coordination]
+    CreateCoord --> CreateIntel[Create Intelligence<br/>with Council Reference]
+    CreateIntel --> CreateOps[Create Operations<br/>with Council Reference]
+    CreateOps --> SetupVSMSubs[Setup VSM Bus Subscriptions]
+    
+    SetupVSMSubs --> SetupSMSubs[Setup SmartMessage Subscriptions]
+    SetupSMSubs --> SubServiceReq[Subscribe to ServiceRequestMessage]
+    SubServiceReq --> SubHealthCheck[Subscribe to HealthCheckMessage]
+    SubHealthCheck --> SubHealthStatus[Subscribe to HealthStatusMessage]
+    
+    SubHealthStatus --> StartGovLoop[Start Governance Loop]
+    
+    subgraph "Main Governance Loop"
+        GovLoop[Governance Loop] --> MonitorOps[Monitor City Operations]
+        MonitorOps --> CheckNewDepts[Check for New Departments]
+        CheckNewDepts --> UpdateStatus[Update Health Status]
+        UpdateStatus --> Sleep10[Sleep 10 seconds]
+        Sleep10 --> GovLoop
+    end
+    
+    subgraph "Message Handlers"
+        MsgReceived[Message Received] --> RouteMsg{Route by Type}
+        
+        RouteMsg -->|ServiceRequest| HandleService[Handle Service Request<br/>→ Forward to Intelligence]
+        RouteMsg -->|HealthCheck| HandleHealth[Respond with Health Status]
+        RouteMsg -->|HealthStatus| HandleDeptHealth[Forward to Operations<br/>Update Department Health]
+        RouteMsg -->|VSM create_service| HandleCreate[Operations - Create Service]
+        RouteMsg -->|VSM:assistant| LogAssistant[Log AI Response]
+        
+        HandleService --> IntelProcess[Intelligence Analysis]
+        IntelProcess --> CheckNeed2{New Service Needed?}
+        CheckNeed2 -->|Yes| GenSpec2[Generate Specification]
+        CheckNeed2 -->|No| ReturnFalse[Return False]
+        
+        GenSpec2 --> EmitCreate2[Emit create_service]
+        EmitCreate2 --> HandleCreate
+        
+        HandleCreate --> OpsProcess[Operations - Create and Launch]
+        OpsProcess --> AnnounceResult[Announce Success/Failure]
+    end
+    
+    subgraph "Signal Handlers"
+        SigReceived[SIGINT/SIGTERM] --> Cleanup[Cleanup Departments]
+        Cleanup --> TermProcs[Terminate All Processes]
+        TermProcs --> Exit[Exit Program]
+    end
+    
+    StartGovLoop --> GovLoop
+    StartGovLoop --> MsgReceived
+    GovLoop --> SigReceived
+```
+
+## Intelligence Component Flow
+
+```mermaid
+flowchart TD
+    IntelMsg[Message Received] --> CheckKind{Message Kind?}
+    CheckKind -->|service_request| ProcessReq[Process Service Request]
+    CheckKind -->|user| ProcessReq
+    CheckKind -->|other| ReturnFalse[Return False]
+    
+    ProcessReq --> NeedsService{Needs New Service?}
+    NeedsService -->|No| LogNoService[Log No Service Needed]
+    LogNoService --> ReturnFalse2[Return False]
+    
+    NeedsService -->|Yes| AnalyzeReq[Analyze Service Request]
+    AnalyzeReq --> PrepPrompt[Prepare AI Prompt]
+    PrepPrompt --> CallAI[Call AI Provider]
+    CallAI --> ParseResponse[Parse AI Response]
+    ParseResponse --> ExtractSpec[Extract Service Specification]
+    
+    ExtractSpec --> ValidSpec{Valid Spec?}
+    ValidSpec -->|No| EmitError[Emit Error Message]
+    ValidSpec -->|Yes| CheckExists2{Service Exists?}
+    
+    CheckExists2 -->|Yes| EmitExists[Emit Already Exists]
+    CheckExists2 -->|No| CreateMsg[Create create_service Message]
+    
+    CreateMsg --> EmitToVSM[Emit to VSM Bus]
+    EmitToVSM --> EmitSuccess[Emit Success Message]
+    
+    EmitError --> ReturnTrue[Return True]
+    EmitExists --> ReturnTrue
+    EmitSuccess --> ReturnTrue
+    
+    subgraph "AI Analysis Details"
+        AIPrompt[System Prompt<br/>Analyze emergency request<br/>Generate department spec] --> AIModel[AI Model<br/>GPT-4 or Ollama]
+        AIModel --> JSONResponse[JSON Response:<br/>• name<br/>• description<br/>• responsibilities<br/>• message_types]
+    end
+    
+    PrepPrompt --> AIPrompt
+    AIModel --> ParseResponse
+```
+
+## Operations Component Flow
+
+```mermaid
+flowchart TD
+    OpsMsg[Operations Message] --> CheckOpsKind{Message Kind?}
+    CheckOpsKind -->|create_service| HandleCreateSvc[Handle Create Service]
+    CheckOpsKind -->|manage_department| HandleManage[Handle Department Management]
+    CheckOpsKind -->|other| ReturnFalse3[Return False]
+    
+    HandleCreateSvc --> ExtractSpec2[Extract Service Spec]
+    ExtractSpec2 --> GenOpID[Generate Operation ID]
+    GenOpID --> CreateFromTemplate[Create Department from Template]
+    
+    CreateFromTemplate --> CheckTemplate{Template Exists?}
+    CheckTemplate -->|No| LogError[Log Template Error]
+    CheckTemplate -->|Yes| GenYAMLConfig[Generate YAML Configuration]
+    
+    GenYAMLConfig --> WriteConfig[Write Config File]
+    WriteConfig --> PrepLaunch[Prepare Launch Command]
+    PrepLaunch --> SpawnProcess[Spawn Ruby Process]
+    SpawnProcess --> DetachProcess[Detach from Parent]
+    DetachProcess --> Wait2Sec[Wait 2 Seconds]
+    Wait2Sec --> CheckAlive{Process Alive?}
+    
+    CheckAlive -->|No| AnnounceFail[Announce Failure]
+    CheckAlive -->|Yes| RegisterMon[Register for Monitoring]
+    
+    RegisterMon --> AnnounceCreate[Announce Created]
+    AnnounceCreate --> AnnounceLaunch[Announce Launched]
+    AnnounceLaunch --> RegisterCouncil[Register with Council]
+    RegisterCouncil --> ReturnTrue2[Return True]
+    
+    AnnounceFail --> ReturnFalse4[Return False]
+    LogError --> ReturnFalse4
+    
+    subgraph "Configuration Generation"
+        DeptSpec[Department Spec] --> ConfigGen[Generate Config<br/>• department metadata<br/>• capabilities<br/>• message_types<br/>• routing_rules<br/>• message_actions<br/>• action_configs]
+        ConfigGen --> YAMLFile[department_name.yml]
+    end
+    
+    subgraph "Health Monitoring Thread"
+        MonThread[Monitor Thread] --> Loop10Sec[Loop Every 10s]
+        Loop10Sec --> CheckHealth{Time for Health Check?}
+        CheckHealth -->|Yes| ForEachMon[For Each Department]
+        CheckHealth -->|No| Loop10Sec
+        
+        ForEachMon --> CheckProcHealth[Check Process Health]
+        CheckProcHealth --> SendHealthMsg[Send Health Check]
+        SendHealthMsg --> HandleTimeout[Handle Response Timeout]
+        HandleTimeout --> NextDept[Next Department]
+        NextDept --> ForEachMon
+        
+        ForEachMon --> CleanupDead2[Cleanup Dead Departments]
+        CleanupDead2 --> Loop10Sec
+    end
+    
+    ExtractSpec2 --> DeptSpec
+    RegisterMon --> MonThread
+```
+
+## Message Bus Architecture
+
+```mermaid
+graph TB
+    subgraph "SmartMessage Bus - Redis"
+        RedisPubSub[Redis Pub/Sub Channel]
+    end
+    
+    subgraph "VSM Message Bus"
+        VSMBus[VSM Internal Bus]
+    end
+    
+    subgraph "CityCouncil Publishers"
+        BasePublish[Base Controller]
+        IntelPublish[Intelligence]
+        OpsPublish[Operations]
+    end
+    
+    subgraph "CityCouncil Subscribers"
+        BaseSub[Base Controller]
+        IntelSub[Intelligence Handler]
+        OpsSub[Operations Handler]
+    end
+    
+    subgraph "External Publishers"
+        Citizens[Citizens<br/>Emergency Requests]
+        Dispatch[Emergency Dispatch<br/>Service Requests]
+        HealthMon[Health Monitor<br/>Health Checks]
+        Departments[City Departments<br/>Health Responses]
+    end
+    
+    subgraph "Message Types"
+        SR[ServiceRequestMessage<br/>Request new services]
+        HC[HealthCheckMessage<br/>Check service health]
+        HS[HealthStatusMessage<br/>Report health status]
+        DA[DepartmentAnnouncementMessage<br/>Announce department events]
+    end
+    
+    Citizens --> SR
+    Dispatch --> SR
+    HealthMon --> HC
+    Departments --> HS
+    OpsPublish --> DA
+    
+    SR --> RedisPubSub
+    HC --> RedisPubSub
+    HS --> RedisPubSub
+    DA --> RedisPubSub
+    
+    RedisPubSub --> BaseSub
+    BaseSub --> VSMBus
+    
+    subgraph "VSM Internal Messages"
+        CreateSvc[create_service<br/>Create department]
+        Assistant[assistant<br/>AI responses]
+        OpResult[operation_result<br/>Operation status]
+        UserMsg[user<br/>User requests]
+        ServiceReqVSM[service_request<br/>Service requests]
+    end
+    
+    IntelPublish --> CreateSvc
+    IntelPublish --> Assistant
+    OpsPublish --> OpResult
+    
+    CreateSvc --> VSMBus
+    Assistant --> VSMBus
+    OpResult --> VSMBus
+    UserMsg --> VSMBus
+    ServiceReqVSM --> VSMBus
+    
+    VSMBus --> IntelSub
+    VSMBus --> OpsSub
+```
+
+## Department Lifecycle
+
+```mermaid
+stateDiagram-v2
+    [*] --> NonExistent: Initial State
+    
+    NonExistent --> Creating: Service Request Received
+    Creating --> Configured: YAML Config Generated
+    Configured --> Launching: Process Spawning
+    Launching --> Running: PID Obtained
+    Launching --> Failed: Launch Failed
+    
+    Running --> Healthy: Health Check Passed
+    Running --> Unresponsive: Health Check Timeout
+    Healthy --> Running: Continuous Monitoring
+    Unresponsive --> Restarting: Restart Attempt
+    
+    Restarting --> Running: Restart Success
+    Restarting --> Failed: Max Failures Reached
+    
+    Failed --> PermanentlyFailed: Cleanup Complete
+    PermanentlyFailed --> [*]: Removed from Monitoring
+    
+    note right of Creating
+        Intelligence analyzes request
+        and generates specification
+    end note
+    
+    note right of Configured
+        Operations writes YAML config
+        with capabilities and routing
+    end note
+    
+    note right of Running
+        Process monitored every 30s
+        Health checks sent periodically
+    end note
+    
+    note right of Restarting
+        Max 3 restart attempts
+        before permanent failure
+    end note
+```
+
+## Data Structures
+
+### Service Specification
 ```ruby
-city_council = VSM::DSL.define(:city_council) do
-  identity klass: VSM::Identity, 
-           args: { 
-             identity: "city_council",
-             invariants: ["must serve citizens", "create needed services"]
-           }
-  
-  governance klass: CityGovernance  # Validates new services
-  coordination klass: VSM::Coordination
-  intelligence klass: CityCouncilIntelligence  # LLM-powered
-  
-  operations do
-    # Existing services loaded here
-    capsule :police, klass: PoliceDepartment
-    capsule :fire, klass: FireDepartment
-    # Dynamically add new services at runtime
-  end
-end
+{
+  name: "animal_control",                    # Department identifier (without _department suffix)
+  display_name: "Animal Control",            # Human-readable name
+  description: "Handles animal-related emergencies...", # Purpose description
+  responsibilities: [                        # List of capabilities
+    "Respond to animal attacks",
+    "Handle stray animals",
+    "Investigate animal bites"
+  ],
+  message_types: [                          # Messages to publish
+    "animal_incident_report",
+    "animal_control_dispatch"
+  ]
+}
 ```
 
-#### 7. **Key Benefits of VSM Integration**
-
-- **Recursive Architecture**: New services can themselves contain sub-capsules for complex functionality
-- **Async Message Bus**: Non-blocking communication between all services
-- **Tool Descriptors**: Auto-generate API descriptions for new services
-- **Observability**: Built-in JSONL logging of all service interactions
-- **Governance Layer**: Ensure new services meet safety/policy requirements
-- **Execution Modes**: Services can run in fibers (I/O) or threads (CPU-intensive)
-
-#### 8. **Dynamic Service Registration**
+### Department Health Info
 ```ruby
-def register_new_service(service_class)
-  # Add to VSM operations at runtime
-  city_council.children[service_class.tool_name] = service_class.new
-  # Update message routing
-  update_message_subscriptions(service_class)
-end
+{
+  pid: 12345,                               # Process ID
+  department_file: "animal_control_department.rb", # Executable file
+  process_healthy: true,                    # Process exists
+  responsive: true,                         # Responds to health checks
+  process_failures: 0,                      # Failed process checks
+  health_check_failures: 0,                 # Failed health responses
+  restart_count: 0,                         # Times restarted
+  status: 'running',                        # Current status
+  created_at: Time,                         # Creation timestamp
+  last_process_check: Time,                 # Last process check
+  last_health_request: Time,                # Last health request sent
+  last_failure: Time,                       # Last failure time
+  last_restart: Time,                       # Last restart time
+  awaiting_response: false                  # Waiting for health response
+}
 ```
 
-### Example: Creating a "Traffic Management" Department
+### Department YAML Configuration
+```yaml
+department:
+  name: animal_control_department
+  display_name: Animal Control
+  description: Handles animal-related emergencies
+  invariants:
+  - serve citizens efficiently
+  - respond to emergencies promptly
+  - maintain operational readiness
 
-When CityCouncil receives "We need traffic management", it would:
-1. Use Intelligence (LLM) to understand the requirement
-2. Generate `traffic_management_department.rb` following existing department patterns
-3. Set `@service_name = 'traffic_management_department'` in the generated code
-4. Create message types in `messages/`: `traffic_alert_message.rb`, `signal_control_message.rb`
-5. Write files to disk following the naming convention
-6. The new department can be discovered by any service scanning for `*_department.rb`
-7. Load and register the new service with VSM
-8. The service immediately starts handling traffic-related messages
+capabilities:
+- Respond to animal attacks
+- Handle stray animals
+- Investigate animal bites
 
-This approach combines VSM's structured agent architecture with dynamic Ruby metaprogramming and AI-powered code generation to create a self-extending city simulation.
+message_types:
+  subscribes_to:
+  - health_check_message
+  - emergency_911_message
+  publishes:
+  - animal_incident_report
 
-## Implementation Notes
+routing_rules:
+  emergency_911_message:
+  - condition: message contains relevant keywords
+    keywords: [animal, attack, bite, stray, rabid]
+    priority: high
+  health_check_message:
+  - condition: always
+    priority: normal
 
-### Current Architecture
-- Existing services use SmartMessage library for pub/sub via Redis
-- Services follow common patterns (see `room_for_improvement.md`)
-- Each service has signal handlers, health monitoring, and logging
-- **Existing Departments**: `police_department.rb`, `fire_department.rb`, `health_department.rb`
+message_actions:
+  emergency_911_message: handle_emergency
+  health_check_message: respond_health_check
 
-### Service Discovery Mechanism
-Programs like `city_council.rb` and `emergency_dispatch_center.rb` should discover available departments by:
-1. **File-based Discovery**: Scan the directory for `*_department.rb` files
-2. **Naming Convention**: Each department's `@service_name` must match its filename
-   - `fire_department.rb` → `@service_name = 'fire_department'`
-   - `police_department.rb` → `@service_name = 'police_department'`
-   - `health_department.rb` → `@service_name = 'health_department'`
+action_configs:
+  handle_emergency:
+    response_template: "🚨 ANIMAL_CONTROL: Responding to {{emergency_type}} at {{location}}"
+    additional_actions: [log_emergency, notify_dispatch]
+    publish_response: true
+  respond_health_check:
+    response_template: "💗 animal_control_department is operational"
+    publish_response: true
 
-```ruby
-# Service Discovery Pattern
-def discover_departments
-  Dir.glob('*_department.rb').map do |file|
-    File.basename(file, '.rb')  # Returns: fire_department, police_department, etc.
-  end
-end
-
-# Dynamic Loading Pattern
-def load_department(department_name)
-  require_relative department_name
-  # Service will self-register with @service_name matching filename
-end
+logging:
+  level: info
+  statistics_interval: 300
 ```
 
-### Integration Considerations
-- VSM could wrap existing SmartMessage communication
-- Existing services could be refactored as VSM ToolCapsules
-- CityCouncil would act as the parent capsule orchestrating all city services
-- New departments generated by CityCouncil must follow the `*_department.rb` naming pattern
+## Key Features
 
-## Implementation Status
+### 1. Dynamic Service Generation
+- AI analyzes emergency requests to determine service needs
+- Automatically generates department specifications
+- Creates YAML configurations from templates
+- Launches new departments as separate processes
 
-### Completed Components
+### 2. VSM Architecture Integration
+- **Identity**: Defines CityCouncil's purpose and invariants
+- **Intelligence**: AI-powered request analysis and decision making
+- **Operations**: Handles actual department creation and management
+- **Governance**: Enforces policies and quality standards
+- **Coordination**: Manages workflow between components
 
-#### 1. **CityCouncil System** - **NEW VSM-Compliant Modular Architecture**
+### 3. Health Monitoring & Recovery
+- Monitors department process health every 30 seconds
+- Sends health check messages and tracks responses
+- Automatically restarts failed departments (up to 3 attempts)
+- Removes permanently failed departments from monitoring
 
-**🏗️ Modular File Structure:**
-```
-city_council.rb                    # Entry point and module namespace (55 lines)
-city_council/
-  ├── base.rb                      # Main VSM coordinator (240 lines)
-  ├── intelligence.rb              # VSM Intelligence subsystem (364 lines)
-  ├── governance.rb                # VSM Governance subsystem (24 lines)
-  ├── operations.rb                # VSM Operations subsystem (363 lines)
-  └── cli_port.rb                  # External CLI interface (64 lines)
-```
+### 4. SmartMessage Integration
+- Subscribes to service requests from emergency dispatch
+- Publishes department announcements for system-wide awareness
+- Handles health check/status message exchanges
+- Enables asynchronous communication between all city services
 
-**✅ VSM Architecture Compliance:**
-- **🧠 Intelligence** (`CityCouncil::Intelligence`) - Environmental scanning, AI analysis, decision making
-  - Service request analysis using AI + heuristics
-  - Service gap identification 
-  - Analysis result caching with confidence scoring
-  - Environmental scanning capabilities
-- **⚙️ Operations** (`CityCouncil::Operations`) - Department creation, process management, execution
-  - Template-based department generation
-  - Process launching and monitoring
-  - YAML configuration generation
-  - Department lifecycle management
-- **🏛️ Governance** (`CityCouncil::Governance`) - Policy validation and enforcement
-  - Service specification validation
-  - Naming convention enforcement
-  - Duplicate service prevention
-- **🎯 Coordination** (`CityCouncil::Base`) - Main viable system coordinator
-  - VSM capsule orchestration
-  - SmartMessage integration
-  - Health monitoring and process cleanup
-  - Department discovery and registration
-- **🖥️ CLI Port** (`CityCouncil::CLIPort`) - External interface for testing
+### 5. Template-Based Department Creation
+- Uses `generic_department.rb` as configurable template
+- Generates department-specific YAML configurations
+- Extracts keywords from descriptions for message routing
+- Creates appropriate message handlers and action configs
 
-**✅ Centralized Logging Architecture:**
-- **Shared Logger Instance**: All components use `Common::Logger` which provides the same `SmartMessage::Logger.default` instance
-- **Single Configuration**: First component to call `setup_logger` configures the global SmartMessage logger
-- **Consistent Output**: All CityCouncil components log to the same destination with consistent formatting
-- **No Duplication**: Each class includes `Common::Logger` but all receive the same underlying logger instance
+## Usage
 
-**✅ VSM Message Flow:**
-1. **Intelligence** analyzes service requests → emits `:create_service` messages
-2. **Operations** receives `:create_service` → executes department creation and process management  
-3. **Governance** validates policies throughout the process
-4. **Base** coordinates all subsystems and handles external SmartMessage integration
-
-**✅ Template-Based Generation:**
-- **Generic Template**: `generic_template.rb` with full VSM architecture
-- **YAML Configuration**: Dynamic configuration generation per department
-- **Process Management**: Automatic spawning and monitoring of department processes
-- **Announcement System**: Real-time status updates via `DepartmentAnnouncementMessage`
-
-**✅ Key Features:**
-- ✅ Full VSM compliance with proper subsystem separation
-- ✅ AI-powered service analysis using RubyLLM (Intelligence)
-- ✅ Template-based department creation (Operations)
-- ✅ Dynamic department discovery and registration (Base)
-- ✅ CLI interface for testing (`ruby city_council.rb --cli`)
-- ✅ **Automatic Department Launching**: Spawns departments as separate processes (Operations)
-- ✅ **Department Announcements**: Publishes creation/launch status to all services (Operations)
-- ✅ **Process Management**: Tracks department PIDs and cleanup on shutdown (Base)
-- ✅ **Centralized Logging**: Single shared logger instance across all components
-- ✅ **Modular Design**: Easy to modify individual VSM subsystems independently
-
-#### 2. **Emergency Dispatch Integration** (`emergency_dispatch_center.rb`)
-**Why These Changes Were Made:**
-The emergency dispatch center needed to handle ANY type of emergency generically, without hard-coding specific department types. Using AI enables dynamic department determination for any scenario.
-
-**Major Architectural Change - AI-Powered Department Routing:**
-- **Removed Hard-Coded Logic**: Eliminated all specific department rules (fire, police, water, etc.)
-- **AI Integration**: Added RubyLLM to analyze 911 calls and determine appropriate departments
-- **Generic Department Mapping**: Can identify any city department type based on emergency description
-- **Fallback Logic**: Maintains rule-based backup when AI is unavailable
-
-**Key Updates:**
-- **RubyLLM Integration**: `setup_ai()` configures AI model for department analysis
-- **AI Department Analysis**: `ai_determine_departments()` uses detailed prompts to analyze emergencies
-- **Comprehensive Fallback**: `fallback_determine_departments()` covers major emergency categories
-- **Dynamic Department Discovery**: Scans for `*_department.rb` files and adapts to new departments
-- **City Council Integration**: Forwards any unhandled emergency types for new department creation
-- **Real-time Updates**: Subscribes to department announcements for immediate routing updates
-
-**How AI Analysis Works:**
-```ruby
-# AI receives comprehensive emergency analysis prompt:
-- Emergency type, description, location, severity
-- Injury status, hazmat, weapons, vehicles, suspects
-- Currently available departments
-- Common city department reference list
-- Returns JSON array of department names
-
-# Example AI responses:
-["animal_control_department"] # for aggressive dog
-["transportation_department", "police_department"] # for traffic light malfunction  
-["environmental_services_department"] # for illegal dumping
-["building_inspection_department"] # for crumbling facade
-```
-
-**Fallback Logic Categories:**
-- Fire/Rescue → fire_department
-- Crime/Accidents → police_department  
-- Medical → fire_department (EMS)
-- Infrastructure → water_management, utilities, transportation, public_works
-- Animals → animal_control_department
-- Buildings → building_inspection_department
-- Parks → parks_recreation_department
-
-#### 3. **Enhanced Citizen Emergency Scenarios** (`citizen.rb`)
-**Why Expanded:**
-To thoroughly test the AI-powered generic department routing system with diverse emergency types that require different specialized departments.
-
-**New Emergency Categories Added:**
-- **Infrastructure**: Water main breaks, gas leaks, storm drain issues
-- **Animal Control**: Aggressive stray dogs, dead wildlife, bee swarms
-- **Transportation**: Pothole damage, traffic light malfunctions
-- **Environmental**: Illegal dumping, building facade issues
-- **Parks & Recreation**: Broken playground equipment, fallen tree branches
-
-**Testing Coverage:**
-These diverse scenarios test the AI's ability to determine appropriate departments:
-- `animal_control_department` for wildlife issues
-- `transportation_department` for road/traffic problems
-- `environmental_services_department` for pollution/dumping
-- `building_inspection_department` for structural issues
-- `parks_recreation_department` for park maintenance
-- `utilities_department` for gas leaks
-- `public_works_department` for general infrastructure
-
-#### 4. **Service Request Message** (`messages/service_request_message.rb`)
-**Purpose:**
-Enables communication between Emergency Dispatch and City Council for requesting new departments.
-
-**Message Structure:**
-```ruby
-ServiceRequestMessage:
-  - request_id: Unique identifier
-  - requesting_service: Who needs the department (e.g., "emergency-dispatch-center")
-  - emergency_type: Type of emergency requiring service
-  - description: Details about why the department is needed
-  - urgency: Priority level (critical/high/normal/low)
-  - original_call_id: Reference to triggering 911 call
-  - details: Additional context and original call data
-```
-
-#### 5. **Department Announcement System** (`messages/department_announcement_message.rb`)
-**Purpose:**
-Enables real-time communication about department lifecycle events across all city services.
-
-**Message Structure:**
-```ruby
-DepartmentAnnouncementMessage:
-  - announcement_id: Unique identifier
-  - department_name: Full department name (e.g., "animal_control_department")
-  - department_file: Ruby filename
-  - status: 'created' | 'launched' | 'active' | 'failed'
-  - description: Department purpose or error details
-  - capabilities: Array of department responsibilities  
-  - message_types: Array of message types it handles
-  - process_id: PID of launched department process
-  - launch_time: When department was launched
-  - reason: Why department was created
-```
-
-**Status Lifecycle:**
-1. **created** - Department file generated, not yet launched
-2. **launched** - Process started successfully, PID assigned
-3. **active** - Department fully operational (optional confirmation)
-4. **failed** - Creation or launch failed with error details
-
-### Enhanced Message Flow: Complete Department Lifecycle
-
-```
-1. Citizen reports "Aggressive stray dog attacking people in the park" to 911
-   ↓
-2. Emergency Dispatch receives call
-   - AI analyzes: emergency_type="other", description="aggressive stray dog..."
-   - AI determines needed departments: ["animal_control_department"]
-   - Checks available departments - animal_control_department doesn't exist
-   ↓
-3. Dispatch sends ServiceRequestMessage to City Council
-   - Department needed: "animal_control_department"
-   - Reason: "911 emergency requiring animal control department"
-   - Includes full emergency details and AI determination flag
-   ↓
-4. City Council Intelligence analyzes request
-   - Uses AI to understand "animal control" need
-   - Generates animal_control_department.rb code
-   - Creates animal-related message types
-   ↓
-5. City Council publishes DepartmentAnnouncementMessage (status: 'created')
-   ↓
-6. Department file written to disk and made executable
-   ↓
-7. City Council spawns new department process
-   - Checks process started successfully
-   - Records PID in @department_processes
-   ↓
-8. City Council publishes DepartmentAnnouncementMessage (status: 'launched', process_id: PID)
-   ↓
-9. Emergency Dispatch receives announcement
-   - Immediately adds animal_control_department to @available_departments
-   - Ready to route future calls without waiting for file system scan
-   ↓
-10. New animal_control_department process is running and ready for messages
-   ↓
-11. Future animal emergencies automatically routed to animal_control_department
-```
-
-### AI Department Determination Examples
-
-**Example 1 - Gas Leak:**
-```
-Input: "Gas leak smell near elementary school!"
-AI Analysis: Critical infrastructure emergency with hazmat
-AI Output: ["utilities_department", "fire_department"]
-```
-
-**Example 2 - Traffic Light Malfunction:**  
-```
-Input: "Traffic lights malfunctioning at major intersection"
-AI Analysis: Transportation emergency affecting traffic flow
-AI Output: ["transportation_department", "police_department"]
-```
-
-**Example 3 - Building Safety:**
-```
-Input: "Building facade crumbling, bricks falling on sidewalk"  
-AI Analysis: Structural safety issue requiring inspection
-AI Output: ["building_inspection_department"]
-```
-
-### Testing the System
-
+### Starting CityCouncil
 ```bash
-# Terminal 1: Start City Council
+# Basic mode
 ruby city_council.rb
 
-# Terminal 2: Start Emergency Dispatch
-ruby emergency_dispatch_center.rb
-
-# Terminal 3: Run citizen with water emergencies
-ruby citizen.rb auto
-
-# Watch as:
-# 1. Citizen calls about water line break
-# 2. Dispatch forwards to City Council
-# 3. City Council generates water_management_department.rb
-# 4. New department becomes available for future calls
+# With interactive CLI
+ruby city_council.rb --cli
 ```
 
-## Architecture Benefits
+### Environment Variables
+```bash
+# Set AI provider (default: openai)
+export LLM_PROVIDER=ollama
+export LLM_MODEL=llama3.2:1b
 
-### Self-Improving System
-- City automatically creates services based on actual citizen needs
-- No manual intervention required for common department types
-- System learns and adapts to community requirements
-- **Instant Availability**: New departments are immediately operational and routable
+# Enable debug output
+export VSM_DEBUG_STREAM=1
+```
 
-### Fail-Safe Design
-- Emergency calls still handled by available departments if possible
-- Police department acts as default fallback
-- City Council requests logged for manual review if AI fails
-- **Process Management**: Automatic cleanup of department processes on shutdown
+### Example Service Request Flow
+1. Emergency dispatch sends ServiceRequestMessage: "Need animal control for rabid dog"
+2. CityCouncil Intelligence analyzes request
+3. Determines "animal_control_department" is needed but doesn't exist
+4. Generates service specification with capabilities
+5. Operations creates YAML configuration
+6. Launches new department process
+7. Announces creation to all services
+8. Begins health monitoring of new department
 
-### Real-Time Communication
-- **Instant Updates**: Emergency dispatch immediately knows when departments are available
-- **Status Tracking**: Full visibility into department creation and launch status
-- **No Polling Required**: Event-driven updates eliminate delay between creation and routing
+## Integration Points
 
-### Scalability
-- New departments follow consistent patterns
-- All departments discoverable via file system AND real-time announcements
-- Message routing automatically updated
-- **Process Isolation**: Each department runs in its own process for stability
+### With Emergency Services
+- Receives service requests when departments are missing
+- Creates specialized departments based on emergency needs
+- Ensures comprehensive emergency response coverage
 
-## Future Ideas
-- Add department dependency management (e.g., utilities depends on public works)
-- Implement department lifecycle (decommission unused departments)
-- Create inter-department coordination for complex emergencies
-- Add citizen feedback loop for department performance
+### With Generic Department Template
+- Uses template as base for all new departments
+- Passes department name as argument for configuration loading
+- Enables rapid deployment of new services
 
-## Questions Explored
-- ✅ **How to handle service dependencies?** - Currently handled through message subscriptions
-- ✅ **SmartMessage vs VSM pattern?** - Using hybrid approach: SmartMessage for existing, VSM for orchestration
-- ✅ **Code security?** - AI generates from safe templates, governance validates
-- ✅ **AI autonomy level?** - AI suggests and generates, but code is persisted for review
+### With VSM Framework
+- Leverages VSM's component architecture for separation of concerns
+- Uses VSM message bus for internal component communication
+- Benefits from VSM's async processing capabilities
+
+### With SmartMessage System
+- Integrates with city-wide messaging infrastructure
+- Enables real-time communication with all departments
+- Supports health monitoring across the entire system
+
+## Benefits
+
+1. **Self-Healing**: Automatically recovers from department failures
+2. **Adaptive**: Creates new services as city needs evolve
+3. **Intelligent**: Uses AI to understand and fulfill service requests
+4. **Observable**: Comprehensive logging and health monitoring
+5. **Scalable**: Can manage unlimited number of departments
+6. **Maintainable**: Clear separation of concerns through VSM architecture
+
+This documentation provides a comprehensive understanding of the CityCouncil system's architecture, data flows, and operational patterns for dynamic city service generation and management.
