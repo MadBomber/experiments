@@ -17,6 +17,7 @@ class Visitor
   def initialize(home_town = nil)
     @home_town = home_town || generate_random_home_town
     @service_name = "visitor-#{@home_town.gsub(/\s+/, '-').downcase}"
+    @status_line_prefix = "from #{@home_town}"
 
     setup_ai
     logger.info("Visitor from #{@home_town} initialized - AI-powered message generation system ready")

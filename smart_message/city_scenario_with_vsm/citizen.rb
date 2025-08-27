@@ -15,6 +15,7 @@ class Citizen
     @citizen_name = citizen_name || generate_random_name
     @service_name = "citizen-#{@citizen_name.downcase.gsub(' ', '_')}"
     @call_count = 0
+    @status_line_prefix = @citizen_name
     @names = ['John Smith', 'Mary Johnson', 'Robert Williams', 'Patricia Brown', 'Michael Davis']
     @locations = [
       '123 Main Street',

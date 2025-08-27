@@ -23,6 +23,7 @@ class House
     @last_fire_time = nil
     @occupants = rand(1..4)
     @occupant_status = 'safe'
+    @status_line_prefix = @address
 
     setup_messaging
     setup_signal_handlers
