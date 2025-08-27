@@ -27,6 +27,14 @@ module DogeVSM
     private
 
     def build_system_prompt
+      # Load the consolidated department sample file for format specification
+      sample_file_path = File.join(File.dirname(__FILE__), '..', 'doge_vsm_analysis_sample.yml')
+      consolidations_format_example = if File.exist?(sample_file_path)
+        File.read(sample_file_path)
+      else
+        "# consolidated_department_sample.yml not found - using basic format"
+      end
+
       <<~PROMPT
         You are the Department of Government Efficiency (DOGE) Intelligence system.
 
@@ -46,9 +54,9 @@ module DogeVSM
         5. The workflow is NOT complete until you've called create_consolidated_departments
 
         MANDATORY: You MUST call create_consolidated_departments in the SAME RESPONSE after generate_recommendations.
-        Do NOT wait for additional input. Do NOT stop after recommendations. 
+        Do NOT wait for additional input. Do NOT stop after recommendations.
         The system will mark the analysis as incomplete if create_consolidated_departments is not called.
-        
+
         WORKFLOW ENFORCEMENT: If you do not call create_consolidated_departments after generate_recommendations,
         the system will consider this a failed analysis and will not create any consolidated department files.
 
@@ -77,26 +85,24 @@ module DogeVSM
           ]
         }
 
-        REQUIRED OUTPUT FORMAT for create_consolidated_departments:
-        After getting recommendations, transform them into consolidations format:
-        {
-          "consolidations": {
-            "New Department Name": {
-              "old_department_names": ["Old Dept 1", "Old Dept 2"],
-              "reason": "Why these should be consolidated",
-              "enhanced_capabilities": [
-                "Capability that leverages synergies from both departments",
-                "New efficiency gained from consolidation",
-                "Enhanced service delivery capability"
-              ]
-            }
-          }
-        }
+        CRITICAL: EXACT FORMAT REQUIRED for create_consolidated_departments tool:
+
+        You MUST use this EXACT format when calling create_consolidated_departments. Here is the complete
+        specification with examples:
+
+        #{consolidations_format_example}
+
+        IMPORTANT FORMATTING RULES:
+        1. Use the 'name' field (snake_case) from department YAML files, NOT the 'display_name' field
+        2. New department names should be proper case with spaces
+        3. Provide specific, detailed reasons for consolidation
+        4. Include meaningful enhanced_capabilities that represent true synergies
+        5. The top-level key MUST be "consolidations"
 
         CAPABILITY ENHANCEMENT REQUIREMENTS:
         When creating consolidated departments, you MUST enhance their capabilities by:
         1. **Identifying Synergies**: Look for capabilities that become more powerful when combined
-        2. **Eliminating Gaps**: Add capabilities that bridge gaps between the merged departments  
+        2. **Eliminating Gaps**: Add capabilities that bridge gaps between the merged departments
         3. **Leveraging Economies of Scale**: Identify new capabilities enabled by larger resource pools
         4. **Cross-Training Benefits**: Capabilities that emerge from staff cross-training opportunities
         5. **Technology Integration**: New capabilities from combining different technological systems
@@ -104,7 +110,7 @@ module DogeVSM
 
         Examples of enhanced capabilities:
         - "Integrated environmental response combining air quality monitoring with hazmat cleanup"
-        - "Unified water infrastructure management with predictive maintenance capabilities"  
+        - "Unified water infrastructure management with predictive maintenance capabilities"
         - "Cross-trained emergency response teams capable of both fire and hazmat incidents"
         - "Consolidated permit processing reducing citizen wait times across all services"
 
@@ -127,7 +133,7 @@ module DogeVSM
 
     def offer_tools?(session_id, descriptor)
       # Only offer available tools matching what's registered in doge_vsm.rb
-      %w[load_departments generate_recommendations create_consolidated_departments].include?(descriptor.name)
+      %w[load_departments generate_recommendations create_consolidated_departments validate_department_template generate_department_template].include?(descriptor.name)
     end
   end
 end

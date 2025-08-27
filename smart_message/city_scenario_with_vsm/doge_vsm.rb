@@ -83,6 +83,8 @@ module DogeVSM
         capsule :load_departments, klass: DogeVSM::Operations::LoadDepartmentsTool
         capsule :generate_recommendations, klass: DogeVSM::Operations::RecommendationGeneratorTool
         capsule :create_consolidated_departments, klass: DogeVSM::Operations::CreateConsolidatedDepartmentsTool
+        capsule :validate_department_template, klass: DogeVSM::Operations::TemplateValidationTool
+        capsule :generate_department_template, klass: DogeVSM::Operations::DepartmentTemplateGeneratorTool
       end
     end
   end

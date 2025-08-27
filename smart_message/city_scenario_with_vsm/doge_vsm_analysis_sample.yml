@@ -1,0 +1,113 @@
+# doge_vsm_analysis_sample.yml
+#
+# This file provides the EXACT format that the AI Intelligence system must produce
+# when calling the create_consolidated_departments tool. This is the input format
+# for consolidation recommendations, NOT the output department YAML structure.
+#
+# CRITICAL: The AI must provide data in exactly this structure to the
+# create_consolidated_departments tool for successful consolidation.
+
+# Top-level key must be "consolidations" - this is the parameter name expected
+# by the create_consolidated_departments tool
+consolidations:
+  # Each key is the DISPLAY NAME of the new consolidated department (proper case with spaces)
+  # This becomes the display_name field in the generated department YAML
+  "Water & Utilities Management":
+    # REQUIRED: Array of department names to be consolidated
+    # These must match the 'name' field from the existing department YAML files (snake_case)
+    # NOT the display_name - use the internal system identifier
+    old_department_names:
+      - "water_management_department" # Matches name: field in water_management_department.yml
+      - "utilities_department" # Matches name: field in utilities_department.yml
+    # Add more departments as needed for this consolidation
+
+    # REQUIRED: Clear explanation of why these departments should be consolidated
+    # Should reference specific overlaps, synergies, or efficiency gains
+    reason: "Both departments handle water infrastructure with overlapping emergency response capabilities and shared utility maintenance responsibilities. Consolidation eliminates duplicate oversight and improves coordinated response to water/utility emergencies."
+
+    # OPTIONAL but HIGHLY RECOMMENDED: 1) New capabilities gained through consolidation
+    # These represent synergies and enhanced capabilities that emerge from combining departments
+    # Focus on capabilities that neither department could achieve alone
+    # 2) New capabilities added because they were missing from the original list but are normally available
+    # for this kind of department
+    enhanced_capabilities:
+      - "Unified water infrastructure management with predictive maintenance capabilities"
+      - "Cross-trained emergency response teams capable of both water and utility incidents"
+      - "Consolidated permit processing reducing citizen wait times across all utility services"
+      - "Integrated monitoring systems for comprehensive utility network oversight"
+      - "Enhanced coordination between water supply and power systems for critical infrastructure"
+
+  # Second consolidation example with different department types
+  "Public Safety & Environmental Response":
+    # Consolidating departments with related but distinct functions
+    old_department_names:
+      - "animal_control_department"
+      - "environmental_protection_agency_department"
+      - "hazardous_materials_response_department"
+
+    # Multi-department consolidation rationale
+    reason: "These departments share overlapping responsibilities in public safety, environmental protection, and hazardous situation response. Animal control often deals with environmental health issues, while hazmat and environmental protection have significant operational overlap in emergency response and regulatory enforcement."
+
+    # Enhanced capabilities from three-way consolidation
+    enhanced_capabilities:
+      - "Comprehensive environmental threat response combining animal, chemical, and ecological expertise"
+      - "Integrated incident command system for complex environmental emergencies"
+      - "Cross-trained responders capable of handling multi-faceted environmental incidents"
+      - "Unified permitting and inspection processes for environmental compliance"
+      - "Enhanced public education programs covering all environmental safety aspects"
+
+  # Transportation infrastructure consolidation example
+  "Transportation & Infrastructure Management":
+    # Engineering and transportation departments with infrastructure overlap
+    old_department_names:
+      - "transportation_management_department"
+      - "city_engineering_department"
+      - "public_works_department"
+
+    reason: "All three departments manage city infrastructure with significant overlap in roadways, traffic systems, and emergency response. Transportation manages traffic flow, city engineering handles infrastructure repairs, and public works maintains the physical systems. Consolidation creates a unified infrastructure management approach."
+
+    enhanced_capabilities:
+      - "Integrated traffic management and infrastructure maintenance reducing service disruptions"
+      - "Coordinated emergency response for transportation incidents with immediate infrastructure assessment"
+      - "Unified project planning combining traffic flow analysis with infrastructure capacity"
+      - "Cross-trained teams capable of both traffic management and infrastructure repair"
+      - "Enhanced predictive maintenance using traffic data to anticipate infrastructure needs"
+# FORMATTING REQUIREMENTS:
+#
+# 1. DISPLAY NAMES: Use proper case with spaces (e.g., "Water & Utilities Management")
+#    - These become the display_name in the generated department YAML
+#    - Should clearly indicate the combined scope and function
+#
+# 2. DEPARTMENT NAMES: Use exact snake_case names from existing YAML files
+#    - Must match the 'name:' field in department YAML files
+#    - NOT the 'display_name:' field
+#    - Examples: "utilities_department", "water_management_department"
+#
+# 3. REASONS: Provide specific, detailed explanations
+#    - Reference actual overlapping functions
+#    - Mention efficiency gains or service improvements
+#    - Cite coordination benefits
+#
+# 4. ENHANCED CAPABILITIES: Focus on synergies and new capabilities
+#    - What can the combined department do that individuals cannot?
+#    - How do cross-training opportunities enhance service?
+#    - What process improvements result from consolidation?
+#    - How does technology integration create new capabilities?
+#
+# VALIDATION CHECKLIST:
+# □ Top-level key is "consolidations"
+# □ Each consolidation has a proper case display name
+# □ old_department_names array uses correct snake_case names
+# □ reason field explains specific consolidation benefits
+# □ enhanced_capabilities list meaningful synergies
+# □ All required fields are present for each consolidation
+#
+# COMMON ERRORS TO AVOID:
+# ❌ Using display_name instead of name for old_department_names
+# ❌ Missing the top-level "consolidations" key
+# ❌ Using snake_case for new department display names
+# ❌ Providing empty enhanced_capabilities arrays
+# ❌ Generic or vague consolidation reasons
+#
+# This exact structure must be provided to create_consolidated_departments tool
+# for successful department consolidation and YAML file generation.

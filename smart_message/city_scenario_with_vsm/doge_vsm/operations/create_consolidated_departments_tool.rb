@@ -41,13 +41,20 @@ module DogeVSM
       def run(args)
         consolidations_data = args[:consolidations] || args["consolidations"]
         
+        # Debug logging to understand what we received
+        if ENV['VSM_DEBUG_STREAM']
+          puts "CreateConsolidatedDepartmentsTool received args: #{args.inspect}"
+          puts "Consolidations data: #{consolidations_data.inspect}"
+        end
+        
         if consolidations_data.nil? || consolidations_data.empty?
+          error_msg = "No consolidation data provided. Received args keys: #{args.keys.join(', ')}"
           return { 
-            error: "No consolidation data provided", 
+            error: error_msg, 
             total_consolidations: 0,
             successful_consolidations: 0,
             consolidations: [],
-            errors: ["No consolidation data provided"]
+            errors: [error_msg]
           }
         end
 
@@ -156,12 +163,15 @@ module DogeVSM
       end
 
       def find_yaml_files_for_department(dept_name)
-        # Convert department name to potential filename patterns
+        # For snake_case department names (e.g., "utilities_department"), 
+        # look for exact filename matches first
         potential_filenames = [
-          "#{dept_name.downcase.gsub(/\s+/, '_')}.yml",
-          "#{dept_name.downcase.gsub(/\s+/, '_')}_department.yml",
-          "#{dept_name.downcase.gsub(/\s+/, '')}.yml",
-          "#{dept_name.downcase.gsub(/[^a-z0-9]/, '_')}.yml"
+          "#{dept_name}.yml",                                    # Exact match (e.g., utilities_department.yml)
+          "#{dept_name.downcase}.yml",                          # Lowercase version  
+          "#{dept_name.downcase.gsub(/\s+/, '_')}.yml",         # Convert spaces to underscores
+          "#{dept_name.downcase.gsub(/\s+/, '_')}_department.yml", # Add _department suffix
+          "#{dept_name.downcase.gsub(/\s+/, '')}.yml",          # Remove spaces
+          "#{dept_name.downcase.gsub(/[^a-z0-9]/, '_')}.yml"    # Replace non-alphanumeric with underscores
         ]
 
         found_files = []
@@ -170,17 +180,29 @@ module DogeVSM
           found_files << filepath if File.exist?(filepath)
         end
 
-        # Also search for files containing the department name
-        Dir.glob("*.yml").each do |yml_file|
-          begin
-            config = YAML.load_file(yml_file)
-            if config && config['display_name'] && 
-               config['display_name'].downcase.include?(dept_name.downcase)
-              found_files << File.join(Dir.pwd, yml_file)
+        # If no direct filename matches, search by department name field in YAML files
+        if found_files.empty?
+          Dir.glob("*_department.yml").each do |yml_file|
+            begin
+              config = YAML.load_file(yml_file)
+              # Match against the 'name' field in the department section (this is the snake_case identifier)
+              if config && config['department'] && config['department']['name'] == dept_name
+                found_files << File.join(Dir.pwd, yml_file)
+              # Also check display_name as fallback
+              elsif config && config['department'] && config['department']['display_name'] && 
+                   config['department']['display_name'].downcase.include?(dept_name.downcase)
+                found_files << File.join(Dir.pwd, yml_file)
+              end
+            rescue => e
+              # Skip files that can't be parsed, but log the error for debugging
+              puts "Warning: Could not parse #{yml_file} while searching for #{dept_name}: #{e.message}" if ENV['VSM_DEBUG_STREAM']
             end
-          rescue
-            # Skip files that can't be parsed
           end
+        end
+
+        if found_files.empty?
+          puts "Warning: No YAML files found for department: #{dept_name}" if ENV['VSM_DEBUG_STREAM']
+          puts "Available department files: #{Dir.glob('*_department.yml').join(', ')}" if ENV['VSM_DEBUG_STREAM']
         end
 
         found_files.uniq
