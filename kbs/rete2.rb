@@ -94,34 +94,34 @@ module ReteII
   class AlphaMemory
     attr_accessor :items, :successors, :pattern
     attr_reader :linked
-    
+
     def initialize(pattern = {})
       @items = []
       @successors = []
       @pattern = pattern
       @linked = true
     end
-    
+
     def unlink!
       @linked = false
-      @successors.each { |s| s.left_unlink! if s.respond_to?(:left_unlink!) }
+      @successors.each { |s| s.right_unlink! if s.respond_to?(:right_unlink!) }
     end
-    
+
     def relink!
       @linked = true
-      @successors.each { |s| s.left_relink! if s.respond_to?(:left_relink!) }
+      @successors.each { |s| s.right_relink! if s.respond_to?(:right_relink!) }
     end
     
     def activate(fact)
       return unless @linked
       @items << fact
-      @successors.each { |s| s.left_activate(fact) }
+      @successors.each { |s| s.right_activate(fact) }
     end
     
     def deactivate(fact)
       return unless @linked
       @items.delete(fact)
-      @successors.each { |s| s.left_deactivate(fact) if s.respond_to?(:left_deactivate) }
+      @successors.each { |s| s.right_deactivate(fact) if s.respond_to?(:right_deactivate) }
     end
   end
   
@@ -145,12 +145,23 @@ module ReteII
       @successors.each { |s| s.left_relink! if s.respond_to?(:left_relink!) }
     end
     
+    def activate(token)
+      add_token(token)
+      @successors.each do |s|
+        if s.respond_to?(:left_activate)
+          s.left_activate(token)
+        elsif s.respond_to?(:activate)
+          s.activate(token)
+        end
+      end
+    end
+
     def add_token(token)
       @tokens << token
       unlink! if @tokens.empty?
       relink! if @tokens.size == 1
     end
-    
+
     def remove_token(token)
       @tokens.delete(token)
       unlink! if @tokens.empty?
@@ -191,12 +202,11 @@ module ReteII
       @alpha_memory.items.each { |fact| right_activate(fact) } if @alpha_memory
     end
     
-    def left_activate(fact)
+    def left_activate(token)
+      # Left activation: a new token from beta memory needs to be joined with facts from alpha memory
       return unless @left_linked && @right_linked
-      
-      parent_tokens = @beta_memory ? @beta_memory.tokens : [Token.new(nil, nil, nil)]
-      
-      parent_tokens.each do |token|
+
+      @alpha_memory.items.each do |fact|
         if perform_join_tests(token, fact)
           new_token = Token.new(token, fact, self)
           token.children << new_token if token
@@ -207,9 +217,9 @@ module ReteII
     
     def right_activate(fact)
       return unless @left_linked && @right_linked
-      
+
       parent_tokens = @beta_memory ? @beta_memory.tokens : [Token.new(nil, nil, nil)]
-      
+
       parent_tokens.each do |token|
         if perform_join_tests(token, fact)
           new_token = Token.new(token, fact, self)
@@ -413,7 +423,11 @@ module ReteII
       @alpha_memories = {}
       @production_nodes = {}
       @root_beta_memory = BetaMemory.new
-      
+
+      # Add initial dummy token to root beta memory
+      # This represents "no conditions matched yet" and allows the first condition to match
+      @root_beta_memory.add_token(Token.new(nil, nil, nil))
+
       @working_memory.add_observer(self)
     end
     

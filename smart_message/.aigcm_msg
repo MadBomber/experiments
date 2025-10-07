@@ -1,0 +1,8 @@
+Add status line prefix to citizen, house, and visitor classes
+
+This commit introduces a new attribute, `@status_line_prefix`, to the 
+Citizen, House, and Visitor classes to enhance status messaging. The 
+prefix is derived from the citizen's name, house address, and 
+visitor's home town, respectively. This change improves clarity in 
+messaging outputs by providing relevant contextual information for 
+each class instance and will aid in debugging and logging processes.
