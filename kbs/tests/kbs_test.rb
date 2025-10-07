@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require_relative '../rete2'
-require_relative '../rete2_dsl'
+require_relative '../kbs'
+require_relative '../kbs_dsl'
 require_relative '../blackboard'
 require_relative '../csv_trading_system'
 require_relative '../portfolio_rebalancing_system'
@@ -10,18 +10,18 @@ require 'minitest/autorun'
 require 'tempfile'
 require 'csv'
 
-class TestReteII < Minitest::Test
+class TestKBS < Minitest::Test
   def setup
-    @engine = ReteII::ReteEngine.new
+    @engine = KBS::ReteEngine.new
   end
   
   def test_simple_rule_firing
     fired = false
     
-    rule = ReteII::Rule.new(
+    rule = KBS::Rule.new(
       "test_rule",
       conditions: [
-        ReteII::Condition.new(:person, { age: 25 })
+        KBS::Condition.new(:person, { age: 25 })
       ],
       action: lambda { |facts, bindings| fired = true }
     )
@@ -36,11 +36,11 @@ class TestReteII < Minitest::Test
   def test_multiple_conditions
     result = nil
     
-    rule = ReteII::Rule.new(
+    rule = KBS::Rule.new(
       "parent_child",
       conditions: [
-        ReteII::Condition.new(:person, { role: "parent" }),
-        ReteII::Condition.new(:person, { role: "child" })
+        KBS::Condition.new(:person, { role: "parent" }),
+        KBS::Condition.new(:person, { role: "child" })
       ],
       action: lambda { |facts, bindings| result = facts.map(&:to_s).join(", ") }
     )
@@ -58,20 +58,20 @@ class TestReteII < Minitest::Test
     fired_with_negation = false
     fired_without_negation = false
     
-    rule_with_negation = ReteII::Rule.new(
+    rule_with_negation = KBS::Rule.new(
       "no_manager",
       conditions: [
-        ReteII::Condition.new(:employee, { department: "IT" }),
-        ReteII::Condition.new(:manager, { department: "IT" }, negated: true)
+        KBS::Condition.new(:employee, { department: "IT" }),
+        KBS::Condition.new(:manager, { department: "IT" }, negated: true)
       ],
       action: lambda { |facts, bindings| fired_with_negation = true }
     )
     
-    rule_without_negation = ReteII::Rule.new(
+    rule_without_negation = KBS::Rule.new(
       "has_manager",
       conditions: [
-        ReteII::Condition.new(:employee, { department: "IT" }),
-        ReteII::Condition.new(:manager, { department: "IT" })
+        KBS::Condition.new(:employee, { department: "IT" }),
+        KBS::Condition.new(:manager, { department: "IT" })
       ],
       action: lambda { |facts, bindings| fired_without_negation = true }
     )
@@ -96,10 +96,10 @@ class TestReteII < Minitest::Test
   def test_fact_removal
     counter = 0
     
-    rule = ReteII::Rule.new(
+    rule = KBS::Rule.new(
       "count_facts",
       conditions: [
-        ReteII::Condition.new(:item, { type: "widget" })
+        KBS::Condition.new(:item, { type: "widget" })
       ],
       action: lambda { |facts, bindings| counter += 1 }
     )
@@ -120,10 +120,10 @@ class TestReteII < Minitest::Test
   def test_pattern_matching_with_proc
     matched_facts = []
     
-    rule = ReteII::Rule.new(
+    rule = KBS::Rule.new(
       "adults_only",
       conditions: [
-        ReteII::Condition.new(:person, { 
+        KBS::Condition.new(:person, { 
           age: ->(age) { age >= 18 }
         })
       ],
@@ -140,8 +140,8 @@ class TestReteII < Minitest::Test
   end
   
   def test_unlinking_optimization
-    alpha_memory = @engine.alpha_memories.values.first || ReteII::AlphaMemory.new
-    beta_memory = ReteII::BetaMemory.new
+    alpha_memory = @engine.alpha_memories.values.first || KBS::AlphaMemory.new
+    beta_memory = KBS::BetaMemory.new
     
     assert alpha_memory.linked, "Alpha memory should start linked"
     alpha_memory.unlink!
@@ -156,11 +156,11 @@ class TestReteII < Minitest::Test
   def test_complex_join
     result = []
     
-    rule = ReteII::Rule.new(
+    rule = KBS::Rule.new(
       "temperature_alert",
       conditions: [
-        ReteII::Condition.new(:sensor, { location: "room1" }),
-        ReteII::Condition.new(:reading, { 
+        KBS::Condition.new(:sensor, { location: "room1" }),
+        KBS::Condition.new(:reading, { 
           value: ->(v) { v > 30 }
         })
       ],
@@ -182,7 +182,7 @@ class TestDSL < Minitest::Test
     
     # Test DSL rule creation using eval to handle the special syntax
     dsl_code = <<~DSL
-      ReteII.knowledge_base do
+      KBS.knowledge_base do
         rule "test_rule" do
           when :person, age: greater_than(18)
           then { |facts, bindings| @executed = true }
@@ -202,11 +202,11 @@ class TestDSL < Minitest::Test
     # Test that DSL can work alongside traditional rule creation
     executed = false
     
-    engine = ReteII::ReteEngine.new
-    rule = ReteII::Rule.new(
+    engine = KBS::ReteEngine.new
+    rule = KBS::Rule.new(
       "simple_test",
       conditions: [
-        ReteII::Condition.new(:person, { age: ->(age) { age > 18 } })
+        KBS::Condition.new(:person, { age: ->(age) { age > 18 } })
       ],
       action: lambda { |facts, bindings| executed = true }
     )
@@ -220,7 +220,7 @@ class TestDSL < Minitest::Test
   
   def test_pattern_evaluator_helpers
     # Test the pattern evaluator helper methods directly
-    evaluator = ReteII::PatternEvaluator.new
+    evaluator = KBS::PatternEvaluator.new
     
     # Test greater_than
     gt_func = evaluator.greater_than(10)
@@ -237,7 +237,7 @@ end
 class TestBlackboard < Minitest::Test
   def setup
     @temp_db = Tempfile.new(['test_db', '.db'])
-    @engine = ReteII::BlackboardEngine.new(db_path: @temp_db.path)
+    @engine = KBS::BlackboardEngine.new(db_path: @temp_db.path)
   end
   
   def teardown
@@ -248,7 +248,7 @@ class TestBlackboard < Minitest::Test
   def test_persistent_facts
     fact = @engine.add_fact(:sensor, { type: "temperature", value: 25 })
     
-    assert_instance_of ReteII::PersistedFact, fact
+    assert_instance_of KBS::PersistedFact, fact
     assert fact.uuid
     assert_equal :sensor, fact.type
     assert_equal 25, fact[:value]
