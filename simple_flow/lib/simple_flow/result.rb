@@ -180,15 +180,50 @@ module SimpleFlow
     end
 
     # Creates a duplicate of the result (needed for parallel execution)
-    # @return [Result] a new result with the same values
+    # Performs deep cloning of value to prevent shared mutable state
+    # @return [Result] a new result with deep-copied values
     def dup
       self.class.new(
-        @value,
-        context: @context.dup,
-        errors: @errors.dup,
+        deep_dup_value(@value),
+        context: deep_dup_hash(@context),
+        errors: deep_dup_hash(@errors),
         continue: @continue
       )
     end
     alias_method :clone, :dup
+
+    private
+
+    # Deep duplicate a value recursively
+    # @param obj [Object] the object to duplicate
+    # @return [Object] deep copy of the object
+    def deep_dup_value(obj)
+      case obj
+      when Hash
+        obj.transform_keys { |k| deep_dup_value(k) }
+           .transform_values { |v| deep_dup_value(v) }
+      when Array
+        obj.map { |item| deep_dup_value(item) }
+      when String
+        obj.dup
+      when Symbol, Numeric, TrueClass, FalseClass, NilClass
+        obj # Immutable types
+      else
+        # For custom objects, try dup, fallback to original
+        begin
+          obj.dup
+        rescue TypeError
+          obj
+        end
+      end
+    end
+
+    # Deep duplicate a hash (used for context and errors)
+    # @param hash [Hash] the hash to duplicate
+    # @return [Hash] deep copy of the hash
+    def deep_dup_hash(hash)
+      hash.transform_keys { |k| k.is_a?(Symbol) ? k : deep_dup_value(k) }
+          .transform_values { |v| deep_dup_value(v) }
+    end
   end
 end

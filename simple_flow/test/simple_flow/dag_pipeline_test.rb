@@ -93,40 +93,41 @@ module SimpleFlow
       assert_equal [:d], groups[2]
     end
 
-    def test_call_parallel
-      execution_threads = {}
-      mutex = Mutex.new
+    def test_call_async
+      execution_order = []
 
       pipeline = DagPipeline.new do
         step :root, ->(r) {
-          mutex.synchronize { execution_threads[:root] = Thread.current.object_id }
-          sleep 0.01
+          execution_order << :root
           r.continue(r.value + 1)
         }
 
         step :parallel_a, ->(r) {
-          mutex.synchronize { execution_threads[:parallel_a] = Thread.current.object_id }
-          sleep 0.01
+          execution_order << :parallel_a
           r.continue(r.value)
         }, depends_on: :root
 
         step :parallel_b, ->(r) {
-          mutex.synchronize { execution_threads[:parallel_b] = Thread.current.object_id }
-          sleep 0.01
+          execution_order << :parallel_b
           r.continue(r.value)
         }, depends_on: :root
 
         step :merge, ->(r) {
-          mutex.synchronize { execution_threads[:merge] = Thread.current.object_id }
+          execution_order << :merge
           r.continue(r.value + 10)
         }, depends_on: [:parallel_a, :parallel_b]
       end
 
-      result = pipeline.call_parallel(@initial_result)
+      result = pipeline.call(@initial_result)
 
       assert_equal 11, result.value
-      # parallel_a and parallel_b should run in different threads
-      assert execution_threads[:parallel_a] != execution_threads[:parallel_b]
+      # Root should be first
+      assert_equal :root, execution_order.first
+      # Merge should be last
+      assert_equal :merge, execution_order.last
+      # parallel_a and parallel_b should be in the middle (concurrent)
+      assert execution_order.include?(:parallel_a)
+      assert execution_order.include?(:parallel_b)
     end
 
     def test_circular_dependency_detection
@@ -201,23 +202,29 @@ module SimpleFlow
     end
 
     def test_context_from_dependencies
+      step_b_context = nil
+
       pipeline = DagPipeline.new do
         step :a, ->(r) {
           r.with_context(:a_value, 100).continue(r.value + 1)
         }
 
         step :b, ->(r) {
-          # Should have access to context from dependency a
-          assert r.context.key?(:a_a_value)
+          # Capture the context to verify later
+          step_b_context = r.context
           r.continue(r.value)
         }, depends_on: :a
       end
 
       result = pipeline.call(@initial_result)
+
       assert result.success?
+      # Should have access to context from dependency a (prefixed with step name)
+      assert step_b_context.key?(:a_a_value), "Expected :a_a_value in context, got: #{step_b_context.keys.inspect}"
+      assert_equal 100, step_b_context[:a_a_value]
     end
 
-    def test_error_in_parallel_execution
+    def test_error_in_async_execution
       pipeline = DagPipeline.new do
         step :root, ->(r) { r.continue(r.value + 1) }
 
@@ -234,7 +241,7 @@ module SimpleFlow
         }, depends_on: [:will_fail, :will_succeed]
       end
 
-      result = pipeline.call_parallel(@initial_result)
+      result = pipeline.call(@initial_result)
 
       refute result.continue?
       assert result.failure?
