@@ -10,7 +10,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.3.8)
+    addressable (2.8.0)
+      public_suffix (>= 2.0.2, < 5.0)
     builder (3.2.2)
     cli_helper (0.1.5)
       configatron
@@ -36,6 +37,7 @@ GEM
     progress_bar (1.0.5)
       highline (~> 1.6)
       options (~> 2.3.0)
+    public_suffix (4.0.6)
     rethinkdb (2.1.0.1)
       json
     rethinkdb_helper (0.0.4)
