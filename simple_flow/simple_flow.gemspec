@@ -9,10 +9,10 @@ Gem::Specification.new do |spec|
   spec.email = [""]
 
   spec.summary = "A lightweight, modular Ruby framework for building composable data processing pipelines"
-  spec.description = "SimpleFlow provides a clean and flexible architecture for orchestrating multi-step workflows with middleware support, flow control, and DAG-based execution"
+  spec.description = "SimpleFlow provides a clean and flexible architecture for orchestrating multi-step workflows with middleware support, flow control, and async fiber-based DAG execution for high-concurrency I/O operations"
   spec.homepage = "https://github.com/madbomber/experiments"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 2.7.0"
+  spec.required_ruby_version = ">= 3.0.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/madbomber/experiments"
@@ -31,9 +31,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Runtime dependencies
-  # None - uses only Ruby stdlib
+  spec.add_dependency "async", "~> 2.0"
 
   # Development dependencies
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "rake", "~> 13.0"
+  spec.add_development_dependency "async-http", "~> 0.60"
 end
