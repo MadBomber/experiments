@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" style="background: transparent;">
+  <defs>
+    <!-- Gradients for depth -->
+    <linearGradient id="pipelineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:0.9" />
+    </linearGradient>
+
+    <linearGradient id="middlewareGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f093fb;stop-opacity:0.85" />
+      <stop offset="100%" style="stop-color:#f5576c;stop-opacity:0.85" />
+    </linearGradient>
+
+    <linearGradient id="stepsGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4facfe;stop-opacity:0.85" />
+      <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:0.85" />
+    </linearGradient>
+
+    <linearGradient id="resultGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#43e97b;stop-opacity:0.85" />
+      <stop offset="100%" style="stop-color:#38f9d7;stop-opacity:0.85" />
+    </linearGradient>
+
+    <!-- Drop shadow -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="2" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Main Pipeline Container -->
+  <rect x="50" y="50" width="700" height="400" rx="15"
+        fill="url(#pipelineGrad)" stroke="#5a67d8" stroke-width="3"
+        filter="url(#shadow)"/>
+
+  <!-- Pipeline Label -->
+  <text x="400" y="80" font-family="Arial, sans-serif" font-size="24"
+        font-weight="bold" fill="#ffffff" text-anchor="middle">
+    Pipeline
+  </text>
+
+  <!-- Middleware Stack Container -->
+  <rect x="90" y="110" width="620" height="110" rx="10"
+        fill="url(#middlewareGrad)" stroke="#e74c3c" stroke-width="2.5"
+        filter="url(#shadow)"/>
+
+  <!-- Middleware Label -->
+  <text x="400" y="135" font-family="Arial, sans-serif" font-size="18"
+        font-weight="bold" fill="#ffffff" text-anchor="middle">
+    Middleware Stack (applied in reverse)
+  </text>
+
+  <!-- Middleware Items -->
+  <text x="110" y="165" font-family="Arial, sans-serif" font-size="16" fill="#ffffff">
+    • Instrumentation
+  </text>
+  <text x="110" y="190" font-family="Arial, sans-serif" font-size="16" fill="#ffffff">
+    • Logging
+  </text>
+  <text x="110" y="215" font-family="Arial, sans-serif" font-size="16" fill="#ffffff">
+    • Custom...
+  </text>
+
+  <!-- Arrow from Middleware to Steps -->
+  <path d="M 400 230 L 400 270" stroke="#fbbf24" stroke-width="4"
+        fill="none" marker-end="url(#arrowhead)"/>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10"
+            refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#fbbf24"/>
+    </marker>
+  </defs>
+
+  <!-- Steps Container -->
+  <rect x="90" y="280" width="620" height="130" rx="10"
+        fill="url(#stepsGrad)" stroke="#3b82f6" stroke-width="2.5"
+        filter="url(#shadow)"/>
+
+  <!-- Steps Label -->
+  <text x="400" y="305" font-family="Arial, sans-serif" font-size="18"
+        font-weight="bold" fill="#ffffff" text-anchor="middle">
+    Steps (executed sequentially)
+  </text>
+
+  <!-- Step Items -->
+  <text x="110" y="335" font-family="Arial, sans-serif" font-size="16" fill="#ffffff">
+    1. Step → Result
+  </text>
+  <text x="110" y="365" font-family="Arial, sans-serif" font-size="16" fill="#ffffff">
+    2. Step → Result (if continue?)
+  </text>
+  <text x="110" y="395" font-family="Arial, sans-serif" font-size="16" fill="#ffffff">
+    3. Step → Result (if continue?)
+  </text>
+
+  <!-- Arrow from Steps to Result -->
+  <path d="M 400 460 L 400 490" stroke="#fbbf24" stroke-width="4"
+        fill="none" marker-end="url(#arrowhead)"/>
+
+  <!-- Final Result Container -->
+  <rect x="300" y="500" width="200" height="85" rx="10"
+        fill="url(#resultGrad)" stroke="#10b981" stroke-width="2.5"
+        filter="url(#shadow)"/>
+
+  <!-- Result Label -->
+  <text x="400" y="525" font-family="Arial, sans-serif" font-size="18"
+        font-weight="bold" fill="#ffffff" text-anchor="middle">
+    Final Result
+  </text>
+
+  <!-- Result Properties -->
+  <text x="320" y="547" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">
+    • value
+  </text>
+  <text x="320" y="565" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">
+    • context
+  </text>
+  <text x="320" y="583" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">
+    • errors
+  </text>
+</svg>

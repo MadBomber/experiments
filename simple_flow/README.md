@@ -307,6 +307,30 @@ dag = SimpleFlow::DagPipeline.new do
 end
 ```
 
+## Architecture
+
+SimpleFlow's architecture follows a layered pipeline pattern with middleware support:
+
+<div align="center">
+  <img src="docs/architecture.svg" alt="SimpleFlow Architecture" width="800"/>
+</div>
+
+**Key Components:**
+
+1. **Pipeline** - Orchestrates the entire execution flow
+2. **Middleware Stack** - Applied in reverse order, wraps each step with cross-cutting concerns
+3. **Steps** - Execute sequentially, each receiving and returning a Result
+4. **Result** - Immutable value object containing data, context, and errors
+
+**Design Patterns:**
+
+- **Pipeline Pattern**: Sequential processing with short-circuit capability
+- **Decorator Pattern**: Middleware wraps steps to add behavior
+- **Immutable Value Object**: Results are never modified, only copied with changes
+- **Builder Pattern**: Fluent DSL for pipeline configuration
+- **Chain of Responsibility**: Each step can handle or pass along the result
+- **Async/Await**: Fiber-based concurrency for I/O-bound operations
+
 ## Usage Examples
 
 ### Basic Pipeline
