@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   # Specify which files should be added to the gem when it is released.
   spec.files = Dir.glob(%w[
     lib/**/*.rb
+    docs/**/*.svg
     README.md
     LICENSE
     CHANGELOG.md
