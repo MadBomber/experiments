@@ -1,0 +1,115 @@
+# Project Metadata for Teen Play
+# This file describes the overall project and its themes
+
+title: "Love by the Numbers"
+tagline: "A comedic teen play where algorithms can't calculate the heart"
+
+description: |
+  A comedic play about six high school students navigating relationships,
+  sports, and self-discovery during one semester. Three couples form as
+  characters learn that the best things in life—love, friendship, and
+  authenticity—can't be quantified or predicted.
+
+  Marcus and Jamie try to mathematically prove compatibility while discovering
+  feelings don't follow formulas. Tyler and Alex move from athletic rivals to
+  vulnerable partners. Benny and Zoe drop their protective personas to find
+  genuine connection.
+
+genre: Comedy
+target_audience: Teenagers and young adults
+setting: Riverside High School
+time_period: Contemporary (one semester, January to May)
+duration: Approximately 90 minutes
+
+themes:
+  - Love cannot be quantified or calculated
+  - Authenticity is more powerful than performance
+  - Vulnerability is a strength, not a weakness
+  - Balancing ambition with human connection
+  - Finding courage to be your real self
+
+structure:
+  acts: 3
+  total_scenes: 8
+  timeline: "16 weeks (one semester)"
+
+characters:
+  total: 6
+  couples: 3
+  description: "Three boys and three girls, each with distinct personalities and growth arcs"
+
+main_couples:
+  - pair: "Marcus & Jamie"
+    arc: "The Analysts - From 'love is logical' to 'love is beyond logic'"
+    theme: "Intellectual connection and embracing unpredictability"
+
+  - pair: "Tyler & Alex"
+    arc: "The Captains - From rivals to teammates in life"
+    theme: "Competitive fire balanced with vulnerability"
+
+  - pair: "Benny & Zoe"
+    arc: "The Performers - From hiding behind personas to being authentic"
+    theme: "Permission to be imperfect and real"
+
+key_plot_device: |
+  Marcus's relationship compatibility algorithm that proves hilariously wrong,
+  demonstrating that love defies mathematical prediction and logical analysis.
+
+tone: Light comedy with heartfelt moments
+style: Ensemble cast with interwoven storylines
+
+sports_integration: |
+  Basketball, soccer, track, cross-country, and volleyball serve as metaphors
+  for relationships: teamwork, trust, competition, support, and letting your
+  guard down.
+
+running_gags:
+  - Marcus's increasingly complex (and wrong) algorithm
+  - Benny's terrible athletic performance despite trying
+  - Zoe's progressively obscure movie quotes nobody understands
+  - Tyler and Alex's competitive one-upmanship
+  - Jamie's detailed charts for everything (including emotions)
+  - Group chat notifications interrupting key moments
+
+technical_notes: |
+  Designed for multi-level staging with gym equipment, portable set pieces,
+  and projection capabilities for texts/social media. Requires 6 actors
+  comfortable with physical comedy and fast-paced dialogue.
+
+resolution: |
+  All three couples come together. The algorithm is ceremoniously deleted.
+  Characters embrace an uncertain future with confidence in their relationships.
+  Theme: Love > Logic, Authenticity > Performance.
+
+# Project metadata
+version: "1.0"
+created: "2025"
+status: "Complete - 8 scenes written"
+suitable_for: "High school drama clubs, youth theater, community theater"
+
+# Scene overview
+scenes_included:
+  - number: 1
+    name: "The Gym Wars"
+    week: 1
+    summary: "All six characters meet during a gym scheduling conflict"
+
+  - number: 2
+    name: "Statistical Anomaly"
+    week: 2
+    summary: "Marcus and Jamie bond over the algorithm; Benny's depth revealed"
+
+  - number: 4
+    name: "The Equipment Room Incident"
+    week: 6
+    summary: "Benny and Zoe locked together, drop their personas completely"
+
+  - number: 8
+    name: "The Data Dump"
+    week: 16
+    summary: "Finale - algorithm proves wrong, love wins, all couples together"
+
+notes: |
+  This project demonstrates the Writers Room system with a complete set of
+  characters and scenes. It can serve as a template for creating other
+  multi-character dialog projects.

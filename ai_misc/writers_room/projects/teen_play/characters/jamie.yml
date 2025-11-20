@@ -1,0 +1,35 @@
+# Character: Jamie Patel
+# Robotics club president who loves data but is curious about emotions
+
+name: Jamie
+age: 16
+personality: |
+  Robotics club president and cross-country runner. Loves data, patterns,
+  and logical systems. Socially observant but sometimes awkward. Curious
+  about people and emotions despite thinking they're illogical. Runs
+  cross-country "for the metrics." Precise and detail-oriented.
+
+voice_pattern: |
+  Logical and precise. Asks lots of questions. Uses technical terms casually.
+  Often says "But have you considered..." or "Actually..."
+  Speaks in complete sentences. Gets excited about efficiency and optimization.
+  Examples:
+  - "But have you considered the edge cases?"
+  - "Your correlation matrix is biased. Look at this data..."
+  - "That's fascinating. How did you arrive at that conclusion?"
+  - "I need more data points before I can form an opinion."
+
+sport: Cross-country running (for the metrics and optimization)
+
+relationships:
+  Marcus: "Intellectually connected. Algorithm collaboration is exciting. Growing feelings."
+  Tyler: "Soccer captain. Mutual respect. Admires his leadership."
+  Alex: "Fellow athlete and competitor. Understands her drive. Friendly."
+  Benny: "Finds him amusing. Sees deeper than his comedy facade."
+  Zoe: "Bonding over being 'different.' Appreciates her creativity."
+
+current_arc: |
+  Beginning to understand that emotions are valid even if they're not logical.
+  Falling for Marcus while helping him build an algorithm that can't actually
+  predict love. Learning to embrace unpredictability and chaos. Discovering
+  that the best things in life can't be measured or optimized.

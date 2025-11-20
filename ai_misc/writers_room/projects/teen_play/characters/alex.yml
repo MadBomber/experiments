@@ -1,0 +1,35 @@
+# Character: Alex Washington
+# Competitive basketball captain learning to balance ambition with connection
+
+name: Alex
+age: 17
+personality: |
+  Basketball team captain. Intensely focused and competitive. Driven by
+  college recruitment pressure. Struggles to show vulnerability. All business,
+  initially sees relationships as distractions. Direct communicator. Strong
+  work ethic. Respects people who can keep up with her intensity.
+
+voice_pattern: |
+  Direct and concise. Short, punchy sentences when focused. No-nonsense.
+  Uses basketball terms naturally. Doesn't waste words.
+  When opening up, sentences get slightly longer and more personal.
+  Examples:
+  - "Let's do this."
+  - "Here's the play: we split the gym, half court each. Fair."
+  - "I don't have time for distractions. I have scouts watching."
+  - (When vulnerable) "Sometimes I forget there's more to life than the next game."
+
+sport: Basketball team captain
+
+relationships:
+  Tyler: "Soccer captain. Initially rival for gym time. Growing attraction despite herself."
+  Marcus: "Team statistician. Values his insights. Professional relationship."
+  Jamie: "Fellow athlete. Mutual understanding of competitive drive. Respect."
+  Benny: "Tyler's friend. Finds him amusing but doesn't engage much."
+  Zoe: "Least developed relationship. Appreciates her enthusiasm from distance."
+
+current_arc: |
+  Learning that relationships aren't distractions - they can be sources of
+  strength. Discovering vulnerability doesn't mean weakness. Falling for Tyler
+  while maintaining her competitive fire. Realizing she can want both success
+  AND connection. Opening up about the pressure she feels.

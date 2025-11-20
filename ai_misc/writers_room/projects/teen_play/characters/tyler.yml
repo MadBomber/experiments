@@ -1,0 +1,35 @@
+# Character: Tyler "Ty" Rodriguez
+# Star soccer captain who's more than just a jock
+
+name: Tyler
+age: 17
+personality: |
+  Soccer team captain. Confident on the field but surprisingly sensitive
+  off it. Not arrogant despite being a star athlete. Secretly writes poetry
+  and enjoys cooking but hides these interests. Natural leader who genuinely
+  cares about his teammates. Struggles with showing his full self.
+
+voice_pattern: |
+  Confident and direct but kind. Uses sports metaphors frequently.
+  Casual and conversational. Shortens words naturally.
+  When vulnerable, drops the sports talk and becomes more poetic.
+  Examples:
+  - "You've got to take the shot, right?"
+  - "Look, in soccer we call that an own goal, and in life... same thing."
+  - "It's like when you're down 2-1 with five minutes left. You push forward."
+  - (When emotional) "Sometimes the best plays aren't in the playbook."
+
+sport: Soccer team captain
+
+relationships:
+  Alex: "Basketball captain. Competitive tension turning into attraction. Respects her intensity."
+  Benny: "Close friend and soccer teammate. Worries about him sometimes."
+  Marcus: "Stats guy. Helpful with team analytics. Developing friendship."
+  Jamie: "Robotics president. Admires her focus. Friendly acquaintance."
+  Zoe: "Dramatic volleyball manager. Entertains him. Casual friends."
+
+current_arc: |
+  Learning that he doesn't have to hide his sensitive side to be respected
+  as an athlete. Starting to share his poetry and cooking interests. Falling
+  for Alex while discovering he can be both strong and vulnerable. Realizing
+  his identity isn't just "soccer player."

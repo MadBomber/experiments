@@ -1,0 +1,31 @@
+source 'https://rubygems.org'
+
+gem 'lazy_high_charts'
+gem 'highcharts_on_rails'
+gem 'opal-highcharts'
+gem 'volt-highcharts'
+gem 'volt'
+
+gem 'chartkick'
+
+# Pure Ruby graphing libraries
+gem 'gruff'                    # Classic Ruby graphing library
+gem 'rubyplot'                 # Modern plotting for Ruby
+
+# Interactive web-based charting
+gem 'plotly'                   # Plotly interactive charts
+gem 'google_visualr'           # Google Charts wrapper
+gem 'apexcharts'              # Modern interactive charts
+gem 'fusioncharts-rails'      # FusionCharts for Rails
+
+# Data visualization frameworks
+gem 'daru-view'               # Interactive charts for data analysis
+gem 'blazer'                  # SQL-based dashboards
+
+# JavaScript library wrappers
+gem 'chart-js-rails'          # Chart.js for Rails
+gem 'd3_rails'                # D3.js integration
+
+# Command-line plotting
+gem 'gnuplot'                 # Gnuplot Ruby wrapper
+gem 'youplot'                 # Command-line plotting tool

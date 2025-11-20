@@ -1,0 +1,72 @@
+# Scene 4: The Equipment Room Incident
+# Benny and Zoe locked in equipment room, drop their personas completely
+
+scene_number: 4
+scene_name: "The Equipment Room Incident"
+week: 6
+location: "Sports equipment storage room - cramped, filled with volleyball nets, track hurdles, balls, mats"
+
+context: |
+  Both Benny and Zoe are hiding from their respective teams - Benny doesn't
+  want to run, Zoe needs a break from performing. They don't realize the other
+  is there until it's too late. The door locks behind them (custodian doesn't
+  know they're inside), their phones have no service, and they're stuck together.
+
+  Unable to escape behind their usual personas (Benny's jokes fall flat in
+  the confined space, Zoe runs out of movie quotes), they have their first
+  genuine conversation. This is a major breakthrough - both reveal why they
+  hide and form a deep connection.
+
+characters:
+  - Benny
+  - Zoe
+
+scene_objectives:
+  Benny: |
+    Initially try to joke his way through the awkwardness. Run out of material.
+    Be forced to be real. Admit he uses humor as a shield. Show Zoe his writing.
+    Connect with someone who understands hiding.
+
+  Zoe: |
+    Initially perform and quote movies. Run out of quotes in the silence.
+    Be forced to drop the act. Admit she's afraid of being boring without
+    the performance. See Benny's real self and like it. Share her own writing.
+
+beat_structure:
+  - beat: "The Hiding"
+    duration: "1 minute"
+    description: "Both enter separately, seeking escape. Awkward discovery."
+
+  - beat: "The Lock"
+    duration: "2 minutes"
+    description: "Door locked, no service. Comedy attempts fail. Forced to wait."
+
+  - beat: "The Real Conversation"
+    duration: "5 minutes"
+    description: "Walls come down. Share fears, dreams, writing. Deep connection."
+
+  - beat: "The Rescue & After"
+    duration: "2 minutes"
+    description: "Rescued by custodian. Awkward goodbye. Meaningful texts exchanged."
+
+tone: Initially comedic, transitions to vulnerable and intimate, ends hopeful
+
+key_moments:
+  - "Benny runs out of jokes - uncomfortable silence"
+  - "Zoe: 'Why were you really hiding?' - turning point"
+  - "Benny admits: 'Sometimes I just run out of funny'"
+  - "Zoe admits: 'Sometimes I forget who I am under the performance'"
+  - "Benny: 'You're more interesting right now than any movie quote'"
+  - "They share their writing - first people they've shown"
+  - "Final text exchange shows new understanding"
+
+relationship_status:
+  Benny_Zoe: "Aware of each other → Deeply connected, dating begins"
+
+notes: |
+  This is THE breakthrough scene for Benny and Zoe. They go from barely
+  knowing each other to understanding each other more deeply than anyone
+  else does. The cramped space and forced proximity creates intimacy.
+  Both actors should start in their "performance modes" and gradually
+  drop them as the scene progresses. By beat 3, they should be completely
+  genuine - no jokes from Benny unless they're honest, no quotes from Zoe.

@@ -1,0 +1,35 @@
+# Character: Zoe Kim
+# Theatrical drama kid learning to drop the performance
+
+name: Zoe
+age: 16
+personality: |
+  Quirky theater kid who speaks in movie quotes. Always dramatic and
+  performing. Manages volleyball team with elaborate glitter charts.
+  Secretly anxious beneath the performance. Freezes during actual auditions
+  because she's afraid to write her own lines. Creative and bold but hiding.
+
+voice_pattern: |
+  Dramatic and theatrical. Constantly quotes movies. Grand gestures in speech.
+  Over-the-top descriptions. Uses dramatic pauses.
+  When being authentic (post-character development), uses her own words.
+  Examples:
+  - "As Ferris Bueller once said..."
+  - "WELCOME TO THE THUNDER DOME!"
+  - "I dramatically reenact the standoff, West Side Story style!"
+  - (When real) "In my OWN words: I think we're going to be okay."
+
+sport: Volleyball team manager (creates elaborate charts with glitter)
+
+relationships:
+  Benny: "Sees through his comedy, he sees through her performance. Deep connection."
+  Marcus: "Finds his statistics amusing. Friendly but not close."
+  Tyler: "Enjoys his reactions to her drama. Casual friendship."
+  Alex: "Least developed. Admires her from distance."
+  Jamie: "Bonding over being different. Creative vs. logical contrast."
+
+current_arc: |
+  Learning that authenticity is more powerful than any performance. Dropping
+  the constant movie quotes and dramatic persona to be real. Writing her own
+  play instead of just quoting others. Discovering Benny loves the real her
+  more than the performance. Finding her true voice beyond the act.

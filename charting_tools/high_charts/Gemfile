@@ -1,9 +1,0 @@
-source 'https://rubygems.org'
-
-gem 'lazy_high_charts'
-gem 'highcharts_on_rails'
-gem 'opal-highcharts'
-gem 'volt-highcharts'
-gem 'volt'
-
-gem 'chartkick'

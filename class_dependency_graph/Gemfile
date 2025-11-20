@@ -1,0 +1,11 @@
+# File: Gemfile
+
+source "https://rubygems.org"
+
+gem 'ripper-tags'
+gem 'debug_me'
+gem 'amazing_print' 
+gem 'syntax_tree'
+
+# Depending on your project, you might also need graphviz related gems
+gem 'ruby-graphviz', require: 'graphviz'
