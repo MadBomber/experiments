@@ -1,0 +1,82 @@
+# Scene 1: The Gym Wars
+# All six characters meet for the first time over gym scheduling conflict
+
+scene_number: 1
+scene_name: "The Gym Wars"
+week: 1
+location: "Riverside High gymnasium - basketball court with portable soccer goals"
+
+context: |
+  Tyler's soccer team and Alex's basketball team both arrive at the gym
+  for practice, only to discover there's been a scheduling error and both
+  teams have reservations for the same time. The gym standoff attracts
+  others: Marcus (basketball team manager) tries to mediate with data,
+  Jamie (passing by) stops to help debug the scheduling system, Benny
+  (soccer player) tries to lighten the mood with jokes, and Zoe (volleyball
+  manager) arrives to borrow equipment and provides dramatic commentary.
+
+  This is the FIRST meeting for all six characters. Initial impressions
+  and chemistry begin to form. The scene is comedic and chaotic.
+
+characters:
+  - Marcus
+  - Jamie
+  - Tyler
+  - Alex
+  - Benny
+  - Zoe
+
+scene_objectives:
+  Marcus: |
+    Solve the scheduling conflict using logic and data. Impress the smart
+    person (Jamie) who stopped to help. Try to mediate between the teams.
+
+  Jamie: |
+    Find and fix the bug in the scheduling system (it's interesting!).
+    Help solve the problem efficiently. Observe these new people.
+
+  Tyler: |
+    Get gym time for his team without being a jerk about it. Show leadership.
+    Find a fair compromise. Be friendly despite the conflict.
+
+  Alex: |
+    Secure gym time for basketball practice. Don't back down but be fair.
+    Assess this soccer captain who seems... interesting.
+
+  Benny: |
+    Make everyone laugh. Defuse the tension with comedy. Try (and fail)
+    to flirt with everyone. Avoid actually having to practice.
+
+  Zoe: |
+    Provide dramatic narration of events. Make this mundane conflict
+    theatrical. Get the equipment she came for. Observe the chaos.
+
+beat_structure:
+  - beat: "The Standoff"
+    duration: "2 minutes"
+    description: "Both teams arrive, confused. Tension builds. Tyler and Alex face off."
+
+  - beat: "The Negotiators"
+    duration: "3 minutes"
+    description: "Marcus tries to mediate. Jamie helps debug. Benny jokes. Zoe narrates."
+
+  - beat: "The Compromise"
+    duration: "4 minutes"
+    description: "Agree to hybrid soccerbasketball game. Chaos ensues. Bonding begins."
+
+  - beat: "The Aftermath"
+    duration: "2 minutes"
+    description: "Everyone laughing. Exchange numbers. Accidental group chat created."
+
+tone: Comedic, chaotic, energetic, first meetings
+
+key_moments:
+  - "Marcus and Jamie bond over finding the scheduling bug"
+  - "Tyler and Alex's hands linger when he helps her up after a collision"
+  - "Benny makes Zoe laugh genuinely (she breaks character)"
+  - "All six in circle looking at phones - group chat accidentally formed"
+
+relationship_status:
+  Marcus_Jamie: "Strangers → Intrigued"
+  Tyler_Alex: "Rivals → Respectful competitors"
+  Benny_Zoe: "Unaware → Aware of each other"

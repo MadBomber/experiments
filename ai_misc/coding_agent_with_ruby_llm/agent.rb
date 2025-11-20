@@ -27,18 +27,13 @@ tools_dir = "/Users/dewayne/sandbox/git_repos/madbomber/experiments/ai_misc/codi
 require_all "#{tools_dir}/**/*.rb"
 
 class String
-  def to_function_name
+  # returns conventional pathname sans extensions
+  # for a fully qualified class name
+  def to_filename
     self.gsub(/::/, '/')
         .gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
         .gsub(/([a-z\d])([A-Z])/,'\1_\2').tr("- ", "_")
         .downcase
-        .gsub('/', '--')
-  end
-
-  def to_camelcase
-    self.gsub('--','/')
-        .gsub(/\/(.?)/)   { "::" + $1.upcase }
-        .gsub(/(^|_)(.)/) { $2.upcase }
   end
 end
 
@@ -61,7 +56,7 @@ class Agent
 
     filtered_subclasses = subclasses.select do |subclass|
       allowed_tools.any? do |tool|
-        subclass.name.to_function_name.include?(tool)
+        subclass.name.to_filename.include?(tool)
       end
     end
 

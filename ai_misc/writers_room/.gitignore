@@ -1,0 +1,41 @@
+# Logs and transcripts
+logs/
+*.log
+transcript_*.txt
+
+# Redis dumps
+dump.rdb
+
+# Projects - allow project directories but ignore any logs within them
+!projects/
+!projects/*/
+!projects/*/characters/
+!projects/*/scenes/
+projects/*/logs/
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Mac OS
+.DS_Store
+
+# Ruby
+*.gem
+*.rbc
+.bundle
+.config
+coverage
+InstalledFiles
+lib/bundler/man
+pkg
+rdoc
+spec/reports
+test/tmp
+test/version_tmp
+tmp
+
+# Environment
+.env
+.env.local

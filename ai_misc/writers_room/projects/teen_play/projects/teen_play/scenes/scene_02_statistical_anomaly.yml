@@ -1,0 +1,70 @@
+# Scene 2: Statistical Anomaly
+# Marcus and Jamie collaborate on the algorithm, Benny provides comic relief
+
+scene_number: 2
+scene_name: "Statistical Anomaly"
+week: 2
+location: "School library - tables with laptops, quiet study atmosphere"
+
+context: |
+  Marcus is working on his "Perfect Match Algorithm" when Jamie enters
+  the library for a study session. Jamie notices Marcus's screen and is
+  genuinely intrigued by the code. They begin collaborating on improving
+  the algorithm, getting closer as they work. Benny interrupts, initially
+  mocking the concept but then insisting on testing it. His deliberately
+  absurd inputs break the algorithm, revealing his loneliness beneath the jokes.
+
+  This scene establishes the Marcus/Jamie intellectual connection and shows
+  Benny's depth.
+
+characters:
+  - Marcus
+  - Jamie
+  - Benny
+
+scene_objectives:
+  Marcus: |
+    Work on the compatibility algorithm. Try not to seem too eager when Jamie
+    shows interest. Impress her with his methodology. Maybe test their own
+    compatibility "as a control group."
+
+  Jamie: |
+    Help Marcus fix the biased correlation matrix. Enjoy the intellectual
+    challenge. Notice how well they work together. Be curious about this
+    whole "quantifying love" concept.
+
+  Benny: |
+    Initially mock the algorithm. Use humor to deflect when they suggest he
+    test it. Input ridiculous answers. Feel hurt when even the computer
+    rejects him. Accept their kindness at the end.
+
+beat_structure:
+  - beat: "The Algorithm Revealed"
+    duration: "2 minutes"
+    description: "Jamie discovers Marcus's algorithm. Both excited about the code."
+
+  - beat: "The Collaboration"
+    duration: "4 minutes"
+    description: "Working together, finishing each other's thoughts. Very in sync."
+
+  - beat: "Benny's Entrance"
+    duration: "3 minutes"
+    description: "Benny mocks them, tests algorithm, gets 'ERROR: NO COMPATIBLE MATCHES.'"
+
+  - beat: "The Underneath"
+    duration: "2 minutes"
+    description: "Marcus and Jamie comfort Benny. Study together. Algorithm dings: 87.3%."
+
+tone: Intellectual excitement, comedy, unexpected vulnerability
+
+key_moments:
+  - "Jamie sits down: 'No, show me. What's your methodology?'"
+  - "Marcus and Jamie so close together they don't realize it"
+  - "Algorithm matches Benny with 'ERROR' - he makes joke but is hurt"
+  - "Benny's creative writing homework reveals his talent"
+  - "Algorithm shows Marcus/Jamie 87.3% - both pretend not to see it"
+
+relationship_status:
+  Marcus_Jamie: "Intrigued → Actively interested, private texting begins"
+  Marcus_Benny: "Acquaintances → Friends, Marcus sees Benny's depth"
+  Jamie_Benny: "Strangers → Friendly, Jamie curious about him"

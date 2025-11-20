@@ -1,0 +1,114 @@
+# Scene 8: The Data Dump
+# Final scene - algorithm is wrong, love wins, resolution for all
+
+scene_number: 8
+scene_name: "The Data Dump"
+week: 16
+location: "Marcus's bedroom - algorithm headquarters, computers, screens, post-championship celebration"
+
+context: |
+  Post-championship pizza party at Marcus's house. All six have gathered
+  to celebrate the end of the season. Tyler and Alex are now obviously
+  together (finally!), Benny and Zoe are comfortable and authentic with
+  each other, Marcus and Jamie are an established couple. The mood is
+  celebratory and relaxed - found family vibes.
+
+  Jamie asks about the final algorithm results. Marcus reveals that BOTH
+  his and Jamie's algorithms got the pairings completely wrong - they
+  predicted totally different matches than what actually happened. This
+  leads to the realization that love can't be calculated. Marcus ceremoniously
+  deletes the algorithm. The group reflects on their growth and looks toward
+  an uncertain but hopeful future.
+
+characters:
+  - Marcus
+  - Jamie
+  - Tyler
+  - Alex
+  - Benny
+  - Zoe
+
+scene_objectives:
+  Marcus: |
+    Reveal the algorithm was completely wrong. Come to terms with love being
+    illogical. Delete the algorithm as a symbolic moment. Express gratitude
+    for taking chances despite statistics.
+
+  Jamie: |
+    Reveal her counter-algorithm was ALSO wrong. Laugh at their failed attempt
+    to mathematize love. Support Marcus in letting go of the need to quantify.
+
+  Tyler: |
+    Be comfortable in relationship with Alex. Share poetry metaphors without
+    hiding. Embrace uncertainty about the future.
+
+  Alex: |
+    Be obviously happy and in love. Show vulnerability openly. Acknowledge
+    growth from "no time for relationships" to "relationships make me stronger."
+
+  Benny: |
+    Be genuine without constant jokes. Show creative partnership with Zoe.
+    Reflect on how he's stopped hiding. Make jokes but honest ones.
+
+  Zoe: |
+    Speak in own words, not movie quotes (mostly). Show authentic self.
+    Support Benny's growth. Deliver final line in her own voice.
+
+beat_structure:
+  - beat: "The Celebration"
+    duration: "2 minutes"
+    description: "Pizza party, trophies, comfortable group dynamic, found family."
+
+  - beat: "The Final Algorithm"
+    duration: "3 minutes"
+    description: "Both algorithms revealed - completely wrong matches. Comedy chaos."
+
+  - beat: "The Realization"
+    duration: "4 minutes"
+    description: "What variables did they miss? Love isn't calculable. Group reflection."
+
+  - beat: "The Real Variables"
+    duration: "3 minutes"
+    description: "Each couple identifies what really brought them together."
+
+  - beat: "The Future"
+    duration: "2 minutes"
+    description: "Delete algorithm. Look forward. Uncertain future but together."
+
+tone: Celebratory, reflective, warm, hopeful, comedic, resolved
+
+key_moments:
+  - "Algorithm results: ALL WRONG - comedy explosion"
+  - "Marcus: 'How are both algorithms wrong?' Jamie: 'Or maybe love isn't math?'"
+  - "Each couple shares what really connected them"
+  - "Marcus programs algorithm to say 'LOVE IS ILLOGICAL. STOP TRYING TO CALCULATE IT.'"
+  - "Ceremonious deletion of algorithm - everyone cheers"
+  - "Someone asks probability of staying together through college"
+  - "Marcus: 'I have no idea.' Jamie: 'Me neither.' Alex: 'Good.'"
+  - "Zoe's final line IN HER OWN WORDS: 'I think we're going to be okay.'"
+  - "End on group laughter, mid-conversation, comfortable and happy"
+
+relationship_status:
+  Marcus_Jamie: "Committed couple, future-focused, deleted the algorithm together"
+  Tyler_Alex: "In love, comfortable, navigating future uncertainty together"
+  Benny_Zoe: "Deeply bonded, most authentic selves, creative partners"
+  Group: "Found family unit established, will maintain connection beyond high school"
+
+thematic_resolution:
+  - Love > Logic
+  - Authenticity > Performance
+  - Connection > Calculation
+  - Uncertainty is okay when you're together
+  - Growth happens through relationships
+
+notes: |
+  This is the resolution scene. All character arcs should be complete:
+  - Marcus: From "love is calculable" to "love is illogical and that's beautiful"
+  - Jamie: From "emotions are illogical" to "embracing unpredictability"
+  - Tyler: From "hiding sensitive side" to "showing whole self"
+  - Alex: From "relationships are distractions" to "relationships are strength"
+  - Benny: From "always performing humor" to "genuine with room for jokes"
+  - Zoe: From "always performing/quoting" to "speaking in own voice"
+
+  The mood should be warm, celebratory, and hopeful. Lots of natural banter,
+  inside jokes, comfortable silences. This is a family now.
