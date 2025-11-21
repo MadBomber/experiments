@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem "debug_me", "~> 1.1"
+gem "minitest", "~> 5.0"
+gem "matrix", "~> 0.4"  # For statistical calculations
+
+# Stock market analysis
+gem "sqa"           # Stock quotes and analysis
+gem "sqa-tai"       # Technical analysis indicators
+
+group :development do
+  gem "rake", "~> 13.0"
+end
