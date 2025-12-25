@@ -40,8 +40,10 @@ GEM
       ruby-progressbar
     multi_json (1.12.1)
     netrc (0.11.0)
+    nio4r (2.5.2)
     pg (0.18.4)
-    puma (3.4.0)
+    puma (4.3.12)
+      nio4r (~> 2.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
