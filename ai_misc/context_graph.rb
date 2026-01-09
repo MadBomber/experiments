@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'fact_db'
+# This is the FactDb client:
+# facts = FactDb::Fact.new
+
 # ContextGraph - A unified layer for querying and transforming knowledge
 # from multiple data stores (FactDB, HTM) into LLM-friendly formats.
 #
