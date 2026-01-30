@@ -14,6 +14,7 @@ GEM
       fiber-annotation
       fiber-local (~> 1.1)
       json
+    debug_me (1.1.3)
     event_stream_parser (1.0.0)
     faraday (2.14.0)
       faraday-net_http (>= 2.0, < 3.5)
@@ -96,6 +97,7 @@ PLATFORMS
 DEPENDENCIES
   async
   chaos_to_the_rescue
+  debug_me
   listen (~> 3.10)
   lumberjack
   mudis
@@ -108,6 +110,7 @@ CHECKSUMS
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   chaos_to_the_rescue (0.1.0) sha256=d2423cb367dbf11d3d6ad6b35088ea48b158bee9f1ea8d62c69ea55d035e61eb
   console (1.34.2) sha256=1c036abf606ccec83f9dc28f0c31710fe5936ffe7ba5d235ae2865590a482d58
+  debug_me (1.1.3) sha256=ae8cf61993350d9b3cbe337a7f9a0f595be5b4976c10891a4e1eacc63d09f717
   event_stream_parser (1.0.0) sha256=a2683bab70126286f8184dc88f7968ffc4028f813161fb073ec90d171f7de3c8
   faraday (2.14.0) sha256=8699cfe5d97e55268f2596f9a9d5a43736808a943714e3d9a53e6110593941cd
   faraday-multipart (1.2.0) sha256=7d89a949693714176f612323ca13746a2ded204031a6ba528adee788694ef757
