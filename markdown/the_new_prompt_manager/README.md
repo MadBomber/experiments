@@ -10,6 +10,19 @@ require 'pm'
 
 ## Usage
 
+`PM.parse` accepts a file path or a string:
+
+```ruby
+# File path (String ending in .md or Pathname)
+parsed = PM.parse('code_review.md')
+parsed = PM.parse(Pathname.new('code_review.md'))
+
+# String content
+parsed = PM.parse("---\ntitle: Hello\n---\nContent here")
+```
+
+When given a file path, `parse` adds `directory`, `name`, `created_at`, and `modified_at` to the metadata. Both forms run the full processing pipeline.
+
 Given a file `code_review.md`:
 
 ```md
@@ -32,8 +45,8 @@ at <%= style_guide %>:
 Parse it:
 
 ```ruby
-parsed = PM.parse_file('code_review.md')
-parsed.metadata['parameters']
+parsed = PM.parse('code_review.md')
+parsed.metadata.parameters
 #=> {'language' => 'ruby', 'code' => nil, 'style_guide' => '~/guides/default.md'}
 ```
 
@@ -58,7 +71,7 @@ Parameters with a `null` default in the YAML are required. Parameters with any o
 
 ### Shell expansion
 
-`parse_file` expands shell references before parsing:
+Shell references are expanded during parsing (when `shell: true`, the default):
 
 ```md
 ---
@@ -84,22 +97,134 @@ Shell expansion is also available directly:
 PM.expand_shell(string)
 ```
 
-### Parsing a string
+### Including other prompt files
 
-```ruby
-parsed = PM.parse(string)
+Use `include` in ERB to compose prompts from multiple files:
+
+```md
+---
+title: Full Review
+parameters:
+  code: null
+---
+<%= include 'common/header.md' %>
+
+Review this code:
+<%= code %>
+
+<%= include 'common/footer.md' %>
 ```
 
-`parse` extracts metadata and content only. It does not perform shell expansion.
+Included files go through the full processing pipeline (comment stripping, metadata extraction, shell expansion, ERB rendering). The parent's parameter values are passed to included files.
+
+Nested includes work — A can include B which includes C. Circular includes raise an error.
+
+After calling `to_s`, the parent's metadata has an `includes` key with a tree of what was included:
+
+```ruby
+parsed = PM.parse('full_review.md')
+parsed.to_s('code' => File.read('app.rb'))
+
+parsed.metadata.includes
+#=> [
+#     {
+#       path:     "/prompts/common/header.md",
+#       depth:    1,
+#       metadata: { title: "Header", ... },
+#       includes: []
+#     },
+#     {
+#       path:     "/prompts/common/footer.md",
+#       depth:    1,
+#       metadata: { title: "Footer", ... },
+#       includes: []
+#     }
+#   ]
+```
+
+### Custom directives
+
+Register custom methods available in ERB templates:
+
+```ruby
+PM.register(:read) { |_ctx, path| File.read(path) }
+PM.register(:env)  { |_ctx, key| ENV.fetch(key, '') }
+PM.register(:run)  { |_ctx, cmd| `#{cmd}`.chomp }
+```
+
+Use them in any prompt file:
+
+```md
+---
+title: Deploy Prompt
+---
+Hostname: <%= read '/etc/hostname' %>
+Environment: <%= env 'DEPLOY_ENV' %>
+Recent commits: <%= run 'git log --oneline -5' %>
+```
+
+The first argument to every directive block is a `PM::RenderContext` with access to the current render state:
+
+- `ctx.directory` — directory of the file being rendered
+- `ctx.params` — merged parameter values
+- `ctx.metadata` — the current file's metadata
+- `ctx.depth` — include nesting depth
+- `ctx.included` — Set of file paths already in the include chain
+
+```ruby
+PM.register(:current_file) { |ctx| ctx.metadata.name || 'unknown' }
+PM.register(:depth) { |ctx| ctx.depth.to_s }
+```
+
+Registering a name that already exists raises an error:
+
+```ruby
+PM.register(:include) { |_ctx, path| path }
+#=> RuntimeError: Directive already registered: include
+```
+
+Reset to built-in directives only:
+
+```ruby
+PM.reset_directives!
+```
+
+### Disabling processing stages
+
+Set `shell: false` or `erb: false` in the metadata to skip those stages:
+
+```md
+---
+title: Raw Template
+shell: false
+erb: false
+---
+This $USER and <%= name %> content is preserved as-is.
+```
+
+Both default to `true` when not specified.
+
+### HTML comment stripping
+
+HTML comments are stripped before any other processing:
+
+```md
+<!-- This comment will be removed -->
+---
+title: My Prompt
+---
+Content here. <!-- This too -->
+```
+
+Comments are also available directly:
+
+```ruby
+PM.strip_comments(string)
+```
 
 ## Processing pipeline
 
-1. Shell expansion (`$ENVAR`, `$(command)`)
+1. Strip HTML comments
 2. Extract YAML metadata and markdown content
-3. ERB rendering on demand via `to_s`
-
-## LICENSE
-
-Copyright (c) 2013 Marc Busqué - <marc@lamarciana.com>
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details.
+3. Shell expansion (`$ENVAR`, `$(command)`) when `shell: true`
+4. ERB rendering on demand via `to_s` when `erb: true`
