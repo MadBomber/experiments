@@ -8,6 +8,53 @@ PM (PromptManager) parses YAML metadata from markdown strings or files. It expan
 require 'pm'
 ```
 
+## Configuration
+
+Set global defaults with `PM.configure`:
+
+```ruby
+PM.configure do |config|
+  config.prompts_dir = '~/.prompts'   # default: ''
+  config.shell       = true           # default: true
+  config.erb         = true           # default: true
+end
+```
+
+**`prompts_dir`** is prepended to relative file paths passed to `PM.parse`. Absolute paths bypass it:
+
+```ruby
+PM.configure { |c| c.prompts_dir = '/usr/share/prompts' }
+
+PM.parse('code_review.md')
+#=> reads /usr/share/prompts/code_review.md
+
+PM.parse('/absolute/path/review.md')
+#=> reads /absolute/path/review.md (prompts_dir ignored)
+```
+
+**`shell`** and **`erb`** set the global defaults for new parses. Per-file YAML metadata overrides the global setting:
+
+```ruby
+PM.configure { |c| c.shell = false }
+
+# All files now default to shell: false
+# A file with "shell: true" in its YAML still gets shell expansion
+```
+
+Reset all settings to defaults:
+
+```ruby
+PM.config.reset!
+```
+
+Access the current configuration:
+
+```ruby
+PM.config.prompts_dir  #=> ''
+PM.config.shell        #=> true
+PM.config.erb          #=> true
+```
+
 ## Usage
 
 `PM.parse` accepts a file path or a string:
@@ -202,7 +249,7 @@ erb: false
 This $USER and <%= name %> content is preserved as-is.
 ```
 
-Both default to `true` when not specified.
+Both default to `true` when not specified. You can change these defaults globally via `PM.configure` (see [Configuration](#configuration)). Per-file metadata always overrides the global setting.
 
 ### HTML comment stripping
 
