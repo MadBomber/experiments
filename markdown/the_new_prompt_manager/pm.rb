@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'date'
+require 'pathname'
 require 'yaml'
 
 # PM (PromptManager) parses YAML metadata from markdown strings or files.
@@ -21,7 +22,13 @@ module PM
   ENV_VAR_REGEXP     = /\$\{([A-Z_][A-Z0-9_]*)\}|\$([A-Z_][A-Z0-9_]*)/
   COMMAND_START      = '$('
 
-  METADATA_DEFAULTS = { 'shell' => true, 'erb' => true }.freeze
+  def self.config
+    @config ||= Configuration.new
+  end
+
+  def self.configure
+    yield config
+  end
 
   # --- Parsing ---
 
@@ -35,7 +42,11 @@ module PM
   # Otherwise source is parsed directly as a string.
   def self.parse(source)
     if file_source?(source)
-      path = File.expand_path(source.respond_to?(:to_path) ? source.to_path : source)
+      raw = source.respond_to?(:to_path) ? source.to_path : source
+      unless config.prompts_dir.empty?
+        raw = (Pathname.new(config.prompts_dir) + raw).to_s
+      end
+      path = File.expand_path(raw)
       parsed = parse_string(File.read(path))
 
       stat = File.stat(path)
@@ -80,7 +91,8 @@ module PM
 
   # Builds a Metadata object with defaults for shell and erb.
   def self.build_metadata(hash)
-    Metadata.new(METADATA_DEFAULTS.merge(hash.transform_keys(&:to_s)))
+    defaults = { 'shell' => config.shell, 'erb' => config.erb }
+    Metadata.new(defaults.merge(hash.transform_keys(&:to_s)))
   end
   private_class_method :build_metadata
 
@@ -90,6 +102,7 @@ module PM
   end
 end
 
+require_relative 'pm/configuration'
 require_relative 'pm/version'
 require_relative 'pm/metadata'
 require_relative 'pm/parsed'
