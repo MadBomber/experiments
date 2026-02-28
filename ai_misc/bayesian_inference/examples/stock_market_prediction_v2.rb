@@ -20,7 +20,7 @@ $DEBUG_ME = false
 # Configuration - Change these to experiment with different settings
 # ============================================================================
 
-TICKER          = 'AAPL'
+TICKER          = 'T'
 DATA_ITEMS      = %w[close_price volume]
 INDICATORS      = {
   sma: { period: 20 },
