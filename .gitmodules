@@ -1,0 +1,3 @@
+[submodule "ai_misc/zvec/vendor/zvec"]
+	path = ai_misc/zvec/vendor/zvec
+	url = https://github.com/alibaba/zvec.git
