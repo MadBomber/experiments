@@ -74,6 +74,15 @@ Files not intended to be loaded into context, but rather used within the output 
 - **Use cases**: Templates, images, icons, boilerplate code, fonts, sample documents that get copied or modified
 - **Benefits**: Separates output resources from documentation, enables Claude to use files without loading them into context
 
+###### Progress/State Templates
+
+When a skill guides multi-step work that may span multiple sessions, include a progress template in `assets/` so users can checkpoint state between sessions.
+
+- **When to include**: Any skill with a multi-step workflow where context loss between sessions would cause rework
+- **Example**: `assets/progress-template.md` capturing checklists, design decisions, domain-specific notes, and in-progress state
+- **Benefits**: Enables users to break work into smaller pieces across sessions without losing continuity; Claude can read the progress file at session start to restore context
+- **Best practice**: Design the template around the decisions and state that are hardest to reconstruct — not just task status, but the *why* behind choices made
+
 ### Progressive Disclosure Design Principle
 
 Skills use a three-level loading system to manage context efficiently:
@@ -171,6 +180,27 @@ To complete SKILL.md, answer the following questions:
 1. What is the purpose of the skill, in a few sentences?
 2. When should the skill be used?
 3. In practice, how should Claude use the skill? All reusable skill contents developed above should be referenced so that Claude knows how to use them.
+
+#### Consider Multi-Agent Design for Complex Skills
+
+When a skill's workflow is broad enough that a single agent would lose focus trying to handle all responsibilities, distribute work across specialized subagents with narrow scopes.
+
+**When to apply:** If the skill involves three or more distinct phases (e.g., discovery, implementation, review), or if hallucinations and context drift are observed during testing, multi-agent design typically helps.
+
+**Recommended pattern:** A coordinator agent orchestrates the workflow and delegates to:
+- An **implementation agent** focused solely on execution
+- A **QA/review agent** that checks output against acceptance criteria
+
+**Trade-offs:** Agent teams consume more tokens than a single subagent but reduce hallucinations and produce more consistent results. Reserve this pattern for genuinely complex skills — simple skills don't need it.
+
+**How to document in SKILL.md:** Name each agent's role and responsibility explicitly. Vague role descriptions produce the same confusion multi-agent design is meant to solve.
+
+#### Anti-Patterns to Avoid
+
+- **Context dumping**: Loading entire reference documents at once causes token waste and hallucinations. Design skills to load sections incrementally or to grep for relevant sections before reading. The skill should tell Claude *which part* of a document to read, not just point at the file.
+- **Vague instructions**: Abstract directives like "review carefully" or "ensure quality" produce inconsistent results. Prefer specific commands, named scripts, and concrete acceptance criteria.
+- **Monolithic single-session design**: Complex multi-step workflows attempted in one pass frequently lose context and drift. If the workflow has natural checkpoints, design the skill to use them — either via a progress template (see above) or by breaking work into named phases.
+- **Relying on Claude to absorb implicit context**: Claude will not infer organizational knowledge, conventions, or constraints that aren't written down. If something matters, state it explicitly in the skill.
 
 ### Step 5: Packaging a Skill
 
