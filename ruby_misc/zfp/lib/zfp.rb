@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "zfp/version"
+require_relative "zfp/errors"
 
 module Zfp
-  class Error < StandardError; end
-  # Your code goes here...
+  # Add convenience methods here as subsequent tasks are completed
 end
