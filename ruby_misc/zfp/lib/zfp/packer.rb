@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zfp
   module Packer
     MAGIC      = "ZFP\x01"
@@ -13,7 +15,7 @@ module Zfp
     def self.encode(compressed_bytes, type:, shape:, mode:, params: {}, numo: false)
       flags  = numo ? 1 : 0
       dims   = shape.length
-      dim0, dim1, dim2, dim3 = shape[0].to_i, shape[1].to_i, shape[2].to_i, shape[3].to_i
+      dim0, dim1, dim2, dim3 = Array.new(4) { |i| shape[i].to_i }
       param  = extract_param(mode, params)
       header = [MAGIC, TYPE_TO_BYTE[type], MODE_TO_BYTE[mode], dims, flags,
                 dim0, dim1, dim2, dim3, param].pack(PACK_FMT)

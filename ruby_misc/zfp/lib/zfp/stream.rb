@@ -53,6 +53,8 @@ module Zfp
         Zfp::FFI.zfp_stream_set_accuracy(zfp_ptr, @params[:tolerance].to_f)
       when :reversible
         Zfp::FFI.zfp_stream_set_reversible(zfp_ptr)
+      else
+        raise Zfp::InvalidMode, "Unknown mode: #{@mode}"
       end
     end
   end

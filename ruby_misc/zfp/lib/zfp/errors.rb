@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zfp
   class Error < StandardError; end
   class LibraryNotFound     < Error; end
