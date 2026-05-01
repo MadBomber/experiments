@@ -13,12 +13,32 @@
 ActiveRecord::Schema[8.1].define(version: 2026_05_01_183146) do
   create_table "actors", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.text "description"
+    t.string "name", null: false
+    t.string "preferred_model"
+    t.string "preferred_provider"
+    t.text "style_notes"
     t.datetime "updated_at", null: false
   end
 
   create_table "characters", force: :cascade do |t|
+    t.string "archetype"
+    t.text "character_arc"
     t.datetime "created_at", null: false
+    t.text "data"
+    t.integer "input_tokens", default: 0, null: false
+    t.text "internal_conflict"
+    t.text "mannerisms"
+    t.string "model"
+    t.text "motivation"
+    t.string "name", null: false
+    t.integer "output_tokens", default: 0, null: false
+    t.text "personality"
+    t.text "physical_description"
+    t.string "provider"
+    t.integer "total_tokens", default: 0, null: false
     t.datetime "updated_at", null: false
+    t.text "voice_pattern"
   end
 
   create_table "roles", force: :cascade do |t|
