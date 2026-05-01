@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_01_183715) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_01_183920) do
   create_table "actors", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -188,7 +188,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_183715) do
 
   create_table "transcript_lines", force: :cascade do |t|
     t.string "addressing"
-    t.integer "character_id", null: false
+    t.integer "character_id"
     t.text "content", null: false
     t.datetime "created_at", null: false
     t.string "element_type", default: "dialogue"
