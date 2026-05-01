@@ -1,9 +1,12 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# Create the 5 roles
+Role::NAMES.each { |name| Role.find_or_create_by!(name:) }
+
+# Create initial producer user
+producer_role = Role.find_by!(name: "producer")
+producer = User.find_or_create_by!(email: "dvanhoozer@gmail.com") do |u|
+  u.name = "Dewayne VanHoozer"
+end
+producer.roles << producer_role unless producer.has_role?(:producer)
+
+puts "Seeded #{Role.count} roles"
+puts "Seeded producer user: #{producer.email}"
