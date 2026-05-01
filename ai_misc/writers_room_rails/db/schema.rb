@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_01_183348) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_01_183525) do
   create_table "actors", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -19,6 +19,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_183348) do
     t.string "preferred_provider"
     t.text "style_notes"
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_actors_on_name"
   end
 
   create_table "castings", force: :cascade do |t|
@@ -66,6 +67,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_183348) do
     t.integer "total_tokens", default: 0, null: false
     t.datetime "updated_at", null: false
     t.text "voice_pattern"
+    t.index ["name"], name: "index_characters_on_name"
   end
 
   create_table "projects", force: :cascade do |t|
