@@ -13,8 +13,6 @@ gem "importmap-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-gem "bcrypt", "~> 3.1.7"
-
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
@@ -34,6 +32,7 @@ gem "thruster", require: false
 
 # Authentication
 gem "passwordless", "~> 1.7"
+gem "bcrypt", ">= 3.1.11"  # required by passwordless gem
 
 # Authorization
 gem "pundit", "~> 2.4"
@@ -43,7 +42,7 @@ gem "phlex-rails", "~> 1.2"
 gem "ruby_ui", "~> 1.0"
 
 # LLM agents
-gem "robot_lab", github: "madbomber/robot_lab"
+gem "robot_lab", github: "madbomber/robot_lab", branch: "main"
 
 # Hotwire (added manually for Phlex compatibility)
 gem "turbo-rails", "~> 2.0"

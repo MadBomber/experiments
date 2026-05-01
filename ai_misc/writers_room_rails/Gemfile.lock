@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/madbomber/robot_lab.git
   revision: dabdc93f8e370d697ae73bf310f5e379a1691ef5
+  branch: main
   specs:
     robot_lab (0.1.0)
       async (~> 2.0)
@@ -544,7 +545,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  bcrypt (~> 3.1.7)
+  bcrypt (>= 3.1.11)
   bootsnap
   brakeman
   bundler-audit
