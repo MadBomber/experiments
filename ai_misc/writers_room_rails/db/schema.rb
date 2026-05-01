@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_01_183146) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_01_183348) do
   create_table "actors", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -19,6 +19,33 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_183146) do
     t.string "preferred_provider"
     t.text "style_notes"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "castings", force: :cascade do |t|
+    t.integer "actor_id", null: false
+    t.integer "character_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "project_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actor_id"], name: "index_castings_on_actor_id"
+    t.index ["character_id", "project_id"], name: "index_castings_on_character_id_and_project_id", unique: true
+    t.index ["character_id"], name: "index_castings_on_character_id"
+    t.index ["project_id"], name: "index_castings_on_project_id"
+  end
+
+  create_table "character_arcs", force: :cascade do |t|
+    t.text "arc_description"
+    t.text "arc_end_goal"
+    t.text "arc_start_state"
+    t.integer "character_id", null: false
+    t.datetime "created_at", null: false
+    t.text "current_position"
+    t.text "key_turning_points"
+    t.integer "project_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id", "project_id"], name: "index_character_arcs_on_character_id_and_project_id", unique: true
+    t.index ["character_id"], name: "index_character_arcs_on_character_id"
+    t.index ["project_id"], name: "index_character_arcs_on_project_id"
   end
 
   create_table "characters", force: :cascade do |t|
@@ -41,11 +68,55 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_183146) do
     t.text "voice_pattern"
   end
 
+  create_table "projects", force: :cascade do |t|
+    t.text "conflict_escalation"
+    t.text "conflicts"
+    t.text "core_stakes"
+    t.datetime "created_at", null: false
+    t.integer "created_by"
+    t.text "description"
+    t.text "differentiation_notes"
+    t.string "genre"
+    t.text "logline"
+    t.text "marketing_angle"
+    t.text "plot_points"
+    t.string "prep_status", default: "concept", null: false
+    t.text "research_notes"
+    t.text "setting"
+    t.text "similar_works"
+    t.text "story_arc"
+    t.text "synopsis"
+    t.string "tagline"
+    t.integer "target_page_count"
+    t.integer "target_runtime_minutes"
+    t.string "title", null: false
+    t.text "title_alternatives"
+    t.text "tone"
+    t.datetime "updated_at", null: false
+    t.text "visual_references"
+    t.text "world_building_notes"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_roles_on_name", unique: true
+  end
+
+  create_table "stories", force: :cascade do |t|
+    t.string "act_structure", default: "three_act", null: false
+    t.text "acts"
+    t.text "conflict_escalation"
+    t.datetime "created_at", null: false
+    t.text "narrative_arc"
+    t.text "plot_points"
+    t.integer "project_id", null: false
+    t.text "resolution"
+    t.integer "target_page_count"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_stories_on_project_id"
   end
 
   create_table "user_roles", force: :cascade do |t|
@@ -67,6 +138,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_183146) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "castings", "actors"
+  add_foreign_key "castings", "characters"
+  add_foreign_key "castings", "projects"
+  add_foreign_key "character_arcs", "characters"
+  add_foreign_key "character_arcs", "projects"
+  add_foreign_key "stories", "projects"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
 end
