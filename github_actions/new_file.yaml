@@ -1,0 +1,227 @@
+name: Post content to Lighthouse Platform Backend (LPB)
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
+    branches: [main]
+
+jobs:
+  gather_content:
+    name: Gather the changed content
+    runs-on: ubuntu-latest
+    outputs:
+      rename_warning: ${{ steps.create_files_list.outputs.rename_warning }}
+      target_environment: ${{ steps.get_target_environment.outputs.target_environment }}
+    steps:
+      - name: Determine Target Environment
+        id: get_target_environment
+        run: |
+          ruby ./bin/determine_target_environment.rb > output.txt
+          TARGET_ENVIRONMENT=$(grep "target_environment=" output.txt | cut -d '=' -f 2)
+          echo "target_environment=$TARGET_ENVIRONMENT" >> $GITHUB_OUTPUT
+        env:
+          INPUT_MERGED: "${{ github.event.pull_request.merged }}"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: pr_files
+        uses: Ana06/get-changed-files@v2.3.0
+      - id: create_files_list
+        name: Find files and send them
+        continue-on-error: true
+        run: |
+          ruby ./bin/create_changed_files_list.rb > output.txt
+          RENAME_WARNING=$(grep "rename_warning=" output.txt | cut -d '=' -f 2)
+          echo "rename_warning=$RENAME_WARNING" >> $GITHUB_OUTPUT
+        env:
+          INPUT_ADDED_MODIFIED_RENAMED: "${{ steps.pr_files.outputs.added_modified_renamed }}"
+          INPUT_RENAMED: "${{ steps.pr_files.outputs.renamed }}"
+      - name: Save changed files list
+        uses: actions/upload-artifact@v4
+        with:
+          name: changed-files
+          path: changed-files.txt
+  send_content_to_development:
+    name: Send content to development LPB
+    needs: [gather_content]
+    environment:
+      name: development
+      url: https://dev-developer.va.gov
+    runs-on: ubuntu-latest
+    if: needs.gather_content.outputs.target_environment == 'development'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: NPM install
+        run: npm ci
+      - id: get_bearer_token
+        if: github.actor != 'dependabot[bot]'
+        name: Get Bearer Token
+        run: |
+          ruby ./bin/get_bearer_token.rb > output.txt
+          BEARER_TOKEN=$(grep "bearer_token=" output.txt | cut -d '=' -f 2)
+          echo "bearer_token=$BEARER_TOKEN" >> $GITHUB_ENV
+        env:
+          LPB_HOST: 'dev-api.va.gov'
+          LPB_CLIENT_ID: ${{ secrets.LPB_CLIENT_ID }}
+          LPB_RSA_TOKEN: ${{ secrets.LPB_RSA_SECRET }}
+          OKTA_TOKEN_AUD: 'https://deptva-eval.okta.com/oauth2/ausg95zxf6dFPccy02p7/v1/token'
+
+      - name: Get file list
+        uses: actions/download-artifact@v4
+        if: github.actor != 'dependabot[bot]'
+        with:
+          name: changed-files
+      - name: Send content to development
+        if: github.actor != 'dependabot[bot]'
+        run: |
+          ruby ./bin/send_content_to_lpb.rb
+        env:
+          LPB_HOST: 'dev-api.va.gov'
+          BEARER_TOKEN: ${{ env.bearer_token }}
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        if: github.actor != 'dependabot[bot]'
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'These changes have been pushed to [dev](https://dev-developer.va.gov/).'
+            })
+      - name: Previously Merged Warning Comment on PR
+        uses: actions/github-script@v7
+        if: |
+          needs.gather_content.outputs.rename_warning == 'TRUE' &&
+          github.actor != 'dependabot[bot]'
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'If this release note was merged to the `main` branch on another PR, you will need to reach out to [Team Okapi](https://lighthouseva.slack.com/archives/C01931CFMTQ) to remove the copy that remains on the previous date.'
+            })
+  send_content_to_production:
+    name: Send content to production LPB
+    needs: [gather_content]
+    environment:
+      name: production
+      url: https://developer.va.gov
+    runs-on: ubuntu-latest
+    if: needs.gather_content.outputs.target_environment == 'production'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: NPM install
+        run: npm ci
+      - id: get_bearer_token_production
+        if: github.actor != 'dependabot[bot]'
+        name: Get Bearer Token
+        run: |
+          ruby ./bin/get_bearer_token.rb > output.txt
+          BEARER_TOKEN=$(grep "bearer_token=" output.txt | cut -d '=' -f 2)
+          echo "bearer_token=$BEARER_TOKEN" >> $GITHUB_ENV
+        env:
+          LPB_HOST: 'api.va.gov'
+          LPB_CLIENT_ID: ${{ secrets.LPB_CLIENT_ID }}
+          LPB_RSA_TOKEN: ${{ secrets.LPB_RSA_SECRET }}
+          OKTA_TOKEN_AUD: 'https://va.okta.com/oauth2/ausdppulkgBFJDZZe297/v1/token'
+
+      - name: Get file list
+        uses: actions/download-artifact@v4
+        if: github.actor != 'dependabot[bot]'
+        with:
+          name: changed-files
+      - name: Send content to production
+        env:
+          LPB_HOST: 'api.va.gov'
+        if: github.actor != 'dependabot[bot]'
+        run: |
+          ruby ./bin/send_content_to_lpb.rb
+        env:
+          LPB_HOST: 'api.va.gov'
+          BEARER_TOKEN: ${{ env.bearer_token }}
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        if: github.actor != 'dependabot[bot]'
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'These changes have been pushed to [production](https://developer.va.gov/).'
+            })
+  send_notifications:
+    name: Send Slack notification for newly published release notes
+    needs: [gather_content, send_content_to_production]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Get file list
+        uses: actions/download-artifact@v4
+        if: github.actor != 'dependabot[bot]'
+        with:
+          name: changed-files
+      - id: get_urls_list
+        name: Get list of URLs with new release notes
+        if: github.actor != 'dependabot[bot]'
+        continue-on-error: true
+        run: |
+          ruby ./bin/get_urls_list.rb > output.txt
+          URLS=$(grep "urls=" output.txt | cut -d '=' -f 2)
+          echo "urls=$URLS" >> $GITHUB_OUTPUT
+      - name: Send Slack notification on success
+        if: github.actor != 'dependabot[bot]' && success()
+        uses: slackapi/slack-github-action@v2
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            # This ID is for #team-marmoset-alerts in Lighthouse Slack
+            channel: C02B97B1WUR
+            text: "Developer Portal Content Update"
+            blocks:
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "A new release note has been posted to the developer portal. Please see the following links:"
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "${{ steps.get_urls_list.outputs.urls }}"
+      - id: send_slack_failure_message
+        if: github.actor != 'dependabot[bot]' && failure()
+        uses: slackapi/slack-github-action@v2
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            # This ID is for #team-okapi-alerts in Lighthouse Slack
+            channel: C05HL4MTAFR
+            text: "Developer Portal Content Slack Notification Failure"
+            blocks:
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "The Marmoset Release Note alert failed in the Developer Portal Content repository."
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "@teamokapi please investigate."

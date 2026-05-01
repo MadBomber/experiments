@@ -1,0 +1,129 @@
+<h2>System Prompt Strategy v3</h2>
+<p class="subtitle">Arcs and plot points belong to the Project. Character holds only timeless definition attributes.</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5em;margin-bottom:1.5em;">
+
+  <!-- Layer diagram -->
+  <div>
+    <p class="label">Revised Prompt Layers</p>
+    <div style="display:flex;flex-direction:column;gap:0;font-size:0.83em;">
+
+      <div style="background:#14532d;border:1px solid #4ade8044;border-radius:6px 6px 0 0;padding:0.75em 1em;">
+        <span style="color:#4ade80;font-weight:bold;">Layer 1 — Actor</span>
+        <p style="margin:0.3em 0 0;color:#86efac;font-size:0.88em;"><code>actor.name</code>, <code>actor.style_notes</code></p>
+        <p style="margin:0.2em 0 0;color:#4ade8099;font-size:0.8em;font-style:italic;">"Michael J. Fox brings nervous energy and comedic timing."</p>
+      </div>
+
+      <div style="background:#1c1917;border:1px solid #f59e0b44;border-left:1px solid #f59e0b44;border-right:1px solid #f59e0b44;border-top:none;padding:0.75em 1em;">
+        <span style="color:#f59e0b;font-weight:bold;">Layer 2 — Character</span>
+        <span style="color:#475569;font-size:0.75em;margin-left:0.5em;">timeless — unchanged across all projects</span>
+        <p style="margin:0.3em 0 0;color:#fcd34d;font-size:0.88em;"><code>character.personality</code>, <code>character.voice_pattern</code></p>
+        <p style="margin:0.2em 0 0;color:#f59e0b99;font-size:0.8em;font-style:italic;">"Marty McFly: optimistic, quick-witted. Speaks in 80s slang."</p>
+        <p style="margin:0.35em 0 0;padding:0.3em 0.5em;background:#292524;border-radius:4px;color:#78716c;font-size:0.78em;">
+          ✗ <code>current_arc</code> removed — arc belongs to the project, not the character
+        </p>
+      </div>
+
+      <div style="background:#0c1a2e;border:1px solid #60a5fa44;border-left:1px solid #60a5fa44;border-right:1px solid #60a5fa44;border-top:none;padding:0.75em 1em;">
+        <span style="color:#60a5fa;font-weight:bold;">Layer 3 — Project</span>
+        <span style="color:#475569;font-size:0.75em;margin-left:0.5em;">the production's narrative context</span>
+        <p style="margin:0.3em 0 0;color:#93c5fd;font-size:0.88em;">
+          <code>project.description</code>, <code>project.genre</code>, <code>project.setting</code>, <code>project.tone</code>,
+          <code>project.story_arc</code>, <code>project.plot_points</code>
+        </p>
+        <p style="margin:0.3em 0 0;color:#60a5fa99;font-size:0.8em;font-style:italic;">
+          "BTTF — Marty must get his parents together or he won't exist. Plot points: meets 1955 Doc, Enchantment Under the Sea, lightning strike."
+        </p>
+        <p style="margin:0.35em 0 0;padding:0.3em 0.5em;background:#0f172a;border-radius:4px;color:#60a5fa;font-size:0.78em;">
+          + <code>character_arcs</code> join — per-character arc notes <em>within this project</em> (see schema right)
+        </p>
+      </div>
+
+      <div style="background:#1a0f2e;border:1px solid #a78bfa44;border-left:1px solid #a78bfa44;border-right:1px solid #a78bfa44;border-top:none;padding:0.75em 1em;">
+        <span style="color:#a78bfa;font-weight:bold;">Layer 4 — Scene</span>
+        <p style="margin:0.3em 0 0;color:#c4b5fd;font-size:0.88em;"><code>scene.context</code>, <code>scene.beat_structure</code>, <code>scene_character.scene_objectives</code>, cast list</p>
+        <p style="margin:0.2em 0 0;color:#a78bfa99;font-size:0.8em;font-style:italic;">"Clock Tower — convince Doc to proceed before lightning."</p>
+      </div>
+
+      <div style="background:#1a0a0a;border:1px solid #fb718544;border-radius:0 0 6px 6px;border-top:none;padding:0.75em 1em;">
+        <span style="color:#fb7185;font-weight:bold;">User Prompt — Runtime</span>
+        <p style="margin:0.3em 0 0;color:#fda4af;font-size:0.88em;">Last N transcript lines + "What does [character] say?"</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Schema -->
+  <div style="display:flex;flex-direction:column;gap:1em;">
+
+    <div>
+      <p class="label">Schema Changes</p>
+      <div style="display:flex;flex-direction:column;gap:0.6em;font-size:0.8em;">
+
+        <div style="background:#0f172a;border:1px solid #f59e0b44;border-radius:6px;padding:0.7em;">
+          <p style="color:#f59e0b;font-weight:bold;margin:0 0 0.3em;">characters — simplified</p>
+          <p style="color:#94a3b8;margin:0;font-family:monospace;line-height:1.8;">
+            name, personality, voice_pattern<br>
+            model, provider, data<br>
+            input/output/total_tokens<br>
+            <span style="color:#78716c;text-decoration:line-through;">current_arc  ← removed</span>
+          </p>
+        </div>
+
+        <div style="background:#0f172a;border:1px solid #60a5fa44;border-radius:6px;padding:0.7em;">
+          <p style="color:#60a5fa;font-weight:bold;margin:0 0 0.3em;">projects — gains narrative fields</p>
+          <p style="color:#94a3b8;margin:0;font-family:monospace;line-height:1.8;">
+            title, description, genre<br>
+            tagline, setting, tone<br>
+            <span style="color:#4ade80;">story_arc  ← new</span><br>
+            <span style="color:#4ade80;">plot_points (json)  ← new</span><br>
+            created_by
+          </p>
+        </div>
+
+        <div style="background:#0f172a;border:1px solid #4ade8044;border-radius:6px;padding:0.7em;">
+          <p style="color:#4ade80;font-weight:bold;margin:0 0 0.3em;">character_arcs — new join <span style="color:#64748b;font-weight:normal;font-size:0.9em;">(per-character arc within a project)</span></p>
+          <p style="color:#94a3b8;margin:0;font-family:monospace;line-height:1.8;">
+            id<br>
+            character_id<br>
+            project_id<br>
+            arc_notes<br>
+            relationship_notes<br>
+            objectives
+          </p>
+          <p style="color:#475569;margin:0.4em 0 0;font-size:0.82em;">unique on [character_id, project_id] — distinct from Casting which is the actor↔character link</p>
+        </div>
+
+        <div style="background:#0f172a;border:1px solid #e879f944;border-radius:6px;padding:0.7em;">
+          <p style="color:#e879f9;font-weight:bold;margin:0 0 0.3em;">castings — still a pure join</p>
+          <p style="color:#94a3b8;margin:0;font-family:monospace;line-height:1.8;">
+            actor_id, character_id, project_id<br>
+            <span style="color:#475569;font-style:italic;">— nothing else —</span>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <p class="label">Two Separate Project Joins</p>
+      <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:0.85em;font-size:0.82em;line-height:1.8;color:#cbd5e1;">
+        <strong style="color:#e879f9;">Casting</strong>: links an Actor to a Character in a Project<br>
+        <span style="color:#64748b;font-size:0.88em;">→ answers "who is playing this character?"</span><br><br>
+        <strong style="color:#4ade80;">CharacterArc</strong>: links a Character's narrative arc to a Project<br>
+        <span style="color:#64748b;font-size:0.88em;">→ answers "what is this character going through in this production?"</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div style="padding:1em;background:#0f172a;border:1px solid #334155;border-radius:8px;">
+  <p style="margin:0;font-size:0.9em;color:#94a3b8;">
+    Does this separation look right?
+    <strong style="color:#f1f5f9;">Casting</strong> = pure actor↔character↔project link.
+    <strong style="color:#4ade80;">CharacterArc</strong> = narrative notes for a character within a project (arc, objectives, relationships).
+    <strong style="color:#60a5fa;">Project</strong> = overall story arc and plot points.
+    If so, the full design is complete.
+  </p>
+</div>

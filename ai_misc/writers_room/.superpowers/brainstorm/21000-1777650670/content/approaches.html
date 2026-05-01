@@ -1,0 +1,128 @@
+<h2>3 Architectural Approaches</h2>
+<p class="subtitle">How to adapt the "agents as ActiveRecord models" pattern for Writers Room</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Character-as-Agent <span style="font-size:0.8em;color:#4ade80;">★ Recommended</span></h3>
+      <p style="margin:0.5em 0 0.25em;font-size:0.85em;color:#94a3b8;">Closest to the article pattern</p>
+      <p style="margin:0;font-size:0.9em;">
+        <code>Character</code> IS the robot_lab agent — one AR model stores both the character definition
+        (personality, voice, arc) and the LLM agent state (model, provider, data, tokens).
+        <code>Project</code> has_many <code>:characters</code> and <code>:scenes</code>.
+        A <code>SceneRun</code> captures a single execution's transcript lines. The Director is a service object.
+      </p>
+      <div style="margin-top:0.75em;display:grid;grid-template-columns:1fr 1fr;gap:0.5em;font-size:0.85em;">
+        <div>
+          <p style="color:#4ade80;margin:0 0 0.25em;">✓ Pros</p>
+          <ul style="margin:0;padding-left:1.2em;color:#cbd5e1;">
+            <li>Fewest models</li>
+            <li>Faithful to article</li>
+            <li>Simple associations</li>
+          </ul>
+        </div>
+        <div>
+          <p style="color:#f87171;margin:0 0 0.25em;">✗ Cons</p>
+          <ul style="margin:0;padding-left:1.2em;color:#cbd5e1;">
+            <li>Agent state mixed with definition</li>
+            <li>State resets between runs</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top:0.75em;background:#1e293b;border-radius:6px;padding:0.75em;font-family:monospace;font-size:0.8em;color:#93c5fd;">
+        Project → has_many :characters, :scenes<br>
+        Character → acts_as_robot_lab_agent (name, personality, voice, model, data, tokens)<br>
+        Scene → belongs_to :project (beats, objectives, context)<br>
+        SceneRun → belongs_to :scene, has_many :transcript_lines
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Split Character + Actor</h3>
+      <p style="margin:0.5em 0 0.25em;font-size:0.85em;color:#94a3b8;">Cleanest separation of concerns</p>
+      <p style="margin:0;font-size:0.9em;">
+        <code>Character</code> is pure definition data (personality, voice, arc — no LLM state).
+        <code>Actor</code> is a separate AR model that wraps the robot_lab agent and belongs to
+        both a <code>Character</code> and a <code>SceneRun</code>. Each run spawns fresh
+        <code>Actor</code> instances with their own state. Preserves run history per character.
+      </p>
+      <div style="margin-top:0.75em;display:grid;grid-template-columns:1fr 1fr;gap:0.5em;font-size:0.85em;">
+        <div>
+          <p style="color:#4ade80;margin:0 0 0.25em;">✓ Pros</p>
+          <ul style="margin:0;padding-left:1.2em;color:#cbd5e1;">
+            <li>Clean def vs. state</li>
+            <li>Full run history</li>
+            <li>Faithful to article's intent</li>
+          </ul>
+        </div>
+        <div>
+          <p style="color:#f87171;margin:0 0 0.25em;">✗ Cons</p>
+          <ul style="margin:0;padding-left:1.2em;color:#cbd5e1;">
+            <li>More models</li>
+            <li>More complex queries</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top:0.75em;background:#1e293b;border-radius:6px;padding:0.75em;font-family:monospace;font-size:0.8em;color:#93c5fd;">
+        Project → has_many :characters, :scenes<br>
+        Character → has_many :actors (definition only — no LLM state)<br>
+        Actor → belongs_to :character, belongs_to :scene_run (LLM agent state)<br>
+        SceneRun → belongs_to :scene, has_many :actors, :transcript_lines
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Pure Data + Ephemeral Robots</h3>
+      <p style="margin:0.5em 0 0.25em;font-size:0.85em;color:#94a3b8;">Simplest — skips article's agent-state pattern</p>
+      <p style="margin:0;font-size:0.9em;">
+        <code>Character</code> and <code>Scene</code> are plain data models with no LLM state.
+        robot_lab robots are built fresh per scene run, never persisted. Transcripts are stored
+        but no per-character agent state is tracked. Skips the article's key insight about
+        treating agents as first-class DB citizens.
+      </p>
+      <div style="margin-top:0.75em;display:grid;grid-template-columns:1fr 1fr;gap:0.5em;font-size:0.85em;">
+        <div>
+          <p style="color:#4ade80;margin:0 0 0.25em;">✓ Pros</p>
+          <ul style="margin:0;padding-left:1.2em;color:#cbd5e1;">
+            <li>Simplest to build</li>
+            <li>Fewest moving parts</li>
+          </ul>
+        </div>
+        <div>
+          <p style="color:#f87171;margin:0 0 0.25em;">✗ Cons</p>
+          <ul style="margin:0;padding-left:1.2em;color:#cbd5e1;">
+            <li>Doesn't follow the article</li>
+            <li>No token tracking</li>
+            <li>No persistent agent state</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top:0.75em;background:#1e293b;border-radius:6px;padding:0.75em;font-family:monospace;font-size:0.8em;color:#93c5fd;">
+        Project → has_many :characters, :scenes<br>
+        Character → plain data (no LLM columns)<br>
+        Scene → plain data<br>
+        SceneRun → has_many :transcript_lines (ephemeral robot, not stored)
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:1.5em;padding:1em;background:#0f172a;border:1px solid #334155;border-radius:8px;">
+  <p style="margin:0;font-size:0.9em;color:#94a3b8;">
+    <strong style="color:#f1f5f9;">My recommendation: B (Split Character + Actor).</strong>
+    It most faithfully implements the article's intent — agents as first-class AR models with their own state and token tracking —
+    while keeping character <em>definitions</em> clean and reusable across multiple scene runs. The extra model is worth it.
+  </p>
+</div>

@@ -1,0 +1,211 @@
+<h2>Scene Lifecycle &amp; Updated Roles</h2>
+<p class="subtitle">State machine on Scene · Actor user role · Revised permissions matrix</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5em;margin-bottom:1.5em;">
+
+  <!-- State machine -->
+  <div>
+    <p class="label">Scene Status State Machine</p>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1.25em;">
+
+      <div style="display:flex;flex-direction:column;gap:0.6em;">
+
+        <div style="background:#1e293b;border:1px solid #64748b;border-radius:6px;padding:0.75em;">
+          <div style="display:flex;align-items:center;gap:0.5em;">
+            <span style="background:#334155;color:#94a3b8;font-size:0.75em;padding:0.15em 0.5em;border-radius:4px;font-family:monospace;">draft</span>
+            <span style="color:#94a3b8;font-size:0.85em;">Writer is working on the scene</span>
+          </div>
+          <p style="margin:0.4em 0 0;font-size:0.8em;color:#475569;">Visible to: Producer, Writer only</p>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:0.5em;padding:0 1em;">
+          <div style="flex:1;height:1px;background:#334155;"></div>
+          <span style="color:#60a5fa;font-size:0.8em;">Writer clicks "Submit for Review"</span>
+          <div style="flex:1;height:1px;background:#334155;"></div>
+        </div>
+
+        <div style="background:#1e293b;border:1px solid #60a5fa44;border-radius:6px;padding:0.75em;">
+          <div style="display:flex;align-items:center;gap:0.5em;">
+            <span style="background:#1e3a5f;color:#60a5fa;font-size:0.75em;padding:0.15em 0.5em;border-radius:4px;font-family:monospace;">ready_for_review</span>
+            <span style="color:#94a3b8;font-size:0.85em;">Awaiting Director approval</span>
+          </div>
+          <p style="margin:0.4em 0 0;font-size:0.8em;color:#475569;">Visible to: Producer, Writer, Director</p>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;padding:0 1em;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:0.2em;">
+            <div style="height:1px;width:4em;background:#f87171;"></div>
+            <span style="color:#f87171;font-size:0.75em;">Director rejects → back to draft</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:0.2em;">
+            <div style="height:1px;width:4em;background:#4ade80;"></div>
+            <span style="color:#4ade80;font-size:0.75em;">Director approves → released</span>
+          </div>
+        </div>
+
+        <div style="background:#1e293b;border:1px solid #4ade8044;border-radius:6px;padding:0.75em;">
+          <div style="display:flex;align-items:center;gap:0.5em;">
+            <span style="background:#14532d;color:#4ade80;font-size:0.75em;padding:0.15em 0.5em;border-radius:4px;font-family:monospace;">released</span>
+            <span style="color:#94a3b8;font-size:0.85em;">Approved — visible to cast</span>
+          </div>
+          <p style="margin:0.4em 0 0;font-size:0.8em;color:#475569;">Visible to: All roles. Actor-users see <strong style="color:#f59e0b;">only scenes their character is cast in</strong></p>
+        </div>
+
+      </div>
+
+      <div style="margin-top:1em;background:#0f172a;border:1px solid #334155;border-radius:6px;padding:0.75em;font-family:monospace;font-size:0.8em;color:#94a3b8;">
+        <span style="color:#f59e0b;">Scene</span> schema addition:<br>
+        status: <span style="color:#4ade80;">enum</span> (draft | ready_for_review | released)<br>
+        submitted_at: datetime <span style="color:#475569;"># when writer submitted</span><br>
+        released_at:  datetime <span style="color:#475569;"># when director approved</span><br>
+        released_by:  user_id  <span style="color:#475569;"># which director approved</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right col: Actor user + updated roles -->
+  <div style="display:flex;flex-direction:column;gap:1em;">
+
+    <div>
+      <p class="label">User ↔ Actor Link</p>
+      <div style="background:#0f172a;border:1px solid #f59e0b44;border-radius:8px;padding:1em;font-size:0.85em;line-height:1.8;">
+        <p style="margin:0 0 0.6em;color:#cbd5e1;">
+          An <code style="color:#4ade80;">Actor</code> record can optionally have a linked
+          <code style="color:#4ade80;">User</code> account. When a user holds the <strong style="color:#f59e0b;">actor</strong> role
+          their account is associated with one Actor record — giving them a personalised view
+          of only the released scenes they appear in.
+        </p>
+        <div style="background:#1e293b;border-radius:6px;padding:0.75em;font-family:monospace;font-size:0.85em;line-height:1.9;color:#cbd5e1;">
+          <span style="color:#4ade80;">Actor</span><br>
+          <span style="color:#64748b;">  has_one :user</span><br>
+          <br>
+          <span style="color:#4ade80;">User</span><br>
+          <span style="color:#64748b;">  belongs_to :actor, optional: true</span><br>
+          <span style="color:#475569;">  # only set when role includes :actor</span>
+        </div>
+        <p style="margin:0.75em 0 0;font-size:0.82em;color:#64748b;">
+          A Producer assigns the actor role to a user and links them to their Actor record.
+          One user = one Actor record. An Actor record can exist without a linked User account.
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <p class="label">Actor Role — What They See</p>
+      <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1em;font-size:0.85em;line-height:1.8;color:#cbd5e1;">
+        <div style="margin-bottom:0.5em;">
+          <span style="color:#f59e0b;font-weight:bold;">My Characters</span> — all characters this actor plays across all projects
+        </div>
+        <div style="margin-bottom:0.5em;">
+          <span style="color:#f59e0b;font-weight:bold;">My Scenes</span> — released scenes where at least one of their characters appears, grouped by project
+        </div>
+        <div>
+          <span style="color:#f59e0b;font-weight:bold;">Scene Detail</span> — the scene script (beat structure, objectives) + the latest released transcript
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Full permissions matrix -->
+<div>
+  <p class="label">Updated Permissions Matrix (5 Roles)</p>
+  <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;overflow:hidden;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.78em;">
+      <thead>
+        <tr style="background:#1e293b;">
+          <th style="text-align:left;padding:0.5em 0.75em;color:#94a3b8;">Resource</th>
+          <th style="text-align:center;padding:0.5em;color:#f59e0b;">Producer</th>
+          <th style="text-align:center;padding:0.5em;color:#60a5fa;">Writer</th>
+          <th style="text-align:center;padding:0.5em;color:#a78bfa;">Director</th>
+          <th style="text-align:center;padding:0.5em;color:#e879f9;">Casting Dir.</th>
+          <th style="text-align:center;padding:0.5em;color:#fb923c;">Actor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#cbd5e1;">Actors</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#64748b;">read</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#64748b;">own only</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#cbd5e1;">Characters</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#64748b;">read</td>
+          <td style="text-align:center;color:#94a3b8;">read</td>
+          <td style="text-align:center;color:#64748b;">own only</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#cbd5e1;">Projects</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#64748b;">read</td>
+          <td style="text-align:center;color:#64748b;">read</td>
+          <td style="text-align:center;color:#64748b;">read</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#cbd5e1;">Scenes (draft)</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#64748b;">—</td>
+          <td style="text-align:center;color:#64748b;">—</td>
+          <td style="text-align:center;color:#64748b;">—</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#cbd5e1;">Scenes (ready_for_review)</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#fbbf24;">read+submit</td>
+          <td style="text-align:center;color:#fbbf24;">read+approve</td>
+          <td style="text-align:center;color:#64748b;">—</td>
+          <td style="text-align:center;color:#64748b;">—</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#cbd5e1;">Scenes (released)</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#64748b;">read</td>
+          <td style="text-align:center;color:#fbbf24;">read+run</td>
+          <td style="text-align:center;color:#64748b;">read</td>
+          <td style="text-align:center;color:#fb923c;">own scenes</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#cbd5e1;">Castings</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#64748b;">read</td>
+          <td style="text-align:center;color:#64748b;">read</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#64748b;">read</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#cbd5e1;">Scene Runs / Transcripts</td>
+          <td style="text-align:center;color:#4ade80;">all</td>
+          <td style="text-align:center;color:#64748b;">read</td>
+          <td style="text-align:center;color:#fbbf24;">create+read</td>
+          <td style="text-align:center;color:#64748b;">read</td>
+          <td style="text-align:center;color:#fb923c;">own scenes</td>
+        </tr>
+        <tr>
+          <td style="padding:0.4em 0.75em;color:#cbd5e1;">Users / Roles</td>
+          <td style="text-align:center;color:#4ade80;">CRUD</td>
+          <td style="text-align:center;color:#64748b;">—</td>
+          <td style="text-align:center;color:#64748b;">—</td>
+          <td style="text-align:center;color:#64748b;">—</td>
+          <td style="text-align:center;color:#64748b;">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:0.78em;color:#475569;margin:0.4em 0 0;padding-left:0.25em;">"own only" / "own scenes" = scoped to records linked to this user's Actor record.</p>
+</div>
+
+<div style="margin-top:1.25em;padding:1em;background:#0f172a;border:1px solid #334155;border-radius:8px;">
+  <p style="margin:0;font-size:0.9em;color:#94a3b8;">
+    Does this look right? If so, I have everything I need and will present the final two sections
+    (<strong style="color:#f1f5f9;">live transcript UI</strong> and <strong style="color:#f1f5f9;">system prompt strategy</strong>)
+    before writing the spec doc.
+  </p>
+</div>

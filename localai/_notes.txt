@@ -1,0 +1,33 @@
+
+--- 2024-02-09 21:48:44 -0600
+    docker run -ti -p 8080:8080 localai/localai:v2.7.0-ffmpeg-core phi-2
+
+  docker run -ti -p 8080:8080 localai/localai:v2.7.0-ffmpeg-core phi-2
+
+
+
+--- 2024-02-09 22:00:17 -0600
+    installed docker desktop for mac because the brew installed docker did not want to execute the command above.
+
+  docker run -ti -p 8080:8080 localai/localai:v2.7.0-ffmpeg-core phi-2
+
+
+
+--- 2024-02-09 22:01:17 -0600
+    try it again and even though I did a brew uninstall the path is still setup to think that docker is a brew installed binary and now it can not find it
+
+  docker run -ti -p 8080:8080 localai/localai:v2.7.0-ffmpeg-core phi-2
+
+
+
+--- 2024-02-09 22:03:28 -0600
+    went to a different iTerm2 tab and ran command. got this:
+
+  21:48:03 3.3.0  nibiru:~ $ docker run -ti -p 8080:8080 localai/localai:v2.7.0-ffmpeg-core phi-2
+	Unable to find image 'localai/localai:v2.7.0-ffmpeg-core' locally
+	v2.7.0-ffmpeg-core: Pulling from localai/localai
+	docker: no matching manifest for linux/arm64/v8 in the manifest list entries.
+	See 'docker run --help'.
+	22:01:33 3.3.0  nibiru:~ $
+
+

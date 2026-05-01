@@ -1,0 +1,57 @@
+
+--- 2023-09-19 21:23:32 -0500
+	SVM explained as a classifier
+
+	https://www.youtube.com/watch?v=efR1C6CvhmE
+	
+	
+	A libsvm text file format consists of lines where each line represents a single data instance. Each line is formatted as follows:
+
+```
+<label> <index1>:<value1> <index2>:<value2> ... <indexN>:<valueN>
+```
+
+where:
+- `<label>` is the class label for the data instance.
+- `<index1>:<value1>`, `<index2>:<value2>`, ..., `<indexN>:<valueN>` are the feature-value pairs for the data instance. `<index>` represents the index of the feature, and `<value>` represents the value of the feature.
+
+For example, a libsvm text file format for a binary classification problem with 3 features could look like:
+
+```
+1 1:0.5 2:1.2 3:0.8
+-1 1:1.0 2:0.2 3:0.7
+1 1:0.9 2:0.4 3:1.0
+```
+
+In this example, the first column represents the class labels, and the subsequent columns are the feature-value pairs for each data instance.
+
+--- 2023-09-20 10:07:33 -0500
+	the libsvm file format is simple. It can easily be created from a stocks dataframe.
+
+	The label values can be:
+		2 Strong Buy
+		1 Buy
+		0 No Recommendation
+	 -1 Sell
+	 -2 Strong Sell
+
+	The idea is to create a libsvm-formatted file from the stock history metrics.  Evaluate the current adjusted closing prices against the adjusted closing price XYZZY days into the future.  Lavel the current entry based upon the delta of the future price.  Two deltas.  First delta seperates buy from sell, 2nd delta seperates strong buy from strong sell.
+
+	Example:
+
+	delta = [ 1.0, 5.0]
+	label = 0 # "No Recommendation"
+	diff  = future_acp - current_acp
+
+	if diff.abs >= delta.first
+	  label = diff.positive? ? 1 : -1 # "Buy" : "Sell"
+	end
+
+	if diff.abs >= delta.last
+	  label = diff.positive? ? 2 : -2 # "Strong " + label
+	end
+
+
+
+	
+	

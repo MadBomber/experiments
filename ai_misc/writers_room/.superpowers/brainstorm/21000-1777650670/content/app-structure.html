@@ -1,0 +1,141 @@
+<h2>Rails App Structure</h2>
+<p class="subtitle">writers_room — a Rails 8 app using Phlex, ruby_ui, Hotwire, and robot_lab</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5em;margin-bottom:1.5em;">
+
+  <!-- Directory tree -->
+  <div>
+    <p class="label">Key Directory Layout</p>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1.25em;font-family:monospace;font-size:0.8em;line-height:1.9;color:#cbd5e1;">
+      <span style="color:#60a5fa;">app/</span><br>
+      <span style="color:#64748b;">  controllers/</span><br>
+      <span style="color:#94a3b8;">    actors_controller.rb</span><br>
+      <span style="color:#94a3b8;">    characters_controller.rb</span><br>
+      <span style="color:#94a3b8;">    castings_controller.rb</span><br>
+      <span style="color:#94a3b8;">    projects_controller.rb</span><br>
+      <span style="color:#94a3b8;">    scenes_controller.rb</span><br>
+      <span style="color:#94a3b8;">    scene_runs_controller.rb</span><br>
+      <span style="color:#94a3b8;">    imports_controller.rb</span><br>
+      <span style="color:#94a3b8;">    exports_controller.rb</span><br>
+      <span style="color:#64748b;">  models/</span><br>
+      <span style="color:#94a3b8;">    actor.rb, character.rb</span><br>
+      <span style="color:#94a3b8;">    casting.rb, project.rb</span><br>
+      <span style="color:#94a3b8;">    scene.rb, scene_character.rb</span><br>
+      <span style="color:#94a3b8;">    scene_run.rb, transcript_line.rb</span><br>
+      <span style="color:#64748b;">  views/  </span><span style="color:#475569;"># Phlex components</span><br>
+      <span style="color:#94a3b8;">    layouts/application_layout.rb</span><br>
+      <span style="color:#94a3b8;">    actors/, characters/</span><br>
+      <span style="color:#94a3b8;">    projects/, scenes/</span><br>
+      <span style="color:#94a3b8;">    scene_runs/</span><br>
+      <span style="color:#94a3b8;">    components/  </span><span style="color:#475569;"># ruby_ui + custom</span><br>
+      <span style="color:#64748b;">  jobs/</span><br>
+      <span style="color:#94a3b8;">    scene_run_job.rb  </span><span style="color:#475569;"># runs the scene</span><br>
+      <span style="color:#64748b;">  services/</span><br>
+      <span style="color:#94a3b8;">    director_service.rb  </span><span style="color:#475569;"># orchestrates agents</span><br>
+      <span style="color:#94a3b8;">    yaml_import_service.rb</span><br>
+      <span style="color:#94a3b8;">    yaml_export_service.rb</span><br>
+      <span style="color:#64748b;">  channels/</span><br>
+      <span style="color:#94a3b8;">    scene_run_channel.rb  </span><span style="color:#475569;"># ActionCable</span>
+    </div>
+  </div>
+
+  <!-- Request flow -->
+  <div style="display:flex;flex-direction:column;gap:1em;">
+    <div>
+      <p class="label">Scene Run Flow (Real-Time)</p>
+      <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1em;font-size:0.85em;line-height:1.9;">
+        <div style="display:flex;align-items:flex-start;gap:0.5em;margin-bottom:0.4em;">
+          <span style="color:#fb7185;min-width:1.5em;">1.</span>
+          <span style="color:#cbd5e1;">User clicks <strong>Run Scene</strong> → POST /scene_runs</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.5em;margin-bottom:0.4em;">
+          <span style="color:#fb7185;min-width:1.5em;">2.</span>
+          <span style="color:#cbd5e1;"><code>SceneRun</code> created (status: queued), <code>SceneRunJob</code> enqueued</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.5em;margin-bottom:0.4em;">
+          <span style="color:#fb7185;min-width:1.5em;">3.</span>
+          <span style="color:#cbd5e1;">Turbo Stream redirect → live transcript page</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.5em;margin-bottom:0.4em;">
+          <span style="color:#fb7185;min-width:1.5em;">4.</span>
+          <span style="color:#cbd5e1;"><code>SceneRunJob</code> starts: <code>DirectorService</code> builds robot_lab agents per Character</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.5em;margin-bottom:0.4em;">
+          <span style="color:#fb7185;min-width:1.5em;">5.</span>
+          <span style="color:#cbd5e1;">Each dialog line → saved as <code>TranscriptLine</code> → Turbo Stream broadcast to browser</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.5em;">
+          <span style="color:#fb7185;min-width:1.5em;">6.</span>
+          <span style="color:#cbd5e1;">Scene ends → <code>SceneRun</code> status: completed, token counts updated on Characters</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="label">robot_lab Integration</p>
+      <div style="background:#0f172a;border:1px solid #a78bfa44;border-radius:8px;padding:1em;font-family:monospace;font-size:0.82em;line-height:1.9;color:#cbd5e1;">
+        <span style="color:#94a3b8;"># DirectorService builds one robot per character</span><br>
+        robot = RobotLab.build(<br>
+        &nbsp;&nbsp;name: character.name,<br>
+        &nbsp;&nbsp;system_prompt: character.system_prompt,<br>
+        &nbsp;&nbsp;model: character.model<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| actor.preferred_model,<br>
+        &nbsp;&nbsp;provider: character.provider<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| actor.preferred_provider<br>
+        )<br>
+        <span style="color:#94a3b8;"># Streaming callback broadcasts each line</span><br>
+        robot.run(prompt) do |chunk|<br>
+        &nbsp;&nbsp;Turbo::StreamsChannel.broadcast_...<br>
+        end
+      </div>
+    </div>
+
+    <div>
+      <p class="label">YAML Import / Export</p>
+      <div style="background:#0f172a;border:1px solid #4ade8044;border-radius:8px;padding:1em;font-size:0.85em;line-height:1.8;color:#cbd5e1;">
+        <strong style="color:#4ade80;">Import:</strong> Upload or paste YAML → <code>YamlImportService</code>
+        upserts Actors, Characters, Projects, Scenes, Castings.<br><br>
+        <strong style="color:#4ade80;">Export:</strong> Any Project → <code>YamlExportService</code>
+        serializes to the same YAML format the old experiment used, preserving compatibility.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UI nav -->
+<div>
+  <p class="label">Primary UI Navigation</p>
+  <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1em;">
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.75em;text-align:center;font-size:0.85em;">
+      <div style="background:#1e293b;border-radius:6px;padding:0.75em;">
+        <p style="color:#4ade80;font-weight:bold;margin:0 0 0.25em;">Actors</p>
+        <p style="color:#64748b;margin:0;font-size:0.85em;">Create, edit actors. View their characters and projects.</p>
+      </div>
+      <div style="background:#1e293b;border-radius:6px;padding:0.75em;">
+        <p style="color:#f59e0b;font-weight:bold;margin:0 0 0.25em;">Characters</p>
+        <p style="color:#64748b;margin:0;font-size:0.85em;">Define roles, personality, voice. View token usage history.</p>
+      </div>
+      <div style="background:#1e293b;border-radius:6px;padding:0.75em;">
+        <p style="color:#60a5fa;font-weight:bold;margin:0 0 0.25em;">Projects</p>
+        <p style="color:#64748b;margin:0;font-size:0.85em;">Manage productions. Assign castings. Browse scenes.</p>
+      </div>
+      <div style="background:#1e293b;border-radius:6px;padding:0.75em;">
+        <p style="color:#a78bfa;font-weight:bold;margin:0 0 0.25em;">Scenes</p>
+        <p style="color:#64748b;margin:0;font-size:0.85em;">Write scene details, beats, cast list. Run and view transcripts.</p>
+      </div>
+      <div style="background:#1e293b;border-radius:6px;padding:0.75em;">
+        <p style="color:#fb7185;font-weight:bold;margin:0 0 0.25em;">Import / Export</p>
+        <p style="color:#64748b;margin:0;font-size:0.85em;">Round-trip YAML for all project data.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:1.25em;padding:1em;background:#0f172a;border:1px solid #334155;border-radius:8px;">
+  <p style="margin:0;font-size:0.9em;color:#94a3b8;">
+    Does this structure look right? If so, Section 3 covers the
+    <strong style="color:#f1f5f9;">live transcript UI</strong> (the Hotwire/Phlex scene run page)
+    and Section 4 covers <strong style="color:#f1f5f9;">the system prompt strategy</strong>
+    (how Actor style_notes + Character personality + Casting arc_notes combine into the robot_lab prompt).
+  </p>
+</div>

@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+# experiments/graphviz/pretty_filesystem_image.rb
+
+
+require 'find'
+
+def generate_graph(starting_dir, level,
+include_files)
+raise "The starting directory does not exist."
+unless Dir.exist?(starting_dir)
+graph = "digraph DirectoryStructure {\n"
+queue = [[starting_dir, 0]]
+
+while (dir_info = queue.shift)
+dir_path, current_level = dir_info
+break if current_level > level
+
+Dir.entries(dir_path).each do |entry|
+next if entry == '.' || entry == '..'
+path = File.join(dir_path, entry)
+if File.directory?(path)
+graph << " \"#{dir_path}\" -> \"#{path}\"\n"
+queue << [path, current_level + 1]
+elsif include_files
+graph << " \"#{dir_path}\" -> \"#{path}\"\n"
+end
+end
+end
+
+graph << "}\n"
+end
+
+def write_file(contents, filename)
+File.write(filename, contents)
+end
+
+# Usage
+starting_directory = ARGV[0] # e.g., "/path/to/dir"
+max_level = ARGV[1].to_i # e.g., 2
+include_files_flag = ARGV[2] == 'true' # e.g., true
+or false
+
+dot_content = generate_graph(starting_directory,
+max_level, include_files_flag)
+write_file(dot_content, 'directory_structure.dot')
+
+
+__END__
+
+  Before running the script, make sure the arguments
+  are correctly provided:
+  - ARGV[0]: the starting directory (e.g.,
+  `/home/user`)
+  - ARGV[1]: depth level (e.g., `2`)
+  - ARGV[2]: include file names (`true` or `false`)

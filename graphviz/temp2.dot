@@ -1,0 +1,20 @@
+# temp2.dot
+  
+digraph organizational_chart {
+  node [shape=box];
+  rankdir=LR;
+
+  /* Define nodes */
+  CEO [label="CEO"];
+  Manager1 [label="Manager 1"];
+  Manager2 [label="Manager 2"];
+  Employee1 [label="Employee 1"];
+  Employee2 [label="Employee 2"];
+  Employee3 [label="Employee 3"];
+  Employee4 [label="Employee 4"];
+
+  /* Define relationships */
+  CEO -> {Manager1 Manager2}
+  Manager1 -> {Employee1 Employee2}
+  Manager2 -> {Employee3 Employee4}
+}

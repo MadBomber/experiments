@@ -1,0 +1,6 @@
+[2026-01-30T12:39:53.627 INFO  (53339)] LlmConfig: RubyLLM configured for Ollama at http://localhost:11434/v1
+[2026-01-30T12:39:59.133 INFO  (53339)] LlmConfig: Ollama verified with qwen3-coder:30b
+[2026-01-30T12:39:59.133 INFO  (53339)] LlmConfig: chaos_to_the_rescue enabled
+[2026-01-30T12:40:02.103 INFO  (53339)] [SelfModifyingRobot] Generated instance method :battle_cry
+[2026-01-30T12:40:04.980 INFO  (53339)] [SelfModifyingRobot] Generated singleton method :uid
+[2026-01-30T12:40:06.967 INFO  (53339)] [SelfModifyingRobot] Generated class method :fleet_name

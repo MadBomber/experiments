@@ -1,0 +1,109 @@
+<h2>Revised Domain Model v2</h2>
+<p class="subtitle">Character is independent — the same Character can appear across many Projects</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5em;margin-bottom:1.5em;">
+
+  <!-- ERD -->
+  <div>
+    <p class="label">Entity Relationships</p>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1.25em;font-family:monospace;font-size:0.85em;line-height:2;">
+      <span style="color:#4ade80;">Actor</span> <span style="color:#64748b;">has_many :characters</span><br>
+      <span style="color:#4ade80;">Actor</span> <span style="color:#64748b;">has_many :projects, through: :characters (→ castings)</span><br>
+      <br>
+      <span style="color:#f59e0b;">Character</span> <span style="color:#64748b;">belongs_to :actor</span><br>
+      <span style="color:#f59e0b;">Character</span> <span style="color:#64748b;">has_many :castings</span><br>
+      <span style="color:#f59e0b;">Character</span> <span style="color:#64748b;">has_many :projects, through: :castings</span><br>
+      <span style="color:#f59e0b;">Character</span> <span style="color:#64748b;"># LLM agent state (persistent across projects)</span><br>
+      <br>
+      <span style="color:#e879f9;">Casting</span> <span style="color:#64748b;">belongs_to :character</span><br>
+      <span style="color:#e879f9;">Casting</span> <span style="color:#64748b;">belongs_to :project</span><br>
+      <span style="color:#e879f9;">Casting</span> <span style="color:#64748b;"># project-specific: objectives, arc_notes</span><br>
+      <br>
+      <span style="color:#60a5fa;">Project</span> <span style="color:#64748b;">has_many :castings</span><br>
+      <span style="color:#60a5fa;">Project</span> <span style="color:#64748b;">has_many :characters, through: :castings</span><br>
+      <span style="color:#60a5fa;">Project</span> <span style="color:#64748b;">has_many :actors, through: :characters</span><br>
+      <span style="color:#60a5fa;">Project</span> <span style="color:#64748b;">has_many :scenes</span><br>
+      <br>
+      <span style="color:#a78bfa;">Scene</span> <span style="color:#64748b;">belongs_to :project</span><br>
+      <span style="color:#a78bfa;">Scene</span> <span style="color:#64748b;">has_many :scene_castings</span> <span style="color:#94a3b8;"># who's in this scene</span><br>
+      <span style="color:#a78bfa;">Scene</span> <span style="color:#64748b;">has_many :castings, through: :scene_castings</span><br>
+      <br>
+      <span style="color:#fb7185;">SceneRun</span> <span style="color:#64748b;">belongs_to :scene</span><br>
+      <span style="color:#fb7185;">SceneRun</span> <span style="color:#64748b;">has_many :transcript_lines</span>
+    </div>
+  </div>
+
+  <!-- BTTF analogy -->
+  <div>
+    <p class="label">The Back to the Future Analogy</p>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1.25em;font-size:0.88em;line-height:1.8;">
+      <div style="margin-bottom:0.75em;">
+        <span style="color:#4ade80;font-weight:bold;">Actor:</span> Michael J. Fox<br>
+        <span style="color:#94a3b8;font-size:0.85em;">Consistent comedic timing, nervous energy, everyman style</span>
+      </div>
+      <div style="margin-bottom:0.75em;">
+        <span style="color:#f59e0b;font-weight:bold;">Character:</span> Marty McFly<br>
+        <span style="color:#94a3b8;font-size:0.85em;">Personality, voice pattern, arc — one persistent LLM agent state that carries memory across films</span>
+      </div>
+      <div style="border-left:3px solid #e879f922;padding-left:0.75em;margin-bottom:0.4em;">
+        <span style="color:#e879f9;">Casting:</span> Marty in <span style="color:#60a5fa;">BTTF 1</span><br>
+        <span style="color:#94a3b8;font-size:0.82em;">arc_notes: "discovers time travel, gets home"</span>
+      </div>
+      <div style="border-left:3px solid #e879f922;padding-left:0.75em;margin-bottom:0.4em;">
+        <span style="color:#e879f9;">Casting:</span> Marty in <span style="color:#60a5fa;">BTTF 2</span><br>
+        <span style="color:#94a3b8;font-size:0.82em;">arc_notes: "protects future family" — Marty remembers BTTF1!</span>
+      </div>
+      <div style="border-left:3px solid #e879f922;padding-left:0.75em;">
+        <span style="color:#e879f9;">Casting:</span> Marty in <span style="color:#60a5fa;">BTTF 3</span><br>
+        <span style="color:#94a3b8;font-size:0.82em;">arc_notes: "rescues Doc in the Old West"</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Key insight box -->
+<div style="background:#1e293b;border:1px solid #e879f944;border-radius:8px;padding:1em;margin-bottom:1.5em;">
+  <p style="margin:0 0 0.5em;color:#e879f9;font-weight:bold;">Casting = the pivot between Character and Project</p>
+  <p style="margin:0;font-size:0.9em;color:#cbd5e1;">
+    Casting holds the project-specific context for a character (their objectives and arc notes within THIS project)
+    while the <strong style="color:#f59e0b;">Character's LLM agent state persists across all projects</strong> —
+    Marty McFly at the start of BTTF2 remembers everything from BTTF1.
+    One Actor can have multiple Characters (plays), and the same Character can appear in multiple Projects (sequels).
+  </p>
+</div>
+
+<!-- Schema sketch -->
+<div>
+  <p class="label">Key Database Columns</p>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.6em;font-size:0.78em;">
+    <div style="background:#0f172a;border:1px solid #4ade8044;border-radius:6px;padding:0.65em;">
+      <p style="color:#4ade80;font-weight:bold;margin:0 0 0.4em;">actors</p>
+      <p style="color:#94a3b8;margin:0;line-height:1.7;">id<br>name<br>description<br>style_notes<br>preferred_model<br>preferred_provider</p>
+    </div>
+    <div style="background:#0f172a;border:1px solid #f59e0b44;border-radius:6px;padding:0.65em;">
+      <p style="color:#f59e0b;font-weight:bold;margin:0 0 0.4em;">characters</p>
+      <p style="color:#94a3b8;margin:0;line-height:1.7;">id<br>actor_id<br>name<br>personality<br>voice_pattern<br>current_arc<br>— agent state —<br>model, provider<br>data (text)<br>input/output/<br>total_tokens</p>
+    </div>
+    <div style="background:#0f172a;border:1px solid #e879f944;border-radius:6px;padding:0.65em;">
+      <p style="color:#e879f9;font-weight:bold;margin:0 0 0.4em;">castings</p>
+      <p style="color:#94a3b8;margin:0;line-height:1.7;">id<br>character_id<br>project_id<br>arc_notes<br>objectives<br>relationship_<br>notes</p>
+    </div>
+    <div style="background:#0f172a;border:1px solid #60a5fa44;border-radius:6px;padding:0.65em;">
+      <p style="color:#60a5fa;font-weight:bold;margin:0 0 0.4em;">projects</p>
+      <p style="color:#94a3b8;margin:0;line-height:1.7;">id<br>title<br>description<br>genre<br>tagline<br>week_count</p>
+    </div>
+    <div style="background:#0f172a;border:1px solid #a78bfa44;border-radius:6px;padding:0.65em;">
+      <p style="color:#a78bfa;font-weight:bold;margin:0 0 0.4em;">scenes</p>
+      <p style="color:#94a3b8;margin:0;line-height:1.7;">id<br>project_id<br>number<br>name<br>location<br>week<br>context<br>beat_structure<br>(json)</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:1.25em;padding:1em;background:#0f172a;border:1px solid #334155;border-radius:8px;">
+  <p style="margin:0;font-size:0.9em;color:#94a3b8;">
+    Does this match your mental model? One open question: should a <strong style="color:#f1f5f9;">Scene</strong> reference
+    <code>Castings</code> (to specify which project-scoped character appearances are in the scene) or directly reference
+    <code>Characters</code>? And does <strong style="color:#f1f5f9;">SceneRun</strong> need anything beyond transcript lines
+    (e.g. status, started_at, duration)?
+  </p>
+</div>

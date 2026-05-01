@@ -1,0 +1,143 @@
+<h2>Arc Hierarchy</h2>
+<p class="subtitle">Three levels — Project story arc → Character arc → Scene arc advancement</p>
+
+<div style="margin-bottom:1.5em;">
+  <p class="label">The Flow</p>
+  <div style="display:flex;flex-direction:column;gap:0;font-size:0.85em;">
+
+    <!-- Level 1: Project -->
+    <div style="background:#0c1a2e;border:2px solid #60a5fa44;border-radius:8px 8px 0 0;padding:1em 1.25em;">
+      <div style="display:flex;align-items:center;gap:0.75em;margin-bottom:0.5em;">
+        <span style="background:#1e3a5f;color:#60a5fa;font-size:0.8em;padding:0.2em 0.6em;border-radius:4px;font-weight:bold;">Level 1 — Project</span>
+        <span style="color:#64748b;font-size:0.82em;">The overall story arc of the entire production</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 2fr;gap:1em;">
+        <div style="background:#0f172a;border-radius:6px;padding:0.75em;font-family:monospace;font-size:0.8em;line-height:1.8;color:#94a3b8;">
+          project.story_arc<br>
+          project.plot_points (json)
+        </div>
+        <div style="font-size:0.85em;color:#93c5fd;padding:0.5em 0;">
+          The macro narrative — what the entire production is about from beginning to end.
+          Defines the journey all characters collectively take.
+          <span style="color:#60a5fa;font-style:italic;">Example: "A reckless teen learns that actions have consequences — past, present, and future."</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arrow down -->
+    <div style="display:flex;align-items:center;justify-content:center;padding:0.4em;background:#0a0f1a;border-left:2px solid #60a5fa44;border-right:2px solid #60a5fa44;">
+      <span style="color:#334155;font-size:0.8em;">↓ each character derives their arc from the story arc ↓</span>
+    </div>
+
+    <!-- Level 2: Character arc -->
+    <div style="background:#1c1917;border:2px solid #f59e0b44;border-left:2px solid #f59e0b44;border-right:2px solid #f59e0b44;border-top:none;padding:1em 1.25em;">
+      <div style="display:flex;align-items:center;gap:0.75em;margin-bottom:0.5em;">
+        <span style="background:#292524;color:#f59e0b;font-size:0.8em;padding:0.2em 0.6em;border-radius:4px;font-weight:bold;">Level 2 — Character Arc</span>
+        <span style="color:#64748b;font-size:0.82em;">Each character's personal journey within this production — derived from the story arc</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 2fr;gap:1em;">
+        <div style="background:#0f172a;border-radius:6px;padding:0.75em;font-family:monospace;font-size:0.8em;line-height:1.8;color:#94a3b8;">
+          character.character_arc<br>
+          <span style="color:#475569;">(on Character model)</span><br><br>
+          character_arcs table:<br>
+          character_id<br>
+          project_id<br>
+          arc_description<br>
+          arc_start_state<br>
+          arc_end_goal<br>
+          current_position
+        </div>
+        <div style="font-size:0.85em;color:#fcd34d;padding:0.5em 0;">
+          <p style="margin:0 0 0.5em;">
+            <code style="color:#f59e0b;">character.character_arc</code> — the character's timeless arc concept (who they are across all productions).<br>
+            <span style="color:#78716c;font-size:0.88em;font-style:italic;">Example: "Marty's arc: from reckless risk-taker to someone who understands consequences."</span>
+          </p>
+          <p style="margin:0;">
+            <code style="color:#f59e0b;">character_arcs</code> (join) — how that arc manifests <em>in this specific project</em>, where they start and where they need to end up.<br>
+            <span style="color:#78716c;font-size:0.88em;font-style:italic;">In BTTF1: starts overconfident, must learn humility. In BTTF2: starts cautious, tempted back into recklessness.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arrow down -->
+    <div style="display:flex;align-items:center;justify-content:center;padding:0.4em;background:#0a0f1a;border-left:2px solid #f59e0b44;border-right:2px solid #f59e0b44;">
+      <span style="color:#334155;font-size:0.8em;">↓ each scene advances the character along their arc ↓</span>
+    </div>
+
+    <!-- Level 3: Scene advancement -->
+    <div style="background:#1a0f2e;border:2px solid #a78bfa44;border-left:2px solid #a78bfa44;border-right:2px solid #a78bfa44;border-top:none;border-radius:0 0 8px 8px;padding:1em 1.25em;">
+      <div style="display:flex;align-items:center;gap:0.75em;margin-bottom:0.5em;">
+        <span style="background:#2e1065;color:#a78bfa;font-size:0.8em;padding:0.2em 0.6em;border-radius:4px;font-weight:bold;">Level 3 — Scene Arc Advancement</span>
+        <span style="color:#64748b;font-size:0.82em;">Each scene moves the character forward along their arc</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 2fr;gap:1em;">
+        <div style="background:#0f172a;border-radius:6px;padding:0.75em;font-family:monospace;font-size:0.8em;line-height:1.8;color:#94a3b8;">
+          scene_characters table:<br>
+          scene_id<br>
+          character_id<br>
+          scene_objectives<br>
+          <span style="color:#4ade80;">arc_advancement</span><br>
+          <span style="color:#475569;">(how this scene</span><br>
+          <span style="color:#475569;"> moves the arc)</span>
+        </div>
+        <div style="font-size:0.85em;color:#c4b5fd;padding:0.5em 0;">
+          Each scene appearance records <em>what arc movement happens here</em>.
+          Collectively, scene arc advancements move the character from
+          <code>arc_start_state</code> → <code>arc_end_goal</code>,
+          which in turn moves the project's <code>story_arc</code> forward.<br><br>
+          <span style="color:#78716c;font-size:0.88em;font-style:italic;">Scene 1: Marty is cocky and dismissive. Scene 4: first crack of doubt. Scene 8: fully transformed.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Revised system prompt layer 2 + 3 -->
+<div style="margin-bottom:1.5em;">
+  <p class="label">How This Changes the System Prompt</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75em;font-size:0.83em;">
+    <div style="background:#0f172a;border:1px solid #f59e0b44;border-radius:6px;padding:0.75em;">
+      <p style="color:#f59e0b;font-weight:bold;margin:0 0 0.4em;">Layer 2 — Character (updated)</p>
+      <p style="color:#94a3b8;margin:0;line-height:1.8;">
+        personality, voice_pattern<br>
+        <span style="color:#4ade80;">+ character.character_arc</span> (timeless arc concept)<br>
+        <span style="color:#4ade80;">+ character_arc.arc_start_state</span> (where they begin in this project)<br>
+        <span style="color:#4ade80;">+ character_arc.current_position</span> (where they are NOW)
+      </p>
+    </div>
+    <div style="background:#0f172a;border:1px solid #60a5fa44;border-radius:6px;padding:0.75em;">
+      <p style="color:#60a5fa;font-weight:bold;margin:0 0 0.4em;">Layer 3 — Project (updated)</p>
+      <p style="color:#94a3b8;margin:0;line-height:1.8;">
+        title, description, genre, setting, tone<br>
+        <span style="color:#4ade80;">+ project.story_arc</span> (the macro narrative)<br>
+        <span style="color:#4ade80;">+ project.plot_points</span> (key story beats)
+      </p>
+    </div>
+    <div style="background:#0f172a;border:1px solid #a78bfa44;border-radius:6px;padding:0.75em;">
+      <p style="color:#a78bfa;font-weight:bold;margin:0 0 0.4em;">Layer 4 — Scene (updated)</p>
+      <p style="color:#94a3b8;margin:0;line-height:1.8;">
+        context, beat_structure, cast list<br>
+        <span style="color:#4ade80;">+ scene_character.scene_objectives</span><br>
+        <span style="color:#4ade80;">+ scene_character.arc_advancement</span> (what arc movement this scene delivers)
+      </p>
+    </div>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:0.75em;">
+      <p style="color:#94a3b8;font-weight:bold;margin:0 0 0.4em;">After the scene run</p>
+      <p style="color:#94a3b8;margin:0;line-height:1.8;">
+        <code>character_arc.current_position</code> is updated to reflect the arc advancement from this scene — the character carries their new position into the next scene.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div style="padding:1em;background:#0f172a;border:1px solid #334155;border-radius:8px;">
+  <p style="margin:0;font-size:0.9em;color:#94a3b8;">
+    Does this hierarchy match your intent? Three levels:
+    <strong style="color:#60a5fa;">Project.story_arc</strong> (macro) →
+    <strong style="color:#f59e0b;">CharacterArc</strong> (per character per project, with start/current/end states) →
+    <strong style="color:#a78bfa;">SceneCharacter.arc_advancement</strong> (scene-level movement).
+    After each scene run, <code>current_position</code> on CharacterArc is updated.
+  </p>
+</div>

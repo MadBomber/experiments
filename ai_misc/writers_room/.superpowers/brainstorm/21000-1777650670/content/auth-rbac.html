@@ -1,0 +1,174 @@
+<h2>Authentication &amp; Role-Based Access Control</h2>
+<p class="subtitle">passwordless gem for auth · Pundit for authorization · Roles drawn from the theater/film domain</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5em;margin-bottom:1.5em;">
+
+  <!-- Schema additions -->
+  <div>
+    <p class="label">New &amp; Updated Schema</p>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1.25em;font-family:monospace;font-size:0.82em;line-height:2;">
+      <span style="color:#4ade80;">users</span><br>
+      <span style="color:#94a3b8;">  id, email (unique, not null)</span><br>
+      <span style="color:#94a3b8;">  name, timestamps</span><br>
+      <span style="color:#475569;">  # passwordless stores sessions separately</span><br>
+      <br>
+      <span style="color:#60a5fa;">roles</span><br>
+      <span style="color:#94a3b8;">  id, name (enum — see right)</span><br>
+      <br>
+      <span style="color:#a78bfa;">user_roles</span><br>
+      <span style="color:#94a3b8;">  user_id, role_id</span><br>
+      <span style="color:#94a3b8;">  unique on [user_id, role_id]</span><br>
+      <br>
+      <span style="color:#f59e0b;">projects</span> <span style="color:#475569;">+= created_by: user_id</span><br>
+      <span style="color:#fb7185;">scene_runs</span> <span style="color:#475569;">+= started_by: user_id</span><br>
+      <span style="color:#e879f9;">castings</span> <span style="color:#475569;">+= assigned_by: user_id</span>
+    </div>
+
+    <p class="label" style="margin-top:1em;">Associations</p>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1.25em;font-family:monospace;font-size:0.82em;line-height:2;">
+      <span style="color:#4ade80;">User</span><br>
+      <span style="color:#64748b;">  has_many :user_roles</span><br>
+      <span style="color:#64748b;">  has_many :roles, through: :user_roles</span><br>
+      <span style="color:#64748b;">  has_many :projects, foreign_key: :created_by</span><br>
+      <span style="color:#64748b;">  has_many :scene_runs, foreign_key: :started_by</span><br>
+      <span style="color:#64748b;">  # passwordless concern mixed in</span>
+    </div>
+  </div>
+
+  <!-- Roles matrix -->
+  <div>
+    <p class="label">Roles &amp; Permissions</p>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;overflow:hidden;">
+      <table style="width:100%;border-collapse:collapse;font-size:0.78em;">
+        <thead>
+          <tr style="background:#1e293b;">
+            <th style="text-align:left;padding:0.5em 0.75em;color:#94a3b8;">Resource</th>
+            <th style="text-align:center;padding:0.5em;color:#f59e0b;">Producer</th>
+            <th style="text-align:center;padding:0.5em;color:#60a5fa;">Writer</th>
+            <th style="text-align:center;padding:0.5em;color:#a78bfa;">Director</th>
+            <th style="text-align:center;padding:0.5em;color:#e879f9;">Casting Dir.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #1e293b;">
+            <td style="padding:0.45em 0.75em;color:#cbd5e1;">Actors</td>
+            <td style="text-align:center;color:#4ade80;">CRUD</td>
+            <td style="text-align:center;color:#4ade80;">CRUD</td>
+            <td style="text-align:center;color:#64748b;">read</td>
+            <td style="text-align:center;color:#4ade80;">CRUD</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1e293b;">
+            <td style="padding:0.45em 0.75em;color:#cbd5e1;">Characters</td>
+            <td style="text-align:center;color:#4ade80;">CRUD</td>
+            <td style="text-align:center;color:#4ade80;">CRUD</td>
+            <td style="text-align:center;color:#64748b;">read</td>
+            <td style="text-align:center;color:#94a3b8;">read</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1e293b;">
+            <td style="padding:0.45em 0.75em;color:#cbd5e1;">Projects</td>
+            <td style="text-align:center;color:#4ade80;">CRUD</td>
+            <td style="text-align:center;color:#4ade80;">CRUD</td>
+            <td style="text-align:center;color:#64748b;">read</td>
+            <td style="text-align:center;color:#64748b;">read</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1e293b;">
+            <td style="padding:0.45em 0.75em;color:#cbd5e1;">Scenes</td>
+            <td style="text-align:center;color:#4ade80;">CRUD</td>
+            <td style="text-align:center;color:#4ade80;">CRUD</td>
+            <td style="text-align:center;color:#fbbf24;">read+run</td>
+            <td style="text-align:center;color:#64748b;">read</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1e293b;">
+            <td style="padding:0.45em 0.75em;color:#cbd5e1;">Castings</td>
+            <td style="text-align:center;color:#4ade80;">CRUD</td>
+            <td style="text-align:center;color:#64748b;">read</td>
+            <td style="text-align:center;color:#64748b;">read</td>
+            <td style="text-align:center;color:#4ade80;">CRUD</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1e293b;">
+            <td style="padding:0.45em 0.75em;color:#cbd5e1;">Scene Runs</td>
+            <td style="text-align:center;color:#4ade80;">CRUD</td>
+            <td style="text-align:center;color:#64748b;">read</td>
+            <td style="text-align:center;color:#fbbf24;">create+read</td>
+            <td style="text-align:center;color:#64748b;">read</td>
+          </tr>
+          <tr style="border-bottom:1px solid #1e293b;">
+            <td style="padding:0.45em 0.75em;color:#cbd5e1;">Import / Export</td>
+            <td style="text-align:center;color:#4ade80;">✓</td>
+            <td style="text-align:center;color:#4ade80;">✓</td>
+            <td style="text-align:center;color:#64748b;">—</td>
+            <td style="text-align:center;color:#64748b;">—</td>
+          </tr>
+          <tr>
+            <td style="padding:0.45em 0.75em;color:#cbd5e1;">Users / Roles</td>
+            <td style="text-align:center;color:#4ade80;">CRUD</td>
+            <td style="text-align:center;color:#64748b;">—</td>
+            <td style="text-align:center;color:#64748b;">—</td>
+            <td style="text-align:center;color:#64748b;">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:0.78em;color:#475569;margin:0.4em 0 0;padding-left:0.25em;">Producer is the superuser. A user can hold multiple roles simultaneously.</p>
+  </div>
+</div>
+
+<!-- Auth flow -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5em;margin-bottom:1.5em;">
+  <div>
+    <p class="label">passwordless Auth Flow</p>
+    <div style="background:#0f172a;border:1px solid #4ade8044;border-radius:8px;padding:1em;font-size:0.85em;line-height:1.9;color:#cbd5e1;">
+      <div style="display:flex;gap:0.5em;margin-bottom:0.3em;"><span style="color:#4ade80;min-width:1.5em;">1.</span> User enters email at <code>/auth/sign_in</code></div>
+      <div style="display:flex;gap:0.5em;margin-bottom:0.3em;"><span style="color:#4ade80;min-width:1.5em;">2.</span> <code>passwordless</code> emails a magic link (token)</div>
+      <div style="display:flex;gap:0.5em;margin-bottom:0.3em;"><span style="color:#4ade80;min-width:1.5em;">3.</span> User clicks link → session established</div>
+      <div style="display:flex;gap:0.5em;margin-bottom:0.3em;"><span style="color:#4ade80;min-width:1.5em;">4.</span> <code>current_user</code> available in all controllers</div>
+      <div style="display:flex;gap:0.5em;"><span style="color:#4ade80;min-width:1.5em;">5.</span> Pundit policies check roles on every action</div>
+    </div>
+  </div>
+
+  <div>
+    <p class="label">Pundit Policy Pattern (example)</p>
+    <div style="background:#0f172a;border:1px solid #a78bfa44;border-radius:8px;padding:1em;font-family:monospace;font-size:0.8em;line-height:1.9;color:#cbd5e1;">
+      <span style="color:#94a3b8;"># app/policies/scene_policy.rb</span><br>
+      class ScenePolicy &lt; ApplicationPolicy<br>
+      &nbsp;&nbsp;def run?<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;user.has_role?(:director)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| user.has_role?(:producer)<br>
+      &nbsp;&nbsp;end<br>
+      &nbsp;&nbsp;def create?<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;user.has_role?(:writer)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| user.has_role?(:producer)<br>
+      &nbsp;&nbsp;end<br>
+      end
+    </div>
+  </div>
+</div>
+
+<!-- Gems -->
+<div>
+  <p class="label">Gem Stack Addition</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75em;font-size:0.85em;">
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:0.75em;">
+      <p style="color:#4ade80;font-weight:bold;margin:0 0 0.3em;">passwordless</p>
+      <p style="color:#94a3b8;margin:0;font-size:0.88em;">Magic-link email authentication. No passwords stored. Provides session management and the sign-in flow out of the box.</p>
+    </div>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:0.75em;">
+      <p style="color:#60a5fa;font-weight:bold;margin:0 0 0.3em;">pundit</p>
+      <p style="color:#94a3b8;margin:0;font-size:0.88em;">Policy objects — one file per resource. Clean fit with Phlex since there's no view layer magic. <code>authorize</code> called in every controller action.</p>
+    </div>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:0.75em;">
+      <p style="color:#a78bfa;font-weight:bold;margin:0 0 0.3em;">User#has_role?</p>
+      <p style="color:#94a3b8;margin:0;font-size:0.88em;">Simple helper method on User. No gem needed — roles are just a <code>has_many :through</code> and <code>roles.exists?(name:)</code>.</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:1.25em;padding:1em;background:#0f172a;border:1px solid #334155;border-radius:8px;">
+  <p style="margin:0 0 0.5em;font-size:0.9em;color:#94a3b8;">
+    <strong style="color:#f1f5f9;">Two things to confirm:</strong>
+  </p>
+  <p style="margin:0;font-size:0.9em;color:#94a3b8;">
+    1. Does the permissions table above match your intent for each role?<br>
+    2. Should roles be fixed (the enum above) or user-definable at runtime?
+  </p>
+</div>

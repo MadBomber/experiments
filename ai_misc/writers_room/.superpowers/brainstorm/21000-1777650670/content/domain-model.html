@@ -1,0 +1,89 @@
+<h2>Revised Domain Model</h2>
+<p class="subtitle">Actor ↔ Project through Characters — confirm this is right before we design the full app</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5em;margin-bottom:1.5em;">
+
+  <!-- ERD diagram -->
+  <div>
+    <p class="label">Entity Relationships</p>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1.25em;font-family:monospace;font-size:0.85em;line-height:2;">
+      <span style="color:#4ade80;">Actor</span> <span style="color:#64748b;">has_many :characters</span><br>
+      <span style="color:#4ade80;">Actor</span> <span style="color:#64748b;">has_many :projects, through: :characters</span><br>
+      <br>
+      <span style="color:#60a5fa;">Project</span> <span style="color:#64748b;">has_many :characters</span><br>
+      <span style="color:#60a5fa;">Project</span> <span style="color:#64748b;">has_many :actors, through: :characters</span><br>
+      <span style="color:#60a5fa;">Project</span> <span style="color:#64748b;">has_many :scenes</span><br>
+      <br>
+      <span style="color:#f59e0b;">Character</span> <span style="color:#64748b;">belongs_to :actor</span> <span style="color:#94a3b8;"># Clint in this role</span><br>
+      <span style="color:#f59e0b;">Character</span> <span style="color:#64748b;">belongs_to :project</span> <span style="color:#94a3b8;"># in this film</span><br>
+      <span style="color:#f59e0b;">Character</span> <span style="color:#64748b;"># + LLM agent state</span><br>
+      <br>
+      <span style="color:#a78bfa;">Scene</span> <span style="color:#64748b;">belongs_to :project</span><br>
+      <span style="color:#a78bfa;">Scene</span> <span style="color:#64748b;">has_many :scene_characters</span> <span style="color:#94a3b8;"># cast list</span><br>
+      <br>
+      <span style="color:#fb7185;">SceneRun</span> <span style="color:#64748b;">belongs_to :scene</span><br>
+      <span style="color:#fb7185;">SceneRun</span> <span style="color:#64748b;">has_many :transcript_lines</span>
+    </div>
+  </div>
+
+  <!-- Real-world analogy -->
+  <div>
+    <p class="label">The Clint Eastwood Analogy</p>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1.25em;font-size:0.9em;line-height:1.8;">
+      <div style="margin-bottom:1em;">
+        <span style="color:#4ade80;font-weight:bold;">Actor: Clint Eastwood</span><br>
+        <span style="color:#94a3b8;font-size:0.85em;">Consistent LLM persona, model preference, token budget</span>
+      </div>
+      <div style="border-left:2px solid #334155;padding-left:1em;margin-bottom:0.75em;">
+        <span style="color:#60a5fa;">Project:</span> A Fistful of Dollars<br>
+        <span style="color:#f59e0b;">Character:</span> Joe (The Man with No Name)
+      </div>
+      <div style="border-left:2px solid #334155;padding-left:1em;margin-bottom:0.75em;">
+        <span style="color:#60a5fa;">Project:</span> The Good, the Bad and the Ugly<br>
+        <span style="color:#f59e0b;">Character:</span> Blondie
+      </div>
+      <div style="border-left:2px solid #334155;padding-left:1em;">
+        <span style="color:#60a5fa;">Project:</span> A Comedy Play (same project, two roles)<br>
+        <span style="color:#f59e0b;">Character:</span> Sheriff Dawson + Narrator
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Character as the pivot -->
+<div style="background:#1e293b;border:1px solid #f59e0b44;border-radius:8px;padding:1em;margin-bottom:1.5em;">
+  <p style="margin:0 0 0.5em;color:#f59e0b;font-weight:bold;">Character = the pivot between Actor and Project</p>
+  <p style="margin:0;font-size:0.9em;color:#cbd5e1;">
+    Character is not just a join table — it's the LLM agent model. It carries:
+    the role's <strong>personality, voice pattern, arc, objectives</strong> (the character definition)
+    plus <strong>model, provider, data, token counts</strong> (the robot_lab agent state).
+    One Actor can have multiple Characters in the same Project.
+  </p>
+</div>
+
+<!-- Schema sketch -->
+<div>
+  <p class="label">Key Database Columns</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75em;font-size:0.82em;">
+    <div style="background:#0f172a;border:1px solid #4ade8044;border-radius:6px;padding:0.75em;">
+      <p style="color:#4ade80;font-weight:bold;margin:0 0 0.5em;">actors</p>
+      <p style="color:#94a3b8;margin:0;line-height:1.8;">id<br>name<br>description<br>style_notes<br>preferred_model<br>preferred_provider<br>timestamps</p>
+    </div>
+    <div style="background:#0f172a;border:1px solid #60a5fa44;border-radius:6px;padding:0.75em;">
+      <p style="color:#60a5fa;font-weight:bold;margin:0 0 0.5em;">projects</p>
+      <p style="color:#94a3b8;margin:0;line-height:1.8;">id<br>title<br>description<br>genre<br>tagline<br>timestamps</p>
+    </div>
+    <div style="background:#0f172a;border:1px solid #f59e0b44;border-radius:6px;padding:0.75em;">
+      <p style="color:#f59e0b;font-weight:bold;margin:0 0 0.5em;">characters <span style="font-size:0.8em;color:#94a3b8;">(agent)</span></p>
+      <p style="color:#94a3b8;margin:0;line-height:1.8;">id<br>actor_id, project_id<br>name, personality<br>voice_pattern, arc<br>— robot_lab state —<br>model, provider<br>data (text)<br>input/output/total_tokens<br>timestamps</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:1.5em;padding:1em;background:#0f172a;border:1px solid #334155;border-radius:8px;">
+  <p style="margin:0;font-size:0.9em;color:#94a3b8;">
+    Does this look right? Let me know in the terminal if anything needs adjusting — particularly around
+    <strong style="color:#f1f5f9;">SceneRun</strong> (how transcripts are stored) or whether
+    <strong style="color:#f1f5f9;">Actor</strong> should carry any LLM state itself vs. only Character.
+  </p>
+</div>

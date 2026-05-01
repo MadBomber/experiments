@@ -1,0 +1,847 @@
+description,latitude,longitude,altitude
+"Achille, Oklahoma",33.835346,-96.388752,208.0
+"Ada, Oklahoma",34.767914,-96.669114,315.0
+"Adair, Oklahoma",36.43641,-95.273445,209.0
+"Adams, Oklahoma",36.754581,-101.075164,865.0
+"Adamson, Oklahoma",34.924784,-95.547583,191.0
+"Addington, Oklahoma",34.243091,-97.966102,288.0
+"Afton, Oklahoma",36.696535,-94.957463,239.0
+"Agra, Oklahoma",35.894937,-96.870195,314.0
+"Akins, Oklahoma",35.503967,-94.666795,182.0
+"Albany, Oklahoma",33.874518,-96.155242,169.0
+"Albion, Oklahoma",34.662141,-95.099369,203.0
+"Alderson, Oklahoma",34.900593,-95.689431,212.0
+"Alex, Oklahoma",34.922801,-97.776329,314.0
+"Aline, Oklahoma",36.50967,-98.448672,397.0
+"Allen, Oklahoma",34.877628,-96.412889,265.0
+"Altus, Oklahoma",34.657061,-99.309046,417.0
+"Alva, Oklahoma",36.789566,-98.664877,450.0
+"Amber, Oklahoma",35.160232,-97.882055,383.0
+"Ames, Oklahoma",36.246962,-98.186139,370.0
+"Amorita, Oklahoma",36.924012,-98.293621,369.0
+"Anadarko, Oklahoma",35.065296,-98.244469,360.0
+"Antlers, Oklahoma",34.233026,-95.622759,158.0
+"Apache, Oklahoma",34.894169,-98.358726,393.0
+"Arapaho, Oklahoma",35.577797,-98.959345,508.0
+"Arcadia, Oklahoma",35.665487,-97.325515,295.0
+"Ardmore, Oklahoma",34.196507,-97.131848,269.0
+"Arkoma, Oklahoma",35.330247,-94.448332,126.0
+"Armstrong, Oklahoma",34.052816,-96.34484,182.0
+"Arnett, Oklahoma",36.134487,-99.772706,748.0
+"Arpelar, Oklahoma",34.932848,-95.951695,234.0
+"Asher, Oklahoma",34.988373,-96.925401,308.0
+"Ashland, Oklahoma",34.765566,-96.070867,233.0
+"Atoka, Oklahoma",34.386353,-96.131101,194.0
+"Atwood, Oklahoma",34.955155,-96.336762,244.0
+"Avant, Oklahoma",36.489631,-96.04626,207.0
+"Avard, Oklahoma",36.697358,-98.789357,451.0
+"Bache, Oklahoma",34.894269,-95.650526,229.0
+"Badger Lee, Oklahoma",35.473733,-94.818981,181.0
+"Baker, Oklahoma",36.870414,-101.017712,868.0
+"Ballou, Oklahoma",36.142127,-95.199834,219.0
+"Barber, Oklahoma",35.752135,-94.848449,281.0
+"Barnsdall, Oklahoma",36.560938,-96.15577,222.0
+"Baron, Oklahoma",35.935523,-94.602071,328.0
+"Bartlesville, Oklahoma",36.737668,-95.948454,205.0
+"Bearden, Oklahoma",35.364298,-96.388587,265.0
+"Beaver, Oklahoma",36.815087,-100.523543,737.0
+"Bee, Oklahoma",34.124588,-96.568773,211.0
+"Beggs, Oklahoma",35.741386,-96.066464,222.0
+"Belfonte, Oklahoma",35.542915,-94.551167,207.0
+"Bell, Oklahoma",35.729723,-94.567897,325.0
+"Bennington, Oklahoma",34.005396,-96.038388,191.0
+"Bentley, Oklahoma",34.217411,-96.07971,177.0
+"Bernice, Oklahoma",36.623395,-94.913481,237.0
+"Bessie, Oklahoma",35.385419,-98.989178,472.0
+"Bethany, Oklahoma",35.507174,-97.641734,400.0
+"Bethel Acres, Oklahoma",35.311366,-97.045059,348.0
+"Big Cabin, Oklahoma",36.537602,-95.229368,215.0
+"Billings, Oklahoma",36.537595,-97.441749,312.0
+"Binger, Oklahoma",35.310487,-98.343134,415.0
+"Bison, Oklahoma",36.195948,-97.897913,370.0
+"Bixby, Oklahoma",35.945571,-95.878343,186.0
+"Blackburn, Oklahoma",36.373312,-96.596551,247.0
+"Blackgum, Oklahoma",35.612046,-94.992135,278.0
+"Blackwell, Oklahoma",36.801341,-97.300871,313.0
+"Blair, Oklahoma",34.780193,-99.333436,448.0
+"Blanchard, Oklahoma",35.152343,-97.665221,399.0
+"Blanco, Oklahoma",34.750821,-95.773563,216.0
+"Blue, Oklahoma",33.989938,-96.230368,176.0
+"Bluejacket, Oklahoma",36.800427,-95.074033,237.0
+"Boise City, Oklahoma",36.731336,-102.509522,1270.0
+"Bokchito, Oklahoma",34.015434,-96.141577,192.0
+"Bokoshe, Oklahoma",35.190371,-94.790406,164.0
+"Boley, Oklahoma",35.489868,-96.479953,265.0
+"Boswell, Oklahoma",34.027613,-95.869957,186.0
+"Bowlegs, Oklahoma",35.147276,-96.669273,287.0
+"Bowring, Oklahoma",36.878744,-96.11975,248.0
+"Box, Oklahoma",35.570017,-94.972763,247.0
+"Boynton, Oklahoma",35.649415,-95.6541,189.0
+"Bradley, Oklahoma",34.877967,-97.708744,329.0
+"Braggs, Oklahoma",35.663293,-95.198339,168.0
+"Braman, Oklahoma",36.923644,-97.335815,321.0
+"Bray, Oklahoma",34.60836,-97.817484,379.0
+"Breckenridge, Oklahoma",36.457242,-97.725465,366.0
+"Brent, Oklahoma",35.36622,-94.792473,157.0
+"Briartown, Oklahoma",35.297323,-95.238611,168.0
+"Bridge Creek, Oklahoma",35.233546,-97.734686,416.0
+"Bridgeport, Oklahoma",35.547622,-98.377478,454.0
+"Briggs, Oklahoma",35.921763,-94.878519,275.0
+"Bristow, Oklahoma",35.833592,-96.394395,253.0
+"Broken Arrow, Oklahoma",36.036529,-95.780996,221.0
+"Broken Bow, Oklahoma",34.028862,-94.741357,144.0
+"Bromide, Oklahoma",34.418295,-96.494761,214.0
+"Brooksville, Oklahoma",35.209675,-96.961127,296.0
+"Brush Creek, Oklahoma",36.416473,-94.783885,297.0
+"Brushy, Oklahoma",35.561647,-94.747517,261.0
+"Bryant, Oklahoma",35.392286,-96.062342,225.0
+"Buffalo, Oklahoma",36.829412,-99.637673,559.0
+"Bug Tussle, Oklahoma",35.033312,-95.675587,185.0
+"Bull Hollow, Oklahoma",36.304625,-94.900832,330.0
+"Bunch, Oklahoma",35.698852,-94.740242,328.0
+"Burbank, Oklahoma",36.696085,-96.728112,299.0
+"Burlington, Oklahoma",36.900213,-98.42341,372.0
+"Burneyville, Oklahoma",33.890125,-97.292396,227.0
+"Burns Flat, Oklahoma",35.354693,-99.175017,582.0
+"Bushyhead, Oklahoma",36.461664,-95.505238,228.0
+"Butler, Oklahoma",35.636448,-99.186377,539.0
+"Butler, Oklahoma",36.538724,-94.74057,265.0
+"Byars, Oklahoma",34.871969,-97.054224,313.0
+"Byng, Oklahoma",34.865667,-96.66777,304.0
+"Byron, Oklahoma",36.901382,-98.294423,364.0
+"Cache, Oklahoma",34.627562,-98.619548,382.0
+"Caddo, Oklahoma",34.125593,-96.263719,222.0
+"Calera, Oklahoma",33.930829,-96.42906,213.0
+"Calumet, Oklahoma",35.601385,-98.124786,422.0
+"Calvin, Oklahoma",34.96638,-96.249887,230.0
+"Camargo, Oklahoma",36.017902,-99.288454,592.0
+"Cameron, Oklahoma",35.137476,-94.539288,153.0
+"Canadian, Oklahoma",35.173963,-95.649404,219.0
+"Canadian Shores, Oklahoma",35.172853,-95.742081,206.0
+"Caney, Oklahoma",34.235764,-96.217168,182.0
+"Caney, Oklahoma",35.829557,-94.840026,233.0
+"Caney Ridge, Oklahoma",35.763926,-94.882761,222.0
+"Canton, Oklahoma",36.055018,-98.588403,485.0
+"Canute, Oklahoma",35.421969,-99.277927,575.0
+"Capron, Oklahoma",36.896662,-98.577622,395.0
+"Carlisle, Oklahoma",35.506877,-95.032222,184.0
+"Carlton Landing, Oklahoma",35.211734,-95.557049,247.0
+"Carmen, Oklahoma",36.579117,-98.457902,411.0
+"Carnegie, Oklahoma",35.102742,-98.599587,407.0
+"Carney, Oklahoma",35.805891,-97.015542,323.0
+"Carrier, Oklahoma",36.478594,-98.0172,412.0
+"Carter, Oklahoma",35.216948,-99.503576,558.0
+"Cartwright, Oklahoma",33.85539,-96.556978,202.0
+"Cashion, Oklahoma",35.800909,-97.675739,343.0
+"Castle, Oklahoma",35.468109,-96.391552,288.0
+"Catoosa, Oklahoma",36.180264,-95.77031,217.0
+"Cave Spring, Oklahoma",35.728177,-94.75814,359.0
+"Cayuga, Oklahoma",36.637389,-94.651732,247.0
+"Cedar Crest, Oklahoma",36.123176,-95.173148,246.0
+"Cedar Lake, Oklahoma",35.427,-98.193009,444.0
+"Cedar Valley, Oklahoma",35.872919,-97.500499,311.0
+"Cement, Oklahoma",34.936201,-98.136288,462.0
+"Centrahoma, Oklahoma",34.610397,-96.343671,215.0
+"Central High, Oklahoma",34.614327,-98.088648,356.0
+"Chance, Oklahoma",36.067498,-94.646266,360.0
+"Chandler, Oklahoma",35.712784,-96.836198,283.0
+"Chattanooga, Oklahoma",34.42386,-98.654017,350.0
+"Checotah, Oklahoma",35.482436,-95.522818,188.0
+"Chelsea, Oklahoma",36.532037,-95.434568,220.0
+"Cherokee, Oklahoma",36.750694,-98.357667,362.0
+"Cherry Tree, Oklahoma",35.746465,-94.643925,325.0
+"Chester, Oklahoma",36.215676,-98.921341,525.0
+"Chewey, Oklahoma",36.112488,-94.725729,329.0
+"Cheyenne, Oklahoma",35.61092,-99.676371,594.0
+"Chickasha, Oklahoma",35.040543,-97.947173,341.0
+"Choctaw, Oklahoma",35.484983,-97.269942,356.0
+"Chouteau, Oklahoma",36.189507,-95.338902,188.0
+"Christie, Oklahoma",35.97604,-94.646948,329.0
+"Cimarron City, Oklahoma",35.888778,-97.603211,301.0
+"Claremore, Oklahoma",36.315093,-95.609451,188.0
+"Clarita, Oklahoma",34.480967,-96.439393,209.0
+"Clarksville, Oklahoma",35.824076,-95.514082,172.0
+"Clayton, Oklahoma",34.586129,-95.355746,191.0
+"Clearview, Oklahoma",35.398249,-96.18696,240.0
+"Cleo Springs, Oklahoma",36.404928,-98.440027,390.0
+"Cleora, Oklahoma",36.595027,-94.942887,236.0
+"Cleveland, Oklahoma",36.310908,-96.47218,242.0
+"Clinton, Oklahoma",35.507101,-98.970503,480.0
+"Cloud Creek, Oklahoma",36.293782,-94.754354,316.0
+"Coalgate, Oklahoma",34.532271,-96.221205,189.0
+"Colbert, Oklahoma",33.858359,-96.507632,204.0
+"Colcord, Oklahoma",36.264707,-94.692344,351.0
+"Cole, Oklahoma",35.098548,-97.562738,338.0
+"Coleman, Oklahoma",34.264653,-96.420626,234.0
+"Collinsville, Oklahoma",36.369263,-95.861756,211.0
+"Colony, Oklahoma",35.348537,-98.671458,446.0
+"Comanche, Oklahoma",34.362503,-97.979879,322.0
+"Commerce, Oklahoma",36.934895,-94.861462,241.0
+"Connerville, Oklahoma",34.442069,-96.629676,296.0
+"Cookson, Oklahoma",35.721272,-94.915492,252.0
+"Cooperton, Oklahoma",34.86651,-98.875869,466.0
+"Copan, Oklahoma",36.900473,-95.925291,235.0
+"Copeland, Oklahoma",36.663775,-94.827148,269.0
+"Corn, Oklahoma",35.379052,-98.781704,483.0
+"Cornish, Oklahoma",34.163583,-97.596391,267.0
+"Cottonwood, Oklahoma",34.554699,-96.203235,181.0
+"Council Hill, Oklahoma",35.555812,-95.65251,200.0
+"Covington, Oklahoma",36.307474,-97.586358,350.0
+"Coweta, Oklahoma",35.967111,-95.65586,198.0
+"Cowlington, Oklahoma",35.309628,-94.783967,154.0
+"Coyle, Oklahoma",35.951879,-97.236079,283.0
+"Crescent, Oklahoma",35.951937,-97.594355,349.0
+"Crescent Springs, Oklahoma",35.89765,-97.602795,306.0
+"Cromwell, Oklahoma",35.340736,-96.459568,293.0
+"Crowder, Oklahoma",35.118247,-95.677794,189.0
+"Cumberland, Oklahoma",34.058719,-96.592436,212.0
+"Cushing, Oklahoma",35.979681,-96.761753,282.0
+"Custer City, Oklahoma",35.663829,-98.886946,541.0
+"Cyril, Oklahoma",34.898474,-98.20293,419.0
+"Dacoma, Oklahoma",36.659622,-98.563474,417.0
+"Dale, Oklahoma",35.384162,-97.043419,317.0
+"Davenport, Oklahoma",35.70938,-96.764208,259.0
+"Davidson, Oklahoma",34.242103,-99.078113,357.0
+"Davis, Oklahoma",34.429427,-97.174438,359.0
+"Deer Creek, Oklahoma",36.806682,-97.519483,333.0
+"Deer Lick, Oklahoma",36.459467,-94.746813,326.0
+"Del City, Oklahoma",35.448278,-97.440785,369.0
+"Delaware, Oklahoma",36.778958,-95.642539,219.0
+"Dennis, Oklahoma",36.547328,-94.87692,272.0
+"Depew, Oklahoma",35.801443,-96.511066,260.0
+"Devol, Oklahoma",34.1954,-98.588195,326.0
+"Dewar, Oklahoma",35.457918,-95.949132,197.0
+"Dewey, Oklahoma",36.790402,-95.933712,213.0
+"Dibble, Oklahoma",35.019655,-97.627086,369.0
+"Dickson, Oklahoma",34.190224,-96.99875,263.0
+"Dill City, Oklahoma",35.281822,-99.133647,573.0
+"Disney, Oklahoma",36.474142,-95.017845,232.0
+"Dixon, Oklahoma",35.161003,-96.518441,260.0
+"Dodge, Oklahoma",36.578926,-94.638484,281.0
+"Dotyville, Oklahoma",36.8514,-94.909763,236.0
+"Dougherty, Oklahoma",34.399808,-97.05148,235.0
+"Douglas, Oklahoma",36.260463,-97.6666,344.0
+"Dover, Oklahoma",35.981347,-97.910823,317.0
+"Dripping Springs, Oklahoma",36.170835,-94.685222,329.0
+"Drowning Creek, Oklahoma",36.4778,-94.894247,273.0
+"Drummond, Oklahoma",36.301724,-98.03578,375.0
+"Drumright, Oklahoma",35.989923,-96.597424,243.0
+"Dry Creek, Oklahoma",35.738788,-94.873333,328.0
+"Duchess Landing, Oklahoma",35.398468,-95.41658,190.0
+"Duncan, Oklahoma",34.481607,-97.960537,339.0
+"Durant, Oklahoma",33.995153,-96.39254,210.0
+"Durham, Oklahoma",35.84389,-99.926126,748.0
+"Dustin, Oklahoma",35.271245,-96.027826,217.0
+"Dwight Mission, Oklahoma",35.557966,-94.850529,183.0
+"Eagle City, Oklahoma",35.93383,-98.589967,520.0
+"Eagletown, Oklahoma",34.041866,-94.570239,134.0
+"Eakly, Oklahoma",35.305361,-98.55619,452.0
+"Earl, Oklahoma",34.203356,-96.892088,226.0
+"Earlsboro, Oklahoma",35.3292,-96.802928,307.0
+"East Duke, Oklahoma",34.662829,-99.569629,433.0
+"Edgewater Park, Oklahoma",34.824734,-98.375198,389.0
+"Edmond, Oklahoma",35.673807,-97.413076,331.0
+"El Reno, Oklahoma",35.541833,-97.961268,404.0
+"Eldon, Oklahoma",35.940128,-94.809192,296.0
+"Eldorado, Oklahoma",34.472945,-99.649617,442.0
+"Elgin, Oklahoma",34.785937,-98.296627,390.0
+"Elk City, Oklahoma",35.389612,-99.428749,599.0
+"Elm Grove, Oklahoma",35.795962,-94.568114,315.0
+"Elmer, Oklahoma",34.480801,-99.352104,401.0
+"Elmore City, Oklahoma",34.629322,-97.393953,304.0
+"Elohim City, Oklahoma",35.641465,-94.510467,348.0
+"Emet, Oklahoma",34.205997,-96.53929,248.0
+"Empire City, Oklahoma",34.477613,-98.059445,352.0
+"Enid, Oklahoma",36.406702,-97.869861,384.0
+"Enterprise, Oklahoma",35.22483,-95.376876,223.0
+"Erick, Oklahoma",35.215604,-99.868683,630.0
+"Erin Springs, Oklahoma",34.810665,-97.605272,305.0
+"Etowah, Oklahoma",35.125933,-97.1704,351.0
+"Etta, Oklahoma",35.836225,-94.903013,228.0
+"Eufaula, Oklahoma",35.292114,-95.586425,187.0
+"Evening Shade, Oklahoma",35.620973,-94.905374,295.0
+"Fair Oaks, Oklahoma",36.158993,-95.690685,184.0
+"Fairfax, Oklahoma",36.570081,-96.707885,271.0
+"Fairfield, Oklahoma",35.837508,-94.6082,357.0
+"Fairland, Oklahoma",36.751393,-94.847266,258.0
+"Fairmont, Oklahoma",36.356015,-97.705455,367.0
+"Fairview, Oklahoma",36.27061,-98.477017,396.0
+"Fallis, Oklahoma",35.749299,-97.118222,304.0
+"Fanshawe, Oklahoma",34.961951,-94.911181,245.0
+"Fargo, Oklahoma",36.374206,-99.622165,644.0
+"Faxon, Oklahoma",34.460258,-98.579374,330.0
+"Fay, Oklahoma",35.81609,-98.658661,518.0
+"Felt, Oklahoma",36.563366,-102.79479,1358.0
+"Finley, Oklahoma",34.327347,-95.497668,151.0
+"Fittstown, Oklahoma",34.609033,-96.640542,268.0
+"Fitzhugh, Oklahoma",34.657603,-96.766932,392.0
+"Fletcher, Oklahoma",34.823702,-98.231446,428.0
+"Flint Creek, Oklahoma",36.176928,-94.746713,349.0
+"Flute Springs, Oklahoma",35.626728,-94.799979,266.0
+"Foraker, Oklahoma",36.87283,-96.569211,387.0
+"Forest Park, Oklahoma",35.509858,-97.447143,363.0
+"Forgan, Oklahoma",36.906979,-100.537979,788.0
+"Fort Cobb, Oklahoma",35.115273,-98.445334,409.0
+"Fort Coffee, Oklahoma",35.294209,-94.571353,141.0
+"Fort Gibson, Oklahoma",35.782175,-95.260139,154.0
+"Fort Supply, Oklahoma",36.572092,-99.57352,614.0
+"Fort Towson, Oklahoma",34.031395,-95.277635,151.0
+"Foss, Oklahoma",35.450005,-99.170738,493.0
+"Foster, Oklahoma",34.605963,-97.489859,304.0
+"Fox, Oklahoma",34.357864,-97.495,308.0
+"Foyil, Oklahoma",36.430325,-95.520461,227.0
+"Francis, Oklahoma",34.874579,-96.59266,290.0
+"Frederick, Oklahoma",34.349965,-98.987997,377.0
+"Freedom, Oklahoma",36.767478,-99.112273,468.0
+"Friendship, Oklahoma",34.697835,-99.228694,426.0
+"Gage, Oklahoma",36.318128,-99.757603,653.0
+"Gans, Oklahoma",35.387658,-94.693563,167.0
+"Garber, Oklahoma",36.436669,-97.581012,360.0
+"Garvin, Oklahoma",33.957181,-94.930997,133.0
+"Gate, Oklahoma",36.851706,-100.055208,692.0
+"Geary, Oklahoma",35.637076,-98.316976,459.0
+"Gene Autry, Oklahoma",34.314442,-97.042171,247.0
+"Geronimo, Oklahoma",34.483127,-98.387653,333.0
+"Gerty, Oklahoma",34.835734,-96.288876,256.0
+"Gideon, Oklahoma",35.997151,-95.027925,247.0
+"Glencoe, Oklahoma",36.234081,-96.932853,311.0
+"Glenpool, Oklahoma",35.94949,-96.006754,216.0
+"Golden, Oklahoma",34.030741,-94.902967,120.0
+"Goldsby, Oklahoma",35.123907,-97.486624,366.0
+"Goltry, Oklahoma",36.531965,-98.151302,421.0
+"Goodwell, Oklahoma",36.59479,-101.621981,999.0
+"Gore, Oklahoma",35.54061,-95.112153,163.0
+"Gotebo, Oklahoma",35.07123,-98.874261,437.0
+"Gould, Oklahoma",34.669144,-99.773646,494.0
+"Gowen, Oklahoma",34.883282,-95.47238,221.0
+"Gracemont, Oklahoma",35.187856,-98.259114,389.0
+"Grainola, Oklahoma",36.937929,-96.648771,368.0
+"Grand Lake Towne, Oklahoma",36.505588,-95.027836,247.0
+"Grandfield, Oklahoma",34.230749,-98.687311,344.0
+"Grandview, Oklahoma",35.96476,-94.99866,295.0
+"Granite, Oklahoma",34.951154,-99.368379,484.0
+"Grant, Oklahoma",33.936486,-95.517868,147.0
+"Grayson, Oklahoma",35.505391,-95.871617,202.0
+"Greasy, Oklahoma",35.681874,-94.702453,356.0
+"Greenfield, Oklahoma",35.729052,-98.377483,445.0
+"Greenville, Oklahoma",34.0044,-97.121286,229.0
+"Gregory, Oklahoma",36.169725,-95.574088,193.0
+"Grove, Oklahoma",36.585034,-94.787247,253.0
+"Guthrie, Oklahoma",35.876512,-97.408657,312.0
+"Guymon, Oklahoma",36.690101,-101.477046,954.0
+"Haileyville, Oklahoma",34.854152,-95.578632,200.0
+"Hallett, Oklahoma",36.231852,-96.56786,281.0
+"Hammon, Oklahoma",35.63232,-99.38322,531.0
+"Hanna, Oklahoma",35.202089,-95.889242,211.0
+"Hanson, Oklahoma",35.438009,-94.698351,172.0
+"Hardesty, Oklahoma",36.614785,-101.193662,889.0
+"Harrah, Oklahoma",35.472048,-97.182687,341.0
+"Hartshorne, Oklahoma",34.838795,-95.561923,209.0
+"Haskell, Oklahoma",35.818966,-95.680398,183.0
+"Hastings, Oklahoma",34.22432,-98.108748,305.0
+"Haworth, Oklahoma",33.840923,-94.657009,124.0
+"Haywood, Oklahoma",34.891946,-95.951981,242.0
+"Headrick, Oklahoma",34.626894,-99.137336,415.0
+"Healdton, Oklahoma",34.231506,-97.487173,294.0
+"Heavener, Oklahoma",34.891965,-94.60779,181.0
+"Helena, Oklahoma",36.546477,-98.27187,427.0
+"Hendrix, Oklahoma",33.775265,-96.407082,182.0
+"Hennepin, Oklahoma",34.517219,-97.345376,277.0
+"Hennessey, Oklahoma",36.105811,-97.898615,356.0
+"Henryetta, Oklahoma",35.441655,-95.986416,226.0
+"Hickory, Oklahoma",34.556478,-96.85342,377.0
+"Hillsdale, Oklahoma",36.56325,-97.992664,376.0
+"Hinton, Oklahoma",35.493227,-98.354723,489.0
+"Hitchcock, Oklahoma",35.967658,-98.349696,394.0
+"Hitchita, Oklahoma",35.519825,-95.751743,201.0
+"Hobart, Oklahoma",35.024606,-99.087579,472.0
+"Hochatown, Oklahoma",34.165729,-94.771597,246.0
+"Hodgen, Oklahoma",34.840444,-94.633889,165.0
+"Hoffman, Oklahoma",35.488837,-95.844692,193.0
+"Holdenville, Oklahoma",35.083481,-96.401353,271.0
+"Hollis, Oklahoma",34.689672,-99.915294,498.0
+"Hollister, Oklahoma",34.340936,-98.871131,343.0
+"Homestead, Oklahoma",36.14997,-98.397004,382.0
+"Hominy, Oklahoma",36.421925,-96.393031,238.0
+"Honey Hill, Oklahoma",35.764728,-94.574949,351.0
+"Hooker, Oklahoma",36.86136,-101.216256,912.0
+"Hoot Owl, Oklahoma",36.359983,-95.121414,220.0
+"Hopeton, Oklahoma",36.68818,-98.662014,429.0
+"Horntown, Oklahoma",35.083603,-96.23759,257.0
+"Hough, Oklahoma",36.871959,-101.57474,1001.0
+"Howe, Oklahoma",34.949572,-94.640305,149.0
+"Hoyt, Oklahoma",35.264849,-95.301151,171.0
+"Hugo, Oklahoma",34.011584,-95.512179,169.0
+"Hulbert, Oklahoma",35.931653,-95.145527,188.0
+"Hunter, Oklahoma",36.564017,-97.662508,331.0
+"Hydro, Oklahoma",35.54813,-98.580106,463.0
+"IXL, Oklahoma",35.528769,-96.385394,256.0
+"Idabel, Oklahoma",33.907406,-94.822174,134.0
+"Indiahoma, Oklahoma",34.619895,-98.75205,411.0
+"Indianola, Oklahoma",36.444505,-94.674667,343.0
+"Indianola, Oklahoma",35.163372,-95.775934,198.0
+"Ingalls, Oklahoma",36.104744,-96.87077,280.0
+"Inola, Oklahoma",36.113154,-95.551556,174.0
+"Iron Post, Oklahoma",36.155822,-95.135248,277.0
+"Isabella, Oklahoma",36.238987,-98.326401,392.0
+"Jay, Oklahoma",36.427112,-94.795571,313.0
+"Jefferson, Oklahoma",36.720343,-97.790901,318.0
+"Jenks, Oklahoma",35.998219,-95.973404,210.0
+"Jennings, Oklahoma",36.182278,-96.569162,286.0
+"Jet, Oklahoma",36.666527,-98.181648,380.0
+"Johnson, Oklahoma",35.413769,-96.849312,296.0
+"Johnson Prairie, Oklahoma",36.079103,-94.975868,341.0
+"Jones, Oklahoma",35.56673,-97.288914,339.0
+"Justice, Oklahoma",36.290802,-95.563561,198.0
+"Kansas, Oklahoma",36.205359,-94.788945,351.0
+"Katie, Oklahoma",34.590712,-97.32562,296.0
+"Kaw City, Oklahoma",36.766748,-96.861777,359.0
+"Keefton, Oklahoma",35.578506,-95.306315,164.0
+"Kellyville, Oklahoma",35.968997,-96.193923,252.0
+"Kemp, Oklahoma",33.769572,-96.354436,194.0
+"Kendrick, Oklahoma",35.785303,-96.775512,263.0
+"Kenefic, Oklahoma",34.149955,-96.36441,201.0
+"Kenton, Oklahoma",36.906359,-102.965209,1319.0
+"Kenwood, Oklahoma",36.301244,-94.997873,246.0
+"Keota, Oklahoma",35.257388,-94.922314,150.0
+"Ketchum, Oklahoma",36.517568,-95.037332,239.0
+"Keyes, Oklahoma",36.807634,-102.251735,1203.0
+"Keys, Oklahoma",35.802786,-94.941358,276.0
+"Kiefer, Oklahoma",35.943753,-96.05314,212.0
+"Kildare, Oklahoma",36.80836,-97.049982,342.0
+"Kingfisher, Oklahoma",35.844726,-97.939308,333.0
+"Kingston, Oklahoma",34.000377,-96.706504,240.0
+"Kinta, Oklahoma",35.119759,-95.238238,169.0
+"Kiowa, Oklahoma",34.723294,-95.902895,229.0
+"Knowles, Oklahoma",36.872893,-100.192416,772.0
+"Konawa, Oklahoma",34.957894,-96.753806,303.0
+"Krebs, Oklahoma",34.929783,-95.718636,203.0
+"Kremlin, Oklahoma",36.546573,-97.83233,341.0
+"Lahoma, Oklahoma",36.387988,-98.090322,379.0
+"Lake Aluma, Oklahoma",35.53147,-97.447417,341.0
+"Lake Ellsworth Addition, Oklahoma",34.836829,-98.321326,389.0
+"Lakeside Village, Oklahoma",34.798885,-98.381096,388.0
+"Lamar, Oklahoma",35.094209,-96.124823,232.0
+"Lambert, Oklahoma",36.683241,-98.423656,389.0
+"Lamont, Oklahoma",36.691319,-97.558274,309.0
+"Lane, Oklahoma",34.29988,-95.989631,177.0
+"Langley, Oklahoma",36.480261,-95.05721,245.0
+"Langston, Oklahoma",35.931276,-97.279406,287.0
+"Latta, Oklahoma",34.753149,-96.708797,302.0
+"Laverne, Oklahoma",36.705318,-99.896732,646.0
+"Lawrence Creek, Oklahoma",36.083804,-96.426756,236.0
+"Lawton, Oklahoma",34.617172,-98.4214,349.0
+"Lawtonka Acres, Oklahoma",34.780499,-98.529603,417.0
+"Le Flore, Oklahoma",34.894594,-94.978025,175.0
+"Leach, Oklahoma",36.197849,-94.909861,346.0
+"Lebanon, Oklahoma",33.971745,-96.92384,200.0
+"Leedey, Oklahoma",35.868423,-99.344924,627.0
+"Lehigh, Oklahoma",34.474729,-96.221689,180.0
+"Lenapah, Oklahoma",36.851347,-95.635696,231.0
+"Leon, Oklahoma",33.877336,-97.429083,248.0
+"Leonard, Oklahoma",35.922786,-95.801007,183.0
+"Lequire, Oklahoma",35.111147,-95.111859,166.0
+"Lexington, Oklahoma",35.017605,-97.335018,315.0
+"Liberty, Oklahoma",35.460861,-94.545749,262.0
+"Liberty, Oklahoma",35.853024,-95.986245,205.0
+"Lima, Oklahoma",35.173708,-96.598114,276.0
+"Limestone, Oklahoma",36.314343,-95.747728,216.0
+"Lindsay, Oklahoma",34.840485,-97.609851,298.0
+"Little City, Oklahoma",34.083955,-96.616047,230.0
+"Little Ponderosa, Oklahoma",36.961186,-100.878139,852.0
+"Little Rock, Oklahoma",36.214953,-95.091226,283.0
+"Loco, Oklahoma",34.329506,-97.680638,294.0
+"Locust Grove, Oklahoma",36.198162,-95.168874,205.0
+"Lone Chimney, Oklahoma",36.23265,-96.792914,328.0
+"Lone Grove, Oklahoma",34.180972,-97.253313,295.0
+"Lone Wolf, Oklahoma",34.990427,-99.245602,477.0
+"Long, Oklahoma",35.497823,-94.538858,266.0
+"Longdale, Oklahoma",36.133794,-98.551179,506.0
+"Longtown, Oklahoma",35.242373,-95.518593,188.0
+"Lookeba, Oklahoma",35.363005,-98.364095,413.0
+"Lost City, Oklahoma",36.000647,-95.122306,251.0
+"Lotsee, Oklahoma",36.133432,-96.209085,232.0
+"Loveland, Oklahoma",34.304985,-98.771271,328.0
+"Lovell, Oklahoma",36.056034,-97.636473,312.0
+"Lowrey, Oklahoma",36.099952,-94.930908,345.0
+"Loyal, Oklahoma",35.972771,-98.118154,343.0
+"Lucien, Oklahoma",36.274764,-97.455029,341.0
+"Luther, Oklahoma",35.668218,-97.190547,280.0
+"Lyons Switch, Oklahoma",35.788983,-94.685329,384.0
+"Macomb, Oklahoma",35.147902,-97.00865,302.0
+"Madill, Oklahoma",34.08708,-96.774665,247.0
+"Mallard Bay, Oklahoma",35.862248,-95.263845,176.0
+"Manchester, Oklahoma",36.994494,-98.0351,393.0
+"Mangum, Oklahoma",34.878559,-99.503906,491.0
+"Manitou, Oklahoma",34.507244,-98.981011,381.0
+"Mannford, Oklahoma",36.132862,-96.330428,224.0
+"Mannsville, Oklahoma",34.183123,-96.888853,244.0
+"Maramec, Oklahoma",36.24189,-96.680512,293.0
+"Marble City, Oklahoma",35.583882,-94.817396,230.0
+"Marietta, Oklahoma",35.848331,-94.653261,353.0
+"Marietta, Oklahoma",33.936172,-97.124716,258.0
+"Marland, Oklahoma",36.560995,-97.152772,313.0
+"Marlow, Oklahoma",34.631114,-97.956659,394.0
+"Marshall, Oklahoma",36.149683,-97.623244,320.0
+"Martha, Oklahoma",34.725983,-99.386657,431.0
+"Maud, Oklahoma",35.133451,-96.777971,298.0
+"May, Oklahoma",36.616708,-99.748636,624.0
+"Maysville, Oklahoma",34.864713,-97.373593,300.0
+"Mazie, Oklahoma",36.142561,-95.330214,191.0
+"McAlester, Oklahoma",34.926128,-95.773619,224.0
+"McBride, Oklahoma",33.934502,-96.636363,207.0
+"McCord, Oklahoma",36.673115,-97.035919,332.0
+"McCurtain, Oklahoma",35.150561,-94.967178,189.0
+"McLoud, Oklahoma",35.412153,-97.106622,343.0
+"Mead, Oklahoma",33.997991,-96.518641,226.0
+"Medford, Oklahoma",36.803444,-97.738169,334.0
+"Medicine Park, Oklahoma",34.73199,-98.48897,425.0
+"Meeker, Oklahoma",35.489312,-96.897646,284.0
+"Mehan, Oklahoma",36.04583,-96.940133,259.0
+"Meno, Oklahoma",36.388195,-98.177925,410.0
+"Meridian, Oklahoma",35.844226,-97.245563,316.0
+"Miami, Oklahoma",36.887738,-94.870913,238.0
+"Middleberg, Oklahoma",35.10661,-97.73416,400.0
+"Midwest City, Oklahoma",35.458752,-97.37457,373.0
+"Milburn, Oklahoma",34.238658,-96.552394,222.0
+"Milfay, Oklahoma",35.75095,-96.559172,256.0
+"Mill Creek, Oklahoma",34.402551,-96.825196,317.0
+"Millerton, Oklahoma",33.984902,-95.023033,150.0
+"Minco, Oklahoma",35.315621,-97.951407,400.0
+"Moffett, Oklahoma",35.404671,-94.455721,127.0
+"Monroe, Oklahoma",34.993724,-94.515539,163.0
+"Moodys, Oklahoma",36.034069,-94.956412,287.0
+"Moore, Oklahoma",35.328503,-97.474763,369.0
+"Mooreland, Oklahoma",36.437701,-99.204847,578.0
+"Morris, Oklahoma",35.605211,-95.860823,224.0
+"Morrison, Oklahoma",36.29173,-97.0348,284.0
+"Mounds, Oklahoma",35.875913,-96.066128,223.0
+"Mountain Park, Oklahoma",34.698829,-98.952348,418.0
+"Mountain View, Oklahoma",35.099516,-98.749749,411.0
+"Moyers, Oklahoma",34.325002,-95.651087,150.0
+"Mulberry, Oklahoma",35.868687,-94.69945,332.0
+"Muldrow, Oklahoma",35.40342,-94.597523,157.0
+"Mule Barn, Oklahoma",36.217903,-96.312301,267.0
+"Mulhall, Oklahoma",36.112098,-97.342802,341.0
+"Murphy, Oklahoma",36.134102,-95.24137,245.0
+"Muskogee, Oklahoma",35.743797,-95.356405,179.0
+"Mustang, Oklahoma",35.391847,-97.72514,409.0
+"Mutual, Oklahoma",36.230462,-99.167975,573.0
+"Narcissa, Oklahoma",36.801033,-94.927866,256.0
+"Nardin, Oklahoma",36.804091,-97.449868,331.0
+"Nash, Oklahoma",36.665048,-98.051966,342.0
+"Nashoba, Oklahoma",34.480729,-95.210298,211.0
+"Nelagoney, Oklahoma",36.626037,-96.2441,256.0
+"Nescatunga, Oklahoma",36.754293,-98.156052,348.0
+"New Alluwe, Oklahoma",36.610102,-95.488565,222.0
+"New Cordell, Oklahoma",35.296862,-98.983769,470.0
+"New Eucha, Oklahoma",36.39116,-94.852242,327.0
+"New Woodville, Oklahoma",33.968845,-96.654842,233.0
+"Newcastle, Oklahoma",35.242395,-97.595336,363.0
+"Newkirk, Oklahoma",36.881797,-97.055292,350.0
+"Nichols Hills, Oklahoma",35.546389,-97.54327,365.0
+"Nicoma Park, Oklahoma",35.49178,-97.324313,363.0
+"Nicut, Oklahoma",35.602384,-94.562909,183.0
+"Ninnekah, Oklahoma",34.964011,-97.944707,352.0
+"Noble, Oklahoma",35.134919,-97.371089,357.0
+"Norge, Oklahoma",34.98878,-97.994049,386.0
+"Norman, Oklahoma",35.240569,-97.345299,351.0
+"North Enid, Oklahoma",36.445832,-97.863389,383.0
+"North Miami, Oklahoma",36.920131,-94.879654,248.0
+"Norwood, Oklahoma",35.844683,-95.151226,272.0
+"Notchietown, Oklahoma",35.585427,-95.089467,183.0
+"Nowata, Oklahoma",36.699265,-95.637465,216.0
+"Oak Grove, Oklahoma",36.205613,-96.338423,237.0
+"Oak Hill-Piney, Oklahoma",36.378688,-94.726565,317.0
+"Oakhurst, Oklahoma",36.08061,-96.062364,224.0
+"Oakland, Oklahoma",34.093175,-96.802424,271.0
+"Oaks, Oklahoma",36.169798,-94.852931,311.0
+"Oakwood, Oklahoma",35.931616,-98.703088,560.0
+"Ochelata, Oklahoma",36.602685,-95.975056,221.0
+"Oilton, Oklahoma",36.082655,-96.581442,240.0
+"Okarche, Oklahoma",35.724871,-97.975675,380.0
+"Okay, Oklahoma",35.865019,-95.307735,173.0
+"Okeene, Oklahoma",36.117076,-98.316734,373.0
+"Okemah, Oklahoma",35.429269,-96.300309,268.0
+"Oklahoma City, Oklahoma",35.467079,-97.513657,368.0
+"Okmulgee, Oklahoma",35.625162,-95.954032,215.0
+"Oktaha, Oklahoma",35.577489,-95.477892,182.0
+"Old Eucha, Oklahoma",36.355135,-94.937907,302.0
+"Old Green, Oklahoma",35.98533,-94.608227,327.0
+"Olive, Oklahoma",36.02382,-96.481544,274.0
+"Olustee, Oklahoma",34.547754,-99.424066,407.0
+"Oologah, Oklahoma",36.443778,-95.708911,198.0
+"Optima, Oklahoma",36.761275,-101.349203,918.0
+"Orlando, Oklahoma",36.148356,-97.374844,332.0
+"Osage, Oklahoma",36.295702,-96.417211,259.0
+"Owasso, Oklahoma",36.287217,-95.835365,211.0
+"Paden, Oklahoma",35.508363,-96.567089,304.0
+"Panama, Oklahoma",35.171182,-94.668428,139.0
+"Panola, Oklahoma",34.922121,-95.208671,205.0
+"Paoli, Oklahoma",34.827046,-97.262269,292.0
+"Paradise Hill, Oklahoma",35.607345,-95.07309,235.0
+"Park Hill, Oklahoma",35.834444,-94.972077,234.0
+"Pauls Valley, Oklahoma",34.710206,-97.224027,291.0
+"Pawhuska, Oklahoma",36.669064,-96.331216,249.0
+"Pawnee, Oklahoma",36.35148,-96.800504,254.0
+"Peavine, Oklahoma",35.900317,-94.606632,331.0
+"Peckham, Oklahoma",36.886652,-97.178056,339.0
+"Peggs, Oklahoma",36.067284,-95.071798,301.0
+"Pensacola, Oklahoma",36.459227,-95.127764,200.0
+"Peoria, Oklahoma",36.915563,-94.669552,268.0
+"Perkins, Oklahoma",35.979763,-97.03129,279.0
+"Perry, Oklahoma",36.280149,-97.30819,323.0
+"Pershing, Oklahoma",36.590124,-96.273126,278.0
+"Pettit, Oklahoma",35.773684,-94.976758,275.0
+"Phillips, Oklahoma",34.504221,-96.222227,179.0
+"Pickett, Oklahoma",34.779506,-96.775519,303.0
+"Piedmont, Oklahoma",35.674845,-97.753508,372.0
+"Pin Oak Acres, Oklahoma",36.122561,-95.288859,208.0
+"Piney, Oklahoma",35.890519,-94.555943,340.0
+"Pinhook Corner, Oklahoma",35.533147,-94.891677,203.0
+"Pink, Oklahoma",35.232691,-97.100032,328.0
+"Pittsburg, Oklahoma",34.711636,-95.850183,238.0
+"Platter, Oklahoma",33.907851,-96.533959,202.0
+"Pocasset, Oklahoma",35.177995,-97.959187,355.0
+"Pocola, Oklahoma",35.251531,-94.467919,138.0
+"Ponca City, Oklahoma",36.721042,-97.068444,308.0
+"Pond Creek, Oklahoma",36.667836,-97.802391,319.0
+"Pontotoc, Oklahoma",34.488836,-96.629019,315.0
+"Porter, Oklahoma",35.868409,-95.515954,188.0
+"Porum, Oklahoma",35.357128,-95.26339,178.0
+"Poteau, Oklahoma",35.06665,-94.610269,140.0
+"Prague, Oklahoma",35.496803,-96.69987,302.0
+"Preston, Oklahoma",35.711385,-95.988942,245.0
+"Proctor, Oklahoma",35.980356,-94.736268,300.0
+"Prue, Oklahoma",36.249422,-96.266523,249.0
+"Pryor Creek, Oklahoma",36.299675,-95.311286,190.0
+"Pump Back, Oklahoma",36.260656,-95.121073,236.0
+"Pumpkin Hollow, Oklahoma",36.005973,-94.841439,352.0
+"Purcell, Oklahoma",35.02366,-97.373675,339.0
+"Putnam, Oklahoma",35.855908,-98.968223,601.0
+"Quapaw, Oklahoma",36.949989,-94.78653,261.0
+"Quay, Oklahoma",36.160699,-96.70827,280.0
+"Quinlan, Oklahoma",36.456222,-99.045728,526.0
+"Quinton, Oklahoma",35.12606,-95.366479,195.0
+"Ralston, Oklahoma",36.503475,-96.73738,251.0
+"Ramona, Oklahoma",36.537579,-95.926319,195.0
+"Randlett, Oklahoma",34.177347,-98.463921,317.0
+"Ratliff City, Oklahoma",34.452445,-97.517354,324.0
+"Rattan, Oklahoma",34.19604,-95.404544,164.0
+"Ravia, Oklahoma",34.241226,-96.756825,229.0
+"Reagan, Oklahoma",34.344063,-96.713367,279.0
+"Red Oak, Oklahoma",34.951328,-95.079441,180.0
+"Red Rock, Oklahoma",36.460071,-97.179608,280.0
+"Redbird, Oklahoma",35.887132,-95.587254,196.0
+"Redbird Smith, Oklahoma",35.563929,-95.024055,245.0
+"Remy, Oklahoma",35.46144,-94.499574,255.0
+"Renfrow, Oklahoma",36.92484,-97.657048,370.0
+"Rentiesville, Oklahoma",35.533543,-95.484796,183.0
+"Reydon, Oklahoma",35.649812,-99.92361,692.0
+"Ringling, Oklahoma",34.177257,-97.591474,277.0
+"Ringwood, Oklahoma",36.383582,-98.239964,405.0
+"Ripley, Oklahoma",36.01584,-96.903844,263.0
+"River Bottom, Oklahoma",35.635741,-95.237836,183.0
+"Rock Island, Oklahoma",35.184921,-94.482614,153.0
+"Rocky, Oklahoma",35.156408,-99.059646,503.0
+"Rocky Ford, Oklahoma",36.155773,-94.911016,321.0
+"Rocky Mountain, Oklahoma",35.790288,-94.771297,407.0
+"Rocky Point, Oklahoma",36.025606,-95.322084,198.0
+"Roff, Oklahoma",34.628935,-96.841467,382.0
+"Roland, Oklahoma",35.413179,-94.508525,143.0
+"Roosevelt, Oklahoma",34.848278,-99.022335,446.0
+"Rose, Oklahoma",36.212358,-95.038139,295.0
+"Rosedale, Oklahoma",34.918875,-97.185071,325.0
+"Rosston, Oklahoma",36.812897,-99.932746,652.0
+"Rush Springs, Oklahoma",34.778857,-97.95731,397.0
+"Ryan, Oklahoma",34.021415,-97.954152,277.0
+"Salina, Oklahoma",36.291629,-95.155423,193.0
+"Sallisaw, Oklahoma",35.46036,-94.806617,162.0
+"Sams Corner, Oklahoma",36.198319,-95.216708,195.0
+"Sand Hill, Oklahoma",35.634262,-95.2012,192.0
+"Sand Point, Oklahoma",33.960153,-96.571054,207.0
+"Sand Springs, Oklahoma",36.136482,-96.13197,199.0
+"Sapulpa, Oklahoma",36.004206,-96.123275,238.0
+"Sasakwa, Oklahoma",34.946762,-96.52533,257.0
+"Savanna, Oklahoma",34.836138,-95.835749,225.0
+"Sawyer, Oklahoma",34.018708,-95.378474,130.0
+"Sayre, Oklahoma",35.295653,-99.628239,577.0
+"Schulter, Oklahoma",35.511268,-95.95654,217.0
+"Scipio, Oklahoma",35.051296,-95.955577,219.0
+"Seiling, Oklahoma",36.144651,-98.925437,537.0
+"Selman, Oklahoma",36.801413,-99.489322,528.0
+"Seminole, Oklahoma",35.234772,-96.649329,289.0
+"Sentinel, Oklahoma",35.156979,-99.173463,504.0
+"Sequoyah, Oklahoma",36.379744,-95.596839,230.0
+"Seward, Oklahoma",35.796668,-97.486973,310.0
+"Shady Grove, Oklahoma",35.948542,-95.095242,224.0
+"Shady Grove, Oklahoma",35.468503,-95.411458,207.0
+"Shady Point, Oklahoma",35.127585,-94.668491,149.0
+"Shamrock, Oklahoma",35.910664,-96.577693,306.0
+"Sharon, Oklahoma",36.275492,-99.338134,630.0
+"Shattuck, Oklahoma",36.26497,-99.877431,704.0
+"Shawnee, Oklahoma",35.369413,-96.956408,328.0
+"Shidler, Oklahoma",36.780521,-96.659952,354.0
+"Short, Oklahoma",35.568198,-94.495373,205.0
+"Silo, Oklahoma",34.035744,-96.474467,249.0
+"Simms, Oklahoma",35.39871,-95.164706,164.0
+"Skedee, Oklahoma",36.380474,-96.703923,257.0
+"Skiatook, Oklahoma",36.34654,-95.94536,214.0
+"Slaughterville, Oklahoma",35.094631,-97.282809,363.0
+"Slick, Oklahoma",35.778762,-96.264795,222.0
+"Smith Village, Oklahoma",35.45079,-97.457006,373.0
+"Smithville, Oklahoma",34.47276,-94.646471,223.0
+"Snake Creek, Oklahoma",36.178558,-95.093714,293.0
+"Snyder, Oklahoma",34.65541,-98.953394,412.0
+"Soper, Oklahoma",34.032075,-95.696601,164.0
+"Sour John, Oklahoma",35.620585,-95.143283,250.0
+"South Coffeyville, Oklahoma",36.992089,-95.621838,223.0
+"Sparks, Oklahoma",35.610915,-96.818516,258.0
+"Sparrowhawk, Oklahoma",35.970552,-94.892782,320.0
+"Spaulding, Oklahoma",35.013077,-96.440443,248.0
+"Spavinaw, Oklahoma",36.393932,-95.050185,219.0
+"Spencer, Oklahoma",35.510758,-97.371553,360.0
+"Sperry, Oklahoma",36.296681,-95.998986,193.0
+"Spiro, Oklahoma",35.240531,-94.624258,150.0
+"Sportmans Shores, Oklahoma",36.464013,-95.0829,213.0
+"Sportsmen Acres, Oklahoma",36.245577,-95.251695,187.0
+"Springer, Oklahoma",34.29562,-97.11745,265.0
+"St. Louis, Oklahoma",35.081259,-96.859791,285.0
+"Steely Hollow, Oklahoma",35.99169,-94.935948,326.0
+"Sterling, Oklahoma",34.749393,-98.172507,376.0
+"Stidham, Oklahoma",35.368643,-95.700754,193.0
+"Stigler, Oklahoma",35.258881,-95.11685,174.0
+"Stillwater, Oklahoma",36.131496,-97.074464,292.0
+"Stilwell, Oklahoma",35.815224,-94.631465,332.0
+"Stonewall, Oklahoma",34.649823,-96.526832,215.0
+"Stoney Point, Oklahoma",35.564708,-94.676222,343.0
+"Strang, Oklahoma",36.412259,-95.134738,203.0
+"Stratford, Oklahoma",34.795314,-96.960497,339.0
+"Stringtown, Oklahoma",34.4696,-96.055521,208.0
+"Strong City, Oklahoma",35.66984,-99.600448,578.0
+"Stroud, Oklahoma",35.768875,-96.65007,263.0
+"Stuart, Oklahoma",34.901062,-96.099426,224.0
+"Sugden, Oklahoma",34.08253,-97.978839,259.0
+"Sulphur, Oklahoma",34.501612,-96.986489,286.0
+"Summit, Oklahoma",35.669581,-95.420655,191.0
+"Sumner, Oklahoma",36.318302,-97.117931,287.0
+"Sunray, Oklahoma",34.409303,-97.954223,321.0
+"Sweetwater, Oklahoma",35.415025,-99.920299,663.0
+"Swink, Oklahoma",34.017272,-95.20179,153.0
+"Sycamore, Oklahoma",36.399006,-94.714954,327.0
+"Taft, Oklahoma",35.760334,-95.545985,181.0
+"Tagg Flats, Oklahoma",36.338723,-94.903645,292.0
+"Tahlequah, Oklahoma",35.910503,-94.97772,255.0
+"Talala, Oklahoma",36.529472,-95.701074,208.0
+"Talihina, Oklahoma",34.75284,-95.043566,213.0
+"Taloga, Oklahoma",36.040236,-98.964039,521.0
+"Tamaha, Oklahoma",35.398188,-95.014189,156.0
+"Tatums, Oklahoma",34.477557,-97.464584,298.0
+"Taylor Ferry, Oklahoma",35.934485,-95.305379,196.0
+"Tecumseh, Oklahoma",35.264267,-96.933445,319.0
+"Temple, Oklahoma",34.272116,-98.234568,308.0
+"Tenkiller, Oklahoma",35.802534,-94.852314,263.0
+"Teresita, Oklahoma",36.123037,-94.980356,274.0
+"Terlton, Oklahoma",36.187621,-96.491817,239.0
+"Terral, Oklahoma",33.896632,-97.938228,259.0
+"Texanna, Oklahoma",35.357918,-95.511754,207.0
+"Texhoma, Oklahoma",36.505405,-101.787387,1064.0
+"Texola, Oklahoma",35.222462,-99.992959,655.0
+"Thackerville, Oklahoma",33.787525,-97.13918,262.0
+"The Village, Oklahoma",35.570276,-97.557499,367.0
+"Thomas, Oklahoma",35.744773,-98.739686,537.0
+"Tiawah, Oklahoma",36.248285,-95.53619,184.0
+"Tipton, Oklahoma",34.499357,-99.136278,398.0
+"Tishomingo, Oklahoma",34.239048,-96.68242,213.0
+"Titanic, Oklahoma",35.890698,-94.740643,333.0
+"Tonkawa, Oklahoma",36.670589,-97.315028,290.0
+"Tonkawa Tribal Housing, Oklahoma",36.669741,-97.266254,300.0
+"Toppers, Oklahoma",35.966203,-95.319681,197.0
+"Tribbey, Oklahoma",35.103791,-97.105602,324.0
+"Tryon, Oklahoma",35.877055,-96.96959,305.0
+"Tullahassee, Oklahoma",35.834812,-95.446942,181.0
+"Tulsa, Oklahoma",36.127949,-95.902316,222.0
+"Tupelo, Oklahoma",34.602685,-96.420791,216.0
+"Turley, Oklahoma",36.246853,-95.966211,190.0
+"Turpin, Oklahoma",36.870458,-100.882502,838.0
+"Tushka, Oklahoma",34.318649,-96.167332,189.0
+"Tuskahoma, Oklahoma",34.629729,-95.282605,192.0
+"Tuttle, Oklahoma",35.313876,-97.753612,385.0
+"Twin Lakes, Oklahoma",35.868492,-97.665038,298.0
+"Twin Oaks, Oklahoma",36.197428,-94.837848,344.0
+"Tyrone, Oklahoma",36.955669,-101.067992,893.0
+"Union City, Oklahoma",35.399523,-97.906705,401.0
+"Utica, Oklahoma",33.906613,-96.221735,183.0
+"Valley Brook, Oklahoma",35.40267,-97.481423,389.0
+"Valley Park, Oklahoma",36.278805,-95.735742,195.0
+"Valliant, Oklahoma",34.007542,-95.084904,162.0
+"Vanoss, Oklahoma",34.757816,-96.871209,318.0
+"Velma, Oklahoma",34.456418,-97.663845,324.0
+"Vera, Oklahoma",36.452641,-95.892914,195.0
+"Verden, Oklahoma",35.083316,-98.086122,346.0
+"Verdigris, Oklahoma",36.253691,-95.660458,186.0
+"Vernon, Oklahoma",35.226515,-95.938588,240.0
+"Vian, Oklahoma",35.50425,-94.969826,174.0
+"Vici, Oklahoma",36.14881,-99.299433,691.0
+"Vinita, Oklahoma",36.644152,-95.062183,217.0
+"Wagoner, Oklahoma",35.965686,-95.377715,180.0
+"Wainwright, Oklahoma",35.613519,-95.565562,196.0
+"Wakita, Oklahoma",36.88186,-97.923948,360.0
+"Walters, Oklahoma",34.358433,-98.356883,323.0
+"Wanette, Oklahoma",34.974608,-97.028837,312.0
+"Wann, Oklahoma",36.914701,-95.804716,261.0
+"Wapanucka, Oklahoma",34.373472,-96.425128,196.0
+"Wardville, Oklahoma",34.654646,-96.030893,207.0
+"Warner, Oklahoma",35.491693,-95.308945,174.0
+"Warr Acres, Oklahoma",35.526104,-97.618106,403.0
+"Warwick, Oklahoma",35.690338,-97.005027,275.0
+"Washington, Oklahoma",35.054686,-97.490731,354.0
+"Washita, Oklahoma",35.104407,-98.341338,377.0
+"Watonga, Oklahoma",35.847503,-98.402734,465.0
+"Watova, Oklahoma",36.61972,-95.660449,226.0
+"Watts, Oklahoma",36.106512,-94.573885,304.0
+"Wauhillau, Oklahoma",35.861012,-94.75947,291.0
+"Waukomis, Oklahoma",36.286102,-97.902729,376.0
+"Waurika, Oklahoma",34.183747,-98.026293,269.0
+"Wayne, Oklahoma",34.91691,-97.316523,339.0
+"Waynoka, Oklahoma",36.582962,-98.87895,454.0
+"Weatherford, Oklahoma",35.537395,-98.684345,499.0
+"Webb City, Oklahoma",36.808308,-96.71331,332.0
+"Webbers Falls, Oklahoma",35.517003,-95.164221,162.0
+"Welch, Oklahoma",36.874408,-95.094399,252.0
+"Weleetka, Oklahoma",35.34029,-96.135974,221.0
+"Welling, Oklahoma",35.881053,-94.87032,236.0
+"Wellston, Oklahoma",35.683851,-97.063415,287.0
+"Welty, Oklahoma",35.62716,-96.417151,217.0
+"West Peavine, Oklahoma",35.911493,-94.652781,317.0
+"West Siloam Springs, Oklahoma",36.175983,-94.598966,354.0
+"Westport, Oklahoma",36.193432,-96.337138,230.0
+"Westville, Oklahoma",35.989661,-94.574665,354.0
+"Wetumka, Oklahoma",35.241875,-96.236791,233.0
+"Wewoka, Oklahoma",35.144068,-96.496775,267.0
+"Whippoorwill, Oklahoma",36.912011,-96.127692,244.0
+"White Eagle, Oklahoma",36.626662,-97.081228,281.0
+"White Oak, Oklahoma",36.609145,-95.275453,244.0
+"White Water, Oklahoma",36.50169,-94.728885,310.0
+"Whitefield, Oklahoma",35.254288,-95.244834,165.0
+"Whitehorn Cove, Oklahoma",35.994857,-95.287289,203.0
+"Whitesboro, Oklahoma",34.7047,-94.873497,229.0
+"Wickliffe, Oklahoma",36.312165,-95.107166,275.0
+"Wilburton, Oklahoma",34.91845,-95.304015,203.0
+"Willow, Oklahoma",35.051531,-99.509898,531.0
+"Wilson, Oklahoma",34.168664,-97.425407,285.0
+"Winchester, Oklahoma",35.790569,-95.998131,258.0
+"Wister, Oklahoma",34.969743,-94.720638,157.0
+"Woodall, Oklahoma",35.824573,-95.082349,222.0
+"Woodlawn Park, Oklahoma",35.509629,-97.649868,395.0
+"Woodward, Oklahoma",36.424832,-99.404726,606.0
+"Wright City, Oklahoma",34.066286,-95.00701,124.0
+"Wyandotte, Oklahoma",36.807143,-94.729305,239.0
+"Wynnewood, Oklahoma",34.642789,-97.162467,274.0
+"Wynona, Oklahoma",36.545789,-96.326351,276.0
+"Yale, Oklahoma",36.115147,-96.701059,249.0
+"Yeager, Oklahoma",35.156806,-96.339992,240.0
+"Yukon, Oklahoma",35.518409,-97.766172,385.0
+"Zeb, Oklahoma",35.796588,-95.055116,303.0
+"Zena, Oklahoma",36.508375,-94.84813,290.0
+"Zion, Oklahoma",35.787806,-94.642477,317.0

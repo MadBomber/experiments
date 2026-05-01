@@ -900,6 +900,73 @@ Chemical detection adds:
 - Plume modeling = spatial range that expands as a function of time
   (coupled spatial-temporal dimension, like trajectory)
 
+### 14. Vector Embeddings and Semantic Event Space
+
+An N-dimensional event IS a vector. A semantic embedding IS a vector. They
+operate in the same mathematical space and support the same operations:
+distance, similarity, clustering, nearest-neighbor search.
+
+**The difference:**
+- Event coordinates: each dimension is INTERPRETABLE (lat, lon, time, freq)
+- Embeddings: each dimension is LEARNED (opaque, but captures meaning)
+
+**They complement each other.** Neither alone is sufficient:
+
+| Approach | Strength | Weakness |
+|---|---|---|
+| Coordinate matching | Precise spatial/temporal queries | Can't capture semantic meaning |
+| Semantic embeddings | Handles meaning, paraphrases, intent | No spatial/temporal precision |
+| **Hybrid** | Both | Both |
+
+**The key insight:** An S-band signal activation in Baghdad and an S-band
+signal activation in Mosul score nearly identical on semantic similarity
+(0.998) but are 300km apart in coordinate space. Coordinate matching alone
+rejects the connection. Semantic matching alone ranks it equal to a nearby
+event. Only the hybrid approach reveals what it is: **possibly the same
+network operating from a different location.** That's an intelligence
+insight neither approach produces alone.
+
+#### Use Cases for the Hybrid Approach
+
+1. **Event similarity search**: "Find events like this one" — filter by
+   coordinate proximity, rank by semantic similarity
+2. **Natural language queries (RAG)**: "S-band activations near mosques
+   before Friday prayers" — embedding handles semantic intent, coordinates
+   handle precise filtering
+3. **Temporal pattern prediction**: Event sequences as trajectories through
+   vector space. Similar trajectories → similar outcomes.
+4. **Anomaly detection**: Event far from all known clusters in embedding
+   space = semantically anomalous. Normal embedding but wrong coordinates
+   = "right event, wrong place" anomaly.
+5. **Cross-domain correlation (JISR fusion)**: SIGINT, HUMINT, IMINT reports
+   share coordinate proximity AND semantic alignment despite different formats.
+   This is the intelligence fusion problem.
+6. **NL → coordinates (replacing the parser)**: Instead of regex/EBNF, embed
+   "after Ramadan" and "following the end of the holy month" and
+   "post-fasting period" — all map to the same temporal vector. The parsing
+   problem dissolves into a nearest-neighbor lookup.
+7. **Propagation modeling**: Chemical plumes, radio signals, disease outbreaks,
+   and rumors all propagate through dimensional space over time. Each is a
+   trajectory through the event vector space — a dynamic surface evolving
+   through N-dimensional coordinates.
+
+#### Connection to JISR Fusion
+
+This is exactly the JISR intelligence fusion problem:
+
+```
+SIGINT:  "S-band activation at grid 33.4N 44.3E, 0400 local"
+HUMINT:  "Source reports unusual military vehicle at the mosque"
+IMINT:   "Satellite shows new antenna installation at compound"
+
+Coordinate overlap: all within 2km, all within 48 hours
+Semantic overlap:   all relate to military communications capability
+```
+
+Neither coordinate matching nor semantic similarity alone confidently
+links these three reports. Together, they provide high-confidence
+correlation that these describe the same real-world activity.
+
 ## Potential Gem Names
 
 - `temporal` (probably taken)
@@ -1043,6 +1110,242 @@ uncertainty. An unknown direction keeps the full ring.
   NetworkCoordinate (IP/port/protocol), AcousticCoordinate, ChemicalCoordinate,
   NDimensionalEvent (arbitrary dimension bag). Three worked examples: SIGINT
   report with triangulation, cyber exfiltration event, CBRN chemical detection
+- `embeddings_and_event_space.rb` — Vector embeddings meet event coordinates:
+  HybridEventVector (structured coordinates + semantic embedding), coordinate
+  distance with per-dimension metrics, cosine similarity, hybrid scoring
+  (alpha-weighted blend). Seven use cases: similarity search, NL queries/RAG,
+  pattern prediction, anomaly detection, cross-domain correlation (JISR fusion),
+  NL-to-coordinates (replacing parsers), propagation modeling
+
+## Map Visualization with libgd-gis
+
+The [libgd-gis](https://github.com/ggerman/libgd-gis) gem is a native GIS and
+map-rendering engine for Ruby built on top of ruby-libgd. It generates map
+images directly from latitude/longitude data — no external map servers, no
+JavaScript, no QGIS or Mapbox required. Output formats include PNG, JPG, WebP,
+and GIF (including animated GIFs for time-based sequences).
+
+This is a natural fit for visualizing events that have GEOSPATIAL coordinates.
+
+### Why it fits this project
+
+- Our `Geospatial` class already stores `latitude`, `longitude`, `radius_m`,
+  `altitude`, `floor_alt`, and `ceiling_alt` — exactly the data libgd-gis
+  needs for point and area rendering.
+- Events with multiple geospatial coordinates (e.g., the road trip from Tyler
+  to Houston) could be rendered as connected routes on a map.
+- The `confidence` field on coordinates maps naturally to visual styling — high
+  confidence points rendered solid, low confidence rendered with larger
+  translucent circles or dashed outlines.
+- Temporal filtering (via `find_events_in_timerange`) combined with map
+  rendering enables animated GIF output showing events unfolding over time.
+- The `radius_m` field on geospatial coordinates can render as proportional
+  circles showing area-of-interest or uncertainty regions.
+
+### Basic integration sketch
+
+```ruby
+require "gd/gis"
+
+# Pull events from our repository
+events = repo.find_events_near(32.35, -95.30, 100_000)
+
+# Build a GeoJSON FeatureCollection from our domain objects
+features = events.flat_map do |event|
+  event.geospatial_coordinates.map do |coord|
+    {
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [coord.data.longitude, coord.data.latitude]
+      },
+      properties: {
+        name:       event.description,
+        confidence: coord.confidence,
+        radius_m:   coord.data.radius_m
+      }
+    }
+  end
+end
+
+geojson = { type: "FeatureCollection", features: features }
+File.write("/tmp/events.geojson", JSON.generate(geojson))
+
+# Render the map
+map = GD::GIS::Map.new(
+  bbox: [-96.0, 29.5, -94.5, 33.0],  # East Texas bounding box
+  zoom: 8,
+  basemap: :carto_light,
+  width: 1024,
+  height: 768
+)
+
+map.add_geojson("/tmp/events.geojson")
+map.render
+map.save("events_near_tyler.png")
+```
+
+### Potential use cases
+
+- **Static event maps** — render all events in a region as a PNG for reports
+  or dashboards
+- **Temporal animation** — generate frames for each time slice, combine into
+  an animated GIF showing event progression (e.g., troop movements, incident
+  timeline)
+- **Uncertainty visualization** — use `radius_m` and `confidence` to render
+  proportional circles with opacity reflecting certainty
+- **Reference graph overlay** — draw lines between events that reference each
+  other, showing the relationship network on a map
+- **Intelligence briefing maps** — the original JISR use case: render known
+  and suspected event locations with confidence-coded markers
+
+### Installation
+
+```ruby
+# Gemfile
+gem "libgd-gis"
+```
+
+Requires the GD library as a system dependency (`brew install gd` on macOS).
+
+### References
+
+- [GitHub — ggerman/libgd-gis](https://github.com/ggerman/libgd-gis)
+- [libgd-gis documentation](https://ggerman.github.io/libgd-gis/)
+- [Rebuilding Ruby's Image Processing Layer](https://rubystacknews.com/2026/01/02/rebuilding-rubys-image-processing-layer-why-ruby-libgd-matters-for-gis-and-the-future-of-ruby/)
+- [Making Maps with Ruby](https://rubystacknews.com/2026/01/29/making-maps-with-ruby/)
+- [Rendering Maps by Name: Symbolic Geographic Extents](https://rubystacknews.com/2026/02/20/%F0%9F%8C%8D-rendering-maps-by-name-symbolic-geographic-extents-in-ruby/)
+
+### Ruby Gems for Geocoding Addresses
+
+To populate our `Geospatial` coordinates from street addresses (and vice versa),
+these Ruby gems provide geocoding and reverse geocoding capabilities:
+
+#### Actively Maintained
+
+| Gem | Downloads | Description | Status |
+|-----|-----------|-------------|--------|
+| [geocoder](https://github.com/alexreisner/geocoder) | 97.5M | Complete geocoding solution — street address to lat/lon, reverse geocoding, IP geolocation. Supports 40+ APIs including Google, Nominatim, Mapbox, OpenCage, Bing, HERE. Works with ActiveRecord, Mongoid, or standalone. | Active (last release Sep 2025) |
+| [rgeo](https://github.com/rgeo/rgeo) | 31.7M | Geospatial data library implementing OGC Simple Features. Provides geometric types (points, polygons, lines), spatial operations, and coordinate transformations. Not a geocoder itself but the standard for spatial data in Ruby. | Active (last release Jan 2026) |
+| [activerecord-postgis-adapter](https://github.com/rgeo/activerecord-postgis-adapter) | 22.1M | ActiveRecord adapter for PostGIS. Adds spatial column types and spatial queries to Rails models. Pairs with rgeo. | Active (last release Nov 2025) |
+
+#### Dormant but Functional
+
+| Gem | Downloads | Description | Status |
+|-----|-----------|-------------|--------|
+| [geokit](https://github.com/geokit/geokit) | 27.7M | Geocoding and distance calculations. Supports Google, Yahoo BOSS, Nominatim, Mapbox, OpenCage, Geocod.io, Bing, Yandex, MapQuest, and Geonames. | Last release Jan 2023 |
+| [geokit-rails](https://github.com/geokit/geokit-rails) | 13.8M | Rails/ActiveRecord plugin for geokit. Adds `acts_as_mappable` with distance-based finders. | Last release 2023 |
+| [georuby](https://github.com/nofxx/georuby) | 4.0M | Geometric data types from OGC Simple Features. Read/write Shapefile, GeoJSON, KML, GeoRSS. | Inactive since 2015 |
+
+#### Integration with our domain model
+
+The `geocoder` gem is the strongest candidate. It can convert a street address
+to coordinates that feed directly into our `Geospatial` class:
+
+```ruby
+require 'geocoder'
+
+# Forward geocode: address → coordinates
+results = Geocoder.search("420 Rose Park Dr, Tyler, TX")
+if results.any?
+  loc = results.first
+  geo = Geospatial.new(latitude: loc.latitude, longitude: loc.longitude)
+
+  event = Event.new(
+    description: "Dentist appointment",
+    coordinates: [
+      Coordinate.new(type: 'geospatial', confidence: 1.0, data: geo),
+    ]
+  )
+end
+
+# Reverse geocode: coordinates → address (useful for display)
+results = Geocoder.search([32.3513, -95.3011])
+puts results.first.address  #=> "420 Rose Park Dr, Tyler, TX 75702, USA"
+```
+
+The `geocoder` gem supports multiple backends. For this project, the
+[Nominatim](https://nominatim.openstreetmap.org/) backend (OpenStreetMap, free,
+no API key) is a good default. For higher volume or commercial use, Google Maps,
+Mapbox, or HERE are solid options.
+
+```ruby
+# Configure Nominatim as the default lookup (free, no API key)
+Geocoder.configure(lookup: :nominatim, use_https: true)
+```
+
+### RGeo — Future Geometry Support
+
+The [rgeo](https://github.com/rgeo/rgeo) gem (31.7M downloads, actively
+maintained, last release Jan 2026) implements the OGC Simple Features
+Specification — the same standard used by PostGIS, GeoJSON, and most GIS tools.
+
+Our current `Geospatial` class uses a point+radius model which handles simple
+cases well. RGeo will become necessary when we need:
+
+- **Polygons and LineStrings** — irregular boundaries (city limits, patrol
+  zones, exclusion areas) that aren't well approximated by a circle
+- **Movement paths** — representing trajectories as LineString geometries with
+  timestamps, enabling derived attributes like speed, heading, and acceleration
+- **Complex area coordinates** — convoy routes, flight corridors, irregular
+  threat zones, river boundaries
+- **Spatial set operations** — intersection (do two event areas overlap?),
+  union (combined footprint of related events), buffer (expand an area by a
+  safety margin), difference (what area is NOT covered?)
+- **Coordinate system transformations** — converting between WGS84 (GPS),
+  UTM (military grid), and local coordinate systems
+- **Well-Known Text/Binary (WKT/WKB)** — standard serialization for spatial
+  databases
+
+#### Key RGeo components
+
+| Gem | Purpose |
+|-----|---------|
+| [rgeo](https://github.com/rgeo/rgeo) | Core geometry types, spatial operations, factories |
+| [rgeo-geojson](https://github.com/rgeo/rgeo-geojson) | GeoJSON encoding/decoding for RGeo objects |
+| [rgeo-proj4](https://github.com/rgeo/rgeo-proj4) | Coordinate system transformations via PROJ |
+| [activerecord-postgis-adapter](https://github.com/rgeo/activerecord-postgis-adapter) | PostGIS spatial columns in Rails (if we move beyond SQLite) |
+
+#### Integration path
+
+When the time comes, our `Geospatial` class can wrap RGeo objects internally
+while keeping the same public API. The transition would look like:
+
+```ruby
+require 'rgeo'
+
+# Current: point + radius
+geo = Geospatial.new(latitude: 32.35, longitude: -95.30, radius_m: 5000)
+
+# Future: arbitrary polygon for an irregular boundary
+factory = RGeo::Geographic.spherical_factory(srid: 4326)
+polygon = factory.polygon(
+  factory.linear_ring([
+    factory.point(-95.35, 32.40),
+    factory.point(-95.25, 32.40),
+    factory.point(-95.25, 32.30),
+    factory.point(-95.35, 32.30),
+    factory.point(-95.35, 32.40),
+  ])
+)
+
+# Future: movement as a LineString with timestamps
+path = factory.line_string([
+  factory.point(-95.30, 32.35),  # Tyler
+  factory.point(-95.50, 31.80),  # waypoint
+  factory.point(-95.37, 29.76),  # Houston
+])
+path.length  # distance in meters along the path
+
+# Spatial operations
+area1.intersection(area2)  # overlap region
+area1.contains?(point)     # point-in-polygon test
+area1.buffer(1000)         # expand by 1km
+```
+
+**Status: Not needed yet.** Current point+radius model covers all existing use
+cases. Add `gem "rgeo"` to Gemfile when movement paths or polygon boundaries
+become a requirement.
 
 ## Files Related to This Work
 

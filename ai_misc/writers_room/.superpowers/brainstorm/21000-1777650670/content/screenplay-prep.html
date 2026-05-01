@@ -1,0 +1,192 @@
+<h2>Screenplay Prep Integration</h2>
+<p class="subtitle">5 prep phases → new model attributes + a Project Setup Wizard before writing begins</p>
+
+<div style="margin-bottom:1.5em;">
+  <p class="label">Prep Workflow → Model Attributes</p>
+  <div style="display:flex;flex-direction:column;gap:0.5em;font-size:0.83em;">
+
+    <div style="display:grid;grid-template-columns:1.2em 1fr 1fr;gap:0.75em;align-items:start;background:#0f172a;border:1px solid #60a5fa44;border-radius:6px;padding:0.75em;">
+      <span style="color:#60a5fa;font-weight:bold;font-size:1.1em;">1</span>
+      <div>
+        <p style="color:#60a5fa;font-weight:bold;margin:0 0 0.2em;">Concept Assessment</p>
+        <p style="color:#64748b;margin:0;font-size:0.9em;">Story foundation, conflicts, stakes, core concept distillation</p>
+      </div>
+      <div style="background:#0a0f1a;border-radius:4px;padding:0.5em;font-family:monospace;font-size:0.82em;line-height:1.8;color:#94a3b8;">
+        project.logline<br>
+        project.synopsis<br>
+        project.conflicts<br>
+        project.core_stakes
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.2em 1fr 1fr;gap:0.75em;align-items:start;background:#0f172a;border:1px solid #f59e0b44;border-radius:6px;padding:0.75em;">
+      <span style="color:#f59e0b;font-weight:bold;font-size:1.1em;">2</span>
+      <div>
+        <p style="color:#f59e0b;font-weight:bold;margin:0 0 0.2em;">Seed Growing — Character &amp; Story</p>
+        <p style="color:#64748b;margin:0;font-size:0.9em;">Character motivations, internal conflicts, arc deepening, escalation plan</p>
+      </div>
+      <div style="background:#0a0f1a;border-radius:4px;padding:0.5em;font-family:monospace;font-size:0.82em;line-height:1.8;color:#94a3b8;">
+        character.motivation<br>
+        character.internal_conflict<br>
+        character.archetype<br>
+        character_arc.key_turning_points (json)<br>
+        project.conflict_escalation
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.2em 1fr 1fr;gap:0.75em;align-items:start;background:#0f172a;border:1px solid #a78bfa44;border-radius:6px;padding:0.75em;">
+      <span style="color:#a78bfa;font-weight:bold;font-size:1.1em;">3</span>
+      <div>
+        <p style="color:#a78bfa;font-weight:bold;margin:0 0 0.2em;">Visualization Workshop</p>
+        <p style="color:#64748b;margin:0;font-size:0.9em;">Scene imagery, character physicality, atmosphere, pacing</p>
+      </div>
+      <div style="background:#0a0f1a;border-radius:4px;padding:0.5em;font-family:monospace;font-size:0.82em;line-height:1.8;color:#94a3b8;">
+        character.physical_description<br>
+        character.mannerisms<br>
+        scene.atmosphere<br>
+        scene.key_imagery
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.2em 1fr 1fr;gap:0.75em;align-items:start;background:#0f172a;border:1px solid #4ade8044;border-radius:6px;padding:0.75em;">
+      <span style="color:#4ade80;font-weight:bold;font-size:1.1em;">4</span>
+      <div>
+        <p style="color:#4ade80;font-weight:bold;margin:0 0 0.2em;">Research Planning</p>
+        <p style="color:#64748b;margin:0;font-size:0.9em;">World-building details, factual accuracy needs, uniqueness verification</p>
+      </div>
+      <div style="background:#0a0f1a;border-radius:4px;padding:0.5em;font-family:monospace;font-size:0.82em;line-height:1.8;color:#94a3b8;">
+        project.research_notes<br>
+        project.world_building_notes
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.2em 1fr 1fr;gap:0.75em;align-items:start;background:#0f172a;border:1px solid #fb718544;border-radius:6px;padding:0.75em;">
+      <span style="color:#fb7185;font-weight:bold;font-size:1.1em;">5</span>
+      <div>
+        <p style="color:#fb7185;font-weight:bold;margin:0 0 0.2em;">Reference Gathering</p>
+        <p style="color:#64748b;margin:0;font-size:0.9em;">Similar works, tone/visual inspiration, differentiation opportunities</p>
+      </div>
+      <div style="background:#0a0f1a;border-radius:4px;padding:0.5em;font-family:monospace;font-size:0.82em;line-height:1.8;color:#94a3b8;">
+        project.similar_works (json)<br>
+        project.visual_references (json)<br>
+        project.differentiation_notes
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.2em 1fr 1fr;gap:0.75em;align-items:start;background:#0f172a;border:1px solid #e879f944;border-radius:6px;padding:0.75em;">
+      <span style="color:#e879f9;font-weight:bold;font-size:1.1em;">6</span>
+      <div>
+        <p style="color:#e879f9;font-weight:bold;margin:0 0 0.2em;">Identity Creation</p>
+        <p style="color:#64748b;margin:0;font-size:0.9em;">Title finalization, logline polishing, marketing angle</p>
+      </div>
+      <div style="background:#0a0f1a;border-radius:4px;padding:0.5em;font-family:monospace;font-size:0.82em;line-height:1.8;color:#94a3b8;">
+        project.title (finalized)<br>
+        project.logline (polished)<br>
+        project.marketing_angle<br>
+        project.title_alternatives (json)
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Project prep status + wizard -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5em;margin-bottom:1.5em;">
+
+  <div>
+    <p class="label">Project Prep Status</p>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1em;font-size:0.85em;">
+      <p style="color:#cbd5e1;margin:0 0 0.75em;">
+        <code>project.prep_status</code> tracks where a project is in the screenplay prep workflow:
+      </p>
+      <div style="font-family:monospace;font-size:0.85em;line-height:2;color:#94a3b8;">
+        <span style="color:#64748b;">concept</span> → <span style="color:#60a5fa;">seed_growing</span> → <span style="color:#a78bfa;">visualization</span><br>
+        → <span style="color:#4ade80;">research</span> → <span style="color:#fb7185;">references</span> → <span style="color:#e879f9;">identity</span> → <span style="color:#f59e0b;">ready</span>
+      </div>
+      <p style="color:#64748b;margin:0.75em 0 0;font-size:0.82em;">
+        Only projects in <code style="color:#f59e0b;">ready</code> status can have scenes created and run. Writers see a prep checklist dashboard per project.
+      </p>
+    </div>
+  </div>
+
+  <div>
+    <p class="label">Completes &amp; Exports</p>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1em;font-size:0.85em;line-height:1.8;color:#cbd5e1;">
+      At any point a Writer/Producer can export:<br>
+      <span style="color:#4ade80;">→</span> <strong>Concept Document</strong> — story summary, arcs, conflict plan<br>
+      <span style="color:#4ade80;">→</span> <strong>Character Profiles</strong> — full character + arc sheets<br>
+      <span style="color:#4ade80;">→</span> <strong>Research Plan</strong> — world-building and fact needs<br>
+      <span style="color:#4ade80;">→</span> <strong>Reference Library</strong> — similar works and inspiration<br>
+      <span style="color:#4ade80;">→</span> <strong>Project Identity Package</strong> — title, logline, synopsis<br>
+      <span style="color:#4ade80;">→</span> <strong>Full YAML export</strong> — entire project for portability
+    </div>
+  </div>
+
+</div>
+
+<!-- Updated full schema summary -->
+<div>
+  <p class="label">Updated Schema Summary (all changes combined)</p>
+  <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.78em;">
+      <thead>
+        <tr style="background:#1e293b;border-bottom:1px solid #334155;">
+          <th style="text-align:left;padding:0.5em 0.75em;color:#94a3b8;">Table</th>
+          <th style="text-align:left;padding:0.5em;color:#94a3b8;">All Columns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#4ade80;white-space:nowrap;">users</td>
+          <td style="padding:0.4em;color:#94a3b8;font-family:monospace;font-size:0.9em;">id, email, name, actor_id (opt), timestamps</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#4ade80;white-space:nowrap;">roles / user_roles</td>
+          <td style="padding:0.4em;color:#94a3b8;font-family:monospace;font-size:0.9em;">role.name (enum) · user_roles: user_id, role_id</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#4ade80;white-space:nowrap;">actors</td>
+          <td style="padding:0.4em;color:#94a3b8;font-family:monospace;font-size:0.9em;">id, name, description, style_notes, preferred_model, preferred_provider</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#f59e0b;white-space:nowrap;">characters</td>
+          <td style="padding:0.4em;color:#94a3b8;font-family:monospace;font-size:0.9em;">id, name, personality, voice_pattern, character_arc, motivation, internal_conflict, archetype, physical_description, mannerisms, model, provider, data, input/output/total_tokens</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#e879f9;white-space:nowrap;">castings</td>
+          <td style="padding:0.4em;color:#94a3b8;font-family:monospace;font-size:0.9em;">id, actor_id, character_id, project_id — <em>pure join</em></td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#60a5fa;white-space:nowrap;">projects</td>
+          <td style="padding:0.4em;color:#94a3b8;font-family:monospace;font-size:0.9em;">id, title, description, genre, tagline, setting, tone, logline, synopsis, story_arc, plot_points, conflicts, core_stakes, conflict_escalation, research_notes, world_building_notes, similar_works, visual_references, differentiation_notes, marketing_angle, title_alternatives, prep_status, created_by</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#4ade80;white-space:nowrap;">character_arcs</td>
+          <td style="padding:0.4em;color:#94a3b8;font-family:monospace;font-size:0.9em;">id, character_id, project_id, arc_description, arc_start_state, arc_end_goal, current_position, key_turning_points (json)</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#a78bfa;white-space:nowrap;">scenes</td>
+          <td style="padding:0.4em;color:#94a3b8;font-family:monospace;font-size:0.9em;">id, project_id, number, name, location, week, context, beat_structure (json), atmosphere, key_imagery, status, submitted_at, released_at, released_by</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#94a3b8;white-space:nowrap;">scene_characters</td>
+          <td style="padding:0.4em;color:#94a3b8;font-family:monospace;font-size:0.9em;">id, scene_id, character_id, scene_objectives, arc_advancement</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.4em 0.75em;color:#fb7185;white-space:nowrap;">scene_runs</td>
+          <td style="padding:0.4em;color:#94a3b8;font-family:monospace;font-size:0.9em;">id, scene_id, status, started_at, completed_at, started_by</td>
+        </tr>
+        <tr>
+          <td style="padding:0.4em 0.75em;color:#fb7185;white-space:nowrap;">transcript_lines</td>
+          <td style="padding:0.4em;color:#94a3b8;font-family:monospace;font-size:0.9em;">id, scene_run_id, character_id, content, emotion, addressing, position</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div style="margin-top:1.25em;padding:1em;background:#0f172a;border:1px solid #334155;border-radius:8px;">
+  <p style="margin:0;font-size:0.9em;color:#94a3b8;">
+    Does this complete picture look right? If so, the design is fully approved and I'll write the spec document.
+  </p>
+</div>

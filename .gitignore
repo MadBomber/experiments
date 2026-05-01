@@ -1,3 +1,4 @@
+.claude
 .DS_Store
 *.bak
 *.gem
@@ -18,3 +19,7 @@ tmp
 .yardoc
 _yardoc
 doc/
+.aider*
+.env
+temp.md
+.aigcm_msg

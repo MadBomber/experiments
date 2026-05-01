@@ -1,0 +1,138 @@
+<h2>Live Transcript UI</h2>
+<p class="subtitle">Hotwire Turbo Streams · Phlex components · ruby_ui · real-time dialog as it's generated</p>
+
+<div style="display:grid;grid-template-columns:1.4fr 1fr;gap:1.5em;margin-bottom:1.5em;">
+
+  <!-- Mockup -->
+  <div>
+    <p class="label">Scene Run Page Layout</p>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;overflow:hidden;">
+
+      <!-- Mock nav -->
+      <div style="background:#1e293b;padding:0.5em 1em;display:flex;align-items:center;gap:1.5em;border-bottom:1px solid #334155;font-size:0.8em;">
+        <span style="color:#f1f5f9;font-weight:bold;">Writers Room</span>
+        <span style="color:#64748b;">Projects</span>
+        <span style="color:#64748b;">Scenes</span>
+        <span style="color:#64748b;">Actors</span>
+        <span style="color:#64748b;">Characters</span>
+        <div style="flex:1;"></div>
+        <span style="color:#94a3b8;font-size:0.85em;">dvanhoozer@gmail.com</span>
+      </div>
+
+      <div style="padding:1em;">
+
+        <!-- Scene header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75em;">
+          <div>
+            <p style="margin:0;color:#f1f5f9;font-size:0.9em;font-weight:bold;">Scene 1: The Gym Wars</p>
+            <p style="margin:0;color:#64748b;font-size:0.78em;">Back to the Future · Location: School gymnasium · Week 1</p>
+          </div>
+          <div style="display:flex;gap:0.5em;align-items:center;">
+            <span style="background:#14532d;color:#4ade80;font-size:0.72em;padding:0.2em 0.6em;border-radius:4px;">released</span>
+            <span style="background:#1e3a5f;color:#60a5fa;font-size:0.72em;padding:0.2em 0.6em;border-radius:4px;font-family:monospace;">Run #3</span>
+          </div>
+        </div>
+
+        <!-- Cast strip -->
+        <div style="display:flex;gap:0.4em;margin-bottom:0.75em;flex-wrap:wrap;">
+          <span style="background:#1e293b;border:1px solid #334155;color:#f59e0b;font-size:0.72em;padding:0.2em 0.6em;border-radius:4px;">Marty McFly</span>
+          <span style="background:#1e293b;border:1px solid #334155;color:#f59e0b;font-size:0.72em;padding:0.2em 0.6em;border-radius:4px;">Doc Brown</span>
+          <span style="background:#1e293b;border:1px solid #334155;color:#f59e0b;font-size:0.72em;padding:0.2em 0.6em;border-radius:4px;">Biff Tannen</span>
+        </div>
+
+        <!-- Transcript area — the Turbo Frame target -->
+        <div id="transcript" style="background:#0a0f1a;border:1px solid #1e293b;border-radius:6px;padding:0.75em;min-height:200px;font-size:0.82em;line-height:1.9;">
+
+          <div style="display:flex;gap:0.5em;margin-bottom:0.3em;">
+            <span style="color:#f59e0b;min-width:7em;font-weight:bold;">Marty McFly</span>
+            <span style="color:#cbd5e1;">Doc, are you telling me you built a time machine… out of a DeLorean?</span>
+          </div>
+          <div style="display:flex;gap:0.5em;margin-bottom:0.3em;">
+            <span style="color:#60a5fa;min-width:7em;font-weight:bold;">Doc Brown</span>
+            <span style="color:#cbd5e1;">The way I see it, if you're gonna build a time machine into a car, why not do it with some style?</span>
+          </div>
+          <div style="display:flex;gap:0.5em;margin-bottom:0.3em;">
+            <span style="color:#a78bfa;min-width:7em;font-weight:bold;">Biff Tannen</span>
+            <span style="color:#cbd5e1;">Why don't you make like a tree — and get out of here.</span>
+          </div>
+          <div style="display:flex;gap:0.5em;margin-bottom:0.3em;">
+            <span style="color:#f59e0b;min-width:7em;font-weight:bold;">Marty McFly</span>
+            <span style="color:#cbd5e1;">That's "leave", Biff. "Make like a tree and leave." You sound like an idiot when you say it wrong.</span>
+          </div>
+
+          <!-- Streaming indicator -->
+          <div style="display:flex;gap:0.5em;margin-top:0.25em;align-items:center;">
+            <span style="color:#60a5fa;min-width:7em;font-weight:bold;">Doc Brown</span>
+            <span style="color:#475569;font-style:italic;font-size:0.9em;">generating</span>
+            <span style="display:inline-flex;gap:3px;align-items:center;">
+              <span style="width:4px;height:4px;background:#60a5fa;border-radius:50%;animation:pulse 1s infinite;opacity:0.6;"></span>
+              <span style="width:4px;height:4px;background:#60a5fa;border-radius:50%;opacity:0.4;"></span>
+              <span style="width:4px;height:4px;background:#60a5fa;border-radius:50%;opacity:0.2;"></span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div style="display:flex;gap:0.5em;margin-top:0.75em;align-items:center;">
+          <div style="background:#7f1d1d;color:#fca5a5;font-size:0.78em;padding:0.3em 0.75em;border-radius:4px;cursor:pointer;">Stop Scene</div>
+          <div style="flex:1;"></div>
+          <span style="color:#64748b;font-size:0.75em;">12 lines · 2,340 tokens</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Right col: Hotwire wiring + Phlex components -->
+  <div style="display:flex;flex-direction:column;gap:1em;">
+
+    <div>
+      <p class="label">Turbo Stream Broadcast</p>
+      <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1em;font-family:monospace;font-size:0.78em;line-height:1.9;color:#cbd5e1;">
+        <span style="color:#94a3b8;"># In SceneRunJob, after each line saved:</span><br>
+        Turbo::StreamsChannel<br>
+        &nbsp;&nbsp;.broadcast_append_to(<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;"scene_run_#{scene_run.id}",<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;target: "transcript",<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;partial: Views::TranscriptLine<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.new(line: transcript_line)<br>
+        &nbsp;&nbsp;)<br>
+        <span style="color:#94a3b8;"># Token count updated via separate</span><br>
+        <span style="color:#94a3b8;"># broadcast_replace_to on stats bar</span>
+      </div>
+    </div>
+
+    <div>
+      <p class="label">Phlex Component Tree</p>
+      <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1em;font-family:monospace;font-size:0.78em;line-height:1.9;color:#cbd5e1;">
+        <span style="color:#60a5fa;">SceneRunPage</span><br>
+        <span style="color:#94a3b8;">  ├─ </span><span style="color:#a78bfa;">SceneHeader</span><span style="color:#94a3b8;"> (title, status, cast)</span><br>
+        <span style="color:#94a3b8;">  ├─ </span><span style="color:#a78bfa;">TranscriptFrame</span><span style="color:#94a3b8;"> (turbo_frame)</span><br>
+        <span style="color:#94a3b8;">  │   └─ </span><span style="color:#f59e0b;">TranscriptLine</span><span style="color:#94a3b8;"> ×N</span><br>
+        <span style="color:#94a3b8;">  ├─ </span><span style="color:#a78bfa;">StatsBar</span><span style="color:#94a3b8;"> (lines, tokens)</span><br>
+        <span style="color:#94a3b8;">  └─ </span><span style="color:#a78bfa;">RunControls</span><span style="color:#94a3b8;"> (stop btn)</span>
+      </div>
+    </div>
+
+    <div>
+      <p class="label">Actor-User Restricted View</p>
+      <div style="background:#0f172a;border:1px solid #fb923c44;border-radius:8px;padding:1em;font-size:0.83em;line-height:1.8;color:#cbd5e1;">
+        When a user with the <span style="color:#fb923c;">actor</span> role views a released scene run:<br>
+        • Full transcript is shown<br>
+        • Scene beat structure &amp; script context shown<br>
+        • <strong>No Run button</strong> — read-only<br>
+        • Navigation filtered to "My Scenes" only<br>
+        • Token stats hidden (not relevant to them)
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div style="padding:1em;background:#0f172a;border:1px solid #334155;border-radius:8px;">
+  <p style="margin:0;font-size:0.9em;color:#94a3b8;">
+    Does this layout look right? Next is <strong style="color:#f1f5f9;">Section 4: System Prompt Strategy</strong> —
+    how Actor style_notes + Character personality + Casting arc_notes are combined into
+    the robot_lab system prompt for each character in a scene run.
+  </p>
+</div>

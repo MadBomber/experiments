@@ -1,0 +1,18 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    refinements (12.3.1)
+    semver (1.0.1)
+    versionaire (13.3.1)
+      refinements (~> 12.1)
+
+PLATFORMS
+  arm64-darwin-23
+  ruby
+
+DEPENDENCIES
+  semver
+  versionaire
+
+BUNDLED WITH
+   2.5.10

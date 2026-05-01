@@ -1,0 +1,201 @@
+<h2>Markdown File Types</h2>
+<p class="subtitle">Seven file types · YAML frontmatter for structured fields · body varies by type</p>
+
+<div style="margin-bottom:0.5em;padding:0.75em 1em;background:#0f172a;border:1px solid #334155;border-radius:8px;font-size:0.85em;color:#94a3b8;">
+  Every file: <code style="color:#f1f5f9;">type:</code> in frontmatter identifies the kind. Body sections use <code style="color:#f1f5f9;">## Heading</code> prose — no rigid schema, just convention per type.
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1em;margin-bottom:1.5em;">
+
+  <!-- Actor -->
+  <div style="background:#0f172a;border:1px solid #4ade8044;border-radius:8px;padding:0.9em;">
+    <p style="color:#4ade80;font-weight:bold;margin:0 0 0.5em;font-size:0.9em;">Actor</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5em;font-size:0.78em;">
+      <div style="background:#0a0f1a;border-radius:4px;padding:0.5em;font-family:monospace;line-height:1.8;color:#94a3b8;">
+        <span style="color:#64748b;">---</span><br>
+        type: actor<br>
+        name: Michael J. Fox<br>
+        preferred_model: ...<br>
+        preferred_provider: ...<br>
+        <span style="color:#64748b;">---</span>
+      </div>
+      <div style="font-size:0.9em;color:#64748b;line-height:1.8;">
+        ## Description<br>
+        ## Style Notes<br>
+        ## Notable Works<br>
+        ## Performance Notes
+      </div>
+    </div>
+  </div>
+
+  <!-- Character -->
+  <div style="background:#0f172a;border:1px solid #f59e0b44;border-radius:8px;padding:0.9em;">
+    <p style="color:#f59e0b;font-weight:bold;margin:0 0 0.5em;font-size:0.9em;">Character</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5em;font-size:0.78em;">
+      <div style="background:#0a0f1a;border-radius:4px;padding:0.5em;font-family:monospace;line-height:1.8;color:#94a3b8;">
+        <span style="color:#64748b;">---</span><br>
+        type: character<br>
+        name: Marty McFly<br>
+        archetype: Everyman Hero<br>
+        model: ...<br>
+        provider: ...<br>
+        <span style="color:#64748b;">---</span>
+      </div>
+      <div style="font-size:0.9em;color:#64748b;line-height:1.8;">
+        ## Personality<br>
+        ## Voice Pattern<br>
+        ## Character Arc<br>
+        ## Motivation<br>
+        ## Internal Conflict<br>
+        ## Physical Description<br>
+        ## Mannerisms
+      </div>
+    </div>
+  </div>
+
+  <!-- Project -->
+  <div style="background:#0f172a;border:1px solid #60a5fa44;border-radius:8px;padding:0.9em;">
+    <p style="color:#60a5fa;font-weight:bold;margin:0 0 0.5em;font-size:0.9em;">Project</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5em;font-size:0.78em;">
+      <div style="background:#0a0f1a;border-radius:4px;padding:0.5em;font-family:monospace;line-height:1.8;color:#94a3b8;">
+        <span style="color:#64748b;">---</span><br>
+        type: project<br>
+        title: Back to the Future<br>
+        genre: Sci-fi Comedy<br>
+        prep_status: ready<br>
+        similar_works: [...]<br>
+        title_alternatives: [...]<br>
+        <span style="color:#64748b;">---</span>
+      </div>
+      <div style="font-size:0.9em;color:#64748b;line-height:1.8;">
+        ## Tagline<br>
+        ## Logline<br>
+        ## Synopsis<br>
+        ## Setting<br>
+        ## Tone<br>
+        ## Conflicts<br>
+        ## Core Stakes<br>
+        ## Marketing Angle
+      </div>
+    </div>
+  </div>
+
+  <!-- Story -->
+  <div style="background:#0f172a;border:1px solid #fb923c44;border-radius:8px;padding:0.9em;">
+    <p style="color:#fb923c;font-weight:bold;margin:0 0 0.5em;font-size:0.9em;">Story <span style="color:#64748b;font-weight:normal;font-size:0.85em;">— the narrative treatment</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5em;font-size:0.78em;">
+      <div style="background:#0a0f1a;border-radius:4px;padding:0.5em;font-family:monospace;line-height:1.8;color:#94a3b8;">
+        <span style="color:#64748b;">---</span><br>
+        type: story<br>
+        project: back_to_the_future<br>
+        act_structure: three_act<br>
+        <span style="color:#64748b;">---</span>
+      </div>
+      <div style="font-size:0.9em;color:#64748b;line-height:1.8;">
+        ## Story Arc<br>
+        ## Act One<br>
+        ## Act Two<br>
+        ## Act Three<br>
+        ## Plot Points<br>
+        ## Conflict Escalation<br>
+        ## Resolution
+      </div>
+    </div>
+    <p style="margin:0.5em 0 0;font-size:0.78em;color:#475569;">The full prose narrative treatment — a separate file from the project metadata. One project can have multiple story drafts.</p>
+  </div>
+
+  <!-- Arc -->
+  <div style="background:#0f172a;border:1px solid #4ade8044;border-radius:8px;padding:0.9em;">
+    <p style="color:#4ade80;font-weight:bold;margin:0 0 0.5em;font-size:0.9em;">Arc <span style="color:#64748b;font-weight:normal;font-size:0.85em;">— character arc within a project</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5em;font-size:0.78em;">
+      <div style="background:#0a0f1a;border-radius:4px;padding:0.5em;font-family:monospace;line-height:1.8;color:#94a3b8;">
+        <span style="color:#64748b;">---</span><br>
+        type: arc<br>
+        character: marty_mcfly<br>
+        project: back_to_the_future<br>
+        actor: michael_j_fox<br>
+        <span style="color:#64748b;">---</span>
+      </div>
+      <div style="font-size:0.9em;color:#64748b;line-height:1.8;">
+        ## Arc Description<br>
+        ## Arc Start State<br>
+        ## Arc End Goal<br>
+        ## Key Turning Points<br>
+        ## Current Position
+      </div>
+    </div>
+    <p style="margin:0.5em 0 0;font-size:0.78em;color:#475569;">Also encodes the Casting (actor ↔ character ↔ project) and the CharacterArc in one file.</p>
+  </div>
+
+  <!-- Scene -->
+  <div style="background:#0f172a;border:1px solid #a78bfa44;border-radius:8px;padding:0.9em;">
+    <p style="color:#a78bfa;font-weight:bold;margin:0 0 0.5em;font-size:0.9em;">Scene</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5em;font-size:0.78em;">
+      <div style="background:#0a0f1a;border-radius:4px;padding:0.5em;font-family:monospace;line-height:1.8;color:#94a3b8;">
+        <span style="color:#64748b;">---</span><br>
+        type: scene<br>
+        number: 1<br>
+        project: back_to_the_future<br>
+        location: Hill Valley, 1955<br>
+        week: 1<br>
+        status: released<br>
+        characters: [marty_mcfly, doc_brown]<br>
+        <span style="color:#64748b;">---</span>
+      </div>
+      <div style="font-size:0.9em;color:#64748b;line-height:1.8;">
+        ## Context<br>
+        ## Atmosphere<br>
+        ## Key Imagery<br>
+        ## Beat Structure<br>
+        ## Character Objectives<br>
+        ## Arc Advancements
+      </div>
+    </div>
+  </div>
+
+  <!-- Research -->
+  <div style="background:#0f172a;border:1px solid #fb718544;border-radius:8px;padding:0.9em;grid-column:1/-1;">
+    <p style="color:#fb7185;font-weight:bold;margin:0 0 0.5em;font-size:0.9em;">Research Material <span style="color:#64748b;font-weight:normal;font-size:0.85em;">— can attach to project, character, or scene</span></p>
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:0.75em;font-size:0.78em;">
+      <div style="background:#0a0f1a;border-radius:4px;padding:0.5em;font-family:monospace;line-height:1.8;color:#94a3b8;">
+        <span style="color:#64748b;">---</span><br>
+        type: research<br>
+        subject: 1955 Hill Valley Culture<br>
+        category: world_building<br>
+        project: back_to_the_future<br>
+        character: <span style="color:#475569;"># optional</span><br>
+        scene: <span style="color:#475569;">    # optional</span><br>
+        sources: ["...", "..."]<br>
+        <span style="color:#64748b;">---</span>
+      </div>
+      <div>
+        <div style="font-size:0.9em;color:#64748b;line-height:1.8;margin-bottom:0.5em;">
+          ## Summary<br>
+          ## Key Facts<br>
+          ## World Building Notes<br>
+          ## Accuracy Requirements<br>
+          ## Sources
+        </div>
+        <p style="margin:0;font-size:0.82em;color:#475569;">Research files are freeform — the body is whatever the writer needs to capture. The frontmatter anchors them to the right project, character, or scene so they surface in the right context within the app.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Import routing -->
+<div style="padding:1em;background:#0f172a;border:1px solid #334155;border-radius:8px;">
+  <p style="margin:0 0 0.5em;color:#f1f5f9;font-weight:bold;font-size:0.9em;">Import Routing — one dispatcher, seven handlers</p>
+  <div style="font-family:monospace;font-size:0.82em;line-height:1.9;color:#cbd5e1;">
+    <span style="color:#94a3b8;"># MarkdownImportService reads type: from frontmatter and dispatches</span><br>
+    case frontmatter["type"]<br>
+    when "actor"     <span style="color:#64748b;">then</span> ActorImporter.call(frontmatter, sections)<br>
+    when "character" <span style="color:#64748b;">then</span> CharacterImporter.call(frontmatter, sections)<br>
+    when "project"   <span style="color:#64748b;">then</span> ProjectImporter.call(frontmatter, sections)<br>
+    when "story"     <span style="color:#64748b;">then</span> StoryImporter.call(frontmatter, sections)<br>
+    when "arc"       <span style="color:#64748b;">then</span> ArcImporter.call(frontmatter, sections) <span style="color:#94a3b8;"># also creates Casting</span><br>
+    when "scene"     <span style="color:#64748b;">then</span> SceneImporter.call(frontmatter, sections)<br>
+    when "research"  <span style="color:#64748b;">then</span> ResearchImporter.call(frontmatter, sections)<br>
+    end
+  </div>
+</div>

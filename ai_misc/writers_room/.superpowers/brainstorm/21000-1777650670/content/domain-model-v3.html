@@ -1,0 +1,154 @@
+<h2>Domain Model v3</h2>
+<p class="subtitle">Scene → Characters → Actor via Castings</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5em;margin-bottom:1.5em;">
+
+  <!-- Full associations -->
+  <div>
+    <p class="label">Associations</p>
+    <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1.25em;font-family:monospace;font-size:0.83em;line-height:2;">
+      <span style="color:#4ade80;">Actor</span><br>
+      <span style="color:#64748b;">  has_many :castings</span><br>
+      <span style="color:#64748b;">  has_many :characters, through: :castings</span><br>
+      <span style="color:#64748b;">  has_many :projects,   through: :castings</span><br>
+      <br>
+      <span style="color:#f59e0b;">Character</span> <span style="color:#475569;"># IS the LLM agent</span><br>
+      <span style="color:#64748b;">  has_many :castings</span><br>
+      <span style="color:#64748b;">  has_many :actors,   through: :castings</span><br>
+      <span style="color:#64748b;">  has_many :projects, through: :castings</span><br>
+      <span style="color:#64748b;">  has_many :scene_characters</span><br>
+      <span style="color:#64748b;">  has_many :scenes, through: :scene_characters</span><br>
+      <br>
+      <span style="color:#e879f9;">Casting</span> <span style="color:#475569;"># Actor+Character+Project</span><br>
+      <span style="color:#64748b;">  belongs_to :actor</span><br>
+      <span style="color:#64748b;">  belongs_to :character</span><br>
+      <span style="color:#64748b;">  belongs_to :project</span><br>
+      <span style="color:#64748b;">  # arc_notes, objectives (project-specific)</span><br>
+      <span style="color:#64748b;">  # unique on [character_id, project_id]</span><br>
+      <br>
+      <span style="color:#60a5fa;">Project</span><br>
+      <span style="color:#64748b;">  has_many :castings</span><br>
+      <span style="color:#64748b;">  has_many :characters, through: :castings</span><br>
+      <span style="color:#64748b;">  has_many :actors,     through: :castings</span><br>
+      <span style="color:#64748b;">  has_many :scenes</span><br>
+      <br>
+      <span style="color:#a78bfa;">Scene</span> <span style="color:#475569;"># unique to a Project</span><br>
+      <span style="color:#64748b;">  belongs_to :project</span><br>
+      <span style="color:#64748b;">  has_many :scene_characters</span><br>
+      <span style="color:#64748b;">  has_many :characters, through: :scene_characters</span><br>
+      <span style="color:#64748b;">  has_many :scene_runs</span><br>
+      <br>
+      <span style="color:#94a3b8;">SceneCharacter</span> <span style="color:#475569;"># cast list for a scene</span><br>
+      <span style="color:#64748b;">  belongs_to :scene</span><br>
+      <span style="color:#64748b;">  belongs_to :character</span><br>
+      <br>
+      <span style="color:#fb7185;">SceneRun</span><br>
+      <span style="color:#64748b;">  belongs_to :scene</span><br>
+      <span style="color:#64748b;">  has_many :transcript_lines</span>
+    </div>
+  </div>
+
+  <!-- Right column: path + analogy -->
+  <div style="display:flex;flex-direction:column;gap:1em;">
+
+    <div>
+      <p class="label">Finding the Actor in a Scene</p>
+      <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1em;font-family:monospace;font-size:0.83em;line-height:1.8;color:#93c5fd;">
+        <span style="color:#94a3b8;"># Who plays Marty in BTTF2's clock scene?</span><br>
+        scene.project<br>
+        &nbsp;&nbsp;.castings<br>
+        &nbsp;&nbsp;.find_by(character: marty)<br>
+        &nbsp;&nbsp;.actor<br>
+        <span style="color:#94a3b8;"># => Michael J. Fox</span>
+      </div>
+    </div>
+
+    <div>
+      <p class="label">The Recast Scenario</p>
+      <div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:1em;font-size:0.88em;line-height:1.8;">
+        <span style="color:#f59e0b;font-weight:bold;">Character:</span> Batman<br>
+        <div style="border-left:3px solid #e879f922;padding-left:0.75em;margin:0.4em 0;">
+          <span style="color:#e879f9;">Casting:</span> Batman in <span style="color:#60a5fa;">Batman (1989)</span><br>
+          <span style="color:#94a3b8;font-size:0.85em;">→ <span style="color:#4ade80;">Actor:</span> Michael Keaton</span>
+        </div>
+        <div style="border-left:3px solid #e879f922;padding-left:0.75em;">
+          <span style="color:#e879f9;">Casting:</span> Batman in <span style="color:#60a5fa;">Batman Begins (2005)</span><br>
+          <span style="color:#94a3b8;font-size:0.85em;">→ <span style="color:#4ade80;">Actor:</span> Christian Bale</span>
+        </div>
+        <p style="margin:0.75em 0 0;font-size:0.82em;color:#64748b;">Same character, different actors, different projects — all naturally supported.</p>
+      </div>
+    </div>
+
+    <div>
+      <p class="label">Key Schema Note</p>
+      <div style="background:#1e293b;border:1px solid #f59e0b44;border-radius:8px;padding:0.85em;font-size:0.88em;">
+        <p style="margin:0 0 0.5em;color:#f59e0b;font-weight:bold;">LLM agent state lives on Character</p>
+        <p style="margin:0;color:#cbd5e1;font-size:0.9em;">
+          Marty McFly's conversation history, model, provider, and token counts persist
+          across all projects he appears in — he remembers BTTF1 when he enters BTTF2.
+          The <code>Casting</code> holds only the project-specific framing (arc notes, objectives).
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Schema table -->
+<div>
+  <p class="label">Schema at a Glance</p>
+  <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.82em;">
+      <thead>
+        <tr style="border-bottom:1px solid #334155;">
+          <th style="text-align:left;padding:0.5em;color:#94a3b8;">Table</th>
+          <th style="text-align:left;padding:0.5em;color:#94a3b8;">Key Columns</th>
+          <th style="text-align:left;padding:0.5em;color:#94a3b8;">Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.5em;color:#4ade80;">actors</td>
+          <td style="padding:0.5em;color:#94a3b8;font-family:monospace;font-size:0.9em;">name, description, style_notes, preferred_model, preferred_provider</td>
+          <td style="padding:0.5em;color:#64748b;">Real person's consistent LLM persona</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.5em;color:#f59e0b;">characters</td>
+          <td style="padding:0.5em;color:#94a3b8;font-family:monospace;font-size:0.9em;">name, personality, voice_pattern, current_arc, model, provider, data, input_tokens, output_tokens, total_tokens</td>
+          <td style="padding:0.5em;color:#64748b;">Role definition + persistent LLM agent state</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.5em;color:#e879f9;">castings</td>
+          <td style="padding:0.5em;color:#94a3b8;font-family:monospace;font-size:0.9em;">actor_id, character_id, project_id, arc_notes, objectives, relationship_notes</td>
+          <td style="padding:0.5em;color:#64748b;">Actor+Character+Project linkage with project-specific framing</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.5em;color:#60a5fa;">projects</td>
+          <td style="padding:0.5em;color:#94a3b8;font-family:monospace;font-size:0.9em;">title, description, genre, tagline</td>
+          <td style="padding:0.5em;color:#64748b;">A play, film, or story</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.5em;color:#a78bfa;">scenes</td>
+          <td style="padding:0.5em;color:#94a3b8;font-family:monospace;font-size:0.9em;">project_id, number, name, location, week, context, beat_structure (json)</td>
+          <td style="padding:0.5em;color:#64748b;">A scene within a project</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e293b;">
+          <td style="padding:0.5em;color:#94a3b8;">scene_characters</td>
+          <td style="padding:0.5em;color:#94a3b8;font-family:monospace;font-size:0.9em;">scene_id, character_id, scene_objectives</td>
+          <td style="padding:0.5em;color:#64748b;">Cast list for a specific scene</td>
+        </tr>
+        <tr>
+          <td style="padding:0.5em;color:#fb7185;">scene_runs / transcript_lines</td>
+          <td style="padding:0.5em;color:#94a3b8;font-family:monospace;font-size:0.9em;">scene_id, status, started_at, completed_at / scene_run_id, character_id, content, emotion</td>
+          <td style="padding:0.5em;color:#64748b;">Execution record and dialog output</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div style="margin-top:1.25em;padding:1em;background:#0f172a;border:1px solid #334155;border-radius:8px;">
+  <p style="margin:0;font-size:0.9em;color:#94a3b8;">
+    Does this match your mental model now? If this looks right, I'll move to presenting the full design
+    (Rails app structure, UI layout, YAML import/export, robot_lab integration, and Hotwire real-time flow).
+  </p>
+</div>

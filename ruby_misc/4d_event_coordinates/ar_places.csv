@@ -1,0 +1,626 @@
+description,latitude,longitude,altitude
+"Acorn, Arkansas",34.638786,-94.200112,334.0
+"Adona, Arkansas",35.03993,-92.899132,116.0
+"Alexander, Arkansas",34.618588,-92.451217,101.0
+"Alicia, Arkansas",35.892907,-91.08345,77.0
+"Alix, Arkansas",35.422002,-93.728784,117.0
+"Alleene, Arkansas",33.764823,-94.262198,125.0
+"Allport, Arkansas",34.539866,-91.783886,62.0
+"Alma, Arkansas",35.492375,-94.213947,153.0
+"Almyra, Arkansas",34.405689,-91.410847,64.0
+"Alpena, Arkansas",36.292748,-93.303607,389.0
+"Alpine, Arkansas",34.226886,-93.378321,184.0
+"Altheimer, Arkansas",34.327434,-91.847282,62.0
+"Altus, Arkansas",35.44676,-93.764388,163.0
+"Amagon, Arkansas",35.563173,-91.109415,68.0
+"Amity, Arkansas",34.26619,-93.463423,156.0
+"Anthonyville, Arkansas",35.039831,-90.340328,63.0
+"Antoine, Arkansas",34.034536,-93.421361,93.0
+"Aplin, Arkansas",34.967483,-92.981271,92.0
+"Appleton, Arkansas",35.410823,-92.875276,174.0
+"Arkadelphia, Arkansas",34.12738,-93.070851,96.0
+"Arkansas City, Arkansas",33.608876,-91.204896,43.0
+"Armorel, Arkansas",35.925571,-89.797959,77.0
+"Ash Flat, Arkansas",36.236559,-91.606512,199.0
+"Ashdown, Arkansas",33.674529,-94.126627,101.0
+"Atkins, Arkansas",35.240863,-92.949643,119.0
+"Aubrey, Arkansas",34.719817,-90.897981,66.0
+"Augusta, Arkansas",35.28655,-91.36086,70.0
+"Austin, Arkansas",35.005912,-91.989609,86.0
+"Avilla, Arkansas",34.694843,-92.586141,161.0
+"Avoca, Arkansas",36.394697,-94.06577,392.0
+"Bald Knob, Arkansas",35.312539,-91.571253,82.0
+"Banks, Arkansas",33.575796,-92.267101,67.0
+"Barling, Arkansas",35.331286,-94.275195,123.0
+"Bassett, Arkansas",35.535577,-90.129434,71.0
+"Batavia, Arkansas",36.247852,-93.215771,485.0
+"Batesville, Arkansas",35.768572,-91.622652,122.0
+"Bauxite, Arkansas",34.554483,-92.505794,131.0
+"Bay, Arkansas",35.746057,-90.552143,69.0
+"Bearden, Arkansas",33.727651,-92.618678,74.0
+"Beaver, Arkansas",36.473994,-93.777335,284.0
+"Bee Branch, Arkansas",35.462622,-92.401023,294.0
+"Beebe, Arkansas",35.072433,-91.901059,80.0
+"Beedeville, Arkansas",35.429169,-91.110738,64.0
+"Beirne, Arkansas",33.888208,-93.206223,70.0
+"Bella Vista, Arkansas",36.466641,-94.266317,363.0
+"Bellefonte, Arkansas",36.199864,-93.047039,332.0
+"Belleville, Arkansas",35.09153,-93.445774,111.0
+"Ben Lomond, Arkansas",33.829113,-94.123319,144.0
+"Benton, Arkansas",34.577424,-92.572583,140.0
+"Bentonville, Arkansas",36.352662,-94.231181,386.0
+"Bergman, Arkansas",36.312786,-93.011221,387.0
+"Berryville, Arkansas",36.37028,-93.568335,380.0
+"Bethesda, Arkansas",35.787096,-91.792711,188.0
+"Big Flat, Arkansas",36.003394,-92.41022,388.0
+"Bigelow, Arkansas",34.997795,-92.631175,99.0
+"Biggers, Arkansas",36.331361,-90.800701,87.0
+"Birdsong, Arkansas",35.461161,-90.259761,68.0
+"Bismarck, Arkansas",34.321836,-93.178139,180.0
+"Black Oak, Arkansas",35.836485,-90.367568,71.0
+"Black Rock, Arkansas",36.106237,-91.10748,98.0
+"Black Springs, Arkansas",34.455977,-93.713115,222.0
+"Blevins, Arkansas",33.871251,-93.578187,128.0
+"Blue Eye, Arkansas",36.496667,-93.39771,392.0
+"Blue Mountain, Arkansas",35.131796,-93.716666,159.0
+"Bluff City, Arkansas",33.735118,-93.124564,92.0
+"Blytheville, Arkansas",35.934066,-89.905133,77.0
+"Board Camp, Arkansas",34.532519,-94.079674,302.0
+"Bodcaw, Arkansas",33.56364,-93.393036,121.0
+"Boles, Arkansas",34.788119,-94.049397,210.0
+"Bonanza, Arkansas",35.231794,-94.416133,167.0
+"Bono, Arkansas",35.911102,-90.800821,82.0
+"Booneville, Arkansas",35.139329,-93.9175,152.0
+"Bowman, Arkansas",35.816835,-90.496228,70.0
+"Bradford, Arkansas",35.422004,-91.455232,76.0
+"Bradley, Arkansas",33.100106,-93.656895,80.0
+"Branch, Arkansas",35.308303,-93.95537,144.0
+"Briarcliff, Arkansas",36.271968,-92.28209,231.0
+"Brinkley, Arkansas",34.889781,-91.189819,61.0
+"Brookland, Arkansas",35.897051,-90.571657,76.0
+"Bryant, Arkansas",34.615059,-92.491338,118.0
+"Buckner, Arkansas",33.35727,-93.435556,86.0
+"Buffalo City, Arkansas",36.169075,-92.437942,138.0
+"Bull Shoals, Arkansas",36.37357,-92.591504,185.0
+"Burdette, Arkansas",35.815273,-89.946421,72.0
+"Cabot, Arkansas",34.975106,-92.028288,91.0
+"Caddo Gap, Arkansas",34.402494,-93.617881,206.0
+"Caddo Valley, Arkansas",34.180746,-93.084597,76.0
+"Caldwell, Arkansas",35.074794,-90.809455,92.0
+"Cale, Arkansas",33.627888,-93.232797,97.0
+"Calico Rock, Arkansas",36.121965,-92.125913,156.0
+"Calion, Arkansas",33.328406,-92.540187,31.0
+"Camden, Arkansas",33.567672,-92.849064,42.0
+"Cammack Village, Arkansas",34.7808,-92.344976,182.0
+"Campbell Station, Arkansas",35.667799,-91.253754,70.0
+"Canehill, Arkansas",35.913765,-94.397321,430.0
+"Caraway, Arkansas",35.760222,-90.322081,70.0
+"Carlisle, Arkansas",34.795425,-91.740494,73.0
+"Carthage, Arkansas",34.072605,-92.555312,96.0
+"Casa, Arkansas",35.024966,-93.045507,115.0
+"Cash, Arkansas",35.801157,-90.931648,78.0
+"Caulksville, Arkansas",35.301849,-93.867806,121.0
+"Cave City, Arkansas",35.947801,-91.546977,198.0
+"Cave Springs, Arkansas",36.26843,-94.219503,377.0
+"Cedarville, Arkansas",35.58397,-94.361897,274.0
+"Center Point, Arkansas",34.031828,-93.951166,195.0
+"Center Ridge, Arkansas",35.380707,-92.575626,224.0
+"Centerton, Arkansas",36.355148,-94.297692,397.0
+"Centerville, Arkansas",35.115702,-93.171461,108.0
+"Central City, Arkansas",35.336381,-94.238042,125.0
+"Charleston, Arkansas",35.294515,-94.04835,147.0
+"Cherokee City, Arkansas",36.294698,-94.576804,347.0
+"Cherokee Village, Arkansas",36.291321,-91.569368,201.0
+"Cherry Valley, Arkansas",35.402762,-90.753617,88.0
+"Chester, Arkansas",35.677772,-94.177828,284.0
+"Chidester, Arkansas",33.701947,-93.023799,82.0
+"Cincinnati, Arkansas",36.045324,-94.527314,353.0
+"Clarendon, Arkansas",34.692974,-91.306292,53.0
+"Clarkedale, Arkansas",35.297028,-90.21025,67.0
+"Clarksville, Arkansas",35.453918,-93.481558,119.0
+"Clinton, Arkansas",35.578981,-92.455735,178.0
+"Coal Hill, Arkansas",35.436892,-93.665193,151.0
+"College Station, Arkansas",34.700535,-92.228432,96.0
+"Collins, Arkansas",33.532266,-91.57244,51.0
+"Colt, Arkansas",35.132897,-90.812933,77.0
+"Concord, Arkansas",35.66633,-91.860623,288.0
+"Conway, Arkansas",35.074404,-92.467004,97.0
+"Corinth, Arkansas",35.069508,-93.420089,107.0
+"Corning, Arkansas",36.413682,-90.583609,89.0
+"Cotter, Arkansas",36.281898,-92.520821,197.0
+"Cotton Plant, Arkansas",35.005918,-91.25205,63.0
+"Cove, Arkansas",34.438983,-94.422321,336.0
+"Coy, Arkansas",34.540484,-91.871295,66.0
+"Crawfordsville, Arkansas",35.226672,-90.324168,69.0
+"Crossett, Arkansas",33.122819,-91.958081,58.0
+"Crystal Springs, Arkansas",34.524828,-93.333623,206.0
+"Cushman, Arkansas",35.865844,-91.778081,220.0
+"Daisy, Arkansas",34.235924,-93.739193,183.0
+"Damascus, Arkansas",35.367092,-92.410712,213.0
+"Danville, Arkansas",35.052457,-93.391199,105.0
+"Dardanelle, Arkansas",35.226305,-93.165909,103.0
+"Datto, Arkansas",36.392471,-90.728499,89.0
+"De Queen, Arkansas",34.042245,-94.342133,133.0
+"De Valls Bluff, Arkansas",34.785865,-91.461071,70.0
+"DeWitt, Arkansas",34.287369,-91.338326,60.0
+"Decatur, Arkansas",36.348527,-94.458044,367.0
+"Deer, Arkansas",35.828023,-93.219622,677.0
+"Delaplaine, Arkansas",36.230409,-90.725667,84.0
+"Delight, Arkansas",34.02953,-93.506555,111.0
+"Dell, Arkansas",35.857166,-90.034076,73.0
+"Dennard, Arkansas",35.747919,-92.549999,426.0
+"Denning, Arkansas",35.425153,-93.756758,129.0
+"Dermott, Arkansas",33.526206,-91.432296,42.0
+"Des Arc, Arkansas",34.978433,-91.506835,59.0
+"Desha, Arkansas",35.730455,-91.685579,96.0
+"Diamond City, Arkansas",36.457609,-92.910989,247.0
+"Diaz, Arkansas",35.648773,-91.258933,71.0
+"Dierks, Arkansas",34.119961,-94.017283,137.0
+"Donaldson, Arkansas",34.234976,-92.919517,71.0
+"Dora, Arkansas",35.462964,-94.429869,188.0
+"Dover, Arkansas",35.390981,-93.114241,128.0
+"Drasco, Arkansas",35.633775,-91.941776,311.0
+"Dumas, Arkansas",33.883372,-91.485632,51.0
+"Dyer, Arkansas",35.494367,-94.138805,130.0
+"Dyess, Arkansas",35.589338,-90.213293,70.0
+"Earle, Arkansas",35.273379,-90.464304,64.0
+"East Camden, Arkansas",33.608421,-92.744966,42.0
+"East End, Arkansas",34.554505,-92.327475,102.0
+"Edgemont, Arkansas",35.600686,-92.196371,168.0
+"Edmondson, Arkansas",35.105035,-90.305452,62.0
+"Egypt, Arkansas",35.867775,-90.945834,77.0
+"El Dorado, Arkansas",33.218982,-92.664071,72.0
+"El Paso, Arkansas",35.115298,-92.081189,84.0
+"Elaine, Arkansas",34.308603,-90.853349,55.0
+"Elkins, Arkansas",36.017217,-94.023497,372.0
+"Elm Springs, Arkansas",36.206224,-94.237904,355.0
+"Emerson, Arkansas",33.097328,-93.195976,97.0
+"Emmet, Arkansas",33.722539,-93.466156,94.0
+"England, Arkansas",34.545431,-91.967442,72.0
+"Enola, Arkansas",35.195907,-92.206581,102.0
+"Etowah, Arkansas",35.715758,-90.230682,69.0
+"Eudora, Arkansas",33.118866,-91.264033,44.0
+"Eureka Springs, Arkansas",36.410774,-93.744904,440.0
+"Evansville, Arkansas",35.790635,-94.488844,374.0
+"Evening Shade, Arkansas",36.069933,-91.621881,142.0
+"Everton, Arkansas",36.15414,-92.909538,294.0
+"Fair Oaks, Arkansas",35.247988,-91.036016,66.0
+"Fairfield Bay, Arkansas",35.601101,-92.266208,265.0
+"Fargo, Arkansas",34.953995,-91.179744,69.0
+"Farmington, Arkansas",36.036581,-94.252466,371.0
+"Fayetteville, Arkansas",36.071455,-94.166564,420.0
+"Felsenthal, Arkansas",33.060826,-92.148961,39.0
+"Fifty-Six, Arkansas",35.96351,-92.233355,291.0
+"Fisher, Arkansas",35.491424,-90.972494,72.0
+"Flippin, Arkansas",36.27732,-92.59353,193.0
+"Floral, Arkansas",35.588939,-91.758932,237.0
+"Floyd, Arkansas",35.198879,-91.96453,123.0
+"Fordyce, Arkansas",33.818236,-92.416972,81.0
+"Foreman, Arkansas",33.719494,-94.397668,124.0
+"Forrest City, Arkansas",35.013599,-90.793207,77.0
+"Fort Smith, Arkansas",35.349276,-94.370883,145.0
+"Fouke, Arkansas",33.262235,-93.88523,95.0
+"Fountain Hill, Arkansas",33.357545,-91.851141,60.0
+"Fountain Lake, Arkansas",34.609682,-92.920447,172.0
+"Fourche, Arkansas",34.993128,-92.618944,95.0
+"Fox, Arkansas",35.784398,-92.299626,409.0
+"Franklin, Arkansas",36.1727,-91.769724,176.0
+"Fredonia (Biscoe), Arkansas",34.81937,-91.41016,58.0
+"Friendship, Arkansas",34.224344,-93.00366,99.0
+"Fulton, Arkansas",33.612565,-93.813795,82.0
+"Gamaliel, Arkansas",36.45189,-92.236928,260.0
+"Garfield, Arkansas",36.45535,-93.97595,420.0
+"Garland, Arkansas",33.360958,-93.71417,70.0
+"Garner, Arkansas",35.142496,-91.779184,83.0
+"Gassville, Arkansas",36.284949,-92.48683,226.0
+"Gateway, Arkansas",36.488902,-93.933087,473.0
+"Genoa, Arkansas",33.377487,-93.882415,105.0
+"Gentry, Arkansas",36.259553,-94.490876,374.0
+"Georgetown, Arkansas",35.126678,-91.453923,65.0
+"Gibson, Arkansas",34.902228,-92.240817,159.0
+"Gilbert, Arkansas",35.990981,-92.716181,205.0
+"Gillett, Arkansas",34.119172,-91.379133,59.0
+"Gillham, Arkansas",34.168628,-94.312977,229.0
+"Gilmore, Arkansas",35.413994,-90.29558,67.0
+"Glenwood, Arkansas",34.328314,-93.527255,192.0
+"Goodwin, Arkansas",34.940726,-91.003576,63.0
+"Goshen, Arkansas",36.102458,-94.001579,374.0
+"Gosnell, Arkansas",35.964937,-89.968577,75.0
+"Gould, Arkansas",33.987194,-91.564038,52.0
+"Grady, Arkansas",34.072492,-91.697637,55.0
+"Grannis, Arkansas",34.240165,-94.321995,279.0
+"Gravette, Arkansas",36.428296,-94.368529,395.0
+"Green Forest, Arkansas",36.33471,-93.430962,406.0
+"Greenbrier, Arkansas",35.228811,-92.383563,110.0
+"Greenland, Arkansas",35.996194,-94.19089,408.0
+"Greenway, Arkansas",36.340577,-90.222124,88.0
+"Greenwood, Arkansas",35.211348,-94.239444,165.0
+"Greers Ferry, Arkansas",35.574966,-92.165959,201.0
+"Gregory, Arkansas",35.153332,-91.334241,61.0
+"Griffithville, Arkansas",35.123053,-91.64497,67.0
+"Grubbs, Arkansas",35.653999,-91.075464,70.0
+"Guion, Arkansas",35.926834,-91.938927,115.0
+"Gum Springs, Arkansas",34.063937,-93.095709,74.0
+"Gurdon, Arkansas",33.916032,-93.15391,66.0
+"Guy, Arkansas",35.326067,-92.33756,205.0
+"Hackett, Arkansas",35.188027,-94.410341,163.0
+"Hagarville, Arkansas",35.515017,-93.332135,165.0
+"Halley, Arkansas",33.536255,-91.323651,43.0
+"Hamburg, Arkansas",33.224755,-91.797247,54.0
+"Hampton, Arkansas",33.534763,-92.466607,65.0
+"Hardy, Arkansas",36.319645,-91.481503,156.0
+"Harrell, Arkansas",33.509869,-92.400061,64.0
+"Harrisburg, Arkansas",35.563772,-90.721615,87.0
+"Harrison, Arkansas",36.242592,-93.11765,366.0
+"Hartford, Arkansas",35.023433,-94.379406,199.0
+"Hartman, Arkansas",35.43525,-93.628245,159.0
+"Haskell, Arkansas",34.509238,-92.641861,98.0
+"Hatfield, Arkansas",34.484507,-94.37991,298.0
+"Hattieville, Arkansas",35.295226,-92.775351,142.0
+"Havana, Arkansas",35.109809,-93.526022,114.0
+"Haynes, Arkansas",34.890933,-90.792662,69.0
+"Hazen, Arkansas",34.781368,-91.558058,65.0
+"Heber Springs, Arkansas",35.499554,-92.029339,146.0
+"Hector, Arkansas",35.462913,-92.97913,228.0
+"Helena-West Helena, Arkansas",34.531363,-90.620098,105.0
+"Henderson, Arkansas",36.377214,-92.218918,234.0
+"Hensley, Arkansas",34.51041,-92.209517,74.0
+"Hermitage, Arkansas",33.447372,-92.171455,52.0
+"Hickory Ridge, Arkansas",35.402812,-90.994458,72.0
+"Higden, Arkansas",35.566406,-92.20518,157.0
+"Higginson, Arkansas",35.196813,-91.715175,66.0
+"Highfill, Arkansas",36.274375,-94.323862,381.0
+"Highland, Arkansas",36.26943,-91.519824,204.0
+"Hindsville, Arkansas",36.147719,-93.86488,419.0
+"Holiday Island, Arkansas",36.484211,-93.736832,343.0
+"Holland, Arkansas",35.166012,-92.277049,108.0
+"Holly Grove, Arkansas",34.601497,-91.200255,54.0
+"Hope, Arkansas",33.668164,-93.588885,109.0
+"Horatio, Arkansas",33.942739,-94.356201,118.0
+"Horseshoe Bend, Arkansas",36.218726,-91.738324,200.0
+"Horseshoe Lake, Arkansas",34.913753,-90.307722,62.0
+"Hot Springs, Arkansas",34.489442,-93.050254,177.0
+"Hot Springs Village, Arkansas",34.658069,-92.968643,211.0
+"Houston, Arkansas",35.034879,-92.694525,92.0
+"Hoxie, Arkansas",36.036041,-90.973588,80.0
+"Hughes, Arkansas",34.948109,-90.471372,63.0
+"Humnoke, Arkansas",34.542242,-91.759656,67.0
+"Humphrey, Arkansas",34.42237,-91.702454,57.0
+"Hunter, Arkansas",35.054558,-91.122856,67.0
+"Huntington, Arkansas",35.08171,-94.266319,184.0
+"Huntsville, Arkansas",36.098656,-93.733244,453.0
+"Huttig, Arkansas",33.04032,-92.179678,31.0
+"Imboden, Arkansas",36.199696,-91.177386,84.0
+"Indian Bay, Arkansas",34.38712,-91.069561,59.0
+"Ivan, Arkansas",33.901968,-92.433196,85.0
+"Jacksonport, Arkansas",35.642177,-91.307914,69.0
+"Jacksonville, Arkansas",34.880512,-92.13059,91.0
+"Jasper, Arkansas",36.012102,-93.1875,273.0
+"Jennette, Arkansas",35.158127,-90.418765,65.0
+"Jericho, Arkansas",35.287677,-90.230466,69.0
+"Jerome, Arkansas",33.397236,-91.470514,42.0
+"Jerusalem, Arkansas",35.40757,-92.823013,228.0
+"Johnson, Arkansas",36.133854,-94.174269,356.0
+"Joiner, Arkansas",35.50739,-90.150706,73.0
+"Jones Mills, Arkansas",34.444947,-92.901539,146.0
+"Jonesboro, Arkansas",35.819755,-90.679033,84.0
+"Judsonia, Arkansas",35.276431,-91.641614,79.0
+"Junction City, Arkansas",33.022091,-92.723616,57.0
+"Keiser, Arkansas",35.674224,-90.096848,72.0
+"Kensett, Arkansas",35.2352,-91.671256,68.0
+"Keo, Arkansas",34.609287,-92.011566,69.0
+"Kibler, Arkansas",35.425237,-94.236145,143.0
+"Kingsland, Arkansas",33.857975,-92.297789,64.0
+"Kingston, Arkansas",36.056744,-93.514735,497.0
+"Kirby, Arkansas",34.254291,-93.654873,201.0
+"Knobel, Arkansas",36.319986,-90.602266,85.0
+"Knoxville, Arkansas",35.377537,-93.361839,118.0
+"LaGrange, Arkansas",34.655757,-90.734742,68.0
+"Lacey, Arkansas",33.450347,-91.849554,69.0
+"Lafe, Arkansas",36.209178,-90.504292,119.0
+"Lake City, Arkansas",35.81937,-90.453905,72.0
+"Lake Hamilton, Arkansas",34.429621,-93.076352,126.0
+"Lake View, Arkansas",34.42116,-90.813314,51.0
+"Lake Village, Arkansas",33.32918,-91.284794,38.0
+"Lakeview, Arkansas",36.373907,-92.538735,247.0
+"Lamar, Arkansas",35.444425,-93.394675,133.0
+"Landmark, Arkansas",34.610352,-92.316045,129.0
+"Lavaca, Arkansas",35.330199,-94.182885,135.0
+"Lawson, Arkansas",33.19996,-92.487896,65.0
+"Leachville, Arkansas",35.911468,-90.254955,71.0
+"Lead Hill, Arkansas",36.413611,-92.907167,216.0
+"Leola, Arkansas",34.170087,-92.591412,81.0
+"Lepanto, Arkansas",35.608528,-90.332985,72.0
+"Leslie, Arkansas",35.829508,-92.555961,327.0
+"Letona, Arkansas",35.363502,-91.829547,83.0
+"Lewisville, Arkansas",33.360132,-93.583971,97.0
+"Lexa, Arkansas",34.598248,-90.751887,68.0
+"Lincoln, Arkansas",35.948834,-94.417468,445.0
+"Little Flock, Arkansas",36.383335,-94.137265,391.0
+"Little Rock, Arkansas",34.725393,-92.358556,85.0
+"Lockesburg, Arkansas",33.972871,-94.179584,116.0
+"London, Arkansas",35.327616,-93.243466,112.0
+"Lonoke, Arkansas",34.790501,-91.907362,90.0
+"Lonsdale, Arkansas",34.544967,-92.810563,132.0
+"Lost Bridge Village, Arkansas",36.389728,-93.915536,365.0
+"Louann, Arkansas",33.391481,-92.792214,43.0
+"Lowell, Arkansas",36.255855,-94.153356,402.0
+"Luxora, Arkansas",35.757672,-89.92948,75.0
+"Lynn, Arkansas",36.004263,-91.252,106.0
+"Madison, Arkansas",35.017993,-90.73115,109.0
+"Magazine, Arkansas",35.153901,-93.807851,146.0
+"Magness, Arkansas",35.703055,-91.482237,80.0
+"Magnet Cove, Arkansas",34.449161,-92.837719,151.0
+"Magnolia, Arkansas",33.276698,-93.226247,112.0
+"Malvern, Arkansas",34.373579,-92.82125,92.0
+"Mammoth Spring, Arkansas",36.49241,-91.541067,171.0
+"Manila, Arkansas",35.884371,-90.165562,74.0
+"Mansfield, Arkansas",35.063915,-94.234269,191.0
+"Marianna, Arkansas",34.77363,-90.767501,70.0
+"Marie, Arkansas",35.612931,-90.082963,71.0
+"Marion, Arkansas",35.204246,-90.206715,66.0
+"Marked Tree, Arkansas",35.527889,-90.42661,67.0
+"Marmaduke, Arkansas",36.190028,-90.385061,90.0
+"Marshall, Arkansas",35.908461,-92.646498,291.0
+"Marvell, Arkansas",34.556304,-90.915338,65.0
+"Maumelle, Arkansas",34.852344,-92.399995,83.0
+"Mayflower, Arkansas",34.966196,-92.426728,107.0
+"Maynard, Arkansas",36.421493,-90.901804,134.0
+"Maysville, Arkansas",36.401975,-94.588951,322.0
+"McAlmont, Arkansas",34.792492,-92.196013,89.0
+"McCaskill, Arkansas",33.919539,-93.636831,134.0
+"McCrory, Arkansas",35.257326,-91.197276,65.0
+"McDougal, Arkansas",36.436465,-90.390727,91.0
+"McGehee, Arkansas",33.627794,-91.39501,46.0
+"McNab, Arkansas",33.660895,-93.832282,97.0
+"McNeil, Arkansas",33.347917,-93.208404,105.0
+"McRae, Arkansas",35.113627,-91.826194,71.0
+"Melbourne, Arkansas",36.063971,-91.88152,199.0
+"Mellwood, Arkansas",34.215475,-90.944687,49.0
+"Mena, Arkansas",34.58184,-94.236518,350.0
+"Menifee, Arkansas",35.149702,-92.55042,103.0
+"Midland, Arkansas",35.092403,-94.352955,170.0
+"Midway, Arkansas",36.39224,-92.475532,276.0
+"Midway, Arkansas",34.249893,-92.973433,74.0
+"Mineral Springs, Arkansas",33.877723,-93.921386,113.0
+"Minturn, Arkansas",35.976417,-91.027188,79.0
+"Mitchellville, Arkansas",33.905333,-91.498398,51.0
+"Monette, Arkansas",35.893208,-90.344106,73.0
+"Monroe, Arkansas",34.73404,-91.106766,59.0
+"Monticello, Arkansas",33.624778,-91.793722,89.0
+"Montrose, Arkansas",33.298925,-91.49644,40.0
+"Moorefield, Arkansas",35.767228,-91.570807,99.0
+"Moro, Arkansas",34.791976,-90.987984,61.0
+"Morrilton, Arkansas",35.155456,-92.738932,110.0
+"Morrison Bluff, Arkansas",35.381952,-93.518854,115.0
+"Morrow, Arkansas",35.856329,-94.430562,336.0
+"Mount Holly, Arkansas",33.307223,-92.950213,80.0
+"Mount Ida, Arkansas",34.549153,-93.629939,214.0
+"Mount Judea, Arkansas",35.926173,-93.056804,302.0
+"Mount Olive, Arkansas",36.003119,-92.090465,123.0
+"Mount Pleasant, Arkansas",35.981423,-91.777383,221.0
+"Mount Vernon, Arkansas",35.223605,-92.12398,131.0
+"Mountain Home, Arkansas",36.335074,-92.3841,252.0
+"Mountain Pine, Arkansas",34.569642,-93.171493,140.0
+"Mountain View, Arkansas",35.861559,-92.109657,236.0
+"Mountainburg, Arkansas",35.649625,-94.162407,231.0
+"Mulberry, Arkansas",35.5085,-94.074753,128.0
+"Murfreesboro, Arkansas",34.070312,-93.694073,119.0
+"Nashville, Arkansas",33.941924,-93.851658,127.0
+"Natural Steps, Arkansas",34.874266,-92.497772,135.0
+"New Blaine, Arkansas",35.29252,-93.419083,133.0
+"New Edinburg, Arkansas",33.756223,-92.240365,99.0
+"Newark, Arkansas",35.70763,-91.4434,95.0
+"Newhope, Arkansas",34.222258,-93.877396,225.0
+"Newport, Arkansas",35.623772,-91.231682,72.0
+"Nimmons, Arkansas",36.30625,-90.095055,83.0
+"Norfork, Arkansas",36.209469,-92.277844,171.0
+"Norman, Arkansas",34.458977,-93.676824,239.0
+"Norphlet, Arkansas",33.319889,-92.662009,55.0
+"North Crossett, Arkansas",33.174113,-91.931736,56.0
+"North Little Rock, Arkansas",34.781752,-92.235057,96.0
+"O'Kean, Arkansas",36.171462,-90.818348,82.0
+"Oak Grove, Arkansas",36.470205,-93.42809,394.0
+"Oak Grove, Arkansas",35.364779,-92.964179,197.0
+"Oak Grove Heights, Arkansas",36.126432,-90.503435,93.0
+"Oakhaven, Arkansas",33.729396,-93.620783,113.0
+"Oakland, Arkansas",36.460423,-92.571771,321.0
+"Oark, Arkansas",35.694977,-93.575027,357.0
+"Oden, Arkansas",34.623149,-93.783646,252.0
+"Ogden, Arkansas",33.585869,-94.046917,100.0
+"Oil Trough, Arkansas",35.629162,-91.461229,75.0
+"Okolona, Arkansas",34.000478,-93.337624,123.0
+"Ola, Arkansas",35.031448,-93.224035,111.0
+"Omaha, Arkansas",36.461647,-93.189964,401.0
+"Oneida, Arkansas",34.460486,-90.786721,51.0
+"Oppelo, Arkansas",35.100558,-92.773566,98.0
+"Osceola, Arkansas",35.690217,-89.988295,72.0
+"Oxford, Arkansas",36.20903,-91.918268,234.0
+"Ozan, Arkansas",33.846611,-93.720822,116.0
+"Ozark, Arkansas",35.501858,-93.848378,168.0
+"Ozark Acres, Arkansas",36.299916,-91.387076,216.0
+"Ozone, Arkansas",35.638491,-93.447317,580.0
+"Palestine, Arkansas",34.970307,-90.908225,65.0
+"Pangburn, Arkansas",35.426108,-91.839411,106.0
+"Paragould, Arkansas",36.052289,-90.510464,105.0
+"Paris, Arkansas",35.290756,-93.734228,120.0
+"Parkdale, Arkansas",33.121215,-91.546399,36.0
+"Parkin, Arkansas",35.261175,-90.553508,63.0
+"Patmos, Arkansas",33.511369,-93.566956,97.0
+"Patterson, Arkansas",35.258973,-91.234957,63.0
+"Payneway, Arkansas",35.545728,-90.512297,64.0
+"Pea Ridge, Arkansas",36.452846,-94.125942,401.0
+"Peach Orchard, Arkansas",36.281229,-90.660774,91.0
+"Pearcy, Arkansas",34.435455,-93.288217,194.0
+"Pencil Bluff, Arkansas",34.630384,-93.735033,233.0
+"Perla, Arkansas",34.364755,-92.776228,106.0
+"Perry, Arkansas",35.046221,-92.79441,124.0
+"Perrytown, Arkansas",33.697141,-93.532407,93.0
+"Perryville, Arkansas",35.012,-92.802938,104.0
+"Piggott, Arkansas",36.387191,-90.198944,101.0
+"Pindall, Arkansas",36.063663,-92.862158,371.0
+"Pine Bluff, Arkansas",34.211591,-92.017555,72.0
+"Pineville, Arkansas",36.161145,-92.106471,208.0
+"Piney, Arkansas",34.502914,-93.144427,168.0
+"Plainview, Arkansas",34.989874,-93.297948,128.0
+"Pleasant Grove, Arkansas",35.820465,-91.906976,143.0
+"Pleasant Plains, Arkansas",35.55453,-91.627246,181.0
+"Plumerville, Arkansas",35.159377,-92.643059,96.0
+"Pocahontas, Arkansas",36.263366,-90.971224,100.0
+"Pollard, Arkansas",36.429561,-90.267129,105.0
+"Ponca, Arkansas",36.029292,-93.362376,420.0
+"Poplar Grove, Arkansas",34.552169,-90.854223,57.0
+"Portia, Arkansas",36.084865,-91.071044,80.0
+"Portland, Arkansas",33.237935,-91.510945,40.0
+"Pottsville, Arkansas",35.230606,-93.060839,116.0
+"Powhatan, Arkansas",36.087312,-91.123884,113.0
+"Poyen, Arkansas",34.324169,-92.641976,73.0
+"Prairie Creek, Arkansas",36.329478,-94.058933,394.0
+"Prairie Grove, Arkansas",35.986113,-94.303383,352.0
+"Prattsville, Arkansas",34.318495,-92.543146,96.0
+"Prescott, Arkansas",33.80432,-93.391207,102.0
+"Princeton, Arkansas",33.97754,-92.624178,85.0
+"Pyatt, Arkansas",36.250744,-92.846637,224.0
+"Quitman, Arkansas",35.381723,-92.214724,181.0
+"Ratcliff, Arkansas",35.306946,-93.888636,130.0
+"Ravenden, Arkansas",36.243201,-91.251307,128.0
+"Ravenden Springs, Arkansas",36.312705,-91.223265,128.0
+"Reader, Arkansas",33.75161,-93.101184,68.0
+"Rector, Arkansas",36.264158,-90.293518,90.0
+"Redfield, Arkansas",34.439337,-92.188484,95.0
+"Reed, Arkansas",33.701672,-91.445758,47.0
+"Reyno, Arkansas",36.360899,-90.758993,86.0
+"Rison, Arkansas",33.959951,-92.193648,70.0
+"Rivervale, Arkansas",35.675877,-90.3445,66.0
+"Rockport, Arkansas",34.405268,-92.808592,106.0
+"Rockwell, Arkansas",34.464341,-93.133829,143.0
+"Roe, Arkansas",34.631101,-91.385963,65.0
+"Rogers, Arkansas",36.318085,-94.152287,412.0
+"Roland, Arkansas",34.90224,-92.517469,86.0
+"Rondo, Arkansas",34.657447,-90.820842,65.0
+"Rose Bud, Arkansas",35.321183,-92.076515,227.0
+"Rosston, Arkansas",33.588019,-93.286934,113.0
+"Rover, Arkansas",34.951824,-93.408964,122.0
+"Rudy, Arkansas",35.527455,-94.240384,239.0
+"Russell, Arkansas",35.362126,-91.509947,73.0
+"Russellville, Arkansas",35.276328,-93.138743,115.0
+"Rye, Arkansas",33.750475,-91.998485,58.0
+"Salado, Arkansas",35.695405,-91.592317,136.0
+"Salem, Arkansas",34.630899,-92.561492,149.0
+"Salem, Arkansas",36.370416,-91.821706,204.0
+"Salesville, Arkansas",36.23906,-92.277495,196.0
+"Saratoga, Arkansas",33.743741,-93.904289,130.0
+"Sardis, Arkansas",34.533041,-92.406722,114.0
+"Scott, Arkansas",34.69766,-92.093932,75.0
+"Scranton, Arkansas",35.36043,-93.539724,119.0
+"Searcy, Arkansas",35.241134,-91.735223,73.0
+"Sedgwick, Arkansas",35.974161,-90.862149,81.0
+"Shannon Hills, Arkansas",34.617586,-92.402176,96.0
+"Sheridan, Arkansas",34.321575,-92.443067,102.0
+"Sherrill, Arkansas",34.385065,-91.951808,70.0
+"Sherwood, Arkansas",34.852029,-92.204483,110.0
+"Shirley, Arkansas",35.643751,-92.313519,165.0
+"Sidney, Arkansas",36.004421,-91.658289,199.0
+"Siloam Springs, Arkansas",36.185382,-94.530029,347.0
+"Smackover, Arkansas",33.363589,-92.731425,37.0
+"Smithville, Arkansas",36.079921,-91.302675,104.0
+"South Lead Hill, Arkansas",36.395614,-92.906209,271.0
+"Southside, Arkansas",35.720183,-91.630162,147.0
+"Sparkman, Arkansas",33.917168,-92.849997,55.0
+"Springdale, Arkansas",36.191438,-94.155062,408.0
+"Springfield, Arkansas",35.272887,-92.554988,151.0
+"Springtown, Arkansas",36.260285,-94.423812,369.0
+"St. Charles, Arkansas",34.372999,-91.137446,64.0
+"St. Francis, Arkansas",36.454872,-90.142179,92.0
+"St. Joe, Arkansas",36.026028,-92.801276,251.0
+"St. Paul, Arkansas",35.826791,-93.767285,509.0
+"Stamps, Arkansas",33.354959,-93.497879,85.0
+"Star City, Arkansas",33.94078,-91.839962,87.0
+"Staves, Arkansas",34.033579,-92.280583,71.0
+"Stephens, Arkansas",33.420917,-93.06959,91.0
+"Strawberry, Arkansas",35.966523,-91.321102,102.0
+"Strong, Arkansas",33.107883,-92.355573,37.0
+"Stuttgart, Arkansas",34.495233,-91.548638,69.0
+"Subiaco, Arkansas",35.297367,-93.639439,141.0
+"Success, Arkansas",36.454501,-90.722625,90.0
+"Sulphur Rock, Arkansas",35.751613,-91.500264,101.0
+"Sulphur Springs, Arkansas",36.484076,-94.460095,281.0
+"Sulphur Springs, Arkansas",34.17145,-92.132055,106.0
+"Summers, Arkansas",35.987194,-94.482872,367.0
+"Summit, Arkansas",36.252203,-92.688287,269.0
+"Sunset, Arkansas",35.223979,-90.205642,66.0
+"Sweet Home, Arkansas",34.667397,-92.246304,94.0
+"Swifton, Arkansas",35.824376,-91.129429,76.0
+"Taylor, Arkansas",33.099802,-93.461843,75.0
+"Texarkana, Arkansas",33.436339,-93.987118,117.0
+"Thornton, Arkansas",33.774876,-92.487651,95.0
+"Tillar, Arkansas",33.711,-91.451812,47.0
+"Tinsman, Arkansas",33.629183,-92.353295,52.0
+"Tollette, Arkansas",33.818095,-93.896899,109.0
+"Tontitown, Arkansas",36.167388,-94.242128,394.0
+"Traskwood, Arkansas",34.452451,-92.666438,99.0
+"Trumann, Arkansas",35.67698,-90.526094,69.0
+"Tucker, Arkansas",34.439523,-91.951907,68.0
+"Tuckerman, Arkansas",35.725641,-91.202079,79.0
+"Tull, Arkansas",34.441214,-92.585881,93.0
+"Tumbling Shoals, Arkansas",35.547053,-91.96746,233.0
+"Tupelo, Arkansas",35.390332,-91.229904,66.0
+"Turrell, Arkansas",35.374609,-90.270384,66.0
+"Twin Groves, Arkansas",35.329207,-92.405668,188.0
+"Tyronza, Arkansas",35.486771,-90.356008,69.0
+"Ulm, Arkansas",34.576229,-91.461691,65.0
+"Uniontown, Arkansas",35.585222,-94.446997,280.0
+"Urbana, Arkansas",33.158452,-92.445361,46.0
+"Valley Springs, Arkansas",36.153768,-92.989698,323.0
+"Van Buren, Arkansas",35.451176,-94.354003,181.0
+"Vandervoort, Arkansas",34.379781,-94.364919,330.0
+"Vanndale, Arkansas",35.315292,-90.771114,84.0
+"Victoria, Arkansas",35.757424,-90.060145,69.0
+"Vilonia, Arkansas",35.078702,-92.215387,97.0
+"Viola, Arkansas",36.399237,-91.986977,273.0
+"Violet Hill, Arkansas",36.152899,-91.839723,234.0
+"Wabbaseka, Arkansas",34.359805,-91.793777,63.0
+"Walcott, Arkansas",36.046118,-90.670497,105.0
+"Waldenburg, Arkansas",35.565255,-90.934561,72.0
+"Waldo, Arkansas",33.351923,-93.295393,110.0
+"Waldron, Arkansas",34.903252,-94.094839,197.0
+"Walnut Ridge, Arkansas",36.084796,-90.94684,84.0
+"Ward, Arkansas",35.013782,-91.957727,86.0
+"Warm Springs, Arkansas",36.483148,-91.049008,150.0
+"Warren, Arkansas",33.611829,-92.067718,73.0
+"Washington, Arkansas",33.772882,-93.683293,137.0
+"Watson, Arkansas",33.89375,-91.257061,47.0
+"Wayton, Arkansas",35.919363,-93.259588,584.0
+"Weiner, Arkansas",35.619714,-90.905303,77.0
+"Weldon, Arkansas",35.447994,-91.231606,72.0
+"Wesley, Arkansas",36.032535,-93.918624,392.0
+"West Crossett, Arkansas",33.148043,-92.016978,47.0
+"West Fork, Arkansas",35.934924,-94.18111,409.0
+"West Memphis, Arkansas",35.149554,-90.199266,66.0
+"West Point, Arkansas",35.203307,-91.609897,70.0
+"Western Grove, Arkansas",36.101118,-92.954554,326.0
+"Wheatley, Arkansas",34.921186,-91.106255,64.0
+"Whelen Springs, Arkansas",33.833144,-93.126029,93.0
+"White Hall, Arkansas",34.275179,-92.100649,98.0
+"Wickes, Arkansas",34.299736,-94.327252,310.0
+"Widener, Arkansas",35.023498,-90.681934,62.0
+"Wiederkehr Village, Arkansas",35.477705,-93.764725,199.0
+"Wilburn, Arkansas",35.508788,-91.888375,128.0
+"Williford, Arkansas",36.251832,-91.360457,107.0
+"Willisville, Arkansas",33.516119,-93.293665,115.0
+"Wilmar, Arkansas",33.626384,-91.929342,53.0
+"Wilmot, Arkansas",33.056963,-91.577858,31.0
+"Wilson, Arkansas",35.565961,-90.0418,72.0
+"Wilton, Arkansas",33.738728,-94.147987,97.0
+"Winchester, Arkansas",33.774074,-91.4737,46.0
+"Winslow, Arkansas",35.801542,-94.131779,574.0
+"Winthrop, Arkansas",33.830837,-94.354222,102.0
+"Witts Springs, Arkansas",35.770268,-92.882285,547.0
+"Woodlawn, Arkansas",33.966736,-92.045239,82.0
+"Woodson, Arkansas",34.539726,-92.222549,78.0
+"Wooster, Arkansas",35.199919,-92.450204,93.0
+"Wrightsville, Arkansas",34.620714,-92.219607,75.0
+"Wynne, Arkansas",35.235224,-90.788513,80.0
+"Yarborough Landing, Arkansas",33.718829,-94.009261,91.0
+"Yellville, Arkansas",36.228846,-92.686123,198.0
+"Zinc, Arkansas",36.283959,-92.914422,268.0
