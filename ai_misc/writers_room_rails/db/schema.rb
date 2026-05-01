@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_01_182717) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_01_183146) do
+  create_table "actors", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "characters", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "roles", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
@@ -25,7 +35,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_182717) do
     t.integer "user_id", null: false
     t.index ["role_id"], name: "index_user_roles_on_role_id"
     t.index ["user_id", "role_id"], name: "index_user_roles_on_user_id_and_role_id", unique: true
-    t.index ["user_id"], name: "index_user_roles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -34,6 +43,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_182717) do
     t.string "email", null: false
     t.string "name"
     t.datetime "updated_at", null: false
+    t.index ["actor_id"], name: "index_users_on_actor_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
