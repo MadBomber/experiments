@@ -1,7 +1,25 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
+  include Passwordless::ControllerHelpers
+  include Pundit::Authorization
+
+  before_action :require_user!
+
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
+
+  helper_method :current_user
+
   allow_browser versions: :modern
 
-  # Changes to the importmap will invalidate the etag for HTML responses
-  stale_when_importmap_changes
+  private
+
+  def current_user
+    @current_user ||= authenticate_by_session(User)
+  end
+
+  def require_user!
+    return if current_user
+    redirect_to new_passwordless_session_path(:users),
+                alert: "You must be signed in."
+  end
 end
