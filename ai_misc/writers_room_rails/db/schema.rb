@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_01_183920) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_01_184015) do
   create_table "actors", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -20,6 +20,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_183920) do
     t.text "style_notes"
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_actors_on_name"
+  end
+
+  create_table "beats", force: :cascade do |t|
+    t.integer "act"
+    t.string "beat_type", default: "general", null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.integer "position", default: 0, null: false
+    t.integer "project_id", null: false
+    t.integer "scene_id"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["beat_type"], name: "index_beats_on_beat_type"
+    t.index ["project_id", "position"], name: "index_beats_on_project_id_and_position"
+    t.index ["project_id"], name: "index_beats_on_project_id"
+    t.index ["scene_id"], name: "index_beats_on_scene_id"
   end
 
   create_table "castings", force: :cascade do |t|
@@ -107,6 +123,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_183920) do
     t.index ["prep_status"], name: "index_projects_on_prep_status"
   end
 
+  create_table "research_materials", force: :cascade do |t|
+    t.text "accuracy_requirements"
+    t.string "category", default: "other", null: false
+    t.integer "character_id"
+    t.datetime "created_at", null: false
+    t.text "key_facts"
+    t.integer "project_id", null: false
+    t.integer "scene_id"
+    t.text "sources"
+    t.string "subject", null: false
+    t.text "summary"
+    t.datetime "updated_at", null: false
+    t.text "world_building_notes"
+    t.index ["category"], name: "index_research_materials_on_category"
+    t.index ["project_id"], name: "index_research_materials_on_project_id"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
@@ -124,6 +157,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_183920) do
     t.index ["character_id"], name: "index_scene_characters_on_character_id"
     t.index ["scene_id", "character_id"], name: "index_scene_characters_on_scene_id_and_character_id", unique: true
     t.index ["scene_id"], name: "index_scene_characters_on_scene_id"
+  end
+
+  create_table "scene_comments", force: :cascade do |t|
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.boolean "resolved", default: false, null: false
+    t.integer "resolved_by_id"
+    t.integer "scene_id", null: false
+    t.integer "transcript_line_id"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["scene_id", "resolved"], name: "index_scene_comments_on_scene_id_and_resolved"
+    t.index ["scene_id"], name: "index_scene_comments_on_scene_id"
+    t.index ["transcript_line_id"], name: "index_scene_comments_on_transcript_line_id"
+    t.index ["user_id"], name: "index_scene_comments_on_user_id"
   end
 
   create_table "scene_runs", force: :cascade do |t|
@@ -222,13 +270,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_183920) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "beats", "projects"
   add_foreign_key "castings", "actors"
   add_foreign_key "castings", "characters"
   add_foreign_key "castings", "projects"
   add_foreign_key "character_arcs", "characters"
   add_foreign_key "character_arcs", "projects"
+  add_foreign_key "research_materials", "projects"
   add_foreign_key "scene_characters", "characters"
   add_foreign_key "scene_characters", "scenes"
+  add_foreign_key "scene_comments", "scenes"
+  add_foreign_key "scene_comments", "users"
   add_foreign_key "scene_runs", "scenes"
   add_foreign_key "scenes", "projects"
   add_foreign_key "stories", "projects"
