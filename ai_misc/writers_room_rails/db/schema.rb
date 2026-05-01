@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_01_184015) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_01_184332) do
   create_table "actors", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -137,7 +137,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_184015) do
     t.datetime "updated_at", null: false
     t.text "world_building_notes"
     t.index ["category"], name: "index_research_materials_on_category"
+    t.index ["character_id"], name: "index_research_materials_on_character_id"
     t.index ["project_id"], name: "index_research_materials_on_project_id"
+    t.index ["scene_id"], name: "index_research_materials_on_scene_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -168,6 +170,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_184015) do
     t.integer "transcript_line_id"
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
+    t.index ["resolved_by_id"], name: "index_scene_comments_on_resolved_by_id"
     t.index ["scene_id", "resolved"], name: "index_scene_comments_on_scene_id_and_resolved"
     t.index ["scene_id"], name: "index_scene_comments_on_scene_id"
     t.index ["transcript_line_id"], name: "index_scene_comments_on_transcript_line_id"
@@ -183,6 +186,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_184015) do
     t.string "status", default: "queued", null: false
     t.datetime "updated_at", null: false
     t.index ["scene_id"], name: "index_scene_runs_on_scene_id"
+    t.index ["started_by"], name: "index_scene_runs_on_started_by"
     t.index ["status"], name: "index_scene_runs_on_status"
   end
 
@@ -212,6 +216,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_184015) do
     t.index ["project_id", "number"], name: "index_scenes_on_project_id_and_number"
     t.index ["project_id", "position"], name: "index_scenes_on_project_id_and_position"
     t.index ["project_id"], name: "index_scenes_on_project_id"
+    t.index ["released_by"], name: "index_scenes_on_released_by"
     t.index ["status"], name: "index_scenes_on_status"
   end
 
@@ -284,7 +289,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_184015) do
   add_foreign_key "scene_runs", "scenes"
   add_foreign_key "scenes", "projects"
   add_foreign_key "stories", "projects"
-  add_foreign_key "transcript_lines", "characters"
+  add_foreign_key "transcript_lines", "characters", on_delete: :nullify
   add_foreign_key "transcript_lines", "scene_runs"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
