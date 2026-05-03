@@ -1,0 +1,263 @@
+---
+name: rubyllm/opentelemetry
+version: 0.4.0
+description: |
+  OpenTelemetry tracing for RubyLLM. Use this skill when you need observability into LLM applications with support for Langfuse, Datadog, Honeycomb, Jaeger, Arize Phoenix, and any OpenTelemetry-compatible backend.
+---
+
+# OpenTelemetry RubyLLM Instrumentation v0.4.0
+
+**Observability for RubyLLM Applications**
+
+Adds OpenTelemetry tracing to RubyLLM. Send traces to any compatible backend (Langfuse, Datadog, Honeycomb, Jaeger, Arize Phoenix).
+
+**Gem Version:** 0.4.0  
+**GitHub:** https://github.com/thoughtbot/opentelemetry-instrumentation-ruby_llm
+
+## Installation
+
+```bash
+gem 'opentelemetry-instrumentation-ruby_llm'
+gem 'opentelemetry-sdk'
+gem 'opentelemetry-exporter-otlp'  # For OTLP export
+```
+
+## Setup
+
+```ruby
+require 'opentelemetry/sdk'
+require 'opentelemetry/exporter/otlp'
+require 'opentelemetry/instrumentation/ruby_llm'
+
+OpenTelemetry::SDK.configure do |c|
+  # Enable RubyLLM instrumentation
+  c.use 'OpenTelemetry::Instrumentation::RubyLLM'
+  
+  # Configure exporter (OTLP example)
+  c.add_span_processor(
+    OpenTelemetry::SDK::Trace::Export::BatchSpanProcessor.new(
+      OpenTelemetry::Exporter::OTLP::Exporter.new(
+        endpoint: ENV['OTEL_EXPORTER_OTLP_ENDPOINT'],
+        headers: ENV['OTEL_EXPORTER_OTLP_HEADERS']
+      )
+    )
+  )
+  
+  # Add resource attributes
+  c.resource = OpenTelemetry::SDK::Resources::Resource.create(
+    'service.name' => 'my-llm-app',
+    'service.version' => '1.0.0'
+  )
+end
+```
+
+## Backend Configurations
+
+### Langfuse
+
+```ruby
+OpenTelemetry::SDK.configure do |c|
+  c.use 'OpenTelemetry::Instrumentation::RubyLLM'
+  
+  c.add_span_processor(
+    OpenTelemetry::SDK::Trace::Export::BatchSpanProcessor.new(
+      OpenTelemetry::Exporter::OTLP::Exporter.new(
+        endpoint: 'https://cloud.langfuse.com/api/public/otel',
+        headers: {
+          'Authorization' => "Basic #{ENV['LANGFUSE_PUBLIC_KEY']}:#{ENV['LANGFUSE_SECRET_KEY']}"
+        }
+      )
+    )
+  )
+end
+```
+
+### Datadog
+
+```ruby
+require 'opentelemetry/exporter/otlp'
+
+OpenTelemetry::SDK.configure do |c|
+  c.use 'OpenTelemetry::Instrumentation::RubyLLM'
+  
+  c.add_span_processor(
+    OpenTelemetry::SDK::Trace::Export::BatchSpanProcessor.new(
+      OpenTelemetry::Exporter::OTLP::Exporter.new(
+        endpoint: ENV['DD_TRACE_OTLP_ENDPOINT'] || 'http://localhost:4318'
+      )
+    )
+  )
+end
+```
+
+### Honeycomb
+
+```ruby
+OpenTelemetry::SDK.configure do |c|
+  c.use 'OpenTelemetry::Instrumentation::RubyLLM'
+  
+  c.add_span_processor(
+    OpenTelemetry::SDK::Trace::Export::BatchSpanProcessor.new(
+      OpenTelemetry::Exporter::OTLP::Exporter.new(
+        endpoint: 'https://api.honeycomb.io:4318',
+        headers: {
+          'x-honeycomb-team' => ENV['HONEYCOMB_API_KEY'],
+          'x-honeycomb-dataset' => ENV['HONEYCOMB_DATASET']
+        }
+      )
+    )
+  )
+end
+```
+
+### Jaeger (Local Development)
+
+```ruby
+require 'opentelemetry/exporter/jaeger'
+
+OpenTelemetry::SDK.configure do |c|
+  c.use 'OpenTelemetry::Instrumentation::RubyLLM'
+  
+  c.add_span_processor(
+    OpenTelemetry::SDK::Trace::Export::SimpleSpanProcessor.new(
+      OpenTelemetry::Exporter::Jaeger::Agent.new(
+        host: 'localhost',
+        port: 6831
+      )
+    )
+  )
+end
+```
+
+### Arize Phoenix
+
+```ruby
+OpenTelemetry::SDK.configure do |c|
+  c.use 'OpenTelemetry::Instrumentation::RubyLLM'
+  
+  c.add_span_processor(
+    OpenTelemetry::SDK::Trace::Export::SimpleSpanProcessor.new(
+      OpenTelemetry::Exporter::OTLP::Exporter.new(
+        endpoint: 'http://localhost:4318/v1/traces'
+      )
+    )
+  )
+end
+```
+
+## Traced Operations
+
+### Chat Completions
+
+Automatically traces `Chat#ask`:
+
+**Span Attributes:**
+- `gen_ai.system` - Provider (openai, anthropic, etc.)
+- `gen_ai.request.model` - Requested model
+- `gen_ai.response.model` - Actual model used
+- `gen_ai.usage.input_tokens` - Input tokens
+- `gen_ai.usage.output_tokens` - Output tokens
+- `gen_ai.operation.name` - `chat`
+
+### Tool Calls
+
+Traces tool execution:
+
+**Span Attributes:**
+- `gen_ai.tool.name` - Tool name
+- `gen_ai.tool.description` - Tool description
+- `tool.arguments` - Tool arguments (JSON)
+- `tool.result` - Tool result
+
+**Events:**
+- `tool_call` - When tool is called
+- `tool_result` - When tool returns
+
+### Embeddings
+
+Traces `Embedding.embed`:
+
+**Span Attributes:**
+- `gen_ai.system` - Provider
+- `gen_ai.request.model` - Embedding model
+- `gen_ai.usage.input_tokens` - Input tokens
+- `embedding.dimensions` - Vector dimensions
+
+### Image Generation
+
+Traces `Image.paint`:
+
+**Span Attributes:**
+- `gen_ai.system` - Provider
+- `gen_ai.request.model` - Image model
+- `gen_ai.request.prompt` - Text prompt
+- `image.size` - Image dimensions
+
+### Audio Transcription
+
+Traces `Transcription.transcribe`:
+
+**Span Attributes:**
+- `gen_ai.system` - Provider
+- `gen_ai.request.model` - Transcription model
+- `audio.duration` - Audio duration
+- `audio.language` - Detected language
+
+## Custom Attributes
+
+```ruby
+# Add custom attributes to spans
+RubyLLM::Instrumentation.with(user_id: current_user.id, feature: "chat") do
+  RubyLLM.chat.ask("Hello")
+end
+```
+
+## Context Propagation
+
+```ruby
+# Propagate trace context across services
+require 'opentelemetry/trace'
+
+span = OpenTelemetry::Trace.current_span
+trace_id = span.context.trace_id
+span_id = span.context.span_id
+
+# Include in logs, headers, etc.
+Rails.logger.info "Trace ID: #{trace_id}"
+```
+
+## Sampling
+
+```ruby
+OpenTelemetry::SDK.configure do |c|
+  c.use 'OpenTelemetry::Instrumentation::RubyLLM'
+  
+  # Sample 10% of traces
+  c.sampler = OpenTelemetry::SDK::Trace::Samplers.parent_based(
+    root: OpenTelemetry::SDK::Trace::Samplers.trace_id_ratio_based(0.1)
+  )
+end
+```
+
+## Rails Integration
+
+```ruby
+# config/initializers/opentelemetry.rb
+Rails.application.reloader.to_prepare do
+  OpenTelemetry::SDK.configure do |c|
+    c.use 'OpenTelemetry::Instrumentation::RubyLLM'
+    c.use_all  # Auto-instrument other gems
+    
+    c.add_span_processor(
+      OpenTelemetry::SDK::Trace::Export::BatchSpanProcessor.new(
+        OpenTelemetry::Exporter::OTLP::Exporter.new
+      )
+    )
+  end
+end
+```
+
+## See Also
+
+- **Main RubyLLM**: [rubyllm](../SKILL.md)
+- **OpenTelemetry**: https://opentelemetry.io
