@@ -1,6 +1,6 @@
 ---
 name: rubyllm
-version: 1.14.1
+version: 1.15.0
 description: |
   One beautiful Ruby API for GPT, Claude, Gemini, and more. Use this skill when building AI-powered applications with RubyLLM - chatbots, AI agents, RAG applications, content generators, vision/audio analysis, embeddings, image generation, and Rails integration. Supports 15+ providers with a unified interface.
 allowed-tools:
@@ -8,13 +8,13 @@ allowed-tools:
   - Bash(bin/rails *)
 ---
 
-# RubyLLM v1.14.1
+# RubyLLM v1.15.0
 
 **One beautiful Ruby API for GPT, Claude, Gemini, and more.**
 
 RubyLLM provides a unified interface for working with AI models across 15+ providers. Build chatbots, AI agents, RAG applications, and content generators with the same simple API.
 
-**Gem Version:** 1.14.1
+**Gem Version:** 1.15.0
 
 ## Installation
 
@@ -80,6 +80,7 @@ chat.with_tool(Weather).ask "Weather in Paris?"
 | Streaming | This skill (Streaming section) |
 | Embeddings | [embeddings](embeddings/SKILL.md) |
 | Image Generation | [image-generation](image-generation/SKILL.md) |
+| Image Editing | [image-generation](image-generation/SKILL.md) (v1.15+) |
 | Audio Transcription | [audio-transcription](audio-transcription/SKILL.md) |
 | Moderation | [moderation](moderation/SKILL.md) |
 | Extended Thinking | This skill (Extended Thinking section) |
@@ -179,7 +180,8 @@ raw_block = RubyLLM::Content::Raw.new([
 
 chat.add_message(role: :system, content: raw_block)
 response = chat.ask(raw_block)
-puts "Cached tokens: #{response.cached_tokens}"
+puts "Cache read tokens: #{response.tokens.cache_read}"
+puts "Cache write tokens: #{response.tokens.cache_write}"
 ```
 
 ## Extended Thinking
@@ -228,15 +230,20 @@ chat.ask "Write a story" do |chunk|
   $stdout.flush
 end
 
-# With events
+# With lifecycle callbacks (v1.15+)
 chat = RubyLLM.chat
-  .on_new_message { print "Assistant > " }
-  .on_end_message { |msg| puts "\n✓ Done (#{msg.output_tokens} tokens)" }
+  .before_message { print "Assistant > " }
+  .after_message { |msg| puts "\n✓ Done (#{msg.tokens.output} tokens)" }
+  .before_tool_call { |tc| puts "Calling: #{tc.name}" }
+  .after_tool_result { |r| puts "Result: #{r}" }
 
 chat.ask "Hello" do |chunk|
   print chunk.content
 end
 ```
+
+> **Deprecated (v1.15, removed in v2.0):** `on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result`.
+> Replace with `before_message`, `after_message`, `before_tool_call`, `after_tool_result`.
 
 ## Multi-Modal
 
@@ -259,16 +266,21 @@ chat.ask "Analyze", with: ["image.jpg", "doc.pdf", "notes.txt"]
 ```ruby
 response = chat.ask "Hello"
 
-puts "Input: #{response.input_tokens}"
-puts "Output: #{response.output_tokens}"
-puts "Cached: #{response.cached_tokens}"
+# v1.15+ granular token breakdown
+puts "Input: #{response.tokens.input}"
+puts "Output: #{response.tokens.output}"
+puts "Cache read: #{response.tokens.cache_read}"
+puts "Cache write: #{response.tokens.cache_write}"
 puts "Thinking: #{response.thinking_tokens}"
 
-# Cost estimation
-model = RubyLLM.models.find(response.model_id)
-cost = (response.input_tokens * model.input_price_per_million / 1_000_000) +
-       (response.output_tokens * model.output_price_per_million / 1_000_000)
+# Built-in cost tracking (v1.15+) — returns nil for unknown pricing
+puts "Response cost: #{response.cost.total}"
+puts "Chat total: #{chat.cost.total}"
 ```
+
+> **Compat helpers** (`response.input_tokens`, `response.output_tokens`, `response.cached_tokens`) still work
+> but the new `response.tokens.*` structure is preferred. `response.cached_tokens` no longer distinguishes
+> read vs write; use `response.tokens.cache_read` / `response.tokens.cache_write` for accuracy.
 
 ## Error Handling
 

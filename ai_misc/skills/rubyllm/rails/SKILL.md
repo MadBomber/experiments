@@ -101,6 +101,9 @@ chat.ask "Analyze", with: ["image.jpg", "document.pdf", "data.csv"]
 chat.ask "Process", with: params[:uploaded_file]
 ```
 
+> **v1.15+:** Active Storage blobs are reused instead of re-downloaded/re-uploaded on each ask,
+> reducing API overhead when the same attachment is referenced multiple times.
+
 ### Structured Output
 
 ```ruby
@@ -307,19 +310,19 @@ end
 ## Cost Tracking
 
 ```ruby
+# v1.15+: Built-in cost calculation — no manual token math needed
 class Chat < ApplicationRecord
   acts_as_chat
-  
+
   after_ask :track_cost
-  
+
   private
-  
+
   def track_cost(response)
-    model = Model.find_by(model_id: response.model_id)
-    cost = (response.input_tokens * model.input_price_per_million / 1_000_000) +
-           (response.output_tokens * model.output_price_per_million / 1_000_000)
-    
-    Rails.cache.increment("cost:#{user_id}:#{Date.today}", cost)
+    # response.cost.total returns nil for unknown pricing rather than a bad estimate
+    return unless response.cost.total
+
+    Rails.cache.increment("cost:#{user_id}:#{Date.today}", response.cost.total)
   end
 end
 ```

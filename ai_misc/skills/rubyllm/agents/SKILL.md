@@ -126,6 +126,9 @@ response = chat.ask("Hello")
 # Or instantiate
 agent = WorkAssistant.new
 response = agent.ask("Hello")
+
+# Cost tracking (v1.15+) — accumulates across all asks on this instance
+puts agent.cost.total
 ```
 
 ### Rails-Backed

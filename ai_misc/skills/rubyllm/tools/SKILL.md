@@ -32,6 +32,21 @@ end
 
 ## Parameter Declaration
 
+### Method Signature Inference (v1.15+)
+
+Required and optional keyword arguments are automatically inferred as tool parameters — no `params` block needed:
+
+```ruby
+class Weather < RubyLLM::Tool
+  description "Get weather for a location"
+
+  def execute(latitude:, longitude:, units: "celsius")
+    # latitude, longitude → required params
+    # units → optional param (has default)
+  end
+end
+```
+
 ### params DSL (v1.9+)
 
 ```ruby
@@ -90,18 +105,17 @@ chat.with_tools(Weather, calls: :one)   # One call per response
 ## Tool Monitoring
 
 ```ruby
+# v1.15+ callbacks
 chat = RubyLLM.chat
   .with_tool(Weather)
-  .on_tool_call do |tool_call|
-    puts "Calling: #{tool_call.name}"
-    puts "Args: #{tool_call.arguments}"
-  end
-  .on_tool_result do |result|
-    puts "Result: #{result}"
-  end
+  .before_tool_call { |tc| puts "Calling: #{tc.name} args=#{tc.arguments}" }
+  .after_tool_result { |result| puts "Result: #{result}" }
 
 chat.ask "Weather?"
 ```
+
+> **Deprecated (v1.15, removed in v2.0):** `on_tool_call` and `on_tool_result`.
+> Replace with `before_tool_call` and `after_tool_result`.
 
 ## Rich Content from Tools
 
