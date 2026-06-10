@@ -23,3 +23,6 @@ doc/
 .env
 temp.md
 .aigcm_msg
+
+# Large prebuilt binaries (exceeds GitHub 100MB limit)
+torch/libtorch/lib/
