@@ -84,6 +84,14 @@ def format_time(seconds)
 end
 ```
 
+### Word-Level Timing (v1.16+)
+
+```ruby
+transcription = RubyLLM.transcribe("interview.mp3", model: "whisper-1")
+transcription.words
+# => [{ word: "Hello", start: 0.0, end: 0.42 }, { word: "world", start: 0.5, end: 0.78 }, ...]
+```
+
 ## Language Options
 
 ```ruby

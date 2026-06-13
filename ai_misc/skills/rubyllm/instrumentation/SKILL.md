@@ -11,6 +11,8 @@ description: |
 
 Uses ActiveSupport::Notifications to publish events for all RubyLLM operations. Build custom monitoring, logging, or analytics.
 
+> **v1.16 note:** RubyLLM core now ships with built-in instrumentation (`chat.ruby_llm` event, `config.instrumenter` for non-Rails). This external gem remains valuable for richer features: additional event types, custom metadata blocks (`RubyLLM::Instrumentation.with(...)`), and fine-grained per-operation events (note: the built-in event is `chat.ruby_llm`; this gem publishes `complete_chat.ruby_llm` and others — they are distinct).
+
 **Gem Version:** 0.3.1  
 **GitHub:** https://github.com/sinaptia/ruby_llm-instrumentation
 

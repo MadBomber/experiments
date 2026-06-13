@@ -1,7 +1,7 @@
 ---
 name: rubyllm-tools
 description: |
-  Function calling for RubyLLM. Use this skill when creating tools that let AI call your Ruby code, declaring parameters with the params DSL, using tools in chat, monitoring tool calls with callbacks, handling tool security, and implementing advanced patterns like halt and provider-specific parameters.
+  Function calling for RubyLLM. Use this skill when creating tools that let AI call your Ruby code, declaring parameters with the params DSL, using tools in chat, monitoring tool calls with callbacks, handling tool security, and implementing advanced patterns like halt, provider-specific parameters, and concurrent tool execution (v1.16+).
 allowed-tools:
   - Bash(bundle *)
   - Bash(bin/rails *)
@@ -101,6 +101,23 @@ chat.with_tools(Weather, choice: :none)     # Disable tools
 chat.with_tools(Weather, calls: :many)  # Multiple calls (default)
 chat.with_tools(Weather, calls: :one)   # One call per response
 ```
+
+## Concurrent Tool Execution (v1.16+)
+
+When the LLM requests multiple tools in one turn, run them in parallel:
+
+```ruby
+# Per-chat concurrency mode
+chat.with_tools(Weather, StockPrice, Currency, concurrency: :threads)  # OS threads
+chat.with_tools(Weather, StockPrice, concurrency: :fibers)             # async gem (single-threaded)
+chat.with_tools(Weather, StockPrice, concurrency: false)               # sequential (override global)
+
+# Global default in configure block
+RubyLLM.configure { |c| c.tool_concurrency = true }  # true = :threads
+```
+
+- Results stream back as tools complete but are gathered before returning to the model
+- In Rails, each call runs inside the Rails executor — connection pool and `CurrentAttributes` are safe
 
 ## Tool Monitoring
 

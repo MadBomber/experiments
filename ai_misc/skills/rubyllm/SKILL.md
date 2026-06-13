@@ -1,14 +1,14 @@
 ---
 name: rubyllm
-version: 1.15.0
+version: 1.16.0
 description: |
-  One beautiful Ruby API for GPT, Claude, Gemini, and more. Use this skill when building AI-powered applications with RubyLLM - chatbots, AI agents, RAG applications, content generators, vision/audio analysis, embeddings, image generation, and Rails integration. Supports 15+ providers with a unified interface.
+  One beautiful Ruby API for GPT, Claude, Gemini, and more. Use this skill when building AI-powered applications with RubyLLM - chatbots, AI agents, RAG applications, content generators, vision/audio analysis, embeddings, image generation, and Rails integration. Supports 15+ providers with a unified interface. v1.16 adds concurrent tool execution (threads or fibers), built-in instrumentation, and per-provider API base URL overrides.
 allowed-tools:
   - Bash(bundle *)
   - Bash(bin/rails *)
 ---
 
-# RubyLLM v1.15.0
+# RubyLLM v1.16.0
 
 **One beautiful Ruby API for GPT, Claude, Gemini, and more.**
 
@@ -143,6 +143,7 @@ RubyLLM supports 15+ providers through a unified API:
 
 ```ruby
 RubyLLM.configure do |config|
+  # API keys
   config.openai_api_key = ENV['OPENAI_API_KEY']
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
@@ -150,6 +151,26 @@ RubyLLM.configure do |config|
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
+
+  # Per-provider API base URL overrides (v1.16+)
+  config.bedrock_api_base    = ENV['BEDROCK_API_BASE']
+  config.mistral_api_base    = ENV['MISTRAL_API_BASE']
+  config.perplexity_api_base = ENV['PERPLEXITY_API_BASE']
+  config.vertexai_api_base   = ENV['VERTEXAI_API_BASE']
+  config.xai_api_base        = ENV['XAI_API_BASE']
+  # OpenAI, Anthropic, Gemini, DeepSeek, OpenRouter, Azure, Ollama, GPUStack also supported
+
+  # Concurrent tool execution (v1.16+): true/:threads, :fibers, or false
+  config.tool_concurrency = true
+
+  # HTTP adapter (v1.16+): :async_http, :typhoeus, :net_http, :httpx, etc.
+  config.faraday_adapter = :async_http
+
+  # Deprecation warnings (v1.16+): :warn, :silence, or :raise
+  config.deprecation_behavior = :warn
+
+  # Built-in instrumentation (v1.16+, non-Rails)
+  # config.instrumenter = MyInstrumenter.new  # must respond to instrument(name, payload) { }
 end
 ```
 
@@ -245,6 +266,50 @@ end
 > **Deprecated (v1.15, removed in v2.0):** `on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result`.
 > Replace with `before_message`, `after_message`, `before_tool_call`, `after_tool_result`.
 
+## Concurrent Tool Execution
+
+**New in v1.16.** When the LLM requests multiple tools in one turn, RubyLLM can run them in parallel.
+
+```ruby
+# Global default — :threads, :fibers, true (= :threads), or false
+RubyLLM.configure do |config|
+  config.tool_concurrency = true
+end
+
+# Per-chat override
+chat.with_tools(Weather, StockPrice, Currency, concurrency: :threads)
+chat.with_tools(Weather, StockPrice, concurrency: :fibers)  # requires `async` gem
+chat.with_tools(Weather, StockPrice, concurrency: false)    # sequential
+```
+
+- `:threads` — true OS threads; safe for most tools
+- `:fibers` — single-threaded via the `async` gem; good for I/O-bound tools that use `async`-aware HTTP clients
+- All results are gathered before returning to the model (streaming results still accumulate in order)
+- In Rails, each tool call is wrapped in the Rails executor, ensuring proper connection pool checkout and `CurrentAttributes` propagation
+
+## Built-in Instrumentation
+
+**New in v1.16.** No extra gem required. Events cover HTTP requests, chat completions, tool calls, embeddings, and model registry refreshes.
+
+```ruby
+# Rails — use ActiveSupport::Notifications
+ActiveSupport::Notifications.subscribe('chat.ruby_llm') do |_name, _start, _finish, _id, payload|
+  Rails.logger.info(
+    provider:      payload[:provider],
+    model:         payload[:model],
+    input_tokens:  payload[:input_tokens],
+    output_tokens: payload[:output_tokens]
+  )
+end
+
+# Non-Rails — supply any object that responds to instrument(name, payload, &block)
+RubyLLM.configure do |config|
+  config.instrumenter = MyInstrumenter.new
+end
+```
+
+> The external `ruby_llm-instrumentation` / `opentelemetry-instrumentation-ruby_llm` gems remain available for richer tracing pipelines.
+
 ## Multi-Modal
 
 ```ruby
@@ -259,6 +324,13 @@ chat.ask "Transcribe", with: "meeting.mp3"
 
 # Multiple files
 chat.ask "Analyze", with: ["image.jpg", "doc.pdf", "notes.txt"]
+```
+
+### Audio Transcription — Word-Level Timing (v1.16+)
+
+```ruby
+transcription = RubyLLM.transcribe("interview.mp3", model: "whisper-1")
+transcription.words  # => [{ word: "Hello", start: 0.0, end: 0.42 }, ...]
 ```
 
 ## Token Tracking
@@ -309,7 +381,7 @@ end
 | `UnauthorizedError` | 401 | Invalid API key |
 | `PaymentRequiredError` | 402 | Billing issue |
 | `RateLimitError` | 429 | Rate limit exceeded |
-| `ContextLengthExceededError` | - | Token limit |
+| `ContextLengthExceededError` | - | Token limit (v1.16: Anthropic context-length errors now raise this) |
 | `ServerError` | 500 | Provider error |
 | `ServiceUnavailableError` | 502/503/504 | Service down |
 
