@@ -1,0 +1,32 @@
+AllCops:
+  TargetRubyVersion: 4.0
+  NewCops: enable
+
+Layout/LineLength:
+  Max: 180
+
+Style/Documentation:
+  Enabled: false
+
+# these analyzers are declarative weighted-rubric tables by nature; splitting
+# the component lists further would add indirection without adding clarity
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/AbcSize:
+  Max: 35
+
+Metrics/ClassLength:
+  Max: 160
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 10
+
+# minitest method names describing exact score thresholds (e.g.
+# test_clean_text_scores_100) read better than a normalcase rewrite
+Naming/VariableNumber:
+  Exclude:
+    - "test/**/*_test.rb"

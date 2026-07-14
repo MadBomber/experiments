@@ -1,0 +1,69 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+##########################################################
+###
+##  File: prose_score/bin/prose_score
+##  Desc: CLI for the deterministic prose-quality percentage scorer
+##  By:   Dewayne VanHoozer (dvanhoozer@gmail.com)
+#
+
+require 'optparse'
+require 'json'
+require 'debug_me'
+include DebugMe
+
+require_relative '../lib/prose_score'
+
+options = { json: false, use_llm: false, color: $stdout.tty? }
+
+OptionParser.new do |opts|
+  opts.banner = <<~BANNER
+    prose_score -- scores a piece of prose 0-100% across mechanics, clarity,
+    organization, and readability, with an optional LLM-judged pass for
+    ideas/voice/word choice.
+
+    Usage:
+      prose_score FILE                  # score a file
+      prose_score < FILE                # or pipe/type text on stdin
+      echo "some prose" | prose_score
+      prose_score --llm FILE            # also run the LLM judge (see below)
+      prose_score --json FILE           # machine-readable output
+
+    LLM judge (--llm) defaults to a local Ollama model (gpt-oss:20b) and
+    requires Ollama running locally. Configure with:
+      OLLAMA_URL               Ollama server URL (default http://localhost:11434)
+      PROSE_SCORE_LLM_MODEL    model tag to use (default gpt-oss:20b)
+      PROSE_SCORE_LLM_PROVIDER provider name (default ollama)
+    (RUBY_LLM_MODEL / RUBY_LLM_PROVIDER are honored too, matching actor.rb.)
+
+    Debug logging is on by default (this project's convention); set
+    DEBUG_ME=false to silence it.
+
+    Options:
+  BANNER
+  opts.on('--json', 'Print the full report as JSON instead of the formatted report') { options[:json] = true }
+  opts.on('--llm', 'Add the LLM-judged Ideas/Organization/Voice/Word-Choice pass') { options[:use_llm] = true }
+  opts.on('--no-color', 'Disable colored output') { options[:color] = false }
+  opts.on('-h', '--help', 'Show this help') do
+    puts opts
+    exit
+  end
+end.parse!
+
+warn 'No file given and no input piped in -- reading from stdin, type your prose then Ctrl-D:' if ARGV.empty? && $stdin.tty?
+
+text = ARGV.first ? File.read(ARGV.first) : $stdin.read
+
+debug_me("Scoring #{ARGV.first || 'stdin'}") { [text.length, options] }
+
+report = ProseScore::Scorer.score(text, use_llm: options[:use_llm])
+
+if options[:json]
+  json_safe = report.merge(
+    analyzers: report[:analyzers].transform_values { it.merge(issues: it[:issues].map(&:to_h)) }
+  )
+  puts JSON.pretty_generate(json_safe)
+else
+  puts ProseScore::ReportFormatter.render(report, color: options[:color])
+end
