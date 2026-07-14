@@ -15,20 +15,21 @@ include DebugMe
 
 require_relative '../lib/prose_score'
 
-options = { json: false, use_llm: false, color: $stdout.tty? }
+options = { output: :score, use_llm: false, color: $stdout.tty? }
 
 OptionParser.new do |opts|
   opts.banner = <<~BANNER
-    prose_score -- scores a piece of prose 0-100% across mechanics, clarity,
-    organization, and readability, with an optional LLM-judged pass for
-    ideas/voice/word choice.
+    prose_score -- scores a piece of prose 0-100%. By default prints just
+    the number, for use in a generate/critique/rewrite loop
+    (e.g. `rewrite if $(prose_score draft.txt) < 75`).
 
     Usage:
-      prose_score FILE                  # score a file
+      prose_score FILE                  # print just the score, e.g. 82.4
       prose_score < FILE                # or pipe/type text on stdin
       echo "some prose" | prose_score
-      prose_score --llm FILE            # also run the LLM judge (see below)
-      prose_score --json FILE           # machine-readable output
+      prose_score --report FILE         # full per-analyzer breakdown
+      prose_score --json FILE           # machine-readable full report
+      prose_score --llm FILE            # also run the LLM judge
 
     LLM judge (--llm) defaults to a local Ollama model (gpt-oss:20b) and
     requires Ollama running locally. Configure with:
@@ -42,9 +43,10 @@ OptionParser.new do |opts|
 
     Options:
   BANNER
-  opts.on('--json', 'Print the full report as JSON instead of the formatted report') { options[:json] = true }
+  opts.on('--report', 'Print the full, human-readable per-analyzer breakdown') { options[:output] = :report }
+  opts.on('--json', 'Print the full report as JSON') { options[:output] = :json }
   opts.on('--llm', 'Add the LLM-judged Ideas/Organization/Voice/Word-Choice pass') { options[:use_llm] = true }
-  opts.on('--no-color', 'Disable colored output') { options[:color] = false }
+  opts.on('--no-color', 'Disable colored output (--report only)') { options[:color] = false }
   opts.on('-h', '--help', 'Show this help') do
     puts opts
     exit
@@ -59,11 +61,14 @@ debug_me("Scoring #{ARGV.first || 'stdin'}") { [text.length, options] }
 
 report = ProseScore::Scorer.score(text, use_llm: options[:use_llm])
 
-if options[:json]
+case options[:output]
+when :json
   json_safe = report.merge(
     analyzers: report[:analyzers].transform_values { it.merge(issues: it[:issues].map(&:to_h)) }
   )
   puts JSON.pretty_generate(json_safe)
-else
+when :report
   puts ProseScore::ReportFormatter.render(report, color: options[:color])
+else
+  puts report[:score]
 end
