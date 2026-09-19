@@ -2,13 +2,23 @@
 
 source "https://rubygems.org"
 
-gem "debug_me", "~> 1.1"
 gem "minitest", "~> 5.0"
 gem "matrix", "~> 0.4"  # For statistical calculations
 
-# Stock market analysis
-gem "sqa"           # Stock quotes and analysis
-gem "sqa-tai"       # Technical analysis indicators
+# Stock market analysis: examples/03 uses the sqa gem, but sqa cannot
+# live in this bundle — it depends on ruby_llm-mcp, which pins
+# ruby_llm ~> 1.9 and conflicts with ruby_llm 2.0 (required by the
+# local provider gems). Run examples/03 directly (./03_...), unbundled,
+# so it resolves sqa from installed gems.
+
+# LLM integration (prior elicitation, likelihood estimation)
+gem "ruby_llm", "~> 2.0"
+gem "logger"    # no longer a default gem in Ruby 4; ruby_llm requires it
+gem "csv"       # no longer a default gem in Ruby 4; alphavantage requires it
+
+# Local model providers (required lazily; absence never breaks the cloud path)
+gem "ruby_llm-providers-lms",   require: false  # LM Studio server
+gem "ruby_llm-providers-apfel", require: false  # Apple Foundation Models via apfel
 
 group :development do
   gem "rake", "~> 13.0"

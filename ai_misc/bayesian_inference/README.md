@@ -2,6 +2,13 @@
 
 A Ruby framework for Bayesian inference on discrete outcomes from time series data. Predicts probability distributions over discrete outcomes given historical observations and current features.
 
+> **New:** LLM integration — elicit priors from natural language and use an
+> LLM as a likelihood function over textual evidence. See [EXPLORATION.md](EXPLORATION.md),
+> `examples/04_llm_elicited_prior.rb`, and `examples/05_llm_likelihood_diagnosis.rb`.
+> Providers are auto-detected, local first: LM Studio (`ruby_llm-providers-lms`),
+> then Apfel / Apple Foundation Models (`ruby_llm-providers-apfel`), then cloud.
+> Override with `BI_LLM_PROVIDER` (`lms` | `apfel` | `cloud`) and `BI_LLM_MODEL`.
+
 ## Overview
 
 This library implements Bayesian inference for time series classification problems where:
@@ -185,10 +192,10 @@ posterior.top_outcomes(n)          # Top N outcomes
 
 ### Example 1: Coin Flip Bias Estimation
 
-See `examples/coin_flip.rb` for a complete example of estimating coin bias from flip sequences.
+See `examples/01_coin_flip.rb` for a complete example of estimating coin bias from flip sequences.
 
 ```bash
-ruby examples/coin_flip.rb
+ruby examples/01_coin_flip.rb
 ```
 
 **Problem**: Given a sequence of coin flips, estimate the bias level:
@@ -200,10 +207,10 @@ ruby examples/coin_flip.rb
 
 ### Example 2: Time Series Prediction (Main Use Case)
 
-See `examples/time_series_prediction.rb` for the complete example matching your use case.
+See `examples/02_time_series_prediction.rb` for the complete example matching your use case.
 
 ```bash
-ruby examples/time_series_prediction.rb
+ruby examples/02_time_series_prediction.rb
 ```
 
 **Problem**: Given three time series variables (x, y, z), predict market trend:

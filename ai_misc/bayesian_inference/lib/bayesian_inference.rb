@@ -5,6 +5,9 @@ require_relative 'bayesian_inference/prior'
 require_relative 'bayesian_inference/likelihood'
 require_relative 'bayesian_inference/posterior'
 require_relative 'bayesian_inference/time_series_predictor'
+require_relative 'bayesian_inference/llm_support'
+require_relative 'bayesian_inference/llm_prior_elicitor'
+require_relative 'bayesian_inference/llm_likelihood_estimator'
 
 # Bayesian Inference for Time Series Prediction
 #

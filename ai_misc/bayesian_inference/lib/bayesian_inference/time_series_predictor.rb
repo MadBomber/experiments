@@ -49,8 +49,6 @@ module BayesianInference
 
       # Initialize likelihood
       @likelihood = Likelihood.new([], bandwidth: @bandwidth)
-
-      debug_me("Initialized TimeSeriesPredictor") { %i[@outcomes @bandwidth @update_prior] }
     end
 
     # Train predictor with new observation
@@ -72,8 +70,6 @@ module BayesianInference
       if @update_prior && @likelihood.size >= @outcomes.size
         @prior = @prior.update_from_observations(@likelihood.outcome_counts)
       end
-
-      debug_me("Trained with observation") { %i[features outcome @likelihood.size] }
 
       self
     end
@@ -113,11 +109,7 @@ module BayesianInference
       likelihoods = @likelihood.compute(features, @outcomes)
 
       # Compute posterior
-      posterior = Posterior.new(@prior, likelihoods)
-
-      debug_me("Prediction") { [:features, :likelihoods, 'posterior.to_h'] }
-
-      posterior
+      Posterior.new(@prior, likelihoods)
     end
 
     # Predict and return most likely outcome
@@ -165,7 +157,6 @@ module BayesianInference
       @prior = Prior.new(@outcomes) unless keep_prior
       @likelihood = Likelihood.new([], bandwidth: @bandwidth)
       @feature_dimension = nil
-      debug_me "Predictor reset"
       self
     end
 
@@ -177,7 +168,6 @@ module BayesianInference
       @bandwidth = new_bandwidth
       # Recreate likelihood with new bandwidth
       @likelihood = Likelihood.new(@likelihood.observations, bandwidth: @bandwidth)
-      debug_me("Updated bandwidth") { '@bandwidth' }
       self
     end
 

@@ -23,7 +23,6 @@ module BayesianInference
       @prior = prior
       @likelihoods = likelihoods
       @probabilities = compute_posterior
-      debug_me("Computed Posterior") { %i[@likelihoods @probabilities] }
     end
 
     # Get posterior probability for specific outcome

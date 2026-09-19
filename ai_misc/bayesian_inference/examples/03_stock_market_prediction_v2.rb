@@ -1,18 +1,24 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'debug_me'
-include DebugMe
-
-
 # Stock Market Technical Analysis with Bayesian Inference
 #
 # This example uses Bayesian inference to predict stock price movements
 # based on technical indicators using real data from the sqa gem.
 
-require_relative '../lib/bayesian_inference'
+# NOTE: run this demo directly (./03_...) rather than via `bundle exec`.
+# It needs the sqa gem, which cannot share a bundle with ruby_llm 2.0
+# (sqa -> ruby_llm-mcp pins ruby_llm ~> 1.9).
+
+require_relative 'common'
 require 'sqa'
-require 'sqa/tai'
+
+# Shims for sqa 0.0.38 against modern polars-df and the current
+# Alpha Vantage free tier; remove once sqa is updated.
+require_relative 'sqa_polars_compat'
+
+# Pure-Ruby SMA/EMA/RSI: sqa-tai's ta_lib_ffi hangs against ta-lib 0.8.x.
+require_relative 'pure_ruby_indicators'
 
 $DEBUG_ME = false
 
@@ -164,9 +170,9 @@ INDICATORS.each do |name, config|
 
   begin
     # Generic indicator calculation using send
-    indicator_values[name] = SQA::TAI.send(name, data_arrays[:close_price], period: period)
+    indicator_values[name] = PureRubyIndicators.send(name, data_arrays[:close_price], period: period)
   rescue NoMethodError => e
-    puts "Warning: Indicator #{name} not supported by SQA::TAI, skipping... (#{e.message})"
+    puts "Warning: Indicator #{name} not supported, skipping... (#{e.message})"
   rescue ArgumentError => e
     puts "Warning: Invalid arguments for indicator #{name}, skipping... (#{e.message})"
   end
@@ -417,5 +423,3 @@ puts <<~HEREDOC
   - Add more DATA_ITEMS like high_price, low_price
 
 HEREDOC
-
-debug_me 'Completed'

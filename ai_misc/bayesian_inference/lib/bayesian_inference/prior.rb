@@ -35,8 +35,6 @@ module BayesianInference
           hash[outcome] = uniform_prob
         end
       end
-
-      debug_me("Initialized Prior") { %i[@outcomes @probabilities] }
     end
 
     # Get probability for a specific outcome
@@ -67,8 +65,6 @@ module BayesianInference
         count = observations[outcome] || 0
         hash[outcome] = (count + smoothing) / (total_count + smoothing * @outcomes.size)
       end
-
-      debug_me("Updated Prior from observations") { %i[observations new_probabilities] }
 
       self.class.new(@outcomes, new_probabilities)
     end

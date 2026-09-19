@@ -27,7 +27,6 @@ module BayesianInference
       @observations = observations
       @bandwidth = bandwidth
       @outcome_groups = group_by_outcome
-      debug_me('Initialized Likelihood') { ['@observations.size', :@bandwidth, '@outcome_groups.keys'] }
     end
 
 
@@ -39,7 +38,6 @@ module BayesianInference
     def add_observation(features, outcome)
       @observations << { features: features, outcome: outcome }
       @outcome_groups = group_by_outcome
-      debug_me('Added observation') { [features, outcome, @observations.size] }
     end
 
 
