@@ -1,13 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (5.2.3)
-      activesupport (= 5.2.3)
-    activerecord (5.2.3)
-      activemodel (= 5.2.3)
-      activesupport (= 5.2.3)
+    activemodel (5.2.8.1)
+      activesupport (= 5.2.8.1)
+    activerecord (5.2.8.1)
+      activemodel (= 5.2.8.1)
+      activesupport (= 5.2.8.1)
       arel (>= 9.0)
-    activesupport (5.2.3)
+    activesupport (5.2.8.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
@@ -19,7 +19,7 @@ GEM
     builder (3.2.3)
     commonmarker (0.19.0)
       ruby-enum (~> 0.5)
-    concurrent-ruby (1.1.5)
+    concurrent-ruby (1.1.10)
     debug_me (1.0.3)
     escape_utils (1.2.1)
     extended-markdown-filter (0.7.0)
@@ -62,7 +62,7 @@ GEM
     html-pipeline (2.10.0)
       activesupport (>= 2)
       nokogiri (>= 1.4)
-    i18n (1.6.0)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     mime-types (2.99.3)
     mini_portile2 (2.4.0)
@@ -133,7 +133,7 @@ GEM
     temple (0.8.1)
     thread_safe (0.3.6)
     tilt (2.0.9)
-    tzinfo (1.2.5)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
 
 PLATFORMS
