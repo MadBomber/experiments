@@ -44,6 +44,62 @@ class ReadabilityAnalyzerTest < Minitest::Test
     assert_operator analyzer(text).vocabulary_richness, :>, 0.8
   end
 
+  # ---- gunning_fog_index ----
+
+  def test_gunning_fog_is_higher_for_denser_text
+    plain = 'The dog ran home. It was tired.'
+    dense = 'The instantiation of multifaceted epistemological frameworks necessitates comprehensive reconceptualization.'
+    assert_operator analyzer(dense).gunning_fog_index, :>, analyzer(plain).gunning_fog_index
+  end
+
+  def test_gunning_fog_excludes_words_inflected_from_a_simple_stem
+    # "created" is 3 syllables but its stem "creat(e)" is not real complexity,
+    # just the standard -ed exception from the Gunning Fog rulebook
+    refute analyzer.complex_word?('created')
+  end
+
+  def test_gunning_fog_counts_a_genuinely_complex_word
+    assert analyzer.complex_word?('epistemological')
+  end
+
+  # ---- coleman_liau_index / automated_readability_index ----
+
+  def test_coleman_liau_is_higher_for_denser_text
+    plain = 'The dog ran home. It was tired.'
+    dense = 'The instantiation of multifaceted epistemological frameworks necessitates comprehensive reconceptualization.'
+    assert_operator analyzer(dense).coleman_liau_index, :>, analyzer(plain).coleman_liau_index
+  end
+
+  def test_automated_readability_index_is_higher_for_denser_text
+    plain = 'The dog ran home. It was tired.'
+    dense = 'The instantiation of multifaceted epistemological frameworks necessitates comprehensive reconceptualization.'
+    assert_operator analyzer(dense).automated_readability_index, :>, analyzer(plain).automated_readability_index
+  end
+
+  # ---- grade_level_estimate ----
+
+  def test_grade_level_estimate_is_the_average_of_the_four_formulas
+    text = 'The old house stood at the end of the lane, its windows dark and its paint long faded.'
+    a = analyzer(text)
+    expected = [a.flesch_kincaid_grade_level, a.gunning_fog_index, a.coleman_liau_index, a.automated_readability_index].sum / 4.0
+    assert_in_delta expected, a.grade_level_estimate, 0.01
+  end
+
+  # ---- mtld ----
+
+  def test_mtld_is_low_for_repetitive_text
+    text = 'The dog ran. The dog ran. The dog ran. The dog ran. The dog ran.'
+    assert_operator analyzer(text).mtld, :<, 20.0
+  end
+
+  def test_mtld_is_higher_for_lexically_varied_text
+    varied = 'The old house stood at the end of the lane, its windows dark and its paint long faded. ' \
+             'Rain fell steadily against the roof, tapping a slow uneven rhythm. Somewhere inside, ' \
+             'a candle flickered whenever wind found a gap in the frame.'
+    repetitive = 'The dog ran. The dog ran. The dog ran. The dog ran. The dog ran. The dog ran. The dog ran.'
+    assert_operator analyzer(varied).mtld, :>, analyzer(repetitive).mtld
+  end
+
   # ---- call / composite scoring ----
 
   def test_repetitive_text_scores_lower_than_varied_text

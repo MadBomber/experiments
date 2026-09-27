@@ -1,0 +1,9 @@
+source "https://rubygems.org"
+
+ruby ">= 3.2"
+
+gem "ruby_llm"
+gem "dotenv", "~> 3.0"
+gem "httparty", "~> 0.22"
+gem "debug_me"
+gem "minitest", "~> 5.0"
