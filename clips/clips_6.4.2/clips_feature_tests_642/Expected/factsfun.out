@@ -1,0 +1,196 @@
+TRUE
+CLIPS> (batch "factsfun.bat")
+TRUE
+CLIPS> (clear)
+CLIPS> (reset)
+CLIPS> (defglobal ?*w* = (assert (a)))
+CLIPS> (defglobal ?*x* = (assert (b)))
+CLIPS> (defglobal ?*y* = (assert (c)))
+CLIPS> (defglobal ?*z* = (assert (d)))
+CLIPS> (retract 3 4)
+CLIPS> (fact-existp ?*w*)
+TRUE
+CLIPS> (fact-existp ?*x*)
+TRUE
+CLIPS> (fact-existp ?*y*)
+FALSE
+CLIPS> (fact-existp ?*z*)
+FALSE
+CLIPS> (fact-existp 1)
+TRUE
+CLIPS> (fact-existp 2)
+TRUE
+CLIPS> (fact-existp 3)
+FALSE
+CLIPS> (fact-existp 4)
+FALSE
+CLIPS> (fact-existp 5)
+FALSE
+CLIPS> (fact-existp -1)
+[ARGACCES2] Function 'fact-existp' expected argument #1 to be of type fact-address or fact-index.
+FALSE
+CLIPS> (fact-existp a)
+[ARGACCES2] Function 'fact-existp' expected argument #1 to be of type integer or fact address.
+CLIPS> (fact-existp 1 2)
+[ARGACCES1] Function 'fact-existp' expected exactly 1 argument.
+CLIPS> (fact-addressp)
+[ARGACCES1] Function 'fact-addressp' expected exactly 1 argument.
+CLIPS> (fact-addressp 1)
+FALSE
+CLIPS> (fact-addressp 1 2)
+[ARGACCES1] Function 'fact-addressp' expected exactly 1 argument.
+CLIPS> (fact-addressp ?*w*)
+TRUE
+CLIPS> (fact-addressp ?*y*)
+TRUE
+CLIPS> (fact-addressp [x])
+FALSE
+CLIPS> (fact-addressp 1.2)
+FALSE
+CLIPS> (fact-addressp "a")
+FALSE
+CLIPS> (fact-addressp b)
+FALSE
+CLIPS> (clear)
+CLIPS> (reset)
+CLIPS> (deftemplate foo (slot x) (slot y))
+CLIPS> (defglobal ?*w* = (assert (foo (x 1) (y 2))))
+CLIPS> (defglobal ?*x* = (assert (a)))
+CLIPS> (fact-relation)
+[ARGACCES1] Function 'fact-relation' expected exactly 1 argument.
+CLIPS> (fact-relation a)
+[ARGACCES2] Function 'fact-relation' expected argument #1 to be of type integer or fact address.
+CLIPS> (fact-relation 2 3)
+[ARGACCES1] Function 'fact-relation' expected exactly 1 argument.
+CLIPS> (fact-relation ?*w*)
+foo
+CLIPS> (fact-relation ?*x*)
+a
+CLIPS> (fact-relation 1)
+foo
+CLIPS> (fact-relation 2)
+a
+CLIPS> (fact-relation 3)
+[PRNTUTIL1] Unable to find fact f-3.
+FALSE
+CLIPS> (retract 1 2)
+CLIPS> (fact-relation ?*w*)
+[PRNTUTIL11] The fact f-1 has been retracted.
+FALSE
+CLIPS> (fact-relation ?*x*)
+[PRNTUTIL11] The fact f-2 has been retracted.
+FALSE
+CLIPS> (clear)
+CLIPS> (reset)
+CLIPS> (deftemplate foo (slot x) (multislot y))
+CLIPS> (defglobal ?*w1* = (assert (foo (x 1) (y))))
+CLIPS> (defglobal ?*w2* = (assert (foo (x 1) (y 1))))
+CLIPS> (defglobal ?*w3* = (assert (foo (x 1) (y 1 2))))
+CLIPS> (defglobal ?*x1* = (assert (a)))
+CLIPS> (defglobal ?*x2* = (assert (a b)))
+CLIPS> (defglobal ?*x3* = (assert (a b c)))
+CLIPS> (fact-slot-value)
+[ARGACCES1] Function 'fact-slot-value' expected exactly 2 arguments.
+CLIPS> (fact-slot-value 1)
+[ARGACCES1] Function 'fact-slot-value' expected exactly 2 arguments.
+CLIPS> (fact-slot-value ?*w1*)
+[ARGACCES1] Function 'fact-slot-value' expected exactly 2 arguments.
+CLIPS> (fact-slot-value a)
+[ARGACCES1] Function 'fact-slot-value' expected exactly 2 arguments.
+CLIPS> (fact-slot-value 1 2)
+[ARGACCES2] Function 'fact-slot-value' expected argument #2 to be of type symbol.
+CLIPS> (fact-slot-value 1 x 3)
+[ARGACCES1] Function 'fact-slot-value' expected exactly 2 arguments.
+CLIPS> (fact-slot-value 1 z)
+[TMPLTDEF1] Invalid slot 'z' not defined in corresponding deftemplate 'foo'.
+FALSE
+CLIPS> (fact-slot-value 4 z)
+[TMPLTDEF1] Invalid slot 'z' not defined in corresponding deftemplate 'a'.
+FALSE
+CLIPS> (fact-slot-value 1 x)
+1
+CLIPS> (fact-slot-value ?*w2* x)
+1
+CLIPS> (fact-slot-value 3 x)
+1
+CLIPS> (fact-slot-value ?*w1* y)
+()
+CLIPS> (fact-slot-value 2 y)
+(1)
+CLIPS> (fact-slot-value ?*w3* y)
+(1 2)
+CLIPS> (fact-slot-value 4 implied)
+()
+CLIPS> (fact-slot-value ?*x2* implied)
+(b)
+CLIPS> (fact-slot-value 6 implied)
+(b c)
+CLIPS> (retract 1 4)
+CLIPS> (fact-slot-value 1 x)
+[PRNTUTIL1] Unable to find fact f-1.
+FALSE
+CLIPS> (fact-slot-value 4 implied)
+[PRNTUTIL1] Unable to find fact f-4.
+FALSE
+CLIPS> (fact-slot-value ?*w1* x)
+[PRNTUTIL11] The fact f-1 has been retracted.
+FALSE
+CLIPS> (fact-slot-value ?*x1* implied)
+[PRNTUTIL11] The fact f-4 has been retracted.
+FALSE
+CLIPS> (clear)
+CLIPS> (reset)
+CLIPS> (deftemplate foo1)
+CLIPS> (deftemplate foo2 (slot x))
+CLIPS> (deftemplate foo3 (slot x) (multislot y))
+CLIPS> (deftemplate foo4 (slot x) (multislot y) (slot z))
+CLIPS> (defglobal ?*w1* = (assert (foo1)))
+CLIPS> (defglobal ?*w2* = (assert (foo2)))
+CLIPS> (defglobal ?*w3* = (assert (foo3)))
+CLIPS> (defglobal ?*w4* = (assert (foo4)))
+CLIPS> (defglobal ?*x1* = (assert (a)))
+CLIPS> (defglobal ?*x2* = (assert (b c)))
+CLIPS> (fact-slot-names) 
+[ARGACCES1] Function 'fact-slot-names' expected exactly 1 argument.
+CLIPS> (fact-slot-names a)
+[ARGACCES2] Function 'fact-slot-names' expected argument #1 to be of type integer or fact address.
+CLIPS> (fact-slot-names 1 a)
+[ARGACCES1] Function 'fact-slot-names' expected exactly 1 argument.
+CLIPS> (fact-slot-names ?*w1*)
+()
+CLIPS> (fact-slot-names 2)
+(x)
+CLIPS> (fact-slot-names ?*w3*)
+(x y)
+CLIPS> (fact-slot-names 4)
+(x y z)
+CLIPS> (fact-slot-names ?*x1*)
+(implied)
+CLIPS> (fact-slot-names 6)
+(implied)
+CLIPS> (retract 1 5)
+CLIPS> (fact-slot-names 1)
+[PRNTUTIL1] Unable to find fact f-1.
+FALSE
+CLIPS> (fact-slot-names 5)
+[PRNTUTIL1] Unable to find fact f-5.
+FALSE
+CLIPS> (fact-slot-names ?*w1*)
+[PRNTUTIL11] The fact f-1 has been retracted.
+FALSE
+CLIPS> (fact-slot-names ?*x1*)
+[PRNTUTIL11] The fact f-5 has been retracted.
+FALSE
+CLIPS> (fact-index-to-fact)
+[ARGACCES1] Function 'fact-index-to-fact' expected exactly 1 argument.
+CLIPS> (fact-index-to-fact 1 1)
+[ARGACCES1] Function 'fact-index-to-fact' expected exactly 1 argument.
+CLIPS> (fact-index-to-fact a)
+[ARGACCES2] Function 'fact-index-to-fact' expected argument #1 to be of type integer.
+FALSE
+CLIPS> (fact-index-to-fact 4)
+<Fact-4>
+CLIPS> (fact-index-to-fact 7)
+FALSE
+CLIPS> (clear)
+CLIPS> (dribble-off)

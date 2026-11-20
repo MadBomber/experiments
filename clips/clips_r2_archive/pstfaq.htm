@@ -1,0 +1,215 @@
+<html>
+
+<head>
+<title>PST FAQ</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<meta name="Microsoft Theme" content="none, default">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1 align="center">Frequently Asked Questions</h1>
+
+<hr width="50%">
+<b><font FACE="Univers Condensed" SIZE="4">
+
+<h2>PRODUCTS</font></h2>
+
+<p><b><i>Q. Why do you have three rule-based tools?</i></b></p>
+
+<p>A. PST is in the business of developing technology for rule based systems; we have
+developed the most advanced rule engine in the industry&#151;Rete II&#151;and we are now
+using it in these three major tools. All three systems have their place. Different
+applications have different requirements, and we try to satisfy as many people as
+possible. </p>
+
+<p>&nbsp;</p>
+<i><b>
+
+<p>Q. When would you select OPSJ as your rule language?</b></i></p>
+
+<p>A. OPSJ is written in Java, and it operates directly on Java classes.&nbsp; This makes
+OPSJ useful in a number of areas: 
+
+<ol>
+  <li>Obviously OPSJ is good for adding rule-based capabilities to Java applications
+    (including web-based applications); with OPSJ, the rules and the regular methods can
+    operate on the same data objects with no glue code required.</li>
+  <li>In addition, since there are CORBA and COM bindings for Java, OPSJ can also operate on
+    CORBA and COM objects, including ActiveX components. Again, no special interface code or
+    declarations are required. This makes OPSJ extremely convenient for constructing a rule
+    server for a system based on CORBA or COM. </li>
+  <li>Since many popular agent architectures are built on Java (including Aglets, Odyssey,
+    Concordia, and Voyager), the extended-Java paradigm of OPSJ also makes it a good choice
+    for building intelligent agents.</li>
+</ol>
+
+<p>&nbsp;</p>
+<i><b>
+
+<p>Q. When would you select CLIPS/R2 as your rule language?</b></i></p>
+
+<p>A. There seem to be two main reasons users select CLIPS/R2: 
+
+<ol>
+  <li>CLIPS/R2 is upward compatible with the widely-used CLIPS 6.x. If you have existing CLIPS
+    applications that need to run faster, CLIPS/R2 is the system of choice. There are a number
+    of commercial systems based on CLIPS on the market, and CLIPS/R2 is the only one with the
+    advanced Rete II engine.</li>
+  <li>CLIPS/R2 has the CIDC facility that permits it to operate directly on existing C structs
+    and C++ objects.&nbsp; This makes CLIPS/R2 very convenient for adding rules to programs
+    written in C or C++.</li>
+</ol>
+
+<p>&nbsp;</p>
+<i><b>
+
+<p>Q. When would you select OPS/R2 as your rule language?</b></i></p>
+
+<p>A. Because of its implementation technology, OPS/R2 is the fastest rule system
+available. It should be selected when execution speed is the major concern.&nbsp; OPS/R2
+can be linked with C and C++, and it supports calls both to and from C and C++; however,
+it does not have a facility like CLIPS/R2's CIDC to permit it to work on existing C
+structs and C++ objects.</p>
+
+<p>&nbsp;</p>
+<b><font FACE="Univers Condensed" SIZE="4">
+
+<p>OPSJ</font><i></p>
+
+<p>Q. The OPSJ brochure says OPSJ is an extended Java and not an interpreter. What exactly
+does that mean?</i></b></p>
+
+<p>A. Consider a system like CLIPS. CLIPS is written in C, but it is designed as an
+interpreter for a completely different language (the CLIPS language). If you want to
+access C structs from CLIPS rules, you need to use something like PST&#146;s CIDC to
+create interface code. If you want to call one or more C functions, you have to provide a
+wrapper for each function. In contrast, OPSJ is implemented as a compatible extension to
+standard Java. That means OPSJ rules can operate directly on arbitrary Java classes, and
+OPSJ rules can call any Java method directly. OPSJ never requires you to write interface
+code or special declarations.</p>
+
+<p><i><b>&nbsp;</p>
+
+<p>Q. So what? That is, what is wrong with writing a little interface code?</b></i></p>
+
+<p>A. Writing a little interface code might not be a problem, but writing a lot certainly
+is a problem. For example, suppose you need a rule base that can be accessed from the Web.
+Since OPSJ is upward compatible with Java, you can simply take advantage of the existing
+Java API&#146;s for Web-based systems. For another example, suppose you were developing a
+CORBA application with hundreds of CORBA classes. With OPSJ you do not have to worry about
+translating those classes into something the rules can understand.</p>
+
+<p><i><b>&nbsp;</p>
+
+<p>Q. How does OPSJ work? How does it extend Java?</b></i></p>
+
+<p>A. We provide a preprocessor that takes Java code containing OPSJ extensions and
+converts it to standard Java. The Java code is then compiled and loaded as usual.</p>
+
+<p><i><b>&nbsp;</p>
+
+<p>Q. Does that mean you have to stop your program and recompile every time you change a
+rule?</b></i></p>
+
+<p>A. Absolutely not. When you need to change some OPSJ code, the OPSJ development
+environment will automatically get rid of the old class files, translate and compile the
+new code, load the new class file, and bring the rules up to the current state of the
+system. This means that at any time in a run, you can change some code, have the new code
+loaded, and then keep going.</p>
+
+<p>If you have ever used CLIPS or a tool based on CLIPS, you get the same kind of
+functionality in OPSJ.</p>
+
+<p><b><font FACE="Univers Condensed" SIZE="4">&nbsp;</p>
+
+<p>CLIPS/R2</font><i></p>
+
+<p>Q. What do I have to do to convert an existing CLIPS program to run under CLIPS/R2?</i></b></p>
+
+<p>A. Nothing. CLIPS/R2 is completely upward compatible with CLIPS 6.04. </p>
+
+<p><i><b>&nbsp;</p>
+
+<p>Q. Are there any advantages to CLIPS/R2 besides its Rete II engine?</b></i></p>
+
+<p>A. Yes. It has a more flexible development environment than CLIPS 6.04. It supports
+both forward and backward chaining rules. And it has the new CIDC which enables it to
+operate directly on C++ objects and C structs. </p>
+
+<p><i><b>&nbsp;</p>
+
+<p>Q. What is CIDC?</b></i></p>
+
+<p>A. CLIPS has always had good though somewhat incomplete integration with C and C++.
+Calls could be made from CLIPS to C or C++ and from C or C++ to CLIPS; and C and C++ could
+operate easily on CLIPS data structures. The one thing CLIPS was missing was a way for
+CLIPS rules to operate directly on C structs and C++ objects. CIDC (the CLIPS Interface
+Definition Compiler) extends CLIPS so that rules can operate directly and transparently on
+C structs and C++ objects.</p>
+
+<p><i><b>&nbsp;</p>
+
+<p>Q. Do the rules have to be written in a special way to operate on C++ objects or C
+structs?</b></i></p>
+
+<p>A. No. This all completely transparent to the rules. The rules are written as if they
+were operating on ordinary CLIPS facts. CIDC takes care of mapping between CLIPS types and
+C or C++ types. </p>
+
+<p><b><font FACE="Univers Condensed" SIZE="4">&nbsp;</p>
+
+<p>RETE and RETE II</font><i></p>
+
+<p>Q. What is Rete?</i></b></p>
+
+<p>A. Rete was the first rule handling algorithm to enable rule-based systems to deal
+efficiently with large numbers of rules. It was developed at Carnegie-Mellon University.
+It has become the de facto industry standard, and it is used in virtually all high
+performance rule-based systems.</p>
+
+<p><i><b>&nbsp;</p>
+
+<p>Q. What is Rete II?</b></i></p>
+
+<p>A. It is a significantly enhanced derivative of the original Rete. It was developed by
+Dr. Charles L. Forgy, developer of the original algorithm. Rete II makes rule-based
+systems better able to deal with large amounts of data and with rapidly changing data than
+systems based on the original Rete.</p>
+
+<p><i><b>&nbsp;</p>
+
+<p>Q. How much faster is Rete II than standard Rete?</b></i></p>
+
+<p>A. That depends on the rule base being tested. On some industry standard benchmark
+programs with complex rules, Rete II based CLIPS/R2 has been measured to run more than 100
+times the speed of Rete based CLIPS 6.04. </p>
+
+<p>&nbsp;</p>
+</b>
+
+<p align="right">Copyright © 1998. Production Systems Technologies, Inc.</p>
+<div align="center"><center>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%" align="center">[&nbsp; <a href="mainpage.htm">Home</a>&nbsp; |&nbsp; <a
+    href="whatsnew.htm">News</a>&nbsp; |&nbsp; <a href="opsj.htm">OPSJ</a>&nbsp; |&nbsp; <a
+    href="opsr2.htm">OPS/R2</a>&nbsp; |&nbsp; <a href="clipsr2.htm">CLIPS/R2</a>&nbsp; |&nbsp;
+    <a href="rete.htm">Rete II</a>&nbsp; ]</td>
+  </tr>
+  <tr>
+    <td width="100%" align="center">[&nbsp; <a href="users.htm">Users</a>&nbsp; |&nbsp; <a
+    href="pstfaq.htm">FAQ</a>&nbsp; |&nbsp; <a href="legal.htm">Legal Issues</a>&nbsp; |&nbsp;
+    <a href="license.htm">Licensing </a>&nbsp; |&nbsp; <a href="aboutpst.htm">About PST</a>&nbsp;
+    ]</td>
+  </tr>
+  <tr>
+    <td width="100%"></td>
+  </tr>
+</table>
+</center></div>
+</body>
+</html>
+

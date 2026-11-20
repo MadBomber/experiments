@@ -1,0 +1,1002 @@
+package net.sf.clipsrules.jni.examples.ide;
+
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.*;
+import javax.swing.border.*; 
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.dnd.*;
+import java.awt.datatransfer.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.CompoundEdit;
+import javax.swing.undo.UndoableEdit;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
+import javax.swing.text.DefaultCaret;
+
+import javax.swing.BorderFactory;
+
+public class TextFrame extends JInternalFrame 
+                    implements DocumentListener, DropTargetListener, CaretListener
+  {
+   private JTextArea textArea;
+   private static int untitledCount = 1;
+   private boolean changed = false;
+   private TextUndoManager textAreaUndo;
+   private File textFile;
+
+   /*************/
+   /* TextFrame */
+   /*************/
+   TextFrame(
+     CLIPSIDE theIDE,
+     File theFile,
+     Font theFont)
+     {  
+      super("",true,true,true,true);
+      
+      textFile = theFile;
+      
+      if (theFile == null)
+        { setTitle("Untitled #" + untitledCount++); }
+      else
+        { setTitle(theFile.getName()); }
+        
+      /*===================================*/
+      /* Create a new JFrame container and */
+      /* assign a layout manager to it.    */
+      /*===================================*/
+
+      this.getContentPane().setLayout(new BoxLayout(this.getContentPane(),BoxLayout.Y_AXIS));
+      
+      /*=================================*/
+      /* Give the frame an initial size. */
+      /*=================================*/
+     
+      this.setSize(600,400);  
+      this.setMinimumSize(new Dimension(550,250));
+      
+      /*===========================================*/
+      /* The close button closes just the browser. */
+      /*===========================================*/
+     
+      this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  
+
+      /*====================*/
+      /* Add the Text menu. */
+      /*====================*/
+      
+      JMenuBar menuBar = new JMenuBar();
+
+      JMenu jmText = new TextMenu(theIDE,this);
+
+      menuBar.add(jmText);
+ 
+      setJMenuBar(menuBar);
+      
+      /*=============================*/
+      /* Create the text field area. */
+      /*=============================*/
+
+      try
+        { 
+         textArea = new JTextArea(); 
+         textAreaUndo = new TextUndoManager();
+         textArea.setDocument(new TextUndoPlainDocument(textAreaUndo));
+         textArea.setDragEnabled(true);
+         this.setDropTarget(new DropTarget(this,this));
+         textArea.setFont(theFont);
+         textArea.setTabSize(3);
+        }
+      catch (Exception e)
+        { 
+         e.printStackTrace();
+         return;
+        }       
+        
+      textArea.setBorder(BorderFactory.createEmptyBorder(5,5,5,0));
+      textArea.addCaretListener(this);
+
+      /*=======================================*/
+      /* Put the text area into a scroll pane. */
+      /*=======================================*/
+
+      JScrollPane textPane = new JScrollPane(textArea);
+      textPane.setPreferredSize(new Dimension(600,360));
+      textPane.setViewportBorder(BorderFactory.createEmptyBorder(0,0,2,0));
+      
+      /*========================================*/
+      /* Add the scroll pane to the main frame. */
+      /*========================================*/
+      
+      this.getContentPane().add(textPane); 
+
+      /*========================*/
+      /* Read the file content. */
+      /*========================*/
+      
+      if (theFile != null)
+        { readContent(theFile); }
+
+      /*============================*/
+      /* Set the document listener. */
+      /*============================*/
+      
+      textArea.getDocument().addDocumentListener(this);
+
+      /*===============================================*/
+      /* Override copy/paste for the JTextArea so that */
+      /* we can define our own menu accelerators.      */
+      /*===============================================*/
+
+      KeyStroke cut = KeyStroke.getKeyStroke(KeyEvent.VK_X,KeyEvent.CTRL_DOWN_MASK);
+      KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C,KeyEvent.CTRL_DOWN_MASK);
+      KeyStroke paste = KeyStroke.getKeyStroke(KeyEvent.VK_V,KeyEvent.CTRL_DOWN_MASK);
+      InputMap map = textArea.getInputMap();
+      map.put(cut,"none");
+      map.put(copy,"none");
+      map.put(paste,"none");
+        
+      /*====================*/
+      /* Display the frame. */
+      /*====================*/
+
+      this.pack();
+     }  
+     
+   /**************/
+   /* assignFont */
+   /**************/
+   public void assignFont(
+     Font theFont)
+     {
+      textArea.setFont(theFont);
+     }
+     
+   /**********************/
+   /* balanceParentheses */
+   /**********************/
+   public void balanceParentheses() 
+     {
+      /*=================================*/
+      /* Retrieve the current selection. */
+      /*=================================*/
+          
+      int selStart = textArea.getSelectionStart();
+      int selEnd = textArea.getSelectionEnd();
+
+      /*======================*/
+      /* Where is the cursor? */
+      /*======================*/
+    
+      int cursorLocation = Math.min(textArea.getCaret().getDot(),
+                                    textArea.getCaret().getMark());
+   
+      if (cursorLocation == 0) return;
+   
+      cursorLocation--;
+      
+      /*===============================================*/
+      /* What is the character at the cursor location? */
+      /*===============================================*/
+    
+      char characterToCheck = textArea.getText().charAt(cursorLocation);
+      
+      /*======================================*/
+      /* We only balance a right parenthesis. */
+      /*======================================*/
+   
+      if (characterToCheck != ')') return;
+
+      /*======================================================================*/
+      /* The nesting depth will start at zero. Each time a ')' is encountered */
+      /* the nesting depth is incremented by one and each time a '(' is       */
+      /* encountered the nesting depth is decremented by one. If a '(' is     */
+      /* encountered when the nesting depth is zero (the starting value), the */
+      /* matching parenthesis has been found.                                 */
+      /*======================================================================*/
+   
+      int nestingDepth = 0;
+
+      /*==================================================*/
+      /* Start looking for the matching left parenthesis. */
+      /*==================================================*/
+
+      while (cursorLocation-- != 0) 
+        {
+         characterToCheck = this.textArea.getText().charAt(cursorLocation);
+         if (characterToCheck == '(') 
+           {
+            if (nestingDepth == 0) 
+              {
+               /*======================================*/
+               /* Select the matching left parenthesis */
+               /* and hide the caret.                  */
+               /*======================================*/
+
+               textArea.getCaret().setVisible(false);
+               textArea.setSelectionStart(cursorLocation);
+               textArea.setSelectionEnd(cursorLocation + 1);
+
+               /*========================================*/
+               /* Force an update to occur otherwise the */
+               /* changed selection won't be visible.    */
+               /*========================================*/
+
+               textArea.update(textArea.getGraphics());
+
+               /*============================================*/
+               /* Pause momentarily so the selected matching */
+               /* parenthesis can be observed.               */
+               /*============================================*/
+
+               try
+                 { Thread.sleep(200); }
+               catch (Exception e)
+                 { e.printStackTrace(); }
+
+               /*===========================*/
+               /* Restore the selection and */
+               /* make the caret visible.   */
+               /*===========================*/
+
+               textArea.setSelectionStart(selStart);
+               textArea.setSelectionEnd(selEnd);
+               textArea.getCaret().setVisible(true);
+
+               return;
+              }
+            else
+              { nestingDepth--; }
+           }
+         else if (characterToCheck == ')') 
+           { nestingDepth++; }
+        }
+     }
+
+   /***************/
+   /* readContent */
+   /***************/
+   public void readContent(
+     File theFile)
+     {
+      FileReader reader = null;
+      try 
+        {
+         reader = new FileReader(theFile);
+         textArea.read(reader,null);
+        }
+      catch (IOException e)
+        {
+         JOptionPane.showMessageDialog(getParent(),
+                                       e.getMessage(),"ERROR", 
+                                       JOptionPane.ERROR_MESSAGE);
+        }
+      finally
+        {
+         if (reader != null)
+           {
+            try 
+              { reader.close(); } 
+            catch (IOException e) 
+              {}
+           }
+        }
+     }
+     
+   /****************/
+   /* writeContent */
+   /****************/
+   public void writeContent(
+     File theFile)
+     {
+      BufferedWriter writer = null;
+      try 
+        { 
+         writer = new BufferedWriter(new FileWriter(theFile));
+         textArea.write(writer);
+         changed = false;
+        }
+      catch (IOException e)
+        {
+         JOptionPane.showMessageDialog(getParent(),
+                                       e.getMessage(),"ERROR", 
+                                       JOptionPane.ERROR_MESSAGE);
+        }
+      finally 
+        {
+         if (writer != null)
+           {
+            try 
+              { writer.close(); } 
+            catch (IOException e) 
+              {}
+           }
+        }
+     }
+     
+   /******************/
+   /* closeTextFrame */
+   /******************/  
+   public void closeTextFrame(
+     IDEPreferences preferences)
+     {
+      if (! changed) 
+        {
+         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+         return;
+        }
+      
+      int confirmResult = JOptionPane.showConfirmDialog(this,
+           "Do you want to save the changes made to the document \"" +
+            this.getTitle() +"\"?",
+            null,
+            JOptionPane.YES_NO_CANCEL_OPTION);
+          
+      if (confirmResult == JOptionPane.YES_OPTION)
+        { 
+         saveTextFrame(preferences);
+         setDefaultCloseOperation(DISPOSE_ON_CLOSE); 
+        }
+      else if (confirmResult == JOptionPane.NO_OPTION)
+        { setDefaultCloseOperation(DISPOSE_ON_CLOSE); }
+      else if (confirmResult == JOptionPane.CANCEL_OPTION)
+        { setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); }
+      else if (confirmResult == JOptionPane.CLOSED_OPTION)
+        { setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); }
+     }
+     
+   /*******************/
+   /* saveAsTextFrame */
+   /*******************/  
+   public void saveAsTextFrame(
+     IDEPreferences preferences)
+     {
+      final JFileChooser fc = new JFileChooser();
+
+      File currentDirectory = preferences.getCurrentDirectory();
+      if (currentDirectory != null)
+        { fc.setCurrentDirectory(currentDirectory); }
+
+      if (textFile != null)
+        { fc.setSelectedFile(textFile); }
+      else
+        { fc.setSelectedFile(new File(this.getTitle() + ".clp")); }
+        
+      int returnVal = fc.showSaveDialog(this);
+      
+      if (returnVal != JFileChooser.APPROVE_OPTION) return;
+      
+      File selectedFile = fc.getSelectedFile();
+      if (selectedFile == null) return;
+            
+      if (selectedFile.exists()) 
+        {
+         int confirmationResult = JOptionPane.showConfirmDialog(this,"Replace existing file?");
+         if (confirmationResult != JOptionPane.YES_OPTION) return;
+        }
+        
+      setTitle(selectedFile.getName()); 
+        
+      currentDirectory = fc.getCurrentDirectory();
+      preferences.setCurrentDirectory(currentDirectory);
+      textFile = selectedFile;  
+      
+      writeContent(textFile);
+     }
+
+   /*****************/
+   /* saveTextFrame */
+   /*****************/  
+   public void saveTextFrame(
+     IDEPreferences preferences)
+     {
+      if (textFile == null)
+        {
+         saveAsTextFrame(preferences);
+         return;
+        }
+        
+      writeContent(textFile);
+     }
+     
+   /****************/
+   /* hasSelection */
+   /****************/
+   public boolean hasSelection()
+     {
+      int left = Math.min(textArea.getCaret().getDot(),textArea.getCaret().getMark());
+      int right = Math.max(textArea.getCaret().getDot(),textArea.getCaret().getMark());
+      if (left == right) return false;
+      return true;
+     }
+
+   /***********/
+   /* canUndo */
+   /***********/
+   public boolean canUndo()
+     {
+      return textAreaUndo.canUndo();
+     }
+     
+   /***********/
+   /* canRedo */
+   /***********/
+   public boolean canRedo()
+     {
+      return textAreaUndo.canRedo();     
+     }
+
+   /*************/
+   /* isChanged */
+   /*************/
+   public boolean isChanged()
+     {
+      return changed;    
+     }
+
+   /***********/
+   /* canSave */
+   /***********/
+   public boolean canSave()
+     {
+      if (textFile == null) return true;
+      else return changed;    
+     }
+
+   /********/
+   /* undo */
+   /********/     
+   public void undo()
+     {
+      if (! textAreaUndo.canUndo()) return;
+      try 
+        { textAreaUndo.undo(); }
+      catch (CannotUndoException e) 
+        { e.printStackTrace(); }
+     }
+
+   /********/
+   /* redo */
+   /********/     
+   public void redo()
+     {
+      if (! textAreaUndo.canRedo()) return;
+      try 
+        { textAreaUndo.redo(); }
+      catch (CannotUndoException e) 
+        { e.printStackTrace(); }
+     }
+            
+   /***************/
+   /* getTextArea */
+   /***************/
+   public JTextArea getTextArea()
+     { return textArea; }
+          
+   /*******/
+   /* cut */
+   /*******/
+   public void cut()
+     {
+      textArea.cut();
+     }
+
+   /********/
+   /* copy */
+   /********/
+   public void copy()
+     {
+      textArea.copy(); 
+     }
+
+   /*********/
+   /* paste */
+   /*********/
+   public void paste()
+     { 
+      textArea.paste(); 
+     }
+     
+   /****************/
+   /* insertUpdate */
+   /****************/
+   public void insertUpdate(DocumentEvent e)
+     {
+      changed = true;
+     }
+  
+   /****************/
+   /* removeUpdate */
+   /****************/
+   public void removeUpdate(DocumentEvent e)
+     {
+      changed = true;
+     }
+  
+   /*****************/
+   /* changedUpdate */
+   /*****************/
+   public void changedUpdate(DocumentEvent e)
+     {      
+      changed = true;
+     }
+
+   /*############################*/
+   /* DropTargetListener Methods */
+   /*############################*/
+   
+   /*************/
+   /* dragEnter */
+   /*************/
+   @Override
+   public void dragEnter(DropTargetDragEvent dtde) 
+     {
+      boolean acceptedDrag = true;
+      dragUnderFeedback(dtde,acceptedDrag);
+     }
+      
+   /*************/
+   /* dragOver */
+   /*************/
+   @Override
+   public void dragOver(DropTargetDragEvent dtde) 
+     {
+      boolean acceptedDrag = acceptOrRejectDrag(dtde);
+      dragUnderFeedback(dtde,acceptedDrag);
+     }
+     
+   /*************/
+   /* dragExit */
+   /*************/ 
+   @Override
+   public void dragExit(DropTargetEvent dte) 
+     {
+      dragUnderFeedback(null, false);
+     }
+       
+   /*********************/
+   /* dropActionChanged */
+   /*********************/
+   @Override
+   public void dropActionChanged(DropTargetDragEvent dtde)   
+     { 
+      boolean acceptedDrag = acceptOrRejectDrag(dtde);
+      dragUnderFeedback(dtde,acceptedDrag);
+     }
+      
+   /********/
+   /* drop */
+   /********/
+   @Override
+   public void drop(DropTargetDropEvent dtde) 
+     {       
+      if ((dtde.getDropAction() & DnDConstants.ACTION_COPY_OR_MOVE) == 0) 
+        {
+         dtde.dropComplete(false);
+         return; 
+        }
+
+      try 
+        {
+         Transferable tr = dtde.getTransferable();
+         DataFlavor[] flavors = tr.getTransferDataFlavors();
+         for (int i = 0; i < flavors.length; i++) 
+           {
+            if (flavors[i].equals(DataFlavor.stringFlavor)) 
+              {
+               dtde.acceptDrop(dtde.getDropAction());
+               String dropText = (String) tr.getTransferData(flavors[i]);
+               this.textArea.setCaretPosition(this.textArea.getText().length()); 
+               this.textArea.append(dropText); 
+               this.requestFocus();
+               dtde.dropComplete(true);
+               return;
+              }
+           }
+
+         dtde.rejectDrop();
+        } 
+      catch (Exception e) 
+        {
+         e.printStackTrace();
+         dtde.rejectDrop();
+        }
+     }
+     
+   /*********************/
+   /* dragUnderFeedback */
+   /*********************/
+   protected void dragUnderFeedback(
+     DropTargetDragEvent dtde,
+     boolean acceptedDrag) 
+     {
+      if ((dtde != null) && acceptedDrag) 
+        {
+         Point location = dtde.getLocation();
+         this.textArea.getCaret().setVisible(true);
+         this.textArea.setCaretPosition(this.textArea.viewToModel(location));
+        } 
+      else 
+        { this.textArea.getCaret().setVisible(false); }
+     }
+
+   /*********************/
+   /* checkTransferType */
+   /*********************/
+   protected boolean checkTransferType(
+     DropTargetDragEvent dtde)
+     {
+      if (dtde.isDataFlavorSupported(DataFlavor.stringFlavor))
+        { return true; }
+        
+      return false;
+     }
+     
+   /************************/
+   /* dragTargetCaretStart */
+   /************************/
+   protected int dragTargetCaretStart()
+     {
+      return this.textArea.getText().length();
+     }
+     
+   /**********************/
+   /* dragTargetCaretEnd */
+   /**********************/
+   protected int dragTargetCaretEnd()
+     {
+      return this.textArea.getText().length();
+     }
+     
+   /**********************/
+   /* acceptOrRejectDrag */
+   /**********************/
+   protected boolean acceptOrRejectDrag(
+     DropTargetDragEvent dtde) 
+     {
+      int dropAction = dtde.getDropAction();
+      int sourceActions = dtde.getSourceActions();
+      
+      Point location = dtde.getLocation();
+      int caretPosition = this.textArea.viewToModel(location);
+            
+      /*===============================================*/
+      /* Drag is only valid in a specific caret range. */
+      /*===============================================*/
+      
+      if ((caretPosition < dragTargetCaretStart()) ||
+          (caretPosition > dragTargetCaretEnd()))
+        {
+         dtde.rejectDrag(); 
+         return false;
+        }
+        
+      /*====================================*/
+      /* Reject anything that's not a valid */
+      /* type (in this case a text string). */
+      /*====================================*/
+      
+      if (! checkTransferType(dtde))
+        { 
+         dtde.rejectDrag(); 
+         return false;
+        }
+      
+      /*===========================*/
+      /* Only copy and move source */
+      /* actions are acceptable.   */
+      /*===========================*/
+      
+      if ((sourceActions & DnDConstants.ACTION_COPY_OR_MOVE) == 0)
+        { 
+         dtde.rejectDrag(); 
+         return false;
+        }
+        
+      if ((dropAction & DnDConstants.ACTION_COPY_OR_MOVE) == 0) 
+        {
+         dtde.rejectDrag();
+         return false;
+        } 
+      
+      /*==================*/
+      /* Accept the drag. */
+      /*==================*/
+      
+      dtde.acceptDrag(dropAction);
+      return true;
+     }
+  
+   /*#######################*/
+   /* CaretListener Methods */
+   /*#######################*/
+   public void caretUpdate(CaretEvent e)
+     {
+      if (e.getDot() != e.getMark())
+        { return; }
+        
+      textArea.removeCaretListener(this);
+      balanceParentheses();
+      textArea.addCaretListener(this);
+     }
+  
+   /*##################*/
+   /* TextCompoundEdit */
+   /*##################*/
+   class TextCompoundEdit extends CompoundEdit
+     {
+      private boolean isUnDone = false;
+
+      /*************/
+      /* getLength */
+      /*************/
+      public int getLength()
+        {
+         return edits.size();
+        }
+
+      /********/
+      /* undo */
+      /********/
+      public void undo() throws CannotUndoException
+        {
+         super.undo();
+         isUnDone = true;
+        }
+
+      /********/
+      /* redo */
+      /********/
+      public void redo() throws CannotUndoException
+        {
+         super.redo();
+         isUnDone = false;
+        }
+
+      /***********/
+      /* canUndo */
+      /***********/
+      public boolean canUndo()
+        {
+         return (edits.size() > 0) && (! isUnDone);
+        }
+
+      /***********/
+      /* canRedo */
+      /***********/
+      public boolean canRedo()
+        {
+         return (edits.size() > 0) && isUnDone;
+        }
+     }
+     
+   /*#################*/
+   /* TextUndoManager */
+   /*#################*/
+   class TextUndoManager extends AbstractUndoableEdit 
+                         implements UndoableEditListener
+     {     
+      private String lastEditName = null;
+      private int lastStart = 0;
+      private ArrayList<TextCompoundEdit> edits = new ArrayList<TextCompoundEdit>();
+      private TextCompoundEdit current;
+      private int pointer = -1;
+      private int groupIndex = 0;
+      private String groupName = null;
+       
+      /************************/
+      /* undoableEditHappened */
+      /************************/
+      public void undoableEditHappened(
+        UndoableEditEvent e)
+        {
+         boolean isNeedStart = false;
+         UndoableEdit edit = e.getEdit();
+
+         if (! (edit instanceof AbstractDocument.DefaultDocumentEvent))
+           { return; }
+
+         AbstractDocument.DefaultDocumentEvent event = (AbstractDocument.DefaultDocumentEvent) edit;
+                 
+         int start = event.getOffset();
+
+         String editName;
+
+         /*============================================*/
+         /* If an explicit group name is not present,  */
+         /* use the INSERT/REMOVE name from the event. */
+         /*============================================*/
+                 
+         if (groupName != null)
+           { editName = groupName; }
+         else
+           { editName = event.getType().toString(); }
+
+         /*============================*/
+         /* Create a new compound edit */
+         /* for the very first edit.   */
+         /*============================*/
+         
+         if (current == null)
+           { isNeedStart = true; }
+
+         /*============================*/
+         /* Create a new compound edit */
+         /* for a different operation. */
+         /*============================*/
+         
+         else if ((lastEditName == null) || 
+                  (! lastEditName.equals(editName)))
+           { isNeedStart = true; }
+
+         /*================================================*/
+         /* Only group continuous single character inserts */
+         /* and deletes. Create a new edit if the user has */
+         /* moved the caret from its prior position.       */
+         /*================================================*/
+
+         else if (groupName == null)
+           {            
+            if ((event.getType() == DocumentEvent.EventType.INSERT) &&
+                     (start != (lastStart + 1)))
+              { isNeedStart = true; }
+            else if ((event.getType() == DocumentEvent.EventType.REMOVE) &&
+                     (start != (lastStart - 1)))
+              { isNeedStart = true; }
+           }
+         
+         /*=========================================*/
+         /* Adding a new edit will clear all of the */
+         /* redos forward of the current position.  */
+         /*=========================================*/
+         
+         while (pointer < edits.size() - 1)
+           {
+            edits.remove(edits.size() - 1);
+            isNeedStart = true;
+           }
+                       
+         /*===================*/
+         /* Add the new edit. */
+         /*===================*/
+              
+         if (isNeedStart)
+           { createCompoundEdit(); }
+ 
+         current.addEdit(edit);
+
+         /*=====================================*/
+         /* Remember prior state for next edit. */
+         /*=====================================*/
+         
+         lastEditName = editName;
+         lastStart = start;
+        }
+        
+      /*********************/
+      /* startEditGrouping */
+      /*********************/
+      public void startEditGrouping()
+        {
+         groupName = "Group-" + groupIndex++;
+        }
+
+      /********************/
+      /* stopEditGrouping */
+      /********************/
+      public void stopEditGrouping()
+        {
+         groupName = null;
+        }
+     
+      /**********************/
+      /* createCompoundEdit */
+      /**********************/
+      private void createCompoundEdit()
+        {
+         if (current == null)
+           { current = new TextCompoundEdit(); }
+         else if (current.getLength() > 0)
+           { current = new TextCompoundEdit(); }
+
+         edits.add(current);
+         pointer++;
+        }
+
+      /********/
+      /* undo */
+      /********/ 
+      public void undo() throws CannotUndoException
+        {
+         if (! canUndo())
+           { throw new CannotUndoException(); }
+ 
+         TextCompoundEdit u = edits.get(pointer);
+         u.undo();
+         pointer--;
+        }
+ 
+      /********/
+      /* redo */
+      /********/
+      public void redo() throws CannotUndoException
+        {
+         if (! canRedo())
+           { throw new CannotUndoException(); }
+ 
+         pointer++;
+         TextCompoundEdit u = edits.get(pointer);
+         u.redo();
+        }
+ 
+      /***********/
+      /* canUndo */
+      /***********/
+      public boolean canUndo()
+        { 
+         return pointer >= 0; 
+        }
+
+      /***********/
+      /* canRedo */
+      /***********/
+      public boolean canRedo()
+        {
+         return (edits.size() > 0) && (pointer < (edits.size() - 1));
+        }
+     }
+     
+   /*#######################*/
+   /* TextUndoPlainDocument */
+   /*#######################*/
+   class TextUndoPlainDocument extends PlainDocument 
+     {    
+      private TextUndoManager undoManager;
+
+      /*************************/
+      /* TextUndoPlainDocument */
+      /*************************/
+      TextUndoPlainDocument(
+        TextUndoManager theManager)
+        {
+         super();
+         undoManager = theManager;
+         this.addUndoableEditListener(undoManager);
+        }
+
+      /***********/
+      /* replace */
+      /***********/
+      @Override 
+      public void replace(
+        int offset, 
+        int length,
+        String text, 
+        AttributeSet attrs) throws BadLocationException
+        {
+         if (length == 0)
+           { super.replace(offset,length,text,attrs); }
+         else
+           {
+            undoManager.startEditGrouping();
+            super.replace(offset,length,text,attrs); 
+            undoManager.stopEditGrouping();
+           }
+        }
+     }
+  }

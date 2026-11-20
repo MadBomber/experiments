@@ -1,0 +1,391 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta http-equiv="Content-Language" content="en-us">
+<title>Benchmarking CLIPS/R2</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<style>
+<!--
+p            { font-family: Arial; font-size: 10pt; margin-top: 0; margin-bottom: 0 }
+td           { font-family: Arial; font-size: 10pt; margin-top: 0; margin-bottom: 0 }
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<meta name="Microsoft Theme" content="business-blue 010, default">
+</head>
+
+<body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0" bgcolor="#FFFFFF" text="#000000" link="#144372" vlink="#42709E" alink="#42709E"><!--mstheme--><font face="Arial, Arial, Helvetica">
+
+
+<div ALIGN="left">
+  
+  <!--mstheme--></font><table BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
+    <tr>
+      <td WIDTH="1%" VALIGN="middle" BACKGROUND="images/logo2.gif" ROWSPAN="2"><!--mstheme--><font face="Arial, Arial, Helvetica">
+      
+      <p ALIGN="center"><font color="#FFFFFF" face="CALVIN" size="3"><i>OPS/J </i></font></p>
+      <p ALIGN="center">
+<b>
+<font color="#FFFFFF" size="3"><em>CLIPS/R2</em></font></b></p>
+      <p ALIGN="center">
+<font color="#FFFFFF" face="CALVIN" size="3"><i>OPS/R2</i></font></p>
+      <!--mstheme--></font></td>
+      <td WIDTH="1%" VALIGN="top" ROWSPAN="2" BACKGROUND="images/top_bk.gif"><!--mstheme--><font face="Arial, Arial, Helvetica">
+      
+      <img BORDER="0" SRC="images/top_bk.gif" width="28" height="86"><!--mstheme--></font></td>
+      <td WIDTH="98%" VALIGN="middle" BACKGROUND="images/top_bk.gif"><!--mstheme--><font face="Arial, Arial, Helvetica">
+      <p ALIGN="right"><font size="3" color="#FFFFFF"><b><i>Production Systems 
+      Technologies, Inc</i></b></font><!--mstheme--></font></td>
+    </tr>
+    <tr>
+      <td WIDTH="98%" VALIGN="middle" BACKGROUND="images/top_bk.gif"><!--mstheme--><font face="Arial, Arial, Helvetica">
+      
+      <div ALIGN="right">
+        
+        <!--mstheme--></font><table BORDER="0" CELLPADDING="0" CELLSPACING="0">
+          <tr>
+            <td VALIGN="top"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <!--webbot bot="Navigation" S-Type="global" S-Orientation="horizontal" S-Rendering="graphics" B-Include-Home="TRUE" B-Include-Up="FALSE" U-Page S-Target startspan --><a href="./"><img src="_derived/home_cmp_business-blue010_gbtn.gif" width="100" height="17" border="0" alt="Home" align="middle"></a> <a href="products.htm"><img src="_derived/products.htm_cmp_business-blue010_gbtn.gif" width="100" height="17" border="0" alt="Products" align="middle"></a> <a href="contact_us.htm"><img src="_derived/contact_us.htm_cmp_business-blue010_gbtn.gif" width="100" height="17" border="0" alt="Contact Us" align="middle"></a><!--webbot bot="Navigation" i-checksum="31624" endspan --><!--mstheme--></font></td>
+          </tr>
+        </table><!--mstheme--><font face="Arial, Arial, Helvetica">
+        
+      </div>
+      <!--mstheme--></font></td>
+    </tr>
+    <tr>
+      <td WIDTH="1%" VALIGN="top" BACKGROUND="images/line.gif"><!--mstheme--><font face="Arial, Arial, Helvetica">
+      <img BORDER="0" SRC="images/line.gif" width="167" height="5"><!--mstheme--></font></td>
+      <td WIDTH="1%" VALIGN="top" BACKGROUND="images/line.gif"><!--mstheme--><font face="Arial, Arial, Helvetica">
+      <img BORDER="0" SRC="images/line2.gif" width="28" height="5"><!--mstheme--></font></td>
+      <td WIDTH="98%" VALIGN="top" BACKGROUND="images/line.gif"><!--mstheme--><font face="Arial, Arial, Helvetica">
+      <img BORDER="0" SRC="images/line.gif" width="167" height="5"><!--mstheme--></font></td>
+    </tr>
+  </table><!--mstheme--><font face="Arial, Arial, Helvetica">
+  
+</div>
+<div ALIGN="left">
+  
+  <!--mstheme--></font><table BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="100%" style="border-collapse: collapse">
+    <tr>
+      <td WIDTH="1%" VALIGN="top"><!--mstheme--><font face="Arial, Arial, Helvetica">
+      <img BORDER="0" SRC="images/nav_sp.gif" width="150" height="12"><!--mstheme--></font></td>
+      <td WIDTH="1%" VALIGN="top"><!--mstheme--><font face="Arial, Arial, Helvetica">
+      <img BORDER="0" SRC="images/line_sp.gif" width="8" height="12"><!--mstheme--></font></td>
+      <td WIDTH="174%" VALIGN="top"><!--mstheme--><font face="Arial, Arial, Helvetica">
+      <img BORDER="0" SRC="images/text_sp.gif" width="209" height="12"><!--mstheme--></font></td>
+    </tr>
+    <tr>
+      <td WIDTH="1%" VALIGN="top"><!--mstheme--><font face="Arial, Arial, Helvetica">
+      <div ALIGN="left">
+        
+        <!--mstheme--></font><table BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
+          <tr>
+            <td WIDTH="100%" VALIGN="top"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <!--webbot bot="Navigation" S-Type="top" S-Orientation="vertical" S-Rendering="graphics" B-Include-Home="TRUE" B-Include-Up="TRUE" startspan --><script language="JavaScript"><!--
+MSFPhover = 
+  (((navigator.appName == "Netscape") && 
+  (parseInt(navigator.appVersion) >= 3 )) || 
+  ((navigator.appName == "Microsoft Internet Explorer") && 
+  (parseInt(navigator.appVersion) >= 4 ))); 
+function MSFPpreload(img) 
+{
+  var a=new Image(); a.src=img; return a; 
+}
+// --></script><script language="JavaScript"><!--
+if(MSFPhover) { MSFPnav1n=MSFPpreload("_derived/home_cmp_business-blue010_vbtn.gif"); MSFPnav1h=MSFPpreload("_derived/home_cmp_business-blue010_vbtn_a.gif"); }
+// --></script><a href="./" language="JavaScript" onmouseover="if(MSFPhover) document['MSFPnav1'].src=MSFPnav1h.src" onmouseout="if(MSFPhover) document['MSFPnav1'].src=MSFPnav1n.src"><img src="_derived/home_cmp_business-blue010_vbtn.gif" width="150" height="24" border="0" alt="Home" name="MSFPnav1"></a><br><script language="JavaScript"><!--
+if(MSFPhover) { MSFPnav2n=MSFPpreload("_derived/up_cmp_business-blue010_vbtn.gif"); MSFPnav2h=MSFPpreload("_derived/up_cmp_business-blue010_vbtn_a.gif"); }
+// --></script><a href="clips_r2.htm" language="JavaScript" onmouseover="if(MSFPhover) document['MSFPnav2'].src=MSFPnav2h.src" onmouseout="if(MSFPhover) document['MSFPnav2'].src=MSFPnav2n.src"><img src="_derived/up_cmp_business-blue010_vbtn.gif" width="150" height="24" border="0" alt="Up" name="MSFPnav2"></a><br><script language="JavaScript"><!--
+if(MSFPhover) { MSFPnav3n=MSFPpreload("_derived/opsj.htm_cmp_business-blue010_vbtn.gif"); MSFPnav3h=MSFPpreload("_derived/opsj.htm_cmp_business-blue010_vbtn_a.gif"); }
+// --></script><a href="opsj.htm" language="JavaScript" onmouseover="if(MSFPhover) document['MSFPnav3'].src=MSFPnav3h.src" onmouseout="if(MSFPhover) document['MSFPnav3'].src=MSFPnav3n.src"><img src="_derived/opsj.htm_cmp_business-blue010_vbtn.gif" width="150" height="24" border="0" alt="OPS/J" name="MSFPnav3"></a><br><script language="JavaScript"><!--
+if(MSFPhover) { MSFPnav4n=MSFPpreload("_derived/opsr2.htm_cmp_business-blue010_vbtn.gif"); MSFPnav4h=MSFPpreload("_derived/opsr2.htm_cmp_business-blue010_vbtn_a.gif"); }
+// --></script><a href="opsr2.htm" language="JavaScript" onmouseover="if(MSFPhover) document['MSFPnav4'].src=MSFPnav4h.src" onmouseout="if(MSFPhover) document['MSFPnav4'].src=MSFPnav4n.src"><img src="_derived/opsr2.htm_cmp_business-blue010_vbtn.gif" width="150" height="24" border="0" alt="OPS/R2" name="MSFPnav4"></a><br><script language="JavaScript"><!--
+if(MSFPhover) { MSFPnav5n=MSFPpreload("_derived/rete2.htm_cmp_business-blue010_vbtn.gif"); MSFPnav5h=MSFPpreload("_derived/rete2.htm_cmp_business-blue010_vbtn_a.gif"); }
+// --></script><a href="rete2.htm" language="JavaScript" onmouseover="if(MSFPhover) document['MSFPnav5'].src=MSFPnav5h.src" onmouseout="if(MSFPhover) document['MSFPnav5'].src=MSFPnav5n.src"><img src="_derived/rete2.htm_cmp_business-blue010_vbtn.gif" width="150" height="24" border="0" alt="RETE-II" name="MSFPnav5"></a><br><script language="JavaScript"><!--
+if(MSFPhover) { MSFPnav6n=MSFPpreload("_derived/about_pst.htm_cmp_business-blue010_vbtn.gif"); MSFPnav6h=MSFPpreload("_derived/about_pst.htm_cmp_business-blue010_vbtn_a.gif"); }
+// --></script><a href="about_pst.htm" language="JavaScript" onmouseover="if(MSFPhover) document['MSFPnav6'].src=MSFPnav6h.src" onmouseout="if(MSFPhover) document['MSFPnav6'].src=MSFPnav6n.src"><img src="_derived/about_pst.htm_cmp_business-blue010_vbtn.gif" width="150" height="24" border="0" alt="About PST" name="MSFPnav6"></a><br><script language="JavaScript"><!--
+if(MSFPhover) { MSFPnav7n=MSFPpreload("_derived/testimonials.htm_cmp_business-blue010_vbtn.gif"); MSFPnav7h=MSFPpreload("_derived/testimonials.htm_cmp_business-blue010_vbtn_a.gif"); }
+// --></script><a href="testimonials.htm" language="JavaScript" onmouseover="if(MSFPhover) document['MSFPnav7'].src=MSFPnav7h.src" onmouseout="if(MSFPhover) document['MSFPnav7'].src=MSFPnav7n.src"><img src="_derived/testimonials.htm_cmp_business-blue010_vbtn.gif" width="150" height="24" border="0" alt="Users" name="MSFPnav7"></a><br><script language="JavaScript"><!--
+if(MSFPhover) { MSFPnav8n=MSFPpreload("_derived/license.htm_cmp_business-blue010_vbtn.gif"); MSFPnav8h=MSFPpreload("_derived/license.htm_cmp_business-blue010_vbtn_a.gif"); }
+// --></script><a href="license.htm" language="JavaScript" onmouseover="if(MSFPhover) document['MSFPnav8'].src=MSFPnav8h.src" onmouseout="if(MSFPhover) document['MSFPnav8'].src=MSFPnav8n.src"><img src="_derived/license.htm_cmp_business-blue010_vbtn.gif" width="150" height="24" border="0" alt="Licensing" name="MSFPnav8"></a><br><script language="JavaScript"><!--
+if(MSFPhover) { MSFPnav9n=MSFPpreload("_derived/legal_issues.htm_cmp_business-blue010_vbtn.gif"); MSFPnav9h=MSFPpreload("_derived/legal_issues.htm_cmp_business-blue010_vbtn_a.gif"); }
+// --></script><a href="legal_issues.htm" language="JavaScript" onmouseover="if(MSFPhover) document['MSFPnav9'].src=MSFPnav9h.src" onmouseout="if(MSFPhover) document['MSFPnav9'].src=MSFPnav9n.src"><img src="_derived/legal_issues.htm_cmp_business-blue010_vbtn.gif" width="150" height="24" border="0" alt="Legal Issues" name="MSFPnav9"></a><!--webbot bot="Navigation" i-checksum="44279" endspan --><!--mstheme--></font></td>
+          </tr>
+        </table><!--mstheme--><font face="Arial, Arial, Helvetica">
+        
+      </div>
+      <p>&nbsp;</p>
+      <p ALIGN="center"><a HREF="default.htm">
+      <img BORDER="0" SRC="images/home.gif" width="60" height="20"></a><a HREF="contact_us.htm"><img BORDER="0" SRC="images/contact.gif" width="63" height="20"></a></p>
+      <p>&nbsp;</p>
+      <!--mstheme--></font></td>
+      <td WIDTH="1%" VALIGN="top" BACKGROUND="images/dot_line.gif"><!--mstheme--><font face="Arial, Arial, Helvetica">&nbsp;<!--mstheme--></font></td>
+      <td WIDTH="174%" VALIGN="top"><!--mstheme--><font face="Arial, Arial, Helvetica">
+      <div ALIGN="left">
+        
+        <!--mstheme--></font><table BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">
+          <tr>
+            <td WIDTH="100%"><!--mstheme--><font face="Arial, Arial, Helvetica">&nbsp;<!--mstheme--></font></td>
+          </tr>
+        </table><!--mstheme--><font face="Arial, Arial, Helvetica">
+        
+      </div>
+      <p STYLE="margin-top: 0; margin-bottom: 0">
+      <font SIZE="2">&nbsp;</font></p>
+      <p>&nbsp;</p>
+      <p class="MsoTitle" align="center"><font size="3">Benchmarking CLIPS/R2</font></p>
+      <p class="MsoTitle">&nbsp;</p>
+      <p class="DefaultText" align="center" style="text-align:center">Production 
+      Systems Technologies, Inc.</p>
+      <p class="DefaultText" align="center" style="text-align:center">&nbsp;</p>
+      <p><b>&nbsp;</b></p>
+      <p><b>Abstract:</b> CLIPS/R2 is a new implementation of the widely-used 
+      CLIPS rule-based language. CLIPS/R2 uses the Rete II match algorithm, a 
+      very advanced version of the industry-standard Rete match algorithm. This 
+      paper details the results of benchmarking CLIPS/R2 against the most recent 
+      preceding version of CLIPS, CLIPS 6.04. Only standard, 
+      independently-developed benchmark programs were run. CLIPS/R2 is several 
+      faster than CLIPS 6.04 on moderately complex problems, and on very complex 
+      problems it is more than 100 times faster than CLIPS 6.04.</p>
+      <p><b><span style="FONT-SIZE: 13.5pt; FONT-FAMILY: Arial">&nbsp;</span></b></p>
+      <p><b><span style="FONT-SIZE: 13.5pt; FONT-FAMILY: Arial">1. Introduction</span></b></p>
+      <p>CLIPS/R2 is a new implementation of the popular CLIPS rule-based 
+      system. This paper contains an evaluation of the execution speeds of 
+      CLIPS/R2 and CLIPS 6.04. Two benchmark programs are used, Waltz and 
+      Manners. Both of these programs permit the amount of data operated on by 
+      the rules to be varied. By increasing the amount of data, these benchmarks 
+      can be scaled from fairly simple to quite complex. (As will be seen below, 
+      the runtimes on a system like CLIPS 6.04 increase from a few seconds to 
+      over two hours.) These programs were all independently developed; to 
+      insure the fairness of the results, we are not using any benchmarks 
+      written by Production Systems Technologies.</p>
+      <p>A SUN Sparcstation 4 was used in the study. The SUN Sparcworks C 
+      compiler was used, and both systems were compiled with the optimization 
+      switch -O. The times() system call was used to measure user plus system 
+      time. To improve the accuracy of the results, the rule sets that finished 
+      in less than 100 seconds were run multiple times, and the run times were 
+      averaged. </p>
+      <p><b><span style="FONT-SIZE: 13.5pt; FONT-FAMILY: Arial">&nbsp;</span></b></p>
+      <p><b><span style="FONT-SIZE: 13.5pt; FONT-FAMILY: Arial">2. The Manners 
+      Benchmark</span></b></p>
+      <p>The Manners benchmark program is from the suite of benchmarks collected 
+      by Dr. Daniel Miranker's group at the University of Texas. Manners scales 
+      by increasing the number of working memory elements the rules have to deal 
+      with. In the smallest problem reported below, working memory has an 
+      average of about 400 facts. In the biggest problem, working memory 
+      averages over 2700 facts. At times during the runs for the bigger 
+      problems, the conflict can also grow large, though the average size of the 
+      conflict set for even the longest run is less than 100 activations.</p>
+      <p>Manners assigns seats to guests at a dinner party, seating people on 
+      the basis of their sexes and their hobbies. It attempts to put people of 
+      different sexes and with common hobbies next to each other. The amount of 
+      work this program does depends on the number of guests at the party. We 
+      ran this problem with from 32 to 96 guests. The results are shown in Table 
+      1.</p>
+      <p>&nbsp;</p>
+      <p style="TEXT-ALIGN: center" align="center">&nbsp;</p>
+      <div align="center">
+        <!--mstheme--></font><table class="MsoNormalTable" style="width: 534.75pt" cellSpacing="1" cellPadding="0" width="713" border="1" bordercolordark="#FFFFFF" bordercolorlight="#FFFFFF">
+          <tr>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="center"><b>Regions</b><!--mstheme--></font></td>
+            <td style="width: 21%; padding: 2.25pt; background: white" vAlign="top" width="21%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="center"><b>Rules Fired</b><!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="center"><b>CLIPS Run </b></p>
+            <p style="TEXT-ALIGN: right" align="center"><b>Time (seconds)</b><!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="center"><b>CLIPS/R2 Run</b></p>
+            <p style="TEXT-ALIGN: right" align="center"><b>Time (seconds)</b><!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="center"><b>Relative Speed</b><!--mstheme--></font></td>
+          </tr>
+          <tr>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">32<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">624<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">28<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">1.92<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">14.6<!--mstheme--></font></td>
+          </tr>
+          <tr>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">64<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">2,272<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">1,157.7<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">15.85<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">73<!--mstheme--></font></td>
+          </tr>
+          <tr>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">96<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">4,944<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">7,828.9<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">47.32<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">165.4<!--mstheme--></font></td>
+          </tr>
+        </table><!--mstheme--><font face="Arial, Arial, Helvetica">
+      </div>
+      <p style="TEXT-ALIGN: center" align="center">&nbsp;</p>
+      <p><b><span style="FONT-SIZE: 10pt; FONT-FAMILY: Helvetica">&nbsp;</span></b></p>
+      <p style="TEXT-ALIGN: center" align="center"><b>
+      <span style="FONT-SIZE: 10pt; FONT-FAMILY: Helvetica">Table 1. Run Times 
+      for CLIPS 6.04 and CLIPS/R2 on Manners.</span></b></p>
+      <p>&nbsp;</p>
+      <p>Note that CLIPS/R2's speed advantage increases as the problem scales 
+      up. This is due to the Rete II algorithm used by CLIPS/R2. CLIPS 6.04 uses 
+      the standard Rete algorithm., and Rete II is better able to handle large 
+      working memories and large numbers of full and partial rule matches than 
+      the earlier algorithm.</p>
+      <p><b><span style="FONT-SIZE: 13.5pt; FONT-FAMILY: Arial">&nbsp;</span></b></p>
+      <p><b><span style="FONT-SIZE: 13.5pt; FONT-FAMILY: Arial">3. The Waltz 
+      Benchmark</span></b></p>
+      <p>The Waltz benchmark program also comes from the University of Texas 
+      benchmark suite. Like Manners, this program has a fixed number of rules, 
+      and scaling is achieved by giving the program bigger and bigger problems 
+      to work on. The condition parts of the rules in this system are more 
+      complex than the conditions in Manners.</p>
+      <p>This program performs Waltz labeling. That is, it is presented with a 
+      collection of lines such as might be found by an edge detector in a 
+      computer vision system. It applies a set of constraints to the lines in 
+      order to create a labeling for them. The labels indicate how the lines 
+      correspond to edges in a three-dimensional scene. Four runs of this 
+      program were made, with the number of regions to be labeled varying from 
+      12 to 50. Unlike the other program, Waltz produces a large amount of 
+      output. The amount of output would be sufficient to skew the results for 
+      the smaller problems. As it comes from the University of Texas benchmark 
+      library, the program has the output statements commented out. For the 
+      timing runs, we left them commented out. </p>
+      <p>&nbsp;</p>
+      <p style="TEXT-ALIGN: center" align="center">&nbsp;</p>
+      <div align="center">
+        <!--mstheme--></font><table class="MsoNormalTable" style="width: 539.25pt" cellSpacing="1" cellPadding="0" width="719" border="1" bordercolordark="#FFFFFF" bordercolorlight="#FFFFFF">
+          <tr>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="center"><b>Regions</b><!--mstheme--></font></td>
+            <td style="width: 21%; padding: 2.25pt; background: white" vAlign="top" width="21%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="center"><b>Rules Fired</b><!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="center"><b>CLIPS Run </b></p>
+            <p style="TEXT-ALIGN: right" align="center"><b>Time (seconds)</b><!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="center"><b>CLIPS/R2 Run</b></p>
+            <p style="TEXT-ALIGN: right" align="center"><b>Time (seconds)</b><!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="center"><b>Relative Speed</b><!--mstheme--></font></td>
+          </tr>
+          <tr>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">12<!--mstheme--></font></td>
+            <td style="width: 21%; padding: 2.25pt; background: white" vAlign="top" width="21%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">3,578<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">105.9<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">5.6<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">18.9<!--mstheme--></font></td>
+          </tr>
+          <tr>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">25<!--mstheme--></font></td>
+            <td style="width: 21%; padding: 2.25pt; background: white" vAlign="top" width="21%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">7,166<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">414.6<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">12.1<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">34.3<!--mstheme--></font></td>
+          </tr>
+          <tr>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">37<!--mstheme--></font></td>
+            <td style="width: 21%; padding: 2.25pt; background: white" vAlign="top" width="21%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">10,478<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">882.3<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">18.6<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">47.4<!--mstheme--></font></td>
+          </tr>
+          <tr>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">50<!--mstheme--></font></td>
+            <td style="width: 21%; padding: 2.25pt; background: white" vAlign="top" width="21%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">14,066<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">1,573.5<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">23.4<!--mstheme--></font></td>
+            <td style="width: 20%; padding: 2.25pt; background: white" vAlign="top" width="20%"><!--mstheme--><font face="Arial, Arial, Helvetica">
+            <p style="TEXT-ALIGN: right" align="right">67.2<!--mstheme--></font></td>
+          </tr>
+        </table><!--mstheme--><font face="Arial, Arial, Helvetica">
+      </div>
+      <p><b><span style="FONT-SIZE: 13.5pt; FONT-FAMILY: Arial">&nbsp;</span></b></p>
+      <p><b><span style="FONT-SIZE: 10pt; FONT-FAMILY: Helvetica">&nbsp;</span></b></p>
+      <p style="TEXT-ALIGN: center" align="center"><b>
+      <span style="FONT-SIZE: 10pt; FONT-FAMILY: Helvetica">Table 2. Run Times 
+      for CLIPS 6.04 and CLIPS/R2 on Waltz.</span></b></p>
+      <p style="TEXT-ALIGN: center" align="center"><b>
+      <span style="FONT-SIZE: 13.5pt; FONT-FAMILY: Arial">&nbsp;</span></b></p>
+      <p><b><span style="FONT-SIZE: 13.5pt; FONT-FAMILY: Arial">4. Conclusions</span></b></p>
+      <p>These benchmark programs test the ability of rule based systems to deal 
+      with large working memories and large numbers of full and partial matches 
+      for the rules. Benchmarks of this nature are interesting because they are 
+      the best predictors of how well a rule interpreter can handle complex rule 
+      bases. When a rule-based system has performance problems, it is almost 
+      always the result of the rules having to deal with more data than the 
+      match algorithm can handle efficiently. (The number of rules in the system 
+      does not affect performance much in modern systems because standard 
+      algorithms can easily handle large numbers of rules.) Rete II was 
+      developed specifically to make it possible for rule systems to deal 
+      efficiently with large amounts of data as well as large numbers of rules. 
+      On very simple rule sets, Rete II based CLIPS/R2 is about the same speed 
+      as CLIPS 6.04. But as the tables above illustrate, CLIPS/R2 is 
+      dramatically faster then CLIPS 6.04 on problems involving large amounts of 
+      data.</p>
+      <p>&nbsp;</p>
+      <p>We wish to express our appreciation to Dr. Miranker and his associates 
+      at the University of Texas for creating the rule benchmark suite and 
+      making it available to the community at large.</p>
+      <p>&nbsp;<!--mstheme--></font></td>
+    </tr>
+    <tr>
+      <td WIDTH="1%" VALIGN="top"><!--mstheme--><font face="Arial, Arial, Helvetica"><!--mstheme--></font></td>
+      <td WIDTH="1%" VALIGN="top"><!--mstheme--><font face="Arial, Arial, Helvetica"><!--mstheme--></font></td>
+      <td WIDTH="174%" VALIGN="top"><!--mstheme--><font face="Arial, Arial, Helvetica">
+      <p ALIGN="center">&nbsp;</p>
+      <p ALIGN="center"><font SIZE="1">
+      <!--webbot bot="Navigation" S-Type="top" S-Orientation="horizontal" S-Rendering="text" B-Include-Home="TRUE" B-Include-Up="FALSE" U-Page S-Target startspan --><nobr>[&nbsp;<a href="./">Home</a>&nbsp;]</nobr> <nobr>[&nbsp;<a href="opsj.htm">OPS/J</a>&nbsp;]</nobr> <nobr>[&nbsp;<a href="clips_r2.htm">CLIPS/R2</a>&nbsp;]</nobr> <nobr>[&nbsp;<a href="opsr2.htm">OPS/R2</a>&nbsp;]</nobr> <nobr>[&nbsp;<a href="rete2.htm">RETE-II</a>&nbsp;]</nobr> <nobr>[&nbsp;<a href="about_pst.htm">About&nbsp;PST</a>&nbsp;]</nobr> <nobr>[&nbsp;<a href="testimonials.htm">Users</a>&nbsp;]</nobr> <nobr>[&nbsp;<a href="license.htm">Licensing</a>&nbsp;]</nobr> <nobr>[&nbsp;<a href="legal_issues.htm">Legal&nbsp;Issues</a>&nbsp;]</nobr><!--webbot bot="Navigation" i-checksum="41729" endspan -->
+      </font></p>
+      <p ALIGN="center"><font size="1"><br>
+      info@pst.com<br>
+      Copyright © 2003 Production Systems Technologies, Inc</font></p>
+      <!--mstheme--></font></td>
+    </tr>
+  </table><!--mstheme--><font face="Arial, Arial, Helvetica">
+  
+</div>
+
+
+<!--mstheme--></font></body>
+
+</html>

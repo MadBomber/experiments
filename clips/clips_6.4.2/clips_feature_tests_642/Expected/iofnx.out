@@ -1,0 +1,561 @@
+TRUE
+CLIPS> (batch "iofnx.bat")
+TRUE
+CLIPS> (clear)                            
+CLIPS> (open)                             ; 10.5.2.1
+[ARGACCES1] Function 'open' expected at least 2 arguments.
+CLIPS> (open "blah1.dat")                 ; 10.5.2.1
+[ARGACCES1] Function 'open' expected at least 2 arguments.
+CLIPS> (open "blah2.dat" blah2 "r" 10)    ; 10.5.2.1
+[ARGACCES1] Function 'open' expected no more than 3 arguments.
+CLIPS> (open 10 blah3 "r")                ; 10.5.2.1
+[ARGACCES2] Function 'open' expected argument #1 to be of type symbol or string.
+CLIPS> (open [blah2.dat] blah4 "r")       ; 10.5.2.1
+[ARGACCES2] Function 'open' expected argument #1 to be of type symbol or string.
+CLIPS> (open "blah4.dat" (create$) "r")   ; 10.5.2.1
+[ARGACCES2] Function 'open' expected argument #2 to be of type integer, float, symbol, string, or instance name.
+CLIPS> (open blah5.dat blah5 r)           ; 10.5.2.1
+[ARGACCES2] Function 'open' expected argument #3 to be of type string.
+CLIPS> (open blah6.dat blah6 "x")         ; 10.5.2.1
+[ARGACCES2] Function 'open' expected argument #3 to be of type 'file access mode string'.
+FALSE
+CLIPS> (open blah7.dat blah7 8)           ; 10.5.2.1
+[ARGACCES2] Function 'open' expected argument #3 to be of type string.
+CLIPS> (open blah8.dat blah8 "r")         ; 10.5.2.1
+FALSE
+CLIPS> (close blah6 89)                   ; 10.5.2.2
+[ARGACCES1] Function 'close' expected no more than 1 argument.
+CLIPS> (close (create$))                  ; 10.5.2.2
+[ARGACCES2] Function 'close' expected argument #1 to be of type integer, float, symbol, string, or instance name.
+CLIPS> (close [blah8])                    ; 10.5.2.2
+FALSE
+CLIPS> (printout)                         ; 10.5.2.3
+[ARGACCES1] Function 'printout' expected at least 1 argument.
+CLIPS> (printout (create$))               ; 10.5.2.3
+[ARGACCES2] Function 'printout' expected argument #1 to be of type integer, float, symbol, string, or instance name.
+CLIPS> (read (create$))                   ; 10.5.2.4
+[ARGACCES2] Function 'read' expected argument #1 to be of type integer, float, symbol, string, or instance name.
+CLIPS> (get-error)
+FALSE
+CLIPS> (read bogus)                       ; 10.5.2.4
+[ROUTER1] Logical name 'bogus' was not recognized by any routers.
+FALSE
+CLIPS> (get-error)
+LOGICAL_NAME_ERROR
+CLIPS> (clear-error)
+LOGICAL_NAME_ERROR
+CLIPS> (read stdin stdout)                ; 10.5.2.4
+[ARGACCES1] Function 'read' expected no more than 1 argument.
+CLIPS> (read)                             ; 10.5.2.4 - 7
+7
+7
+CLIPS> (read t)                           ; 10.5.2.4 - abc
+abc
+abc
+CLIPS> (read stdin)                       ; 10.5.2.4 - xyz
+xyz abc
+xyz
+CLIPS> (read)                             ; 10.5.2.4 - a
+
+
+    a    
+a
+CLIPS> (open "Temp/iofnx1.tmp" mydata "w")     ; 10.5.2.4
+TRUE
+CLIPS> (printout mydata "red green")      ; 10.5.2.4
+CLIPS> (close mydata)                     ; 10.5.2.4
+TRUE
+CLIPS> (open "Temp/iofnx1.tmp" mydata)    ; 10.5.2.4
+TRUE
+CLIPS> (read mydata)                      ; 10.5.2.4
+red
+CLIPS> (read mydata)                      ; 10.5.2.4
+green
+CLIPS> (read mydata)                      ; 10.5.2.4
+EOF
+CLIPS> (close mydata)                     ; 10.5.2.4
+TRUE
+CLIPS> (readline (create$))               ; 10.5.2.5
+[ARGACCES2] Function 'readline' expected argument #1 to be of type integer, float, symbol, string, or instance name.
+CLIPS> (readline bogus)                   ; 10.5.2.5
+[ROUTER1] Logical name 'bogus' was not recognized by any routers.
+FALSE
+CLIPS> (readline stdin stdout)            ; 10.5.2.5
+[ARGACCES1] Function 'readline' expected no more than 1 argument.
+CLIPS> (readline)                         ; 10.5.2.5 - "7"
+7
+"7"
+CLIPS> (readline t)                       ; 10.5.2.5 - "abc"
+abc
+"abc"
+CLIPS> (readline stdin)                   ; 10.5.2.5 - "xyz abc"
+xyz abc
+"xyz abc"
+CLIPS> (readline)                         ; 10.5.2.5 - ""
+
+""
+CLIPS> (open "Temp/iofnx1.tmp" 7.8923)    ; 10.5.2.5
+TRUE
+CLIPS> (readline 7.8923)                  ; 10.5.2.5
+"red green"
+CLIPS> (readline 7.8923)                  ; 10.5.2.5
+EOF
+CLIPS> (close 7.8923)                     ; 10.5.2.5
+TRUE
+CLIPS> (format)                           ; 10.5.2.6
+[ARGACCES1] Function 'format' expected at least 2 arguments.
+CLIPS> (format t)                         ; 10.5.2.6
+[ARGACCES1] Function 'format' expected at least 2 arguments.
+CLIPS> (format (create$))                 ; 10.5.2.6
+[ARGACCES1] Function 'format' expected at least 2 arguments.
+CLIPS> (format t "%f%%%n")                ; 10.5.2.6
+[ARGACCES1] Function 'format' expected exactly 3 arguments.
+""
+CLIPS> (format nil "Integer: |%d|" 12)    ; 10.5.2.6
+"Integer: |12|"
+CLIPS> (format t "Integer: |%4d|" 12)     ; 10.5.2.6
+Integer: |  12|"Integer: |  12|"
+CLIPS> (format nil "Integer: |%-04d|" 12)
+"Integer: |12  |"
+CLIPS> (format t "Float:   |%f|" 12.01)   ; 10.5.2.6
+Float:   |12.010000|"Float:   |12.010000|"
+CLIPS> (format nil "Float:   |%7.2f| "12.01)
+"Float:   |  12.01| "
+CLIPS> (format t "Test:    |%e|" 12.01)   ; 10.5.2.6
+Test:    |1.201000e+01|"Test:    |1.201000e+01|"
+CLIPS> (format nil "Test:    |%7.2e|" 12.01)
+"Test:    |1.20e+01|"
+CLIPS> (format t "General: |%g|" 1234567890)
+General: |1.23457e+09|"General: |1.23457e+09|"
+CLIPS> (format t "Hexadecimal: |%x|" 12)  ; 10.5.2.6
+Hexadecimal: |c|"Hexadecimal: |c|"
+CLIPS> (format t "Octal:   |%o|" 12)      ; 10.5.2.6
+Octal:   |14|"Octal:   |14|"
+CLIPS> (format nil "Symbols: |%s| |%s|" value-a1 capacity)
+"Symbols: |value-a1| |capacity|"
+CLIPS> (format nil "the %% x %d x %s x %f y %%" 4 ab 3.5)
+"the % x 4 x ab x 3.500000 y %"
+CLIPS> (format nil "%d" abc)              ; 10.5.2.6
+[ARGACCES2] Function 'format' expected argument #3 to be of type integer or float.
+""
+CLIPS> (format nil "%d" 9.8)              ; 10.5.2.6
+"9"
+CLIPS> (format t "%f" 40)                 ; 10.5.2.6
+40.000000"40.000000"
+CLIPS> (format nil "%f" abc)              ; 10.5.2.6
+[ARGACCES2] Function 'format' expected argument #3 to be of type integer or float.
+""
+CLIPS> (format nil "%g" (create$))        ; 10.5.2.6
+[ARGACCES2] Function 'format' expected argument #3 to be of type integer or float.
+""
+CLIPS> (format t "%o" 9.8)                ; 10.5.2.6
+11"11"
+CLIPS> (format nil "%c" "ei")
+"e"
+CLIPS> (format nil "%c" "éí")
+"é"
+CLIPS> (format nil "%c" 101)
+"e"
+CLIPS> (format nil "%.2s" "abcd")
+"ab"
+CLIPS> (format nil "%.2s" "éêóï")
+"éê"
+CLIPS> (format nil "%.2s" "éaób")
+"éa"
+CLIPS> (format nil "%.6s" "abcd")
+"abcd"
+CLIPS> (format nil "%.6s" "éêóï")
+"éêóï"
+CLIPS> (format nil "%6s" "abcd")
+"  abcd"
+CLIPS> (format nil "%6s" "éêóï")
+"  éêóï"
+CLIPS> (format nil "%6s" "éaób")
+"  éaób"
+CLIPS> (format nil "%6.2s" "abcd")
+"    ab"
+CLIPS> (format nil "%6.2s" "éêóï")
+"    éê"
+CLIPS> (format nil "%6.2s" "éaób")
+"    éa"
+CLIPS> (format nil "%-6.2s" "abcd")
+"ab    "
+CLIPS> (format nil "%-6.2s" "éêóï")
+"éê    "
+CLIPS> (format nil "%-6.2s" "éaób")
+"éa    "
+CLIPS> (format nil "%06.2s" "abcd")
+"0000ab" ; Undefined behavior: padding may be space or 0
+CLIPS> (format nil "%06.2s" "éêóï")
+"0000éê" ; Undefined behavior: padding may be space or 0
+CLIPS> (format nil "%06.2s" "éaób")
+"0000éa" ; Undefined behavior: padding may be space or 0
+CLIPS> (format nil "%+-4d" 3)
+"+3  "
+CLIPS> (format nil "%+04d" 3)
+"+003"
+CLIPS> (format nil "%.0f" 4.0)
+"4"
+CLIPS> (format nil "%#.0f" 4.0)
+"4."
+CLIPS> (format nil "% d" 3)
+" 3"
+CLIPS> (remove "Temp/iofun.dat")          ; Open function modes
+FALSE
+CLIPS> (open "Temp/iofun.dat" temp "bogus")
+[ARGACCES2] Function 'open' expected argument #3 to be of type 'file access mode string'.
+FALSE
+CLIPS> (close temp)
+FALSE
+CLIPS> (remove "Temp/iofun.dat") 
+FALSE
+CLIPS> (open "Temp/iofun.dat" temp "r")
+FALSE
+CLIPS> (close temp)
+FALSE
+CLIPS> (remove "Temp/iofun.dat") 
+FALSE
+CLIPS> (open "Temp/iofun.dat" temp "w")
+TRUE
+CLIPS> (close temp)
+TRUE
+CLIPS> (remove "Temp/iofun.dat") 
+TRUE
+CLIPS> (open "Temp/iofun.dat" temp "a")
+TRUE
+CLIPS> (close temp)
+TRUE
+CLIPS> (remove "Temp/iofun.dat") 
+TRUE
+CLIPS> (open "Temp/iofun.dat" temp "rb")
+FALSE
+CLIPS> (close temp)
+FALSE
+CLIPS> (remove "Temp/iofun.dat") 
+FALSE
+CLIPS> (open "Temp/iofun.dat" temp "wb")
+TRUE
+CLIPS> (close temp)
+TRUE
+CLIPS> (remove "Temp/iofun.dat") 
+TRUE
+CLIPS> (open "Temp/iofun.dat" temp "ab")
+TRUE
+CLIPS> (close temp)
+TRUE
+CLIPS> (remove "Temp/iofun.dat") 
+TRUE
+CLIPS> (open "Temp/iofun.dat" temp "w")
+TRUE
+CLIPS> (printout temp red crlf)
+CLIPS> (close temp)
+TRUE
+CLIPS> (open "Temp/iofun.dat" temp "r")
+TRUE
+CLIPS> (read temp)
+red
+CLIPS> (read temp)
+EOF
+CLIPS> (close temp)
+TRUE
+CLIPS> (open "Temp/iofun.dat" temp "a")
+TRUE
+CLIPS> (read temp)
+EOF
+CLIPS> (printout temp green crlf)
+CLIPS> (close temp)
+TRUE
+CLIPS> (open "Temp/iofun.dat" temp "r")
+TRUE
+CLIPS> (read temp)
+red
+CLIPS> (read temp)
+green
+CLIPS> (read temp)
+EOF
+CLIPS> (close temp)
+TRUE
+CLIPS> (remove "Temp/iofun.dat") 
+TRUE
+CLIPS> (open "Temp/read.dat" temp "w") ; Return symbols for tokens that are not primitive values
+TRUE
+CLIPS> (printout temp "(foo ?foo \"?foo\" \")\")" crlf)
+CLIPS> (close temp)
+TRUE
+CLIPS> (open "Temp/read.dat" temp "r")
+TRUE
+CLIPS> (read temp)
+(
+CLIPS> (read temp)
+foo
+CLIPS> (read temp)
+?foo
+CLIPS> (read temp)
+"?foo"
+CLIPS> (read temp)
+")"
+CLIPS> (read temp)
+)
+CLIPS> (close temp)
+TRUE
+CLIPS> (remove "Temp/read.dat") 
+TRUE
+CLIPS> (put-char) ; put-char/get-char
+[ARGACCES1] Function 'put-char' expected at least 1 argument.
+CLIPS> (put-char temp)
+[ARGACCES2] Function 'put-char' expected argument #1 to be of type integer.
+CLIPS> (open "Temp/read.dat" temp "w") 
+TRUE
+CLIPS> (put-char temp abc)
+[ARGACCES2] Function 'put-char' expected argument #2 to be of type integer.
+CLIPS> (put-char temp 72 34)
+[ARGACCES1] Function 'put-char' expected no more than 2 arguments.
+CLIPS> (put-char temp 72)
+CLIPS> (put-char temp 101)
+CLIPS> (put-char temp 108)
+CLIPS> (put-char temp 112)
+CLIPS> (put-char temp 111)
+CLIPS> (put-char temp 10)
+CLIPS> (close temp)
+TRUE
+CLIPS> (open "Temp/read.dat" temp "r")
+TRUE
+CLIPS> (read temp)
+Helpo
+CLIPS> (close temp)
+TRUE
+CLIPS> (open "Temp/read.dat" temp "r")
+TRUE
+CLIPS> (readline temp)
+"Helpo"
+CLIPS> (close temp)
+TRUE
+CLIPS> (open "Temp/read.dat" temp "r")
+TRUE
+CLIPS> (get-char temp)
+72
+CLIPS> (get-char temp)
+101
+CLIPS> (get-char temp)
+108
+CLIPS> (get-char temp)
+112
+CLIPS> (get-char temp)
+111
+CLIPS> (get-char temp)
+10
+CLIPS> (get-char temp)
+-1
+CLIPS> (close temp)
+TRUE
+CLIPS> (unget-char temp)
+[ARGACCES2] Function 'unget-char' expected argument #1 to be of type integer.
+0
+CLIPS> (open "Temp/read.dat" temp "r")
+TRUE
+CLIPS> (get-char temp)
+72
+CLIPS> (get-char temp)
+101
+CLIPS> (unget-char temp 101)
+101
+CLIPS> (get-char temp)
+101
+CLIPS> (get-char temp)
+108
+CLIPS> (unget-char temp 108)
+108
+CLIPS> (unget-char temp 101)
+101
+CLIPS> (get-char temp)
+101
+CLIPS> (get-char temp)
+108
+CLIPS> (get-char temp)
+112
+CLIPS> (get-char temp)
+111
+CLIPS> (unget-char temp -1)
+-1
+CLIPS> (get-char temp)
+10
+CLIPS> (get-char temp)
+-1
+CLIPS> (close temp)
+TRUE
+CLIPS> (remove "Temp/read.dat")
+TRUE
+CLIPS> (while (not (member$ (get-char) (create$ 10 13))) do)
+ab cd ef
+FALSE
+CLIPS> (open "Temp/plus.dat" temp "w") ; seek, tell, rewind, flush args
+TRUE
+CLIPS> (seek)
+[ARGACCES1] Function 'seek' expected exactly 3 arguments.
+CLIPS> (seek temp)
+[ARGACCES1] Function 'seek' expected exactly 3 arguments.
+CLIPS> (seek temp 0)
+[ARGACCES1] Function 'seek' expected exactly 3 arguments.
+CLIPS> (seek temp 0 seek-cur)
+TRUE
+CLIPS> (seek temp 0 seek-set)
+TRUE
+CLIPS> (seek temp 0 seek-end)
+TRUE
+CLIPS> (seek temp 0 bogus)
+[ARGACCES2] Function 'seek' expected argument #3 to be of type symbol with value seek-set, seek-cur, or seek-end.
+FALSE
+CLIPS> (seek temp 0 seek-set extra)
+[ARGACCES1] Function 'seek' expected exactly 3 arguments.
+CLIPS> (seek bogus 0 seek-set)
+[ROUTER1] Logical name 'bogus' was not recognized by any routers.
+FALSE
+CLIPS> (tell)
+[ARGACCES1] Function 'tell' expected exactly 1 argument.
+CLIPS> (tell temp extra)
+[ARGACCES1] Function 'tell' expected exactly 1 argument.
+CLIPS> (tell bogus)
+[ROUTER1] Logical name 'bogus' was not recognized by any routers.
+FALSE
+CLIPS> (rewind)
+[ARGACCES1] Function 'rewind' expected exactly 1 argument.
+CLIPS> (rewind temp extra)
+[ARGACCES1] Function 'rewind' expected exactly 1 argument.
+CLIPS> (rewind bogus)
+[ROUTER1] Logical name 'bogus' was not recognized by any routers.
+FALSE
+CLIPS> (flush temp extra)
+[ARGACCES1] Function 'flush' expected no more than 1 argument.
+CLIPS> (flush temp)
+TRUE
+CLIPS> (flush)
+TRUE
+CLIPS> (flush bogus)
+FALSE
+CLIPS> (close temp)
+TRUE
+CLIPS> (open "Temp/plus.dat" temp "w") ; rewind
+TRUE
+CLIPS> (printout temp "Jack Smith" crlf)
+CLIPS> (printout temp "John Jones" crlf)
+CLIPS> (close temp)
+TRUE
+CLIPS> (open "Temp/plus.dat" temp "r") 
+TRUE
+CLIPS> (readline temp)
+"Jack Smith"
+CLIPS> (readline temp)
+"John Jones"
+CLIPS> (readline temp)
+EOF
+CLIPS> (printout temp "Sally Walker" crlf)
+CLIPS> (rewind temp)
+TRUE
+CLIPS> (readline temp)
+"Jack Smith"
+CLIPS> (readline temp)
+"John Jones"
+CLIPS> (readline temp)
+EOF
+CLIPS> (close temp)
+TRUE
+CLIPS> (open "Temp/plus.dat" temp "r+") ; r+ mode
+TRUE
+CLIPS> (readline temp)
+"Jack Smith"
+CLIPS> (readline temp)
+"John Jones"
+CLIPS> (readline temp)
+EOF
+CLIPS> (printout temp "Sally Walker" crlf)
+CLIPS> (rewind temp)
+TRUE
+CLIPS> (readline temp)
+"Jack Smith"
+CLIPS> (readline temp)
+"John Jones"
+CLIPS> (readline temp)
+"Sally Walker"
+CLIPS> (readline temp)
+EOF
+CLIPS> (close temp)
+TRUE
+CLIPS> (open "Temp/seek.dat" temp "w+") ; w+, seek, tell
+TRUE
+CLIPS> (printout temp "Jack Smith" crlf)
+CLIPS> (progn (bind ?pos (tell temp)) TRUE)
+TRUE
+CLIPS> (printout temp "John Jones" crlf)
+CLIPS> (printout temp "Sally Walker" crlf)
+CLIPS> (seek temp ?pos seek-set)
+TRUE
+CLIPS> (readline temp)
+"John Jones"
+CLIPS> (readline temp)
+"Sally Walker"
+CLIPS> (readline temp)
+EOF
+CLIPS> (seek temp 0 seek-set)
+TRUE
+CLIPS> (readline temp)
+"Jack Smith"
+CLIPS> (close temp)
+TRUE
+CLIPS> (chdir)
+TRUE ; FALSE on unsupported systems
+CLIPS> (chdir 3)
+[ARGACCES2] Function 'chdir' expected argument #1 to be of type symbol or string.
+CLIPS> (chdir 3 4)
+[ARGACCES1] Function 'chdir' expected no more than 1 argument.
+CLIPS> (with-open-file)
+
+[PRNTUTIL2] Syntax Error:  Check appropriate syntax for with-open-file.
+CLIPS> (with-open-file ())
+
+[EXPRNPSR2] Expected a constant, variable, or expression.
+
+[PRNTUTIL2] Syntax Error:  Check appropriate syntax for with-open-file.
+CLIPS> (with-open-file "stuff.txt")
+
+[PRNTUTIL2] Syntax Error:  Check appropriate syntax for with-open-file.
+CLIPS> (with-open-file "stuff.txt" stuff "r")
+
+[PRNTUTIL2] Syntax Error:  Check appropriate syntax for with-open-file.
+CLIPS> (with-open-file ("stuff.txt"))
+
+[EXPRNPSR2] Expected a constant, variable, or expression.
+
+[PRNTUTIL2] Syntax Error:  Check appropriate syntax for with-open-file.
+CLIPS> (with-open-file ("stuff.txt" stuff "r" "w"))
+
+[PRNTUTIL2] Syntax Error:  Check appropriate syntax for with-open-file.
+CLIPS> (remove "Temp/wof.dat")
+FALSE
+CLIPS> 
+(with-open-file ("Temp/wof.dat" wof "w")
+   (printout wof "Hello World" crlf)
+   (printout wof "Goodbye World" crlf))
+TRUE
+CLIPS> (close wof)
+FALSE
+CLIPS> 
+(with-open-file ("Temp/wof.dat" wof)
+   (println (readline wof))
+   (println (readline wof)))
+Hello World
+Goodbye World
+TRUE
+CLIPS> (close wof)
+FALSE
+CLIPS> 
+(with-open-file ("Temp/wof.dat" wof)
+   (/ 3 0)
+   (println "This shouldn't be printed"))
+[PRNTUTIL7] Attempt to divide by zero in '/' function.
+FALSE
+CLIPS> (close wof)
+FALSE
+CLIPS> (remove "Temp/wof.dat")
+TRUE
+CLIPS> (clear)
+CLIPS> (dribble-off)

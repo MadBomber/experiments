@@ -1,0 +1,156 @@
+<html>
+
+<head>
+<title>Cidc</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<meta name="Microsoft Theme" content="none, default">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1 align="center">The CLIPS Interface Definition Compiler</h1>
+
+<hr width="80%">
+
+<p>CLIPS has always had good integration with other languages such as C and C++. The only
+major feature CLIPS was lacking was a way to permit CLIPS rules to operate directly on the
+data in the external programs. What this meant in practice was that if you had an existing
+C or C++ program and you wanted to add CLIPS rules to reason about what that program was
+doing, you had to explicitly convert the structs and objects to CLIPS facts before calling
+the rules. When the rules finished, you then had to explicitly pass their results back to
+the C or C++ program. The CLIPS Interface Definition Compiler (CIDC) solves this problem.
+CIDC permits the rules to operate directly on C++ objects and C structs. </p>
+
+<p>Briefly, CIDC is used as follows: You determine which object and struct types the rules
+need to operate on, and which fields in the objects and structs they need to have access
+to. You write this information down in the CLIPS Interface Definition Language (CIDL).
+CIDC compiles this information and produces one CLIPS file and one C or C++ file. The C or
+C++ file contains all the code necessary to access the structs and objects. This file is
+compiled and linked into CLIPS/R2, thus giving the interpreter the ability to work with
+these data types. The CLIPS file contains deftemplate declarations for the new types.
+These deftemplate types can be used in rules exactly like any other fact types. When the
+program runs, the C or C++ code can pass one or more structs or objects to CLIPS/R2, and
+the runtime system will create one fact for each of the structs or objects. From that
+point, the system automatically maps slots in the facts to the corresponding fields of the
+structs or objects. When the rules modify a slot, the corresponding field is automatically
+changed. </p>
+
+<p>For a simple example of how this works, suppose you have a C++ program for managing a
+plastics-molding shop, and suppose you need to add a rule-based component to handle
+scheduling of the machines. (Scheduling can be a significant task because schedules may
+have to be revised frequently as orders change and as machines break or are repaired.)
+Suppose the unit of scheduling is a machine-day; that is, whatever a machine is to do for
+a full day, with a machine-day represented by the following class:</p>
+
+<pre>
+class MachDay
+{
+    int day;		// the day of operation this represents
+    int machid;		// the id number of the machine
+    int moldid;		// the id number of the mold
+};</pre>
+
+<p>The rules will need to operate on objects of this type in order to communicate with the
+existing C++ code. With standard CLIPS, you would have to write a substantial amount of
+code to convert the C++ objects to CLIPS defstructs, plus another block of code to take
+the results of the CLIPS run and to convert them back to a form C++ can use.</p>
+
+<p>CIDC does all of that for you. All you have to do is to write a declaration, called a
+defmap, that tells CIDC which fields in the class the rules will operate on, and which
+CLIPS types you wish the fields to be mapped to. The defmap for the above class would be</p>
+
+<pre>
+defmap MachDay
+{
+    INTEGER day;
+    INTEGER machid;
+    INTEGER moldid;
+}</pre>
+
+<p>If the rules did not need access to all the fields, the unused fields could be left out
+of the defmap declaration. From this defmap, CIDC would create two things: 
+
+<ul>
+  <li>A deftemplate for a type MachDay that you can use in your rules just like any other
+    deftemplate.</li>
+  <li>A file of C++ code that gives the CLIPS/R2 runtime system the ability to operate on the
+    C++ class MachDay.</li>
+</ul>
+
+<p>This C++ code represents the major work product of the CIDC compiler. This code insures
+that 
+
+<ol>
+  <li>When a CLIPS rule reads a value from a MachDay fact, it actually gets the value from the
+    field in the C++ object.</li>
+  <li>When a CLIPS rule writes value into a MachDay fact, the value is actually written into
+    the field in the C++ object.</li>
+</ol>
+
+<p>The special deftemplates are used in CLIPS rules exactly like standard deftemplates. In
+fact, by looking at a rule you cannot tell which condition elements refer to C++ objects
+and which refer to standard deftemplates. For example, one rule in the schedule optimizer
+for this system is</p>
+
+<pre>
+(defrule Install_ChangeSwap
+    ?cx &lt;-  (Context  (type install)  (idnum ?csid))
+    	    (ChangeSwap  (idnum ?csid)  (day ?day)
+		(machine1 ?x)  (machine2 ?y))
+    ?md1 &lt;- (MachDay  (day ?day)  (idnum ?x)  (moldid ?mid1))
+    ?md2 &lt;- (MachDay  (day ?day)  (idnum ?y)  (moldid ?mid2))
+--&gt;
+    (modify ?md1 (moldid ?mid2))
+    (modify ?md2 (moldid ?mid1))
+    (retract ?cx))</pre>
+
+<p>This rule is used when the optimizer needs to determine whether the current trial
+schedule would be improved by swapping the molds between two machines. The MachDay
+elements use the CIDC code to map onto the C++ objects. The other two elements operate on
+regular CLIPS deftemplates. The important point here is that the CLIPS programmer does
+nothing special to operate on C++ objects; the programmer treats them exactly as he would
+any deftemplate.</p>
+
+<p>Generally, a CLIPS program will not be interested in every object in your C++ program.
+The programmer controls which objects get into the CLIPS working memory by calling a
+special function to send an object to CLIPS. This function is created by CIDC. The
+function for class MachDay is named SendMachDay(). A typical fragment of C++ code to
+create and send an object to CLIPS is:</p>
+
+<pre>ptr = new MachDay();</pre>
+
+<pre>// ... initialization of ptr</pre>
+
+<pre>SendMachDay(ptr);</pre>
+
+<p>The defmap above was very simple, handling only scalar int fields. Defmaps can be much
+more powerful than this, however. CIDL provides many features that will not be described
+here for handling such things as arrays, strings, and values that are accessed using
+accessor functions rather than by having the code operate directly on data members of the
+object. The manual for CLIPS/R2 explains how these features are used.</p>
+
+<p align="right">Copyright © 1998. Production Systems Technologies, Inc.</p>
+<div align="center"><center>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%" align="center">[&nbsp; <a href="mainpage.htm">Home</a>&nbsp; |&nbsp; <a
+    href="whatsnew.htm">News</a>&nbsp; |&nbsp; <a href="opsj.htm">OPSJ</a>&nbsp; |&nbsp; <a
+    href="opsr2.htm">OPS/R2</a>&nbsp; |&nbsp; <a href="clipsr2.htm">CLIPS/R2</a>&nbsp; |&nbsp;
+    <a href="rete.htm">Rete II</a>&nbsp; ]</td>
+  </tr>
+  <tr>
+    <td width="100%" align="center">[&nbsp; <a href="users.htm">Users</a>&nbsp; |&nbsp; <a
+    href="pstfaq.htm">FAQ</a>&nbsp; |&nbsp; <a href="legal.htm">Legal Issues</a>&nbsp; |&nbsp;
+    <a href="license.htm">Licensing </a>&nbsp; |&nbsp; <a href="aboutpst.htm">About PST</a>&nbsp;
+    ]</td>
+  </tr>
+  <tr>
+    <td width="100%"></td>
+  </tr>
+</table>
+</center></div>
+</body>
+</html>
+

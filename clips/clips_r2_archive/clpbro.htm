@@ -1,0 +1,143 @@
+<html>
+
+<head>
+<title>CLIPSR2 Brochure</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<meta name="Microsoft Theme" content="none, default">
+<meta name="Microsoft Border" content="none, default">
+<meta NAME="description"
+CONTENT="CLIPS/R2 is an upward-compatible extension to standard CLIPS 6.x.
+CLIPS/R2's Rete II rule engine makes it dramatically faster than standard CLIPS.">
+<meta NAME="keywords" CONTENT="rule, rules, clips, clipsr2, 
+forward chaining, backward chaining,
+clips r2, rete, rete II, rete 2, rule engine, rule performance">
+</head>
+
+<body>
+
+<h1 align="center">CLIPS/R2 Brochure</h1>
+
+<hr width="40%">
+
+<p>&nbsp;</p>
+
+<p>CLIPS/R2 is a state of the art implementation of the widely-used CLIPS expert systems
+tool, featuring 
+
+<ul>
+  <li>The ability to operate directly on C structs and C++ objects.</li>
+  <li>Both forward and backward chaining.</li>
+  <li>Full upward-compatibility with standard CLIPS.</li>
+</ul>
+
+<h2>Complete Integration with C and C++ </h2>
+
+<p>CLIPS 6.x provides good, but somewhat incomplete facilities for integrating rules with
+C or C++ code. CLIPS/R2 has extended CLIPS to enable complete, seamless integration of
+rules with C or C++. CLIPS 6.x permits calls to be made between C or C++ and CLIPS, and it
+provides a way for the C or C++ functions to operate on CLIPS facts. The one thing CLIPS
+6.x does not provide is a way for CLIPS rules to access or modify C or C++ data. The
+CLIPS/R2 package eliminates this problem by adding the <a href="cidc.htm">CLIPS Interface
+Definition Compiler (CIDC)</a>. </p>
+
+<p>With CIDC, you simply specify which C structs or C++ classes the rules need access to,
+and which members of the structs or classes the rules should be able to operate on. CIDC
+then generates all the interface code needed to enable the rules to access the structs or
+classes. This code is linked into CLIPS/R2 and becomes a part of the run-time system. The
+rules can then operate on the structs or classes exactly as if they were ordinary CLIPS
+facts. The linkage code is completely transparent to the rules you write. </p>
+
+<h2>Forward and Backward Chaining </h2>
+
+<p>The most recent version of CLIPS prior to CLIPS/R2 was version 6.x. CLIPS 6.x provided
+only forward chaining rules. CLIPS/R2 adds full support for backward chaining as well. The
+backward-chaining in CLIPS/R2 is not the clumsy pseudo-backward chaining found in many
+forward-chaining systems; it is true MYCIN-style backward chaining. CLIPS/R2 has all the
+features needed in an industrial-strength backward chaining system, including complex
+features such as: 
+
+<ul>
+  <li>Certainty Factors for the assertions. </li>
+  <li>Support for nested AND and OR clauses in the IF parts of the rules. </li>
+  <li>How and Why explanations provided by the interpreter. </li>
+</ul>
+
+<h2>State of the Art Implementation </h2>
+
+<p>Perhaps the biggest advantage of CLIPS/R2 over earlier versions of CLIPS is the new
+Rete II implementation. CLIPS 6.x, like most high-performance rule-based systems, uses the
+Rete algorithm for managing rules. Rete was developed at Carnegie-Mellon University in the
+1970's. Rete II is a new, more efficient, version of Rete, which was developed by the
+creator of the original Rete algorithm. Industry-standard benchmark programs clearly
+demonstrate CLIPS/R2's performance advantage. On the simplest problems, CLIPS/R2 and CLIPS
+6.x run about the same speed. On moderately complex programs, CLIPS/R2 is several times
+faster than CLIPS 6.x. On more complex programs, CLIPS/R2 has been benchmarked to run
+between 50 and 100 times the speed of CLIPS 6.x. </p>
+
+<h2>Full Upward-Compatibility with Standard CLIPS </h2>
+
+<p>The CLIPS rule-based programming language was developed at NASA Johnson Space Center in
+1985. Since CLIPS's introduction, the language has been continually refined and extended
+by researchers at NASA and elsewhere. CLIPS/R2 is fully upward-compatible with the latest
+version of CLIPS, version 6.x. You get all the features that have made CLIPS one of the
+most popular rule-based systems in the world. Among the more important features of CLIPS
+6.x and CLIPS/R2 are these: 
+
+<ul>
+  <li>In addition to rules, CLIPS supports both conventional procedural programming and
+    object-oriented programming. The object-oriented features of CLIPS are exceptionally
+    powerful; CLIPS objects are more flexible than those of C++ for example. </li>
+  <li>CLIPS has both an interpreter and a compiler. This means you can create and test your
+    program using a convenient interpreter-based environment, and then deliver the system in a
+    compiled form. Not only is a compiled system smaller than an interpreted one, but perhaps
+    more importantly, since your sensitive source code never has to leave your site, you are
+    protected from unauthorized disclosure or modification of the rules. </li>
+  <li>CLIPS is designed to be embeddable in other programs. CLIPS systems can be linked
+    directly with programs written in languages such as C and C++. In addition, CLIPS systems
+    can be linked as DLL's and used with languages such as Microsoft's Visual Basic and
+    Borland's Delphi. </li>
+</ul>
+
+<h2>Flexible Development Environment</h2>
+
+<p>CLIPS/R2 has a completely new IDE (Integrated Development Environment) that is much
+more flexible than the CLIPS 6.x IDE. The new IDE can be used to develop both stand-alone
+rule bases and rule bases that are embedded in larger programs. You can even use the
+CLIPS/R2 IDE to develop rule bases that have been put into DLLs (Dynamic Link Libraries)
+and linked with Visual Basic or Delphi programs.</p>
+
+<p>The CLIPS/R2 IDE provides a very powerful development environment. It permits you to
+trace rule firings and operations on data, to set break points on the rules, to
+single-step through the rules, to examine and modify the rules and data at run time, to
+examine the interpreter's internal state, and to get How and Why explanations of the
+system's backward chaining. The IDE permits you to define your own debugging macros and
+functions and to invoke them using the mouse or &quot;hot keys.&quot;</p>
+
+<h2>No Run-Time Fees </h2>
+
+<p>CLIPS/R2 development licenses are affordably priced, and CLIPS/R2 is available for a
+wide variety of platforms and operating systems. There are no run-time royalty fees for
+CLIPS/R2 systems. You can buy one development license, create your program, and then copy
+the compiled program onto as many computers as you want.</p>
+
+<p align="right">Copyright © 1998. Production Systems Technologies, Inc.</p>
+<div align="center"><center>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%" align="center">[&nbsp; <a href="mainpage.htm">Home</a>&nbsp; |&nbsp; <a href="whatsnew.htm">News</a>&nbsp; |&nbsp; <a href="opsj.htm">OPSJ</a>&nbsp; |&nbsp; <a href="opsr2.htm">OPS/R2</a>&nbsp; |&nbsp; <a href="clipsr2.htm">CLIPS/R2</a>&nbsp; |&nbsp;
+    <a href="rete.htm">Rete II</a>&nbsp; ]</td>
+  </tr>
+  <tr>
+    <td width="100%" align="center">[&nbsp; <a href="users.htm">Users</a>&nbsp; |&nbsp; <a href="pstfaq.htm">FAQ</a>&nbsp; |&nbsp; <a href="legal.htm">Legal Issues</a>&nbsp; |&nbsp;
+    <a href="license.htm">Licensing </a>&nbsp; |&nbsp; <a href="aboutpst.htm">About PST</a>&nbsp;
+    ]</td>
+  </tr>
+  <tr>
+    <td width="100%"></td>
+  </tr>
+</table>
+</center></div>
+
+</body>
+</html>
